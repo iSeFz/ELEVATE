@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import * as services from '../services/firestore.ts';
+import { UserService } from '../services/UserService.ts';
 
+const customerService = new UserService("customer");
 export const getAllCustomers = async (req: Request, res: Response) => {
-    res.status(200).json(await services.getAllCustomers());
+    res.status(200).json(await customerService.getAll());
 };
 
 export const getCustomer = async (req: Request, res: Response) => {
@@ -10,7 +12,16 @@ export const getCustomer = async (req: Request, res: Response) => {
     if (!customerID) {
         res.status(400).json({ message: 'Please provide a correct customer ID!' });
     }
-    res.status(200).json(await services.getCustomer(customerID));
+    console.log("nouri");
+    res.status(200).json(await customerService.getById(customerID));
+};
+
+export const getCustomerbyEmail = async (req: Request, res: Response) => {
+    let customerEmail = req.query.email as string;
+    if (!customerEmail) {
+        res.status(400).json({ message: 'Please provide a correct customer Email!' });
+    }
+    res.status(200).json(await customerService.getByEmail(customerEmail));
 };
 
 export const addCustomer = async (req: Request, res: Response) => {
@@ -19,7 +30,7 @@ export const addCustomer = async (req: Request, res: Response) => {
         res.status(400).json({ message: 'Please provide a correct customer format!' });
     }
     try {
-        await services.addCustomer(customer);
+        await customerService.add(customer);
         res.status(200).json({ message: 'Customer added' });
     } catch (error) {
         res.status(500).json({ message: 'Error adding customer' });
@@ -38,7 +49,7 @@ export const updateCustomer = async (req: Request, res: Response) => {
     }
     try {
         sanitizeCustomerData(newCustomerData);
-        await services.updateCustomer(customerID, newCustomerData);
+        await customerService.update(customerID, newCustomerData);
         res.status(200).json({ message: 'Customer updated' });
     } catch (error) {
         res.status(500).json({ message: 'Error updating customer' });
@@ -62,7 +73,7 @@ export const deleteCustomer = async (req: Request, res: Response) => {
         res.status(400).json({ message: 'Please provide a correct customer ID!' });
     }
     try {
-        await services.deleteCustomer(customerID);
+        await customerService.delete(customerID);
         res.status(200).json({ message: 'Customer deleted' });
     } catch (error) {
         res.status(500).json({ message: 'Error deleting customer' });
