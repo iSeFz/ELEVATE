@@ -1,4 +1,4 @@
-import { styled, Card, Box, TableCell, LinearProgress, linearProgressClasses } from "@mui/material";
+import { styled, Card, Box, TableCell, SvgIcon} from "@mui/material";
 
 export const StyledCard = styled(Card)(({ theme }) => ({
     flex: 1,
@@ -18,15 +18,19 @@ export const StatCard = styled(Box)(({ color }) => ({
 }));
 
 export const StyledTableHeaderCell = styled(TableCell)({
-    border: 'none',
-    fontWeight: 600,
-    fontSize: 10,
+  border: 'none',
+  fontWeight: 600,
+  fontSize: 10,
+  paddingTop: '4px',
+  paddingBottom: '4px',
 });
 
 export const StyledTableRowCell = styled(TableCell)({
-    border: 'none',
-    fontWeight: 600,
-    fontSize: 12,
+  border: 'none',
+  fontWeight: 600,
+  fontSize: 12,
+  paddingTop: '8px',
+  paddingBottom: '8px',
 });
 
 export const StyledFlexBox = styled(Box)({
@@ -53,3 +57,7 @@ export const ProgressFill = styled(Box)<ProgressFillProps>(({ progress }) => ({
   borderRadius: 2,
   transition: 'width 1s ease-in-out'
 }));
+
+export const StyledSvgIcon = styled(SvgIcon)({
+  fontSize: 36
+})

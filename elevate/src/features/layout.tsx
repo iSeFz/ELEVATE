@@ -6,9 +6,9 @@ import { Header } from "../components/Header/header";
 
 export default function Layout(): React.JSX.Element {
     return (
-      <Box sx={{ display: 'flex' }}>
+      <Box display='flex' backgroundColor="primary.main">
         <Sidebar/>
-        <Box component="main" sx={{ flexGrow: 1 }}>
+        <Box component="main" flexGrow={1}>
           <Header/>
           <Outlet/>
         </Box>

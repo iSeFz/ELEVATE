@@ -2,20 +2,24 @@ import { FC } from 'react';
 import {
   List, 
   ListItem, 
-  ListItemIcon, 
-  ListItemText,
+  ListItemIcon
 } from '@mui/material';
 import { 
   Dashboard as DashboardIcon,
   Person as PersonIcon,
   Inventory as InventoryIcon,
   Settings as SettingsIcon,
-  ExitToApp as ExitToAppIcon
+  ExitToApp as ExitToAppIcon,
+  PieChart,
+  ShoppingBag,
+  Logout
 } from '@mui/icons-material';
-import {CustomBox, TitleText} from "./sidebarStyles"
+import { useNavigate } from 'react-router';
 
+import {CustomBox, TitleText, StyledListItemText} from "./sidebarStyles"
 
 const Sidebar: FC = () => {
+  const navigate = useNavigate();
   return (
     <CustomBox>
       <TitleText variant = "h4">
@@ -24,39 +28,39 @@ const Sidebar: FC = () => {
       
       {/*fix the text style and style the menu more*/}
       <List>
-        <ListItem button selected>
+        <ListItem button onClick={() => navigate('/')} sx={{backgroundColor:'black', borderRadius:3, margin:2, width:250}}>
           <ListItemIcon>
-            <DashboardIcon />
+            <PieChart htmlColor="white"/>
           </ListItemIcon>
-          <ListItemText primary="Dashboard" />
+          <StyledListItemText primary="Dashboard" slotProps={{primary:{color:"White"}}}/>
         </ListItem>
         
-        <ListItem button>
+        <ListItem button onClick={() => navigate('/profile')}>
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>
-          <ListItemText primary="Brand Profile" />
+          <StyledListItemText primary="Brand Profile"/>
         </ListItem>
 
         <ListItem button>
           <ListItemIcon>
-            <InventoryIcon />
+            <ShoppingBag />
           </ListItemIcon>
-          <ListItemText primary="Manage Products" />
+          <StyledListItemText primary="Manage Products"/>
         </ListItem>
 
         <ListItem button>
           <ListItemIcon>
             <SettingsIcon />
           </ListItemIcon>
-          <ListItemText primary="Settings" />
+          <StyledListItemText primary="Settings"/>
         </ListItem>
 
         <ListItem button>
           <ListItemIcon>
-            <ExitToAppIcon />
+            <Logout />
           </ListItemIcon>
-          <ListItemText primary="Sign Out" />
+          <StyledListItemText primary="Sign Out"/>
         </ListItem>
       </List>
     </CustomBox>
