@@ -3,29 +3,35 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import Layout from "../features/layout";
 import Dashboard from "../features/pages/dashboard/dashboard";
 import Profile from "../features/pages/profile/profile";
+import Product from "../features/pages/products/products";
 
 const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Layout/>,
-      children: [
-        {
-          path: "",
-          element: <Dashboard/>,
-        },
-        {
-          path: "profile",
-          element: <Profile/>,
-        },
-      ],
-    },
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "",
+        element: <Dashboard />,
+      },
+      {
+        path: "profile",
+        element: <Profile />,
+      },
+      {
+        path: "products",
+        element: <Product />,
+      },
+      {
+        path: "settings",
+        element: <Profile />,
+      },
+    ],
+  },
 ]);
 
 const Router: React.FC = () => {
-    return(
-        <RouterProvider router={router} />
-    );
+  return <RouterProvider router={router} />;
 };
-
 
 export default Router;
