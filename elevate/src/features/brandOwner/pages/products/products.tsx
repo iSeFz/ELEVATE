@@ -2,7 +2,7 @@
 import React from "react";
 import { Container, Grid2 } from "@mui/material";
 import ProductCard from "./productCard";
-import { StyledButton } from "../../../components/StyledButton";
+import { StyledButton } from "../../../../components/StyledButton";
 import { AddCircleOutline } from "@mui/icons-material";
 // import ProductCard from '../components/ProductCard';
 

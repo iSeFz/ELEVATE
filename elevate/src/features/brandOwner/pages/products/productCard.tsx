@@ -1,8 +1,8 @@
 // src/components/ProductCard.tsx
 import React from "react";
 import { Card, CardContent, CardMedia, Typography, Box } from "@mui/material";
-import { StyledButton } from "../../../components/StyledButton";
-import { StyledSmallSvgIcon } from "../../../components/StyledSmallSvgIcon";
+import { StyledButton } from "../../../../components/StyledButton";
+import { StyledSmallSvgIcon } from "../../../../components/StyledSmallSvgIcon";
 
 interface ProductCardProps {
   title: string;

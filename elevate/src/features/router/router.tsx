@@ -1,9 +1,9 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router";
-import Layout from "../features/layout";
-import Dashboard from "../features/pages/dashboard/dashboard";
-import Profile from "../features/pages/profile/profile";
-import Product from "../features/pages/products/products";
+import Layout from "../brandOwner/layout";
+import Dashboard from "../brandOwner/pages/dashboard/dashboard";
+import Profile from "../brandOwner/pages/profile/profile";
+import Product from "../brandOwner/pages/products/products";
 
 const router = createBrowserRouter([
   {

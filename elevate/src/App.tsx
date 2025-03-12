@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import Router from "./router/router";
+import Router from "./features/router/router";
 
 const theme = createTheme({
   typography: {

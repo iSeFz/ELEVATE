@@ -6,8 +6,8 @@ import {
   StyledTextField,
   StyledTypography,
 } from "./profileStyles";
-import { StyledButton } from "../../../components/StyledButton";
-import { StyledSmallSvgIcon } from "../../../components/StyledSmallSvgIcon";
+import { StyledButton } from "../../../../components/StyledButton";
+import { StyledSmallSvgIcon } from "../../../../components/StyledSmallSvgIcon";
 
 //might need some clean up perhaps seperate into multiple components (do that when doing the edit part)
 const Profile = () => {
