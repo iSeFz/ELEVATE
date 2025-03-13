@@ -1,13 +1,11 @@
 import { Box, Card, Typography } from "@mui/material";
 
-import {
-  StlyedChip,
-  StyledSvgIcon,
-  StyledTextField,
-  StyledTypography,
-} from "./profileStyles";
+import { StyledSvgIcon } from "./StyledSvgIcon";
 import { StyledButton } from "../../../../components/StyledButton";
 import { StyledSmallSvgIcon } from "../../../../components/StyledSmallSvgIcon";
+import { StyledTextField } from "../../../../components/StyledTextField";
+import { StyledTypography } from "../../../../components/StyledTypography";
+import { StlyedChip } from "../../../../components/StyledChip";
 
 //might need some clean up perhaps seperate into multiple components (do that when doing the edit part)
 const Profile = () => {
@@ -28,12 +26,16 @@ const Profile = () => {
         <Box display="flex" flexDirection="column" gap={3} width={500}>
           <Box>
             <StyledTypography>Brand Name</StyledTypography>
-            <StyledTextField disabled value="CLOUD" />
+            <StyledTextField disabled value="CLOUD" fullWidth />
           </Box>
 
           <Box>
             <StyledTypography>Brand Email</StyledTypography>
-            <StyledTextField disabled value="cloudclothing@gmail.com" />
+            <StyledTextField
+              disabled
+              value="cloudclothing@gmail.com"
+              fullWidth
+            />
           </Box>
 
           <Box>

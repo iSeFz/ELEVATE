@@ -5,6 +5,7 @@ import Layout from "../brandOwner/components/layout";
 import Dashboard from "../brandOwner/pages/dashboard/dashboard";
 import Profile from "../brandOwner/pages/profile/profile";
 import Product from "../brandOwner/pages/products/products";
+import { Settings } from "../brandOwner/pages/settings/pages/settings";
 
 const router = createBrowserRouter([
   {
@@ -25,7 +26,7 @@ const router = createBrowserRouter([
       },
       {
         path: "settings",
-        element: <Profile />,
+        element: <Settings />,
         children: [
           {
             path: "account",
