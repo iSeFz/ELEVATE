@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import * as services from '../services/firestore.ts';
 import { UserService } from '../services/UserService.ts';
 
 const customerService = new UserService("customer");
@@ -12,7 +11,6 @@ export const getCustomer = async (req: Request, res: Response) => {
     if (!customerID) {
         res.status(400).json({ message: 'Please provide a correct customer ID!' });
     }
-    console.log("nouri");
     res.status(200).json(await customerService.getById(customerID));
 };
 
@@ -68,7 +66,7 @@ const sanitizeCustomerData = (newCustomerData) => {
 };
 
 export const deleteCustomer = async (req: Request, res: Response) => {
-    let customerID = req.body.customerID;
+    let customerID = req.params.id;
     if (!customerID) {
         res.status(400).json({ message: 'Please provide a correct customer ID!' });
     }
