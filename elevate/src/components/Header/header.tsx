@@ -16,14 +16,14 @@ export const Header: FC = () => {
   const location = useLocation();
 
   const pageTitles: PageTitles = {
-    "/": "Dashboard",
-    "/profile": "Brand Profile",
-    "/products": "Manage Products",
-    "/settings": "Settings",
-    "/logout": "Sign Out",
+    "": "Dashboard",
+    "profile": "Brand Profile",
+    "products": "Manage Products",
+    "settings": "Settings",
+    "logout": "Sign Out",
   };
 
-  const pageTitle = pageTitles[location.pathname] || "Page";
+  const pageTitle = pageTitles[location.pathname.split("/")[1]] || "Page";
 
   return (
     <StyledHeaderBox>

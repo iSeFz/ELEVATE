@@ -51,22 +51,23 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   icon,
   name,
 }) => {
+  const pathStyle = path.split("/")[1];
   return (
     <StyledListItemStyle
       button
       onClick={() => handleItemClick(path, path)}
-      sx={getListItemStyles(path)}
+      sx={getListItemStyles(pathStyle)}
     >
       <ListItemIcon>
         {React.cloneElement(icon, {
-          htmlColor: getIconColor(path),
+          htmlColor: getIconColor(pathStyle),
         })}
       </ListItemIcon>
       <StyledListItemText
         primary={name}
         slotProps={{
           primary: {
-            color: selectedItem === path ? "white" : "inherit",
+            color: selectedItem === pathStyle ? "white" : "inherit",
           },
         }}
       />

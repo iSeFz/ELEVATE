@@ -1,8 +1,6 @@
 import { FC, useState, useEffect } from "react";
 import { List } from "@mui/material";
 import {
-  Settings as SettingsIcon,
-  ShoppingBag,
   Logout,
   PieChartOutline,
   PersonOutline,
@@ -20,7 +18,7 @@ const Sidebar: FC = () => {
   const [selectedItem, setSelectedItem] = useState("");
 
   useEffect(() => {
-    setSelectedItem(location.pathname || "");
+    setSelectedItem(location.pathname.split("/")[1] || "");
   }, [location.pathname]);
 
   const handleItemClick = (route: string) => {
@@ -36,7 +34,7 @@ const Sidebar: FC = () => {
     selectedItem === itemKey ? "white" : "inherit";
 
   return (
-    <CustomBox>
+    <CustomBox minHeight='100vh'>
       <TitleText variant="h4">ELEVATE</TitleText>
 
       <List>
@@ -75,7 +73,7 @@ const Sidebar: FC = () => {
           getListItemStyles={getListItemStyles}
           getIconColor={getIconColor}
           selectedItem={selectedItem}
-          path="/settings"
+          path="/settings/account"
           icon={<SettingsOutlined />}
           name="Settings"
         />

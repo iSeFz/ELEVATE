@@ -5,7 +5,9 @@ import Layout from "../brandOwner/components/layout";
 import Dashboard from "../brandOwner/pages/dashboard/dashboard";
 import Profile from "../brandOwner/pages/profile/profile";
 import Product from "../brandOwner/pages/products/products";
-import { Settings } from "../brandOwner/pages/settings/pages/settings";
+import { Account } from "../brandOwner/pages/settings/pages/account";
+import { Subscriptions } from "../brandOwner/pages/settings/pages/subscriptions";
+import { Settingslayout } from "../brandOwner/pages/settings/components/settingsLayout";
 
 const router = createBrowserRouter([
   {
@@ -26,38 +28,37 @@ const router = createBrowserRouter([
       },
       {
         path: "settings",
-        element: <Settings />,
+        element: <Settingslayout />,
         children: [
           {
             path: "account",
-            element: <Dashboard />,
+            element: <Account />,
           },
           {
             path: "display",
-            element: <Profile />,
+            element: <Account />,
           },
           {
             path: "security",
-            element: <Product />,
+            element: <Account />,
           },
           {
             path: "data",
-            element: <Dashboard />,
+            element: <Account />,
           },
           {
             path: "subscriptions",
-            element: <Profile />,
+            element: <Subscriptions />,
           },
           {
             path: "notifications",
-            element: <Product />,
+            element: <Account />,
           },
         ],
       },
     ],
   },
 ]);
-
 const Router: React.FC = () => {
   return <RouterProvider router={router} />;
 };
