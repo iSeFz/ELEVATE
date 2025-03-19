@@ -4,7 +4,6 @@ import swaggerJsDoc from 'swagger-jsdoc';
 
 const router = express.Router();
 const port = process.env.PORT || 3000;
-const url = `http://localhost:${port}/api/v1`;
 
 const swaggerOptions: swaggerJsDoc.OAS3Options = {
     definition: {
@@ -16,7 +15,9 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
         },
         servers: [
             {
-                url: url,
+                url: process.env.NODE_ENV === 'production' 
+                    ? 'https://elevate-fcai-cu.vercel.app/api/v1'
+                    : `http://localhost:${port}/api/v1`,
                 description: 'Development server',
             },
         ],
@@ -36,6 +37,13 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
-router.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+router.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocs, {
+    explorer: true,
+    customCssUrl: 'https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.0.0/swagger-ui.css',
+    customJs: [
+      'https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.0.0/swagger-ui-bundle.js',
+      'https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.0.0/swagger-ui-standalone-preset.js'
+    ]
+  }));
 
 export default router;
