@@ -32,7 +32,7 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
             },
         ]
     },
-    apis: ['./src/swagger/*.yaml'],
+    apis: ['src/swagger/*.yaml'],
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
