@@ -1,9 +1,9 @@
 import express from 'express';
-import ProductRoutes from './productRoutes.ts';
-import CustomerRoutes from './customerRoutes.ts';
-import BrandRoutes from './brandRoutes.ts';
-import SwaggerRoutes from './swaggerRoutes.ts';
-import { signup, login } from '../controllers/authControllers.ts';
+import ProductRoutes from './productRoutes.js';
+import CustomerRoutes from './customerRoutes.js';
+import BrandRoutes from './brandRoutes.js';
+import SwaggerRoutes from './swaggerRoutes.js';
+import { signup, login } from '../controllers/authControllers.js';
 
 const router = express.Router();
 

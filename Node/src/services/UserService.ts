@@ -1,9 +1,9 @@
-// import { database } from '../config/firebase.ts';
+// import { database } from '../config/firebase.js';
 import {
     collection, getDocs, getDoc, addDoc, deleteDoc,
     doc, query, where, updateDoc
 } from 'firebase/firestore';
-import { BaseService } from './BaseService.ts';
+import { BaseService } from './BaseService.js';
 
 export class UserService extends BaseService {
 

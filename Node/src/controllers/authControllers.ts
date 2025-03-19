@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import * as services from '../services/firestore.ts';
+import * as services from '../services/firestore.js';
 
 /* Testing data
 {
