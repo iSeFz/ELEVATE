@@ -1,8 +1,8 @@
 import express from 'express';
-import { getAllBrands } from '../controllers/brandController.ts';
+import {  } from '../controllers/brandController.ts';
 
 const router = express.Router();
 
-router.get('/', getAllBrands);
+router.get('/', );
 
 export default router;
