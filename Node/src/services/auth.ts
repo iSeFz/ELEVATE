@@ -57,7 +57,7 @@ export const login = async (email: string, password: string) => {
         const { localId: uid } = response.data;
 
         // Get additional user data from Firestore
-        const userDoc = await firestore.collection('users').doc(uid).get();
+        const userDoc = await firestore.collection('customer').doc(uid).get();
         const userData = userDoc.exists ? userDoc.data() : {};
 
         const customToken = await auth.createCustomToken(uid);
