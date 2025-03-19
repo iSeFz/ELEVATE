@@ -14,28 +14,34 @@ import * as services from '../services/firestore.ts';
 }
 */
 export const signup = async (req: Request, res: Response) => {
-    const { email, firstName, lastName, password, username, phoneNumber } = req.body;
-    if (!email || !password || !firstName || !lastName || !username || !phoneNumber) {
-        return res.status(400).json({ error: 'All fields are required' });
-    }
-    const userData = await services.signup(email, password);
-    if (userData.status === 'error') {
-        return res.status(400).json(userData);
-    }
-    const fullUser = {
-        id: userData.user.uid,
-        username,
-        email,
-        firstName,
-        lastName,
-        phoneNumber,
-        loyaltyPoints: 0,
-        imageURL: '',
+    const customer = {
+        username: req.body.username,
+        email: req.body.email,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        phoneNumber: req.body.phoneNumber,
+        password: req.body.password,
     };
-    const newUser = await services.addCustomer(fullUser);
-    return res.status(200).json({
-        ...newUser,
-        accessToken: await userData.user.getIdToken(),
-        refreshToken: userData.user.refreshToken,
-    });
+    try {
+        const userData = await services.signup(customer);
+        const newUser = await services.addCustomer({
+            id: userData.uid,
+            ...customer,
+            loyaltyPoints: 0,
+            imageURL: '',
+        });
+        return res.status(200).json({ status: 'success', data: newUser });
+    } catch (error) {
+        return res.status(400).json({ status: 'error', error: error.message });
+    }
+};
+
+export const login = async (req: Request, res: Response) => {
+    const { email, password } = req.body;
+    try {
+        const userData = await services.login(email, password);
+        return res.status(200).json({ status: 'success', data: userData });
+    } catch (error) {
+        return res.status(400).json({ status: 'error', error: error.message });
+    }
 };

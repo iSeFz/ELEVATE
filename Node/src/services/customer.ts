@@ -1,38 +1,56 @@
-import { database } from '../config/firebase.js';
-import {
-    collection, getDocs, getDoc, addDoc, deleteDoc,
-    doc, query, where, updateDoc, setDoc
-} from 'firebase/firestore';
+import { admin } from '../config/firebase.js';
 
-const collectionRef = collection(database, "customer");
+const firestore = admin.firestore();
+const customerCollection = 'customer';
 
 export const getAllCustomers = async () => {
-    let customers = [];
-    let snapshot = await getDocs(collectionRef);
-    snapshot.forEach((doc) => {
-        customers.push({ id: doc.id, ...doc.data() });
-    });
-    return customers;
-};
-
-export const getCustomer = async (customerID) => {
-    const docRef = doc(database, "customer", customerID);
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-        return { id: docSnap.id, ...docSnap.data() };
-    } else {
-        return null;
+    try {
+        const snapshot = await firestore.collection(customerCollection).get();
+        const customers = [];
+        snapshot.forEach((doc) => {
+            customers.push({ id: doc.id, ...doc.data() });
+        });
+        return customers;
+    } catch (error) {
+        throw new Error(error.message);
     }
 };
 
-export const getCustomerWithEmail = async (customerEmail) => {
-    const querySnapshot = query(collectionRef, where("email", "==", customerEmail));
-    const snapshot = await getDocs(querySnapshot);
-    const customers = [];
-    snapshot.forEach((doc) => {
-        customers.push({ id: doc.id, ...doc.data() });
-    });
-    return customers;
+export const getCustomer = async (customerID: string) => {
+    if (!customerID) {
+        throw new Error('Please provide a customer ID');
+    }
+    try {
+        const docRef = firestore.collection(customerCollection).doc(customerID);
+        const docSnap = await docRef.get();
+
+        if (docSnap.exists) {
+            return { id: docSnap.id, ...docSnap.data() };
+        } else {
+            return null;
+        }
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+
+export const getCustomerWithEmail = async (customerEmail: string) => {
+    if (!customerEmail) {
+        throw new Error('Please provide a customer Email');
+    }
+    try {
+        const snapshot = await firestore.collection(customerCollection)
+            .where("email", "==", customerEmail)
+            .get();
+
+        const customers = [];
+        snapshot.forEach((doc) => {
+            customers.push({ id: doc.id, ...doc.data() });
+        });
+        return customers;
+    } catch (error) {
+        throw new Error(error.message);
+    }
 };
 
 /* Testing data
@@ -47,28 +65,52 @@ export const getCustomerWithEmail = async (customerEmail) => {
     "username": "test123456"
 }
 */
-export const addCustomer = async (customer) => {
-    const customId = customer.id;
-    if (customId) {
-        // Use custom ID if provided
-        const docRef = doc(database, "customer", customId);
-        await setDoc(docRef, customer);
-        return { id: customId, ...customer };
-    } else {
-        // Fall back to auto-generated ID
-        const snapshot = await addDoc(collectionRef, customer);
-        return { id: snapshot.id, ...customer };
+export const addCustomer = async (customer: any) => {
+    if (checkCustomerFormat(customer)) {
+        throw new Error('All fields are required');
+    }
+    try {
+        const customId = customer.id;
+
+        if (customId) {
+            const docRef = firestore.collection(customerCollection).doc(customId);
+            await docRef.set(customer);
+            return { id: customId, ...customer };
+        } else {
+            const docRef = await firestore.collection(customerCollection).add(customer);
+            return { id: docRef.id, ...customer };
+        }
+    } catch (error) {
+        throw new Error(error.message);
     }
 };
 
-export const updateCustomer = async (customerID, newCustomerData) => {
-    const customerRef = doc(database, "customer", customerID);
-    await updateDoc(customerRef, newCustomerData);
-    return true;
+const checkCustomerFormat = (customer) => {
+    return !customer.cartID || !customer.email || !customer.firstName || !customer.lastName || !customer.imageURL || !customer.password || !customer.loyaltyPoints || !customer.phoneNumber || !customer.username;
 };
 
-export const deleteCustomer = async (customerID) => {
-    const customerRef = doc(database, "customer", customerID);
-    await deleteDoc(customerRef);
-    return true;
+export const updateCustomer = async (customerID: string, newCustomerData: any) => {
+    if (!customerID) {
+        throw new Error('Please provide a customer ID');
+    }
+    try {
+        const customerRef = firestore.collection(customerCollection).doc(customerID);
+        await customerRef.update(newCustomerData);
+        return true;
+    } catch (error) {
+        throw new Error(error.message);
+    }
+};
+
+export const deleteCustomer = async (customerID: string) => {
+    if (!customerID) {
+        throw new Error('Please provide a customer ID');
+    }
+    try {
+        const customerRef = firestore.collection(customerCollection).doc(customerID);
+        await customerRef.delete();
+        return true;
+    } catch (error) {
+        throw new Error(error.message);
+    }
 };

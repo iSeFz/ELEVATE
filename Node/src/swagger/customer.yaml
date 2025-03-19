@@ -2,8 +2,6 @@ components:
   schemas:
     CustomerResponse:
       type: object
-      required:
-        - name
       properties:
         id:
           type: string
@@ -11,9 +9,6 @@ components:
         username:
           type: string
           description: The unique username of the customer
-        password:
-          type: string
-          description: The password of the customer
         email:
           type: string
           description: The user email
@@ -35,9 +30,13 @@ components:
 
     CustomerRequest:
       type: object
-      name: Customer
       required:
-        - name
+        - username
+        - password
+        - email
+        - firstName
+        - lastName
+        - phoneNumber
       properties:
         username:
           type: string
@@ -58,8 +57,7 @@ components:
           type: string
           description: The last name of the customer
 
-# Defining Pathes
-
+# Defining Paths
 paths:
   /customers:
     get:
@@ -89,7 +87,25 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomerResponse'
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+        400:
+          description: Failed to add customer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
 
   /customers/{id}:
     get:
@@ -104,11 +120,29 @@ paths:
             type: string
       responses:
         200:
-          description: A customer
+          description: Customer data
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomerResponse'
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: '#/components/schemas/CustomerResponse'
+        400:
+          description: Failed to get customer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
     put:
       summary: Update a customer
       tags: [Customers]
@@ -124,14 +158,47 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CustomerRequest'
+              type: object
+              properties:
+                email:
+                  type: string
+                firstName:
+                  type: string
+                imageURL:
+                  type: string
+                lastName:
+                  type: string
+                password:
+                  type: string
+                phoneNumber:
+                  type: string
+                username:
+                  type: string
       responses:
         200:
           description: The customer was successfully updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CustomerResponse'
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+        400:
+          description: Failed to update customer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
     delete:
       summary: Delete a customer
       tags: [Customers]
@@ -145,5 +212,25 @@ paths:
       responses:
         200:
           description: The customer was successfully deleted
-        404:
-          description: The customer was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+        400:
+          description: Failed to delete customer
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
