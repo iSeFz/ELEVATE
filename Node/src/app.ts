@@ -7,9 +7,12 @@ const url = `http://localhost:${port}`;
 
 app.use(express.json());
 
+app.get('/', (req, res) => {
+    res.send('Connect to /api/v1 to access the API or visit the <a href="/api/v1/docs">documentation</a>');
+});
+
 app.use('/api/v1', MainRouter);
 
-// Start the server
 app.listen(port, () => {
     console.log(`Server is running on ${url}`);
 });

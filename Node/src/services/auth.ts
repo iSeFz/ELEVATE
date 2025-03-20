@@ -1,16 +1,14 @@
 import { admin, verifyCredentialsURL } from '../config/firebase.js';
+import { checkMissingCustomerCredentials, checkMissingCustomerRequestData, Customer } from './utils/customer.ts';
 import axios from 'axios';
 
 const auth = admin.auth();
 const firestore = admin.firestore();
 
-export const signup = async (customer: any) => {
-    if (!customer.email || !customer.password || !customer.firstName || !customer.lastName || !customer.username || !customer.phoneNumber) {
-        throw new Error('All fields are required');
-    }
-
-    if (customer.password.length < 6) {
-        throw new Error('Password must be at least 6 characters');
+export const signup = async (customer: Customer) => {
+    const missedCustomerData = checkMissingCustomerRequestData(customer);
+    if (missedCustomerData) {
+        throw new Error(missedCustomerData);
     }
 
     try {
@@ -43,8 +41,9 @@ export const signup = async (customer: any) => {
 };
 
 export const login = async (email: string, password: string) => {
-    if (!email || !password) {
-        throw new Error('Email and password are required');
+    const missedCredentials = checkMissingCustomerCredentials({ email, password });
+    if (missedCredentials) {
+        throw new Error(missedCredentials);
     }
 
     try {
@@ -75,3 +74,32 @@ export const login = async (email: string, password: string) => {
         throw new Error(errorMessage);
     }
 };
+
+export const deleteCredentialsUsingEmailAndPassword = async (email: string, password: string) => {
+    try {
+        const response = await axios.post(verifyCredentialsURL, {
+            email,
+            password,
+            returnSecureToken: true
+        });
+
+        const { localId: uid } = response.data;
+
+        await auth.deleteUser(uid);
+
+        return "User deleted successfully";
+    } catch (error: any) {
+        const errorMessage = 'Authentication failed. Please check your email and password.';
+        throw new Error(errorMessage);
+    }
+};
+
+export const deleteCredentialsUsingUID = async (uid: string) => {
+    try {
+        await auth.deleteUser(uid);
+        return "User deleted successfully";
+    } catch (error: any) {
+        const errorMessage = 'Authentication failed. Please check your email and password.';
+        throw new Error(errorMessage);
+    }
+}

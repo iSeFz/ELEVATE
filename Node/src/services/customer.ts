@@ -1,4 +1,6 @@
 import { admin } from '../config/firebase.js';
+import { checkMissingFullCustomerData, Customer } from './utils/customer.ts';
+import { deleteCredentialsUsingUID } from './auth.ts';
 
 const firestore = admin.firestore();
 const customerCollection = 'customer';
@@ -65,14 +67,13 @@ export const getCustomerWithEmail = async (customerEmail: string) => {
     "username": "test123456"
 }
 */
-export const addCustomer = async (customer: any) => {
-    if (checkCustomerFormat(customer)) {
-        throw new Error('All fields are required');
-        // todo: Must rollback any realted data inserted in the auth and other services
-    }
+export const addCustomer = async (customer: Customer) => {
     try {
+        const missedCustomerData = checkMissingFullCustomerData(customer);
+        if (missedCustomerData) {
+            throw new Error(missedCustomerData);
+        }
         const customId = customer.id;
-
         if (customId) {
             const docRef = firestore.collection(customerCollection).doc(customId);
             await docRef.set(customer);
@@ -82,14 +83,12 @@ export const addCustomer = async (customer: any) => {
             return { id: docRef.id, ...customer };
         }
     } catch (error) {
+        // Rollback
+        if (customer.id) {
+            await deleteCredentialsUsingUID(customer.id);
+        }
         throw new Error(error.message);
     }
-};
-
-const checkCustomerFormat = (customer) => {
-    return !customer.id || !customer.email || !customer.firstName
-        || !customer.lastName || customer.imageURL == null || !customer.password
-        || customer.loyaltyPoints == null || !customer.phoneNumber || !customer.username;
 };
 
 export const updateCustomer = async (customerID: string, newCustomerData: any) => {

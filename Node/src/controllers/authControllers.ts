@@ -1,34 +1,24 @@
 import { Request, Response } from 'express';
 import * as services from '../services/firestore.js';
+import { Customer } from '../services/utils/customer.ts';
 
-/* Testing data
-{
-    "email": "test@test.com", //(given)
-    "firstName": "test1", //(given)
-    "imageURL": "",
-    "lastName": "Test2", //(given)
-    "loyaltyPoints": 100,
-    "password": "testing", //(given)
-    "phoneNumber": "012345678987", //(given)
-    "username": "test123456", //(given)
-}
-*/
 export const signup = async (req: Request, res: Response) => {
-    const customer = {
+    const customer: Customer = {
+        id: '',
         username: req.body.username,
         email: req.body.email,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         phoneNumber: req.body.phoneNumber,
         password: req.body.password,
+        loyaltyPoints: 0,
+        imageURL: ''
     };
     try {
         const userData = await services.signup(customer);
-        const newUser = await services.addCustomer({
+        const newUser: Customer = await services.addCustomer({
             id: userData.uid,
             ...customer,
-            loyaltyPoints: 0,
-            imageURL: '',
         });
         return res.status(200).json({ status: 'success', data: newUser });
     } catch (error) {

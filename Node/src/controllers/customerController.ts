@@ -26,13 +26,13 @@ export const getCustomer = async (req: Request, res: Response) => {
 // };
 
 export const addCustomer = async (req: Request, res: Response) => {
-    const customer = req.body;
-    try {
-        await services.addCustomer(customer);
-        return res.status(200).json({ status: 'success', message: 'Customer added' });
-    } catch (error) {
-        return res.status(400).json({ status: 'error', message: error.message });
-    }
+    // const customer = req.body;
+    // try {
+    //     await services.addCustomer(customer);
+    //     return res.status(200).json({ status: 'success', message: 'Customer added' });
+    // } catch (error) {
+    //     return res.status(400).json({ status: 'error', message: error.message });
+    // }
 };
 
 export const updateCustomer = async (req: Request, res: Response) => {
