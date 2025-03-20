@@ -1,4 +1,4 @@
-// import { database } from '../config/firebase.ts';
+// import { database } from '../config/firebase.js';
 // import {
 //     collection, getDocs, getDoc, addDoc, deleteDoc,
 //     doc, query, where, updateDoc

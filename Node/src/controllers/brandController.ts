@@ -1,6 +1,6 @@
 // import { Request, Response } from 'express';
-// import * as services from '../services/firestore.ts';
-// import { BaseService } from '../services/BaseService.ts';
+// import * as services from '../services/firestore.js';
+// import { BaseService } from '../services/BaseService.js';
 
 // const brandService = new BaseService("Brand");
 // export const getAllBrands = async (req: Request, res: Response) => {
