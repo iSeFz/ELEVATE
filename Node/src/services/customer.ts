@@ -87,7 +87,9 @@ export const addCustomer = async (customer: any) => {
 };
 
 const checkCustomerFormat = (customer) => {
-    return !customer.id || !customer.email || !customer.firstName || !customer.lastName || !customer.imageURL || !customer.password || !customer.loyaltyPoints || !customer.phoneNumber || !customer.username;
+    return !customer.id || !customer.email || !customer.firstName
+        || !customer.lastName || customer.imageURL == null || !customer.password
+        || customer.loyaltyPoints == null || !customer.phoneNumber || !customer.username;
 };
 
 export const updateCustomer = async (customerID: string, newCustomerData: any) => {
