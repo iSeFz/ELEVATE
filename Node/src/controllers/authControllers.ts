@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import * as services from '../services/firestore.js';
-import { Customer } from '../services/utils/customer.ts';
+import { Customer } from '../services/utils/customer.js';
 
 export const signup = async (req: Request, res: Response) => {
     const customer: Customer = {

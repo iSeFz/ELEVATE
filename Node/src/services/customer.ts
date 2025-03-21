@@ -1,6 +1,6 @@
 import { admin } from '../config/firebase.js';
-import { checkMissingFullCustomerData, Customer } from './utils/customer.ts';
-import { deleteCredentialsUsingUID } from './auth.ts';
+import { checkMissingFullCustomerData, Customer } from './utils/customer.js';
+import { deleteCredentialsUsingUID } from './auth.js';
 
 const firestore = admin.firestore();
 const customerCollection = 'customer';

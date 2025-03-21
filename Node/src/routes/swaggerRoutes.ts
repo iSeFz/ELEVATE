@@ -1,13 +1,52 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
-import { loadSwaggerFiles } from '../utils/swaggerLoader.js';
+import swaggerJsDoc from 'swagger-jsdoc';
+import path from 'path';
 
 const router = express.Router();
+const port = process.env.PORT || 3000;
 
-// Load and combine all swagger definitions
-const swaggerDocument = loadSwaggerFiles();
+// Fix path resolution for nested projects
+const projectRoot = process.env.VERCEL
+  ? '/var/task/Node' // Use the correct path in Vercel
+  : process.cwd();   // Use working directory in local dev
 
-router.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument, {
+console.log("Environment:", process.env.NODE_ENV);
+console.log("PWD:", process.env.PWD);
+console.log("Project root:", projectRoot);
+console.log("Current working directory:", process.cwd());
+
+const swaggerOptions: swaggerJsDoc.OAS3Options = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'ELEVATE',
+      version: '1.0.0',
+      description: 'ELEVATE APIs for both clients and admins',
+    },
+    servers: [
+      {
+        url: process.env.NODE_ENV === 'production'
+          ? 'https://elevate-fcai-cu.vercel.app/api/v1'
+          : `http://localhost:${port}/api/v1`,
+        description: process.env.NODE_ENV === 'production' ? 'Production server' : 'Development server',
+      },
+    ],
+    tags: [
+      { name: 'Customers', description: 'All APIs related to customers' },
+      { name: 'Products', description: 'All APIs related to products' },
+    ]
+  },
+  // Use path.join for better cross-platform compatibility
+  apis: [path.join(projectRoot, 'src', 'swagger', '*.yaml')],
+};
+
+const yamlPath = path.join(projectRoot, 'src', 'swagger', '*.yaml');
+console.log("Looking for YAML files at:", yamlPath);
+
+const swaggerDocs = swaggerJsDoc(swaggerOptions);
+
+router.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocs, {
   explorer: true,
   customCssUrl: 'https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.0.0/swagger-ui.css',
   customJs: [

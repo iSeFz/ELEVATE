@@ -1,5 +1,5 @@
 import { admin, verifyCredentialsURL } from '../config/firebase.js';
-import { checkMissingCustomerCredentials, checkMissingCustomerRequestData, Customer } from './utils/customer.ts';
+import { checkMissingCustomerCredentials, checkMissingCustomerRequestData, Customer } from './utils/customer.js';
 import axios from 'axios';
 
 const auth = admin.auth();
