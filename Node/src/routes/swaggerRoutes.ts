@@ -1,10 +1,20 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
+import path from 'path';
 
 const router = express.Router();
 const port = process.env.PORT || 3000;
-const projectRoot = process.env.PWD || process.cwd(); // Must be set in the environment
+
+// Fix path resolution for nested projects
+const projectRoot = process.env.VERCEL
+  ? '/var/task/Node' // Use the correct path in Vercel
+  : process.cwd();   // Use working directory in local dev
+
+console.log("Environment:", process.env.NODE_ENV);
+console.log("PWD:", process.env.PWD);
+console.log("Project root:", projectRoot);
+console.log("Current working directory:", process.cwd());
 
 const swaggerOptions: swaggerJsDoc.OAS3Options = {
   definition: {
@@ -19,24 +29,20 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
         url: process.env.NODE_ENV === 'production'
           ? 'https://elevate-fcai-cu.vercel.app/api/v1'
           : `http://localhost:${port}/api/v1`,
-        description: 'Development server',
+        description: process.env.NODE_ENV === 'production' ? 'Production server' : 'Development server',
       },
     ],
     tags: [
-      {
-        name: 'Customers',
-        description: 'All APIs related to customers',
-      },
-      {
-        name: 'Products',
-        description: 'All APIs related to products',
-      },
+      { name: 'Customers', description: 'All APIs related to customers' },
+      { name: 'Products', description: 'All APIs related to products' },
     ]
   },
-  apis: [`${projectRoot}/src/swagger/*.yaml`],
+  // Use path.join for better cross-platform compatibility
+  apis: [path.join(projectRoot, 'src', 'swagger', '*.yaml')],
 };
 
-console.log("Folder path: ", `${projectRoot}/src/swagger/*.yaml`);
+const yamlPath = path.join(projectRoot, 'src', 'swagger', '*.yaml');
+console.log("Looking for YAML files at:", yamlPath);
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
 
