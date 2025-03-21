@@ -31,11 +31,30 @@ export function loadSwaggerFiles() {
     // Find all YAML files synchronously
     const yamlFiles = glob.sync(path.join(process.cwd(), 'src/swagger/**/*.yaml'));
 
+    console.log('Found YAML files:', yamlFiles);
+
+    if (yamlFiles.length === 0) {
+        console.warn('WARNING: No YAML files found! Check directory structure and file paths.');
+        
+        // Try listing directories to see what's available
+        try {
+            const dirs = fs.readdirSync(path.join(process.cwd(), 'src'));
+            console.log('Available directories in src:', dirs);
+            
+            if (dirs.includes('swagger')) {
+                const swaggerFiles = fs.readdirSync(path.join(process.cwd(), 'src/swagger'));
+                console.log('Files in swagger directory:', swaggerFiles);
+            }
+        } catch (error) {
+            console.error('Error listing directories:', error);
+        }
+    }
+
     // Load and merge each YAML file
     yamlFiles.forEach(file => {
         try {
             const fileContent = fs.readFileSync(file, 'utf8');
-            const swaggerPart: swaggerJsDoc.OAS3Options = yaml.load(fileContent);
+            const swaggerPart: swaggerJsDoc.OAS3Options = yaml.load(fileContent) as swaggerJsDoc.OAS3Options;
 
             // Merge paths
             if (swaggerPart.paths) {
