@@ -7,7 +7,7 @@ import { BaseService } from './BaseService.js';
 
 export class UserService extends BaseService {
 
-    async getByEmail(email) {
+    async getByEmail(email: any) {
         // const querySnapshot = query(this.collectionRef, where("email", "==", email));
         // const snapshot = await getDocs(querySnapshot);
         // const data = [];

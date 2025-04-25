@@ -1,17 +1,8 @@
-export type Customer = {
-    id: string;
-    username: string;
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    phoneNumber: string;
-    imageURL: string;
-    loyaltyPoints: number;
-}
+import { Customer } from '../../types/models/customer.js';
+import { Staff } from '../../types/models/staff.js';
 
 export const checkMissingCustomerRequestData = (customer: any) => {
-    const currentCustomer: Customer = customer;
+    const currentCustomer = customer as Customer;
     if (currentCustomer.username == null || currentCustomer.email == null || currentCustomer.password == null
         || currentCustomer.firstName == null || currentCustomer.lastName == null || currentCustomer.phoneNumber == null) {
         return 'All fields are required';
@@ -23,7 +14,7 @@ export const checkMissingCustomerRequestData = (customer: any) => {
 };
 
 export const checkMissingFullCustomerData = (customer: any) => {
-    const currentCustomer: Customer = customer;
+    const currentCustomer = customer as Customer;
     if (currentCustomer.username == null || currentCustomer.email == null || currentCustomer.password == null
         || currentCustomer.firstName == null || currentCustomer.lastName == null || currentCustomer.phoneNumber == null
         || currentCustomer.imageURL == null || currentCustomer.loyaltyPoints == null) {
@@ -33,8 +24,16 @@ export const checkMissingFullCustomerData = (customer: any) => {
 };
 
 export const checkMissingCustomerCredentials = (customer: any) => {
-    const currentCustomer: Customer = customer;
-    if (currentCustomer.email == null || currentCustomer.password == null) {
+    const currentCustomer = customer as Customer;
+    if (currentCustomer.email == null || currentCustomer.password == undefined) {
+        return 'All fields are required';
+    }
+    return null;
+}
+
+export const checkMissingStaffCredentials = (staff: any) => {
+    const currentStaff = staff as Staff;
+    if (currentStaff.email == null || currentStaff.password == undefined) {
         return 'All fields are required';
     }
     return null;
