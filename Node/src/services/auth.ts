@@ -1,9 +1,23 @@
 import { admin, verifyCredentialsURL } from '../config/firebase.js';
-import { checkMissingCustomerCredentials, checkMissingCustomerRequestData, checkMissingStaffCredentials, Customer, Staff } from './utils/customer.js';
 import axios from 'axios';
+import { Customer } from '../types/models/customer.js';
+import { Staff } from '../types/models/staff.js';
+import { checkMissingCustomerRequestData } from './utils/customer.js';
+import { checkMissingStaffData } from './utils/staff.js';
 
 const auth = admin.auth();
 const firestore = admin.firestore();
+
+// Helper function to check auth credentials
+const checkMissingCredentials = (credentials: { email?: string, password?: string }) => {
+    if (!credentials.email) {
+        return 'Email is required';
+    }
+    if (!credentials.password) {
+        return 'Password is required';
+    }
+    return null;
+};
 
 export const signup = async (customer: Customer) => {
     const missedCustomerData = checkMissingCustomerRequestData(customer);
@@ -20,16 +34,20 @@ export const signup = async (customer: Customer) => {
 
         auth.setCustomUserClaims(userRecord.uid, { role: 'customer' });
 
+        // Remove password from data stored in Firestore
+        const { password, id, ...customerData } = customer;
+        
+        // Set defaults for new customer
+        if (!customerData.loyaltyPoints) customerData.loyaltyPoints = 0;
+        customerData.role = 'customer';
+        if (!customerData.orders) customerData.orders = [];
+        customerData.cart = undefined;
+        if (!customerData.wishlist) customerData.wishlist = [];
+        
+        // Save customer data to Firestore
         await firestore.collection('customer').doc(userRecord.uid).set({
-            username: customer.username,
-            email: userRecord.email,
-            firstName: customer.firstName,
-            lastName: customer.lastName,
-            imageURL: customer.imageURL,
-            loyaltyPoints: customer.loyaltyPoints,
-            password: customer.password,
-            phoneNumber: customer.phoneNumber,
-            createdAt: new Date(),
+            ...customerData,
+            createdAt: new Date()
         });
 
         return userRecord;
@@ -50,7 +68,7 @@ export const signup = async (customer: Customer) => {
 };
 
 export const login = async (email: string, password: string) => {
-    const missedCredentials = checkMissingCustomerCredentials({ email, password });
+    const missedCredentials = checkMissingCredentials({ email, password });
     if (missedCredentials) {
         throw new Error(missedCredentials);
     }
@@ -61,8 +79,6 @@ export const login = async (email: string, password: string) => {
             password,
             returnSecureToken: true
         });
-        
-        console.log("response:", response.data);
 
         const { localId: uid } = response.data;
 
@@ -113,39 +129,38 @@ export const deleteCredentialsUsingUID = async (uid: string) => {
         const errorMessage = 'Authentication failed. Please check your email and password.';
         throw new Error(errorMessage);
     }
-}
-
+};
 
 // Staff-related functions
-
-export const staffSignup = async (adminData: Staff) => {
-    const missedAdminData = checkMissingStaffCredentials(adminData);
-    if (missedAdminData) {
-        throw new Error(missedAdminData);
+export const staffSignup = async (staff: Staff) => {
+    const missedStaffData = checkMissingStaffData(staff);
+    if (missedStaffData) {
+        throw new Error(missedStaffData);
     }
 
     try {
         const userRecord = await auth.createUser({
-            email: adminData.email,
-            password: adminData.password,
+            email: staff.email,
+            password: staff.password,
             emailVerified: false,
         });
 
         auth.setCustomUserClaims(userRecord.uid, { role: 'staff' });
 
-        await firestore.collection('customer').doc(userRecord.uid).set({
-            username: adminData.username,
-            email: userRecord.email,
-            firstName: adminData.firstName,
-            lastName: adminData.lastName,
-            password: adminData.password,
-            phoneNumber: adminData.phoneNumber,
-            createdAt: new Date(),
+        // Remove password from data stored in Firestore
+        const { password, id, ...staffData } = staff;
+        
+        // Set default role if not provided
+        staffData.role = 'staff';
+        
+        await firestore.collection('staff').doc(userRecord.uid).set({
+            ...staffData,
+            createdAt: new Date()
         });
 
         return userRecord;
     } catch (error: any) {
-        const errorCode = error.code || '';
+        const errorCode = error.code ?? '';
         let errorMessage = error.message;
 
         if (errorCode === 'auth/email-already-exists') {
@@ -158,4 +173,4 @@ export const staffSignup = async (adminData: Staff) => {
 
         throw new Error(errorMessage);
     }
-}
+};

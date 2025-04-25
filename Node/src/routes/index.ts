@@ -6,13 +6,14 @@ import ProductVariantRoutes from './productVariantRoutes.js';
 import ReviewRoutes from './reviewRoutes.js';
 import OrderRoutes from './orderRoutes.js';
 import SwaggerRoutes from './swaggerRoutes.js';
-import { signup, login } from '../controllers/authControllers.js';
+import { signup, login, staffSignup } from '../controllers/authControllers.js';
 
 const router = express.Router();
 
 // Auth routes
 router.post('/signup', signup);
 router.post('/login', login);
+router.post('/staff/signup', staffSignup);
 
 // API documentation
 router.use('/docs', SwaggerRoutes);

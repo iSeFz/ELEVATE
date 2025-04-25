@@ -10,7 +10,7 @@ export interface Cart {
 export interface Customer {
     id?: string;
     address: Address;
-    cart: Cart;
+    cart?: Cart;
     email: string;
     firstName: string;
     lastName: string;

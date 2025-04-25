@@ -12,4 +12,5 @@ export interface Staff {
     // Optional field not in schema but likely needed for authentication
     password?: string;
     role?: string; // Optional field for role-based access control
+    imageURL?: string; // Optional field for profile picture
 }
