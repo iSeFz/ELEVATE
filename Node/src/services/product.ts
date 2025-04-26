@@ -95,6 +95,44 @@ export const addProduct = async (product: Product) => {
         if (!productData.variants) productData.variants = [];
         if (!productData.stock) productData.stock = 0;
         
+        // Add denormalized brandId from the brand reference
+        if (productData.brand) {
+            // Store brandId for denormalized access
+            productData.brandId = productData.brand.id;
+            
+            // Extract review IDs from references
+            if (productData.reviews && productData.reviews.length > 0) {
+                productData.reviewIds = productData.reviews.map(ref => ref.id);
+            } else {
+                productData.reviewIds = [];
+            }
+            
+            // Extract variant IDs from references
+            if (productData.variants && productData.variants.length > 0) {
+                productData.variantIds = productData.variants.map(ref => ref.id);
+            } else {
+                productData.variantIds = [];
+            }
+            
+            // Try to get brandOwnerId from the brand document
+            try {
+                const brandDoc = await productData.brand.get();
+                if (brandDoc.exists) {
+                    const brandData = brandDoc.data();
+                    if (brandData?.brandOwnerId) {
+                        // Use existing denormalized data from brand
+                        productData.brandOwnerId = brandData.brandOwnerId;
+                    } else if (brandData?.owner) {
+                        // Or use the reference directly
+                        productData.brandOwnerId = brandData.owner.id;
+                    }
+                }
+            } catch (error) {
+                console.error('Error populating denormalized fields for product:', error);
+                // Continue without denormalized brandOwnerId
+            }
+        }
+        
         if (customId) {
             const docRef = firestore.collection(productCollection).doc(customId);
             await docRef.set(productData);

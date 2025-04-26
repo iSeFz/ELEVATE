@@ -27,7 +27,7 @@ export const getBrand = async (brandID: string) => {
         const docSnap = await docRef.get();
         
         if (docSnap.exists) {
-            return { id: docSnap.id, ...docSnap.data() };
+            return { id: docSnap.id, ...docSnap.data() } as Brand;
         } else {
             return null;
         }
@@ -69,6 +69,11 @@ export const addBrand = async (brand: Brand) => {
         if (!brandData.addresses) brandData.addresses = [];
         if (!brandData.websites) brandData.websites = [];
         if (!brandData.phoneNumbers) brandData.phoneNumbers = [];
+        
+        // Add denormalized brandOwnerId if brandOwner reference exists
+        if (brandData.owner && !brandData.brandOwnerId) {
+            brandData.brandOwnerId = brandData.owner.id;
+        }
         
         if (customId) {
             const docRef = firestore.collection(brandCollection).doc(customId);

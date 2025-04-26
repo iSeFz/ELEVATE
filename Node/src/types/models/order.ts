@@ -20,6 +20,8 @@ export interface Order {
     id?: string;
     address: Address;
     customer: FirestoreReference<Customer>;
+    // Denormalized field for authorization
+    customerId?: string;
     dateCreated: Timestamp;
     payment: Payment;
     phoneNumber: string;

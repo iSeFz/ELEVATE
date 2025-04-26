@@ -28,7 +28,7 @@ export const getOrder = async (orderID: string) => {
         const docSnap = await docRef.get();
         
         if (docSnap.exists) {
-            return { id: docSnap.id, ...docSnap.data() };
+            return { id: docSnap.id, ...docSnap.data() } as Order;
         } else {
             return null;
         }
@@ -88,6 +88,11 @@ export const addOrder = async (order: Order) => {
                 fees: 0,
                 method: 'Standard'
             };
+        }
+        
+        // Add denormalized customerId if customer reference exists
+        if (orderData.customer && !orderData.customerId) {
+            orderData.customerId = orderData.customer.id;
         }
         
         if (customId) {

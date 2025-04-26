@@ -6,6 +6,8 @@ export interface Review {
     id?: string;
     content: string;
     customer: FirestoreReference<Customer>;
+    // Denormalized field for authorization
+    customerId?: string;
     dateCreated: Timestamp;
     rating: number;
 }

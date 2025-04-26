@@ -13,7 +13,9 @@ export interface Brand {
     id?: string;
     addresses: Address[];
     brandName: string;
-    brandOwner: FirestoreReference<BrandOwner>;
+    owner: FirestoreReference<BrandOwner>;
+    // Denormalized field for authorization
+    brandOwnerId?: string;
     email: string;
     imageURL: string;
     industry: string;

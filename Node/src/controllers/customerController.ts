@@ -3,6 +3,7 @@ import * as customerService from '../services/customer.js';
 import { Customer } from '../types/models/customer.js';
 
 export const getAllCustomers = async (req: Request, res: Response) => {
+    // This route is already protected by authorize middleware in the router
     try {
         const customers = await customerService.getAllCustomers();
         return res.status(200).json({ status: 'success', data: customers });
@@ -14,6 +15,8 @@ export const getAllCustomers = async (req: Request, res: Response) => {
 export const getCustomer = async (req: Request, res: Response) => {
     try {
         const customerID = req.params.id;
+        
+        // Authorization check is now handled by middleware
         const customer = await customerService.getCustomer(customerID);
         
         if (!customer) {
@@ -34,6 +37,7 @@ export const getCustomerByEmail = async (req: Request, res: Response) => {
             return res.status(400).json({ status: 'error', message: 'Email parameter is required' });
         }
         
+        // Authorization check is now handled by middleware
         const customers = await customerService.getCustomerWithEmail(customerEmail);
         
         if (!customers || customers.length === 0) {
@@ -47,6 +51,7 @@ export const getCustomerByEmail = async (req: Request, res: Response) => {
 };
 
 export const addCustomer = async (req: Request, res: Response) => {
+    // This route is already protected by authorize middleware in the router
     try {
         const customer: Customer = req.body;
         const newCustomer = await customerService.addCustomer(customer);
@@ -63,12 +68,23 @@ export const addCustomer = async (req: Request, res: Response) => {
 export const updateCustomer = async (req: Request, res: Response) => {
     try {
         const customerID = req.params.id;
-        const newCustomerData = sanitizeCustomerData(req.body);
+        const userRole = req.user?.role;
+        
+        // Authorization check is now handled by middleware
+        const newCustomerData = sanitizeCustomerData(req.body, userRole);
         
         // Check if customer exists first
         const existingCustomer = await customerService.getCustomer(customerID);
         if (!existingCustomer) {
             return res.status(404).json({ status: 'error', message: 'Customer not found' });
+        }
+        
+        // Prevent users from elevating their own privileges
+        if (userRole !== 'admin' && newCustomerData.role && newCustomerData.role !== 'customer') {
+            return res.status(403).json({ 
+                status: 'error', 
+                message: 'You cannot change your role' 
+            });
         }
         
         await customerService.updateCustomer(customerID, newCustomerData);
@@ -81,6 +97,8 @@ export const updateCustomer = async (req: Request, res: Response) => {
 export const deleteCustomer = async (req: Request, res: Response) => {
     try {
         const customerID = req.params.id;
+        
+        // Authorization check is now handled by middleware
         
         // Check if customer exists first
         const existingCustomer = await customerService.getCustomer(customerID);
@@ -96,12 +114,20 @@ export const deleteCustomer = async (req: Request, res: Response) => {
 };
 
 // Helper function to sanitize customer data
-const sanitizeCustomerData = (newCustomerData: any): Partial<Customer> => {
+const sanitizeCustomerData = (newCustomerData: any, userRole?: string): Partial<Customer> => {
     // Updated list of allowed customer fields based on our new Customer type
-    const customerFields = [
+    let customerFields = [
         'email', 'firstName', 'lastName', 'username', 'phoneNumber', 
-        'imageURL', 'address', 'loyaltyPoints', 'role'
+        'imageURL', 'address'
     ];
+    
+    // Allow admin to update additional fields
+    if (userRole === 'admin') {
+        customerFields = [
+            ...customerFields,
+            'loyaltyPoints', 'role'
+        ];
+    }
     
     const sanitizedData: Partial<Customer> = {};
     

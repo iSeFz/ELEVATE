@@ -1,24 +1,18 @@
 import express from 'express';
 import * as ProductVariantController from '../controllers/productVariantController.js';
+import { authenticate, authorize, authorizeProductAccess } from '../middleware/auth.js';
 
 const router = express.Router();
 
-// Get all product variants
+// Public routes - no authentication required
 router.get('/', ProductVariantController.getAllProductVariants);
-
-// Get product variant by ID
 router.get('/:id', ProductVariantController.getProductVariant);
-
-// Get product variants by product ID
 router.get('/by-product', ProductVariantController.getProductVariantsByProduct);
 
-// Add new product variant
-router.post('/', ProductVariantController.addProductVariant);
-
-// Update product variant
-router.put('/:id', ProductVariantController.updateProductVariant);
-
-// Delete product variant
-router.delete('/:id', ProductVariantController.deleteProductVariant);
+// Protected routes - require authentication
+// Product variants follow the same authorization as their parent products
+router.post('/', authenticate, authorize(['admin', 'staff', 'brandOwner']), ProductVariantController.addProductVariant);
+router.put('/:id', authenticate, authorizeProductAccess, ProductVariantController.updateProductVariant);
+router.delete('/:id', authenticate, authorizeProductAccess, ProductVariantController.deleteProductVariant);
 
 export default router;

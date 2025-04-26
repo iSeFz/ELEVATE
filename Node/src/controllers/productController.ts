@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import * as productService from '../services/product.js';
 import * as productVariantService from '../services/productVariant.js';
+import * as brandService from '../services/brand.js';
 import { Product } from '../types/models/product.js';
 
 export const getAllProducts = async (req: Request, res: Response) => {
@@ -83,8 +84,13 @@ export const getProductWithVariants = async (req: Request, res: Response) => {
 
 export const addProduct = async (req: Request, res: Response) => {
     try {
-        const product: Product = req.body;
-        const newProduct = await productService.addProduct(product);
+        const productData = req.body;
+        
+        // Authorization check is now handled by middleware
+        // Remove any ID if provided - always use auto-generated IDs for products
+        delete productData.id;
+        
+        const newProduct = await productService.addProduct(productData);
         return res.status(201).json({ 
             status: 'success', 
             message: 'Product added successfully', 
@@ -106,6 +112,7 @@ export const updateProduct = async (req: Request, res: Response) => {
             return res.status(404).json({ status: 'error', message: 'Product not found' });
         }
         
+        // Authorization check is now handled by the authorizeProductAccess middleware
         await productService.updateProduct(productID, newProductData);
         return res.status(200).json({ status: 'success', message: 'Product updated successfully' });
     } catch (error: any) {
@@ -123,6 +130,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
             return res.status(404).json({ status: 'error', message: 'Product not found' });
         }
         
+        // Authorization check is now handled by the authorizeProductAccess middleware
         await productService.deleteProduct(productID);
         return res.status(200).json({ status: 'success', message: 'Product deleted successfully' });
     } catch (error: any) {

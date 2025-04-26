@@ -6,6 +6,7 @@ import { Timestamp } from 'firebase-admin/firestore';
 import { FirestoreReference } from '../types/models/common.js';
 
 export const getAllReviews = async (req: Request, res: Response) => {
+    // This route is already protected by the authorize middleware in the router
     try {
         const reviews = await reviewService.getAllReviews();
         return res.status(200).json({ status: 'success', data: reviews });
@@ -17,11 +18,14 @@ export const getAllReviews = async (req: Request, res: Response) => {
 export const getReview = async (req: Request, res: Response) => {
     try {
         const reviewID = req.params.id;
+        
         const review = await reviewService.getReview(reviewID);
 
         if (!review) {
             return res.status(404).json({ status: 'error', message: 'Review not found' });
         }
+        
+        // Authorization check is now handled by middleware
 
         return res.status(200).json({ status: 'success', data: review });
     } catch (error: any) {
@@ -46,8 +50,17 @@ export const getReviewsByProduct = async (req: Request, res: Response) => {
 
 export const getReviewsByCustomer = async (req: Request, res: Response) => {
     try {
+        const requestingUserID = req.user?.id;
+        const userRole = req.user?.role;
+        
+        // For regular users, only allow access to their own reviews
+        if (userRole !== 'admin' && userRole !== 'staff') {
+            const reviews = await reviewService.getReviewsByCustomer(requestingUserID!);
+            return res.status(200).json({ status: 'success', data: reviews });
+        }
+        
+        // Admin/staff can access any customer's reviews
         const customerID = req.query.customerId as string;
-
         if (!customerID) {
             return res.status(400).json({ status: 'error', message: 'Customer ID parameter is required' });
         }
@@ -62,6 +75,7 @@ export const getReviewsByCustomer = async (req: Request, res: Response) => {
 export const addReview = async (req: Request, res: Response) => {
     try {
         const { productId, ...reviewData } = req.body;
+        const requestingUserID = req.user?.id;
 
         if (!productId) {
             return res.status(400).json({ status: 'error', message: 'Product ID is required' });
@@ -69,6 +83,22 @@ export const addReview = async (req: Request, res: Response) => {
 
         // Set creation date if not provided
         reviewData.dateCreated ??= Timestamp.now();
+        
+        // Ensure the customer ID is set to the authenticated user
+        if (!reviewData.customer) {
+            reviewData.customer = { id: requestingUserID };
+        } else {
+            const userRole = req.user?.role;
+            
+            // Regular users can only create reviews as themselves
+            if (userRole !== 'admin' && userRole !== 'staff' && 
+                reviewData.customer.id !== requestingUserID) {
+                reviewData.customer.id = requestingUserID;
+            }
+        }
+
+        // Remove any ID if provided - always use auto-generated IDs for reviews
+        delete reviewData.id;
 
         const review: Review = reviewData;
         const newReview = await reviewService.addReview(review);
@@ -77,7 +107,7 @@ export const addReview = async (req: Request, res: Response) => {
         const product = await productService.getProduct(productId);
         if (product) {
             // Add review reference to product
-            const updatedReviews = [...(product.reviews || []), newReview.id] as FirestoreReference<Review>[];;
+            const updatedReviews = [...(product.reviews || []), newReview.id] as FirestoreReference<Review>[];
 
             // Calculate new average
             const currentTotal = product.averageRating * product.totalReviews;
@@ -107,14 +137,23 @@ export const updateReview = async (req: Request, res: Response) => {
     try {
         const reviewID = req.params.id;
         const { productId, ...reviewData } = req.body;
-        const newReviewData = sanitizeReviewData(reviewData);
 
         // Check if review exists first
         const existingReview = await reviewService.getReview(reviewID);
         if (!existingReview) {
             return res.status(404).json({ status: 'error', message: 'Review not found' });
         }
+        
+        // Authorization check is now handled by middleware
+        
+        // Don't allow changing the customer of a review
+        if (reviewData.customer && reviewData.customer.id !== existingReview.customer?.id) {
+            if (req.user?.role !== 'admin') {
+                delete reviewData.customer;
+            }
+        }
 
+        const newReviewData = sanitizeReviewData(reviewData);
         await reviewService.updateReview(reviewID, newReviewData);
 
         // If rating changed and productId is provided, update product's average rating
@@ -150,6 +189,8 @@ export const deleteReview = async (req: Request, res: Response) => {
         if (!existingReview) {
             return res.status(404).json({ status: 'error', message: 'Review not found' });
         }
+        
+        // Authorization check is now handled by middleware
 
         await reviewService.deleteReview(reviewID);
 

@@ -48,8 +48,22 @@ export const getBrandByName = async (req: Request, res: Response) => {
 
 export const addBrand = async (req: Request, res: Response) => {
     try {
-        const brand: Brand = req.body;
-        const newBrand = await brandService.addBrand(brand);
+        const brandData = req.body;
+        const requestingUserID = req.user?.id;
+        const userRole = req.user?.role;
+        
+        // Authorization check is now handled by middleware
+        
+        // If user is a brand owner, ensure the brand is linked to them
+        if (userRole === 'brandOwner') {
+            // Set the brandOwner reference to the current user
+            brandData.brandOwner = { id: requestingUserID };
+        }
+        
+        // Remove any ID if provided - always use auto-generated IDs for brands
+        delete brandData.id;
+        
+        const newBrand = await brandService.addBrand(brandData);
         return res.status(201).json({ 
             status: 'success', 
             message: 'Brand added successfully', 
@@ -71,6 +85,7 @@ export const updateBrand = async (req: Request, res: Response) => {
             return res.status(404).json({ status: 'error', message: 'Brand not found' });
         }
         
+        // Authorization check is now handled by the authorizeBrandAccess middleware
         await brandService.updateBrand(brandID, newBrandData);
         return res.status(200).json({ status: 'success', message: 'Brand updated successfully' });
     } catch (error: any) {
@@ -88,6 +103,7 @@ export const deleteBrand = async (req: Request, res: Response) => {
             return res.status(404).json({ status: 'error', message: 'Brand not found' });
         }
         
+        // Authorization check is now handled by the authorizeBrandAccess middleware
         await brandService.deleteBrand(brandID);
         return res.status(200).json({ status: 'success', message: 'Brand deleted successfully' });
     } catch (error: any) {

@@ -55,7 +55,7 @@ export const getInventoryByName = async (name: string) => {
     }
 };
 
-export const addInventory = async (inventory: Inventory) => {
+export const addInventory = async (inventory: Inventory, ownerId?: string) => {
     try {
         const missedInventoryData = checkMissingInventoryData(inventory);
         if (missedInventoryData) {
@@ -68,6 +68,24 @@ export const addInventory = async (inventory: Inventory) => {
         // Initialize empty collections if not provided
         if (!inventoryData.orders) inventoryData.orders = [];
         if (!inventoryData.products) inventoryData.products = [];
+        
+        // Set denormalized array IDs from references
+        if (inventoryData.orders.length > 0) {
+            inventoryData.orderIds = inventoryData.orders.map(ref => ref.id);
+        } else {
+            inventoryData.orderIds = [];
+        }
+        
+        if (inventoryData.products.length > 0) {
+            inventoryData.productIds = inventoryData.products.map(ref => ref.id);
+        } else {
+            inventoryData.productIds = [];
+        }
+        
+        // Set owner ID for authorization if provided
+        if (ownerId) {
+            inventoryData.ownerId = ownerId;
+        }
         
         if (customId) {
             const docRef = firestore.collection(inventoryCollection).doc(customId);

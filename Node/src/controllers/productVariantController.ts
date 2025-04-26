@@ -20,6 +20,8 @@ export const getProductVariant = async (req: Request, res: Response) => {
             return res.status(404).json({ status: 'error', message: 'Product variant not found' });
         }
         
+        // Authorization check is now handled by middleware
+        
         return res.status(200).json({ status: 'success', data: productVariant });
     } catch (error: any) {
         return res.status(400).json({ status: 'error', message: error.message });
@@ -43,8 +45,22 @@ export const getProductVariantsByProduct = async (req: Request, res: Response) =
 
 export const addProductVariant = async (req: Request, res: Response) => {
     try {
-        const variant: ProductVariant = req.body;
-        const newVariant = await productVariantService.addProductVariant(variant);
+        const variantData = req.body;
+        
+        // Ensure product ID is provided
+        if (!variantData.product?.id) {
+            return res.status(400).json({ 
+                status: 'error', 
+                message: 'Product ID is required' 
+            });
+        }
+        
+        // Authorization check is now handled by middleware
+        
+        // Remove any ID if provided - always use auto-generated IDs for variants
+        delete variantData.id;
+        
+        const newVariant = await productVariantService.addProductVariant(variantData);
         return res.status(201).json({ 
             status: 'success', 
             message: 'Product variant added successfully', 
@@ -66,6 +82,7 @@ export const updateProductVariant = async (req: Request, res: Response) => {
             return res.status(404).json({ status: 'error', message: 'Product variant not found' });
         }
         
+        // Authorization check is now handled by middleware
         await productVariantService.updateProductVariant(variantID, newVariantData);
         return res.status(200).json({ status: 'success', message: 'Product variant updated successfully' });
     } catch (error: any) {
@@ -83,6 +100,7 @@ export const deleteProductVariant = async (req: Request, res: Response) => {
             return res.status(404).json({ status: 'error', message: 'Product variant not found' });
         }
         
+        // Authorization check is now handled by middleware
         await productVariantService.deleteProductVariant(variantID);
         return res.status(200).json({ status: 'success', message: 'Product variant deleted successfully' });
     } catch (error: any) {

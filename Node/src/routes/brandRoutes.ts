@@ -1,24 +1,17 @@
 import express from 'express';
 import * as BrandController from '../controllers/brandController.js';
+import { authenticate, authorize, authorizeBrandAccess } from '../middleware/auth.js';
 
 const router = express.Router();
 
-// Get all brands
+// Public routes - no authentication required
 router.get('/', BrandController.getAllBrands);
-
-// Get brand by ID
 router.get('/:id', BrandController.getBrand);
-
-// Get brand by name
 router.get('/name', BrandController.getBrandByName);
 
-// Add new brand
-router.post('/', BrandController.addBrand);
-
-// Update brand
-router.put('/:id', BrandController.updateBrand);
-
-// Delete brand
-router.delete('/:id', BrandController.deleteBrand);
+// Protected routes - brand owners can update their own brands
+router.post('/', authenticate, authorize(['admin', 'staff', 'brandOwner']), BrandController.addBrand);
+router.put('/:id', authenticate, authorizeBrandAccess, BrandController.updateBrand);
+router.delete('/:id', authenticate, authorizeBrandAccess, BrandController.deleteBrand);
 
 export default router;

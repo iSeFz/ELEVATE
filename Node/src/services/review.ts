@@ -90,6 +90,11 @@ export const addReview = async (review: Review) => {
         // Set dateCreated if not provided
         if (!reviewData.dateCreated) reviewData.dateCreated = Timestamp.now();
         
+        // Add denormalized customerId if customer reference exists
+        if (reviewData.customer && !reviewData.customerId) {
+            reviewData.customerId = reviewData.customer.id;
+        }
+        
         if (customId) {
             const docRef = firestore.collection(reviewCollection).doc(customId);
             await docRef.set(reviewData);

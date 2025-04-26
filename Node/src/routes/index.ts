@@ -5,8 +5,9 @@ import BrandRoutes from './brandRoutes.js';
 import ProductVariantRoutes from './productVariantRoutes.js';
 import ReviewRoutes from './reviewRoutes.js';
 import OrderRoutes from './orderRoutes.js';
+import InventoryRoutes from './inventoryRoutes.js';
 import SwaggerRoutes from './swaggerRoutes.js';
-import { signup, login, staffSignup } from '../controllers/authControllers.js';
+import { signup, login, staffSignup, brandOwnerSignup } from '../controllers/authControllers.js';
 
 const router = express.Router();
 
@@ -14,6 +15,7 @@ const router = express.Router();
 router.post('/signup', signup);
 router.post('/login', login);
 router.post('/staff/signup', staffSignup);
+router.post('/brand-owner/signup', brandOwnerSignup);
 
 // API documentation
 router.use('/docs', SwaggerRoutes);
@@ -25,5 +27,6 @@ router.use('/reviews', ReviewRoutes);
 router.use('/customers', CustomerRoutes);
 router.use('/brands', BrandRoutes);
 router.use('/orders', OrderRoutes);
+router.use('/inventory', InventoryRoutes);
 
 export default router;
