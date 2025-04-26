@@ -105,8 +105,13 @@ export const deleteCustomer = async (customerID: string) => {
         throw new Error('Please provide a customer ID');
     }
     try {
+        // First, delete the customer from Firestore
         const customerRef = firestore.collection(customerCollection).doc(customerID);
         await customerRef.delete();
+        
+        // Then, delete the customer from Firebase Authentication
+        await deleteCredentialsUsingUID(customerID);
+        
         return true;
     } catch (error: any) {
         throw new Error(error.message);
