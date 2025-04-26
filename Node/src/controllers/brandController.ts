@@ -51,13 +51,18 @@ export const addBrand = async (req: Request, res: Response) => {
         const brandData = req.body;
         const requestingUserID = req.user?.id;
         const userRole = req.user?.role;
-        
+
         // Authorization check is now handled by middleware
         
         // If user is a brand owner, ensure the brand is linked to them
         if (userRole === 'brandOwner') {
             // Set the brandOwner reference to the current user
-            brandData.brandOwner = { id: requestingUserID };
+            brandData.brandOwnerId = requestingUserID;
+        } else if (userRole === 'admin') {
+            // Admins can create brands without linking to a specific user
+            // brandOwnerId will be provided in the request body if needed
+        } else {
+            return res.status(403).json({ status: 'error', message: 'You are not authorized to add a brand' });
         }
         
         // Remove any ID if provided - always use auto-generated IDs for brands

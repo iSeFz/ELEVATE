@@ -132,27 +132,72 @@ export const staffSignup = async (req: Request, res: Response) => {
 
 export const brandOwnerSignup = async (req: Request, res: Response) => {
     try {
-        const brandOwnerData = {
+        // Extract both brand owner and brand data from the request
+        const { brandData, ...brandOwnerData } = req.body;
+        
+        // Initialize brand owner data with empty brandId
+        const newBrandOwner = {
             id: '',
-            username: req.body.username ?? '',
-            email: req.body.email,
-            firstName: req.body.firstName ?? '',
-            lastName: req.body.lastName ?? '',
-            imageURL: req.body.imageURL ?? '',
-            brandId: req.body.brandId ?? '',
-            password: req.body.password,
+            username: brandOwnerData.username,
+            email: brandOwnerData.email,
+            firstName: brandOwnerData.firstName,
+            lastName: brandOwnerData.lastName,
+            imageURL: brandOwnerData.imageURL ?? '',
+            password: brandOwnerData.password,
             role: 'brandOwner',
+            brandId: '', // Initially empty, will be updated after brand creation
         };
 
-        const userRecord = await authService.brandOwnerSignup(brandOwnerData as BrandOwner);
+        // Validate brand owner data
+        if (!newBrandOwner.email || !newBrandOwner.password || !newBrandOwner.firstName || 
+            !newBrandOwner.lastName) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Missing required brand owner fields'
+            });
+        }
+
+        // Validate brand data
+        if (!brandData?.brandName) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Brand data is required with at least the brandName field'
+            });
+        }
+
+        // 1. Create brand owner account
+        const userRecord = await authService.brandOwnerSignup(newBrandOwner as BrandOwner);
+        const brandOwnerId = userRecord.uid;
+
+        // 2. Create brand with reference to the brand owner
+        const brandToCreate = {
+            ...brandData,
+            brandOwnerId: brandOwnerId,
+        };
+
+        // Import brand service
+        const brandService = await import('../services/brand.js');
+        const newBrand = await brandService.addBrand(brandToCreate);
+        
+        // 3. Update brand owner with brand reference
+        const brandOwnerService = await import('../services/brandOwner.js');
+        await brandOwnerService.updateBrandOwner(brandOwnerId, { 
+            brandId: newBrand.id 
+        });
 
         // Return success response without password
-        const { password, ...safeBrandOwnerData } = brandOwnerData;
-        safeBrandOwnerData.id = userRecord.uid; // Add the UID to the response data
+        const { password, ...safeBrandOwnerData } = newBrandOwner;
         return res.status(201).json({
             status: 'success',
-            message: 'Brand owner registration successful',
-            data: safeBrandOwnerData
+            message: 'Brand owner and brand registration successful',
+            data: {
+                brandOwner: {
+                    ...safeBrandOwnerData,
+                    id: brandOwnerId,
+                    brandId: newBrand.id
+                },
+                brand: newBrand
+            }
         });
     } catch (error: any) {
         if (error instanceof AuthError) {
@@ -167,7 +212,7 @@ export const brandOwnerSignup = async (req: Request, res: Response) => {
         console.error('Brand owner signup error:', error);
         return res.status(500).json({
             status: 'error',
-            message: 'An unexpected error occurred during brand owner registration'
+            message: error.message || 'An unexpected error occurred during brand owner registration'
         });
     }
 };

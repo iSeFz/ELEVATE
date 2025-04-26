@@ -69,10 +69,11 @@ export const addBrand = async (brand: Brand) => {
         if (!brandData.addresses) brandData.addresses = [];
         if (!brandData.websites) brandData.websites = [];
         if (!brandData.phoneNumbers) brandData.phoneNumbers = [];
-        
-        // Add denormalized brandOwnerId if brandOwner reference exists
-        if (brandData.owner && !brandData.brandOwnerId) {
-            brandData.brandOwnerId = brandData.owner.id;
+        brandData.subscription = {
+            plan: 'free',
+            price: 0,
+            startDate: admin.firestore.Timestamp.now(),
+            endDate: admin.firestore.Timestamp.fromMillis(admin.firestore.Timestamp.now().toMillis() + 30 * 24 * 60 * 60 * 1000) // 30 days from now
         }
         
         if (customId) {

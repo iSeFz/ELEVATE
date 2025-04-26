@@ -1,17 +1,17 @@
 paths:
   /brand-owners/signup:
     post:
-      summary: Register a new brand owner
+      summary: Register a new brand owner and create their brand
       tags: [Brand Owners]
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BrandOwnerRequest'
+              $ref: '#/components/schemas/BrandOwnerSignupRequest'
       responses:
         201:
-          description: The brand owner was successfully registered
+          description: The brand owner and brand were successfully registered
           content:
             application/json:
               schema:
@@ -20,8 +20,17 @@ paths:
                   status:
                     type: string
                     enum: [success]
+                  message:
+                    type: string
+                    description: Success message
+                    example: Brand owner and brand registration successful
                   data:
-                    $ref: '#/components/schemas/BrandOwnerResponse'
+                    type: object
+                    properties:
+                      brandOwner:
+                        $ref: '#/components/schemas/BrandOwnerResponse'
+                      brand:
+                        $ref: '#/components/schemas/BrandResponse'
         400:
           description: Registration failed
           content:
@@ -217,7 +226,7 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     
     delete:
-      summary: Delete a brand owner
+      summary: Delete a brand owner and their associated brand
       tags: [Brand Owners]
       security:
         - bearerAuth: []
@@ -230,7 +239,7 @@ paths:
           description: Brand Owner ID
       responses:
         200:
-          description: Brand owner deleted successfully
+          description: Brand owner and associated brand deleted successfully
           content:
             application/json:
               schema:
@@ -241,6 +250,7 @@ paths:
                     enum: [success]
                   message:
                     type: string
+                    example: Brand owner and associated brand deleted successfully
         401:
           description: Unauthorized - Invalid or missing token
           content:
@@ -255,6 +265,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         404:
           description: Brand owner not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Failed to delete associated brand
           content:
             application/json:
               schema:
@@ -308,7 +324,7 @@ components:
       description: Enter JWT Bearer token
   
   schemas:
-    BrandOwnerRequest:
+    BrandOwnerSignupRequest:
       type: object
       required:
         - email
@@ -316,7 +332,7 @@ components:
         - lastName
         - password
         - username
-        - brandId
+        - brandData
       properties:
         email:
           type: string
@@ -335,9 +351,72 @@ components:
         username:
           type: string
           description: The unique username of the brand owner
-        brandId:
+        imageURL:
           type: string
-          description: ID of the brand this owner manages
+          description: The image URL of the brand owner (optional)
+        brandData:
+          type: object
+          required:
+            - brandName
+          description: Data for creating the brand
+          properties:
+            brandName:
+              type: string
+              description: The unique name of the brand
+            storyDescription:
+              type: string
+              description: Brand description/story
+            imageURL:
+              type: string
+              description: URL to the brand's logo
+            email:
+              type: string
+              description: Brand's contact email
+            phoneNumbers:
+              type: array
+              items:
+                type: string
+              description: Contact phone numbers
+            industry:
+              type: string
+              description: Industry the brand belongs to
+            addresses:
+              type: array
+              items:
+                $ref: '#/components/schemas/Address'
+              description: Brand's physical addresses
+            websites:
+              type: array
+              items:
+                $ref: '#/components/schemas/Website'
+              description: Brand's websites
+
+    BrandOwnerRequest:
+      type: object
+      required:
+        - email
+        - firstName
+        - lastName
+        - password
+        - username
+      properties:
+        email:
+          type: string
+          format: email
+          description: The brand owner email
+        firstName:
+          type: string
+          description: The first name of the brand owner
+        lastName:
+          type: string
+          description: The last name of the brand owner
+        password:
+          type: string
+          format: password
+          description: The brand owner password
+        username:
+          type: string
+          description: The unique username of the brand owner
         imageURL:
           type: string
           description: The image URL of the brand owner (optional)
@@ -384,26 +463,44 @@ components:
         username:
           type: string
           description: The unique username of the brand owner
-        brand:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Brand reference ID
-            path:
-              type: string
-              description: Firestore reference path to the brand
-        brandIds:
-          type: array
-          items:
-            type: string
-          description: IDs of brands this owner manages
+        brandId:
+          type: string
+          description: ID of the brand this owner manages
         role:
           type: string
           description: The brand owner role (always "brandOwner")
         imageURL:
           type: string
           description: The image URL of the brand owner
+
+    Address:
+      type: object
+      properties:
+        building:
+          type: number
+          description: Building number
+        city:
+          type: string
+          description: City name
+        postalCode:
+          type: number
+          description: Postal code
+        street:
+          type: string
+          description: Street name
+
+    Website:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of website (e.g., official, social, blog)
+        url:
+          type: string
+          description: Website URL
+
+    BrandResponse:
+      $ref: '../brand.yaml#/components/schemas/BrandResponse'
 
     ErrorResponse:
       type: object
