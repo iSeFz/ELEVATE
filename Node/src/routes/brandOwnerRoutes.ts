@@ -1,12 +1,13 @@
 import express from 'express';
 import { authenticate, authorize } from '../middleware/auth.js';
-import { brandOwnerLogin } from '../controllers/authControllers.js';
+import { brandOwnerLogin, brandOwnerSignup } from '../controllers/authControllers.js';
 import * as BrandOwnerController from '../controllers/brandOwnerController.js';
 
 const router = express.Router();
 
 // Auth routes for brand owners
 router.post('/login', brandOwnerLogin);
+router.post('/signup', brandOwnerSignup);
 
 // Brand owner management routes
 router.get('/', authenticate, authorize(['admin']), BrandOwnerController.getAllBrandOwners);

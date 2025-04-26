@@ -134,12 +134,12 @@ export const brandOwnerSignup = async (req: Request, res: Response) => {
     try {
         const brandOwnerData = {
             id: '',
-            username: req.body.username,
+            username: req.body.username ?? '',
             email: req.body.email,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
+            firstName: req.body.firstName ?? '',
+            lastName: req.body.lastName ?? '',
             imageURL: req.body.imageURL ?? '',
-            brand: req.body.brand,
+            brandId: req.body.brandId ?? '',
             password: req.body.password,
             role: 'brandOwner',
         };

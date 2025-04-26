@@ -1,12 +1,13 @@
 import express from 'express';
 import { authenticate, authorize } from '../middleware/auth.js';
-import { staffLogin } from '../controllers/authControllers.js';
+import { staffLogin, staffSignup } from '../controllers/authControllers.js';
 import * as StaffController from '../controllers/staffController.js';
 
 const router = express.Router();
 
 // Auth routes for staff
 router.post('/login', staffLogin);
+router.post('/signup', staffSignup);
 
 // Staff management routes (admin only)
 router.get('/', authenticate, authorize(['admin']), StaffController.getAllStaff);

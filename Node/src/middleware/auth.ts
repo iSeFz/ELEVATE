@@ -30,7 +30,8 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
             // For testing, we'll set a mock user
             req.user = {
                 id: 'test-user-id',
-                email: 'test@example.com',
+                id: req.user?.id ?? 'test-user-id',
+                email: req.user?.email ?? 'test@test.com',
                 role: 'admin'
             };
             return next();

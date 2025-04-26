@@ -1,5 +1,5 @@
 paths:
-  /brand-owner/signup:
+  /brand-owners/signup:
     post:
       summary: Register a new brand owner
       tags: [Brand Owners]
@@ -35,7 +35,7 @@ paths:
                   message:
                     type: string
 
-  /brand-owner/login:
+  /brand-owners/login:
     post:
       summary: Brand owner login
       tags: [Brand Owners]

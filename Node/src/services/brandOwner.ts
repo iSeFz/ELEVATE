@@ -1,5 +1,6 @@
 import { admin } from '../config/firebase.js';
 import { BrandOwner } from '../types/models/brandOwner.js';
+import { deleteCredentialsUsingUID } from './auth.js';
 
 const firestore = admin.firestore();
 const brandOwnerCollection = firestore.collection('brandOwner');
@@ -139,6 +140,9 @@ export const deleteBrandOwner = async (id: string): Promise<boolean> => {
         
         // Delete the document
         await brandOwnerCollection.doc(id).delete();
+
+        // Then, delete the customer from Firebase Authentication
+        await deleteCredentialsUsingUID(id);
         
         return true;
     } catch (error) {
