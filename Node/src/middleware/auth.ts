@@ -6,7 +6,7 @@ import * as authorizationService from '../services/authorization.js';
 // Test key for bypassing auth in development environments
 const TEST_AUTH_KEY = 'ELEVATE_TEST_KEY';
 const TEST_AUTH_HEADER = 'X-Test-Auth';
-const ENABLE_TEST_AUTH = process.env.NODE_ENV !== 'production';
+const ENABLE_TEST_AUTH = process.env.ADMIN_ACCESS === 'true';
 
 // Error codes for authentication/authorization
 export const AuthErrorCodes = {
@@ -29,11 +29,11 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         if (ENABLE_TEST_AUTH || req.headers[TEST_AUTH_HEADER.toLowerCase()] === TEST_AUTH_KEY) {
             // For testing, we'll set a mock user
             req.user = {
-                id: 'test-user-id',
-                id: req.user?.id ?? 'test-user-id',
+                id: req.body?.userId ?? 'testUserId', // Attch `userId` in the request body to act as this user (Must enable admin access env)
                 email: req.user?.email ?? 'test@test.com',
                 role: 'admin'
             };
+            delete req.body?.userId;
             return next();
         }
 
