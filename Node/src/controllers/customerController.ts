@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import * as customerService from '../services/customer.js';
 import { Customer } from '../types/models/customer.js';
+import { signup } from './authControllers.js';
 
 export const getAllCustomers = async (req: Request, res: Response) => {
     // This route is already protected by authorize middleware in the router
@@ -50,20 +51,7 @@ export const getCustomerByEmail = async (req: Request, res: Response) => {
     }
 };
 
-export const addCustomer = async (req: Request, res: Response) => {
-    // This route is already protected by authorize middleware in the router
-    try {
-        const customer: Customer = req.body;
-        const newCustomer = await customerService.addCustomer(customer);
-        return res.status(201).json({ 
-            status: 'success', 
-            message: 'Customer added successfully', 
-            data: newCustomer 
-        });
-    } catch (error: any) {
-        return res.status(400).json({ status: 'error', message: error.message });
-    }
-};
+export const addCustomer = async (req: Request, res: Response) => signup(req, res);
 
 export const updateCustomer = async (req: Request, res: Response) => {
     try {

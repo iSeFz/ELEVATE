@@ -1,7 +1,7 @@
 import { admin } from '../config/firebase.js';
 import { checkMissingFullCustomerData } from './utils/customer.js';
 import { Customer } from '../types/models/customer.js';
-import { deleteCredentialsUsingUID } from './auth.js';
+import { deleteCredentialsUsingUID, signup } from './auth.js';
 
 const firestore = admin.firestore();
 const customerCollection = 'customer';
@@ -57,34 +57,7 @@ export const getCustomerWithEmail = async (customerEmail: string) => {
 };
 
 export const addCustomer = async (customer: Customer) => {
-    try {
-        const missedCustomerData = checkMissingFullCustomerData(customer);
-        if (missedCustomerData) {
-            throw new Error(missedCustomerData);
-        }
-        const customId = customer.id;
-        const { id, ...customerData } = customer;
-        
-        // Initialize empty collections if not provided
-        if (!customerData.orders) customerData.orders = [];
-        if (!customerData.wishlist) customerData.wishlist = [];
-        if (!customerData.cart) customerData.cart = { subtotal: 0, items: [] };
-        
-        if (customId) {
-            const docRef = firestore.collection(customerCollection).doc(customId);
-            await docRef.set(customerData);
-            return { id: customId, ...customerData };
-        } else {
-            const docRef = await firestore.collection(customerCollection).add(customerData);
-            return { id: docRef.id, ...customerData };
-        }
-    } catch (error: any) {
-        // Rollback
-        if (customer.id) {
-            await deleteCredentialsUsingUID(customer.id);
-        }
-        throw new Error(error.message);
-    }
+    // No implementation as the add customer logic is the same as signup
 };
 
 export const updateCustomer = async (customerID: string, newCustomerData: any) => {
