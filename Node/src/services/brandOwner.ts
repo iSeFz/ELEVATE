@@ -1,111 +1,148 @@
 import { admin } from '../config/firebase.js';
-import { checkMissingBrandOwnerData, checkMissingBrandOwnerUpdateData } from './utils/brandOwner.js';
 import { BrandOwner } from '../types/models/brandOwner.js';
 
 const firestore = admin.firestore();
-const brandOwnerCollection = 'brandOwner';
+const brandOwnerCollection = firestore.collection('brandOwner');
 
-export const getAllBrandOwners = async () => {
+/**
+ * Get all brand owners
+ * @returns {Promise<BrandOwner[]>} Array of brand owners
+ */
+export const getAllBrandOwners = async (): Promise<BrandOwner[]> => {
     try {
-        const snapshot = await firestore.collection(brandOwnerCollection).get();
-        const brandOwners: BrandOwner[] = [];
-        snapshot.forEach((doc) => {
-            brandOwners.push({ id: doc.id, ...doc.data() } as BrandOwner);
-        });
-        return brandOwners;
-    } catch (error: any) {
-        throw new Error(error.message);
+        const snapshot = await brandOwnerCollection.get();
+        return snapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+        } as BrandOwner));
+    } catch (error) {
+        console.error('Error getting all brand owners:', error);
+        throw new Error('Failed to retrieve brand owners');
     }
 };
 
-export const getBrandOwner = async (brandOwnerID: string) => {
-    if (!brandOwnerID) {
-        throw new Error('Please provide a brand owner ID');
-    }
+/**
+ * Get a brand owner by ID
+ * @param {string} id - Brand owner ID
+ * @returns {Promise<BrandOwner|null>} Brand owner object or null if not found
+ */
+export const getBrandOwnerById = async (id: string): Promise<BrandOwner | null> => {
     try {
-        const docRef = firestore.collection(brandOwnerCollection).doc(brandOwnerID);
-        const docSnap = await docRef.get();
+        const doc = await brandOwnerCollection.doc(id).get();
         
-        if (docSnap.exists) {
-            return { id: docSnap.id, ...docSnap.data() };
-        } else {
+        if (!doc.exists) {
             return null;
         }
-    } catch (error: any) {
-        throw new Error(error.message);
-    }
-};
-
-export const getBrandOwnerByEmail = async (email: string) => {
-    if (!email) {
-        throw new Error('Please provide an email');
-    }
-    try {
-        const snapshot = await firestore.collection(brandOwnerCollection)
-            .where("email", "==", email)
-            .get();
-
-        const brandOwners: BrandOwner[] = [];
-        snapshot.forEach((doc) => {
-            brandOwners.push({ id: doc.id, ...doc.data() } as BrandOwner);
-        });
-        return brandOwners.length > 0 ? brandOwners[0] : null;
-    } catch (error: any) {
-        throw new Error(error.message);
-    }
-};
-
-export const addBrandOwner = async (brandOwner: BrandOwner) => {
-    try {
-        const missedBrandOwnerData = checkMissingBrandOwnerData(brandOwner);
-        if (missedBrandOwnerData) {
-            throw new Error(missedBrandOwnerData);
-        }
-
-        const customId = brandOwner.id;
-        const { id, ...brandOwnerData } = brandOwner;
         
-        if (customId) {
-            const docRef = firestore.collection(brandOwnerCollection).doc(customId);
-            await docRef.set(brandOwnerData);
-            return { id: customId, ...brandOwnerData };
-        } else {
-            const docRef = await firestore.collection(brandOwnerCollection).add(brandOwnerData);
-            return { id: docRef.id, ...brandOwnerData };
-        }
-    } catch (error: any) {
-        throw new Error(error.message);
+        return {
+            id: doc.id,
+            ...doc.data()
+        } as BrandOwner;
+    } catch (error) {
+        console.error(`Error getting brand owner with ID ${id}:`, error);
+        throw new Error(`Failed to retrieve brand owner with ID ${id}`);
     }
 };
 
-export const updateBrandOwner = async (brandOwnerID: string, newBrandOwnerData: Partial<BrandOwner>) => {
-    if (!brandOwnerID) {
-        throw new Error('Please provide a brand owner ID');
-    }
-    
+/**
+ * Get a brand owner by brand ID
+ * @param {string} brandId - Brand ID
+ * @returns {Promise<BrandOwner|null>} Brand owner object or null if not found
+ */
+export const getBrandOwnerByBrandId = async (brandId: string): Promise<BrandOwner | null> => {
     try {
-        const missedUpdateData = checkMissingBrandOwnerUpdateData(newBrandOwnerData);
-        if (missedUpdateData) {
-            throw new Error(missedUpdateData);
+        // Query brand owners where brandIds array contains this brandId
+        const snapshot = await brandOwnerCollection
+            .where('brandIds', 'array-contains', brandId)
+            .limit(1)
+            .get();
+        
+        if (snapshot.empty) {
+            // Try alternative query if the first one yields no results
+            // This might be needed if using brand.id reference instead of array
+            const secondSnapshot = await brandOwnerCollection
+                .where('brand.id', '==', brandId)
+                .limit(1)
+                .get();
+                
+            if (secondSnapshot.empty) {
+                return null;
+            }
+            
+            const doc = secondSnapshot.docs[0];
+            return {
+                id: doc.id,
+                ...doc.data()
+            } as BrandOwner;
         }
-
-        const brandOwnerRef = firestore.collection(brandOwnerCollection).doc(brandOwnerID);
-        await brandOwnerRef.update(newBrandOwnerData);
-        return true;
-    } catch (error: any) {
-        throw new Error(error.message);
+        
+        const doc = snapshot.docs[0];
+        return {
+            id: doc.id,
+            ...doc.data()
+        } as BrandOwner;
+    } catch (error) {
+        console.error(`Error getting brand owner for brand ${brandId}:`, error);
+        throw new Error(`Failed to retrieve brand owner for brand ${brandId}`);
     }
 };
 
-export const deleteBrandOwner = async (brandOwnerID: string) => {
-    if (!brandOwnerID) {
-        throw new Error('Please provide a brand owner ID');
-    }
+/**
+ * Update a brand owner
+ * @param {string} id - Brand owner ID
+ * @param {Partial<BrandOwner>} data - Brand owner data to update
+ * @returns {Promise<BrandOwner|null>} Updated brand owner or null if not found
+ */
+export const updateBrandOwner = async (
+    id: string,
+    data: Partial<BrandOwner>
+): Promise<BrandOwner | null> => {
     try {
-        const brandOwnerRef = firestore.collection(brandOwnerCollection).doc(brandOwnerID);
-        await brandOwnerRef.delete();
+        // Check if brand owner exists
+        const brandOwnerDoc = await brandOwnerCollection.doc(id).get();
+        
+        if (!brandOwnerDoc.exists) {
+            return null;
+        }
+        
+        // Remove sensitive fields from the update
+        const { id: _, ...updateData } = data;
+        
+        // Update the document
+        await brandOwnerCollection.doc(id).update(updateData);
+        
+        // Get the updated document
+        const updatedDoc = await brandOwnerCollection.doc(id).get();
+        return {
+            id: updatedDoc.id,
+            ...updatedDoc.data()
+        } as BrandOwner;
+    } catch (error) {
+        console.error(`Error updating brand owner with ID ${id}:`, error);
+        throw new Error(`Failed to update brand owner with ID ${id}`);
+    }
+};
+
+/**
+ * Delete a brand owner
+ * @param {string} id - Brand owner ID
+ * @returns {Promise<boolean>} True if deleted, false if not found
+ */
+export const deleteBrandOwner = async (id: string): Promise<boolean> => {
+    try {
+        // Check if brand owner exists
+        const brandOwnerDoc = await brandOwnerCollection.doc(id).get();
+        
+        if (!brandOwnerDoc.exists) {
+            return false;
+        }
+        
+        // Delete the document
+        await brandOwnerCollection.doc(id).delete();
+        
         return true;
-    } catch (error: any) {
-        throw new Error(error.message);
+    } catch (error) {
+        console.error(`Error deleting brand owner with ID ${id}:`, error);
+        throw new Error(`Failed to delete brand owner with ID ${id}`);
     }
 };

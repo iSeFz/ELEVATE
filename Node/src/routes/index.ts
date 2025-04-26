@@ -6,16 +6,18 @@ import ProductVariantRoutes from './productVariantRoutes.js';
 import ReviewRoutes from './reviewRoutes.js';
 import OrderRoutes from './orderRoutes.js';
 import InventoryRoutes from './inventoryRoutes.js';
+import StaffRoutes from './staffRoutes.js';
+import BrandOwnerRoutes from './brandOwnerRoutes.js';
 import SwaggerRoutes from './swaggerRoutes.js';
-import { signup, login, staffSignup, brandOwnerSignup } from '../controllers/authControllers.js';
+import { signup, login, getCurrentUser } from '../controllers/authControllers.js';
+import { authenticate } from '../middleware/auth.js';
 
 const router = express.Router();
 
 // Auth routes
 router.post('/signup', signup);
 router.post('/login', login);
-router.post('/staff/signup', staffSignup);
-router.post('/brand-owner/signup', brandOwnerSignup);
+router.get('/me', authenticate, getCurrentUser);
 
 // API documentation
 router.use('/docs', SwaggerRoutes);
@@ -28,5 +30,9 @@ router.use('/customers', CustomerRoutes);
 router.use('/brands', BrandRoutes);
 router.use('/orders', OrderRoutes);
 router.use('/inventory', InventoryRoutes);
+
+// User type specific routes
+router.use('/staff', StaffRoutes);
+router.use('/brand-owners', BrandOwnerRoutes);
 
 export default router;

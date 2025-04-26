@@ -1,0 +1,357 @@
+paths:
+  /staff/signup:
+    post:
+      summary: Register a new staff member
+      tags: [Staff]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StaffRequest'
+      responses:
+        201:
+          description: The staff was successfully registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: '#/components/schemas/StaffResponse'
+        400:
+          description: Registration failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /staff/login:
+    post:
+      summary: Staff login
+      tags: [Staff]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        200:
+          description: The staff was successfully logged in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: '#/components/schemas/StaffResponse'
+                      token:
+                        type: string
+                        description: JWT token for authentication
+        400:
+          description: Login failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /staff:
+    get:
+      summary: Get all staff members (admin only)
+      tags: [Staff]
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: List of all staff members
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/StaffResponse'
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    
+  /staff/{id}:
+    get:
+      summary: Get a staff member by ID
+      tags: [Staff]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Staff ID
+      responses:
+        200:
+          description: Staff member details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: '#/components/schemas/StaffResponse'
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Staff not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    
+    put:
+      summary: Update a staff member
+      tags: [Staff]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Staff ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StaffRequest'
+      responses:
+        200:
+          description: Staff member updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: '#/components/schemas/StaffResponse'
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Staff not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    
+    delete:
+      summary: Delete a staff member
+      tags: [Staff]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Staff ID
+      responses:
+        200:
+          description: Staff member deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Staff not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Enter JWT Bearer token
+  
+  schemas:
+    StaffRequest:
+      type: object
+      required:
+        - email
+        - firstName
+        - lastName
+        - password
+        - phoneNumber
+        - username
+        - inventoryId
+      properties:
+        email:
+          type: string
+          format: email
+          description: The staff email
+        firstName:
+          type: string
+          description: The first name of the staff
+        lastName:
+          type: string
+          description: The last name of the staff
+        password:
+          type: string
+          format: password
+          description: The staff password
+        phoneNumber:
+          type: string
+          description: The staff phone number
+        username:
+          type: string
+          description: The unique username of the staff
+        inventoryId:
+          type: string
+          description: ID of the inventory this staff manages
+        imageURL:
+          type: string
+          description: The image URL of the staff (optional)
+
+    StaffResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The auto-generated id of the staff
+        email:
+          type: string
+          description: The staff email
+        firstName:
+          type: string
+          description: The first name of the staff
+        lastName:
+          type: string
+          description: The last name of the staff
+        phoneNumber:
+          type: string
+          description: The staff phone number
+        username:
+          type: string
+          description: The unique username of the staff
+        inventory:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Inventory reference ID
+            path:
+              type: string
+              description: Firestore reference path to the inventory
+        inventoryId:
+          type: string
+          description: ID of the inventory this staff manages
+        role:
+          type: string
+          description: The staff role (always "staff")
+        imageURL:
+          type: string
+          description: The image URL of the staff
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [error]
+        message:
+          type: string

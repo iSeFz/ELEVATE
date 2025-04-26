@@ -306,6 +306,38 @@ export const login = async (email: string, password: string) => {
     }
 };
 
+export const staffLogin = async (email: string, password: string) => {
+    // Reusing the generic login function but verifying it's a staff account
+    const userData = await login(email, password);
+    
+    if (userData.user.role !== 'staff') {
+        throw new AuthError(
+            'This account is not a staff account',
+            AuthErrorType.USER_NOT_FOUND,
+            'auth/user-not-staff',
+            403
+        );
+    }
+    
+    return userData;
+};
+
+export const brandOwnerLogin = async (email: string, password: string) => {
+    // Reusing the generic login function but verifying it's a brand owner account
+    const userData = await login(email, password);
+    
+    if (userData.user.role !== 'brandOwner') {
+        throw new AuthError(
+            'This account is not a brand owner account',
+            AuthErrorType.USER_NOT_FOUND,
+            'auth/user-not-brand-owner',
+            403
+        );
+    }
+    
+    return userData;
+};
+
 export const deleteCredentialsUsingEmailAndPassword = async (email: string, password: string) => {
     try {
         // Check for missing credentials

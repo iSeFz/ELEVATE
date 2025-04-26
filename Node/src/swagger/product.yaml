@@ -1,0 +1,325 @@
+paths:
+  /products:
+    get:
+      summary: Retrieve all products
+      tags: [Products]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: Number of products to return
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: Page number for pagination
+        - in: query
+          name: category
+          schema:
+            type: string
+          description: Filter by product category
+        - in: query
+          name: brand
+          schema:
+            type: string
+          description: Filter by brand ID
+      responses:
+        200:
+          description: A list of products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductResponse'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /products/{id}:
+    get:
+      summary: Get a product by ID
+      tags: [Products]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Product ID
+      responses:
+        200:
+          description: A product object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: '#/components/schemas/ProductResponse'
+        404:
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      summary: Update a product
+      tags: [Products]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Product ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        200:
+          description: Product updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: '#/components/schemas/ProductResponse'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      summary: Delete a product
+      tags: [Products]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Product ID
+      responses:
+        200:
+          description: Product deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        404:
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /products/brand/{brandId}:
+    get:
+      summary: Get products by brand ID
+      tags: [Products]
+      parameters:
+        - in: path
+          name: brandId
+          required: true
+          schema:
+            type: string
+          description: Brand ID
+      responses:
+        200:
+          description: List of products for the brand
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductResponse'
+        404:
+          description: Brand not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Enter JWT Bearer token
+  schemas:
+    ProductRequest:
+      type: object
+      required:
+        - name
+        - description
+        - category
+        - brandId
+      properties:
+        name:
+          type: string
+          description: Product name
+        description:
+          type: string
+          description: Product description
+        category:
+          type: string
+          description: Product category
+        department:
+          type: array
+          items:
+            type: string
+          description: Departments the product belongs to
+        material:
+          type: string
+          description: Product material
+        stock:
+          type: number
+          description: Available stock
+        brandId:
+          type: string
+          description: ID of the brand that owns this product
+
+    ProductResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The auto-generated id of the product
+        name:
+          type: string
+          description: Product name
+        description:
+          type: string
+          description: Product description
+        category:
+          type: string
+          description: Product category
+        department:
+          type: array
+          items:
+            type: string
+          description: Departments the product belongs to
+        material:
+          type: string
+          description: Product material
+        averageRating:
+          type: number
+          description: Average product rating
+        totalReviews:
+          type: number
+          description: Total number of reviews
+        stock:
+          type: number
+          description: Available stock
+        brand:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Brand reference ID
+            path:
+              type: string
+              description: Firestore reference path to the brand
+        brandId:
+          type: string
+          description: ID of the brand (denormalized for authorization)
+        brandOwnerId:
+          type: string
+          description: ID of the brand owner (denormalized for authorization)
+        reviews:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Review reference ID
+              path:
+                type: string
+                description: Firestore reference path to the review
+        reviewIds:
+          type: array
+          items:
+            type: string
+          description: IDs of reviews (denormalized for querying)
+        variants:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                description: Variant reference ID
+              path:
+                type: string
+                description: Firestore reference path to the variant
+        variantIds:
+          type: array
+          items:
+            type: string
+          description: IDs of product variants (denormalized for querying)
+        dateCreated:
+          type: string
+          format: date-time
+          description: Creation date
+
+    SuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success]
+        message:
+          type: string
+        data:
+          type: object
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [error]
+        message:
+          type: string

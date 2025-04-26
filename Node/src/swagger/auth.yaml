@@ -1,7 +1,7 @@
 paths:
   /signup:
     post:
-      summary: Register a new user
+      summary: Register a new customer
       tags: [Auth]
       requestBody:
         required: true
@@ -10,8 +10,8 @@ paths:
             schema:
               $ref: '#/components/schemas/CustomerRequest'
       responses:
-        200:
-          description: The user was successfully registered
+        201:
+          description: The customer was successfully registered
           content:
             application/json:
               schema:
@@ -20,6 +20,8 @@ paths:
                   status:
                     type: string
                     enum: [success]
+                  message:
+                    type: string
                   data:
                     $ref: '#/components/schemas/CustomerResponse'
         400:
@@ -32,11 +34,88 @@ paths:
                   status:
                     type: string
                     enum: [error]
-                  error:
+                  message:
                     type: string
+
+  /staff/signup:
+    post:
+      summary: Register a new staff member
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StaffRequest'
+      responses:
+        201:
+          description: The staff was successfully registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/StaffResponse'
+        400:
+          description: Registration failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /brand-owner/signup:
+    post:
+      summary: Register a new brand owner
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BrandOwnerRequest'
+      responses:
+        201:
+          description: The brand owner was successfully registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/BrandOwnerResponse'
+        400:
+          description: Registration failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
   /login:
     post:
-      summary: Log in
+      summary: Customer login
       tags: [Auth]
       requestBody:
         required: true
@@ -56,7 +135,7 @@ paths:
                   format: password
       responses:
         200:
-          description: The user was successfully logged in
+          description: The customer was successfully logged in
           content:
             application/json:
               schema:
@@ -65,6 +144,8 @@ paths:
                   status:
                     type: string
                     enum: [success]
+                  message:
+                    type: string
                   data:
                     type: object
                     properties:
@@ -83,5 +164,375 @@ paths:
                   status:
                     type: string
                     enum: [error]
-                  error:
+                  message:
                     type: string
+
+  /staff/login:
+    post:
+      summary: Staff login
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        200:
+          description: The staff was successfully logged in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: '#/components/schemas/StaffResponse'
+                      token:
+                        type: string
+                        description: JWT token for authentication
+        400:
+          description: Login failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /brand-owner/login:
+    post:
+      summary: Brand owner login
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        200:
+          description: The brand owner was successfully logged in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: '#/components/schemas/BrandOwnerResponse'
+                      token:
+                        type: string
+                        description: JWT token for authentication
+        400:
+          description: Login failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /logout:
+    post:
+      summary: Log out the current user
+      tags: [Auth]
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: The user was successfully logged out
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /forgot-password:
+    post:
+      summary: Request a password reset
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        200:
+          description: Password reset email sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+        400:
+          description: Invalid email
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+  
+  /reset-password:
+    post:
+      summary: Reset password using token
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - token
+                - password
+              properties:
+                token:
+                  type: string
+                  description: Reset token from email
+                password:
+                  type: string
+                  format: password
+                  description: New password
+      responses:
+        200:
+          description: Password successfully reset
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+        400:
+          description: Invalid or expired token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /me:
+    get:
+      summary: Get current user profile
+      tags: [Auth]
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: Current user profile
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    oneOf:
+                      - $ref: '#/components/schemas/CustomerResponse'
+                      - $ref: '#/components/schemas/StaffResponse'
+                      - $ref: '#/components/schemas/BrandOwnerResponse'
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Enter JWT Bearer token
+  
+  schemas:
+    CustomerRequest:
+      type: object
+      required:
+        - email
+        - firstName
+        - lastName
+        - password
+        - phoneNumber
+        - username
+      properties:
+        email:
+          type: string
+          format: email
+          description: The customer email
+        firstName:
+          type: string
+          description: The first name of the customer
+        lastName:
+          type: string
+          description: The last name of the customer
+        password:
+          type: string
+          format: password
+          description: The customer password
+        phoneNumber:
+          type: string
+          description: The customer phone number
+        username:
+          type: string
+          description: The unique username of the customer
+        imageURL:
+          type: string
+          description: The image URL of the customer (optional)
+        address:
+          $ref: '#/components/schemas/Address'
+
+    CustomerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The auto-generated id of the customer
+        email:
+          type: string
+          description: The customer email
+        firstName:
+          type: string
+          description: The first name of the customer
+        lastName:
+          type: string
+          description: The last name of the customer
+        phoneNumber:
+          type: string
+          description: The customer phone number
+        username:
+          type: string
+          description: The unique username of the customer
+        loyaltyPoints:
+          type: integer
+          description: The loyalty points of the customer
+        role:
+          type: string
+          description: The role of the user (always "customer")
+        imageURL:
+          type: string
+          description: The image URL of the customer
+        address:
+          $ref: '#/components/schemas/Address'
+
+    StaffRequest:
+      $ref: 'staff.yaml#/components/schemas/StaffRequest'
+
+    StaffResponse:
+      $ref: 'staff.yaml#/components/schemas/StaffResponse'
+
+    BrandOwnerRequest:
+      $ref: 'brandOwner.yaml#/components/schemas/BrandOwnerRequest'
+
+    BrandOwnerResponse:
+      $ref: 'brandOwner.yaml#/components/schemas/BrandOwnerResponse'
+      
+    Address:
+      type: object
+      properties:
+        building:
+          type: integer
+          description: Building number
+        city:
+          type: string
+          description: City name
+        postalCode:
+          type: integer
+          description: Postal code
+        street:
+          type: string
+          description: Street name

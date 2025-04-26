@@ -1,0 +1,406 @@
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Enter JWT Bearer token
+  schemas:
+    ProductVariantResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The auto-generated id of the product variant
+        colors:
+          type: array
+          items:
+            type: string
+          description: Available colors
+        discount:
+          type: number
+          description: Discount amount
+        images:
+          type: array
+          items:
+            type: string
+          description: URLs of variant images
+        price:
+          type: number
+          description: Price of the variant
+        product:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Product reference ID
+            path:
+              type: string
+              description: Firestore reference path to the product
+        brandId:
+          type: string
+          description: ID of the brand (denormalized for authorization)
+        brandOwnerId:
+          type: string
+          description: ID of the brand owner (denormalized for authorization)
+        brand:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Brand reference ID
+            path:
+              type: string
+              description: Firestore reference path to the brand
+        size:
+          type: string
+          description: Size of the variant
+        stock:
+          type: integer
+          description: Available stock
+
+    ProductVariantRequest:
+      type: object
+      required:
+        - productId
+        - colors
+        - price
+        - size
+        - stock
+      properties:
+        productId:
+          type: string
+          description: ID of the parent product
+        colors:
+          type: array
+          items:
+            type: string
+          description: Available colors
+        discount:
+          type: number
+          description: Discount amount
+        images:
+          type: array
+          items:
+            type: string
+          description: URLs of variant images
+        price:
+          type: number
+          description: Price of the variant
+        size:
+          type: string
+          description: Size of the variant
+        stock:
+          type: integer
+          description: Available stock
+
+    SuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success]
+        message:
+          type: string
+        data:
+          type: object
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [error]
+        message:
+          type: string
+
+# Defining Paths
+paths:
+  /product-variants:
+    get:
+      summary: Retrieve all product variants
+      tags: [Product Variants]
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: Number of variants to return
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: Page number for pagination
+      responses:
+        200:
+          description: A list of product variants
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductVariantResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create a new product variant
+      tags: [Product Variants]
+      security:
+        - bearerAuth: []
+      description: Create a new product variant (Admin, Staff, or Brand Owner access required)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductVariantRequest'
+      responses:
+        201:
+          description: The product variant was successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: '#/components/schemas/ProductVariantResponse'
+        400:
+          description: Failed to create product variant due to invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /product-variants/{id}:
+    get:
+      summary: Retrieve a product variant by ID
+      tags: [Product Variants]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the product variant
+          schema:
+            type: string
+      responses:
+        200:
+          description: Product variant data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: '#/components/schemas/ProductVariantResponse'
+        404:
+          description: Product variant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: Update a product variant
+      tags: [Product Variants]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the product variant
+          schema:
+            type: string
+      requestBody:
+        description: You can only provide the fields you want to update
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                colors:
+                  type: array
+                  items:
+                    type: string
+                  description: Available colors
+                discount:
+                  type: number
+                  description: Discount amount
+                images:
+                  type: array
+                  items:
+                    type: string
+                  description: URLs of variant images
+                price:
+                  type: number
+                  description: Price of the variant
+                size:
+                  type: string
+                  description: Size of the variant
+                stock:
+                  type: integer
+                  description: Available stock
+      responses:
+        200:
+          description: The product variant was successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        400:
+          description: Failed to update product variant due to invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Product variant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      summary: Delete a product variant
+      tags: [Product Variants]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the product variant
+          schema:
+            type: string
+      responses:
+        200:
+          description: The product variant was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Product variant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /product-variants/by-product:
+    get:
+      summary: Retrieve product variants by product ID
+      tags: [Product Variants]
+      parameters:
+        - in: query
+          name: productId
+          required: true
+          description: The ID of the product
+          schema:
+            type: string
+      responses:
+        200:
+          description: List of product variants for the specified product
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductVariantResponse'
+        400:
+          description: Missing product ID parameter
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'

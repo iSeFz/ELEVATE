@@ -1,0 +1,415 @@
+paths:
+  /brand-owner/signup:
+    post:
+      summary: Register a new brand owner
+      tags: [Brand Owners]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BrandOwnerRequest'
+      responses:
+        201:
+          description: The brand owner was successfully registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: '#/components/schemas/BrandOwnerResponse'
+        400:
+          description: Registration failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /brand-owner/login:
+    post:
+      summary: Brand owner login
+      tags: [Brand Owners]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        200:
+          description: The brand owner was successfully logged in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: '#/components/schemas/BrandOwnerResponse'
+                      token:
+                        type: string
+                        description: JWT token for authentication
+        400:
+          description: Login failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /brand-owners:
+    get:
+      summary: Get all brand owners (admin only)
+      tags: [Brand Owners]
+      security:
+        - bearerAuth: []
+      responses:
+        200:
+          description: List of all brand owners
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/BrandOwnerResponse'
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    
+  /brand-owners/{id}:
+    get:
+      summary: Get a brand owner by ID
+      tags: [Brand Owners]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Brand Owner ID
+      responses:
+        200:
+          description: Brand owner details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: '#/components/schemas/BrandOwnerResponse'
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Brand owner not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    
+    put:
+      summary: Update a brand owner
+      tags: [Brand Owners]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Brand Owner ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BrandOwnerUpdateRequest'
+      responses:
+        200:
+          description: Brand owner updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: '#/components/schemas/BrandOwnerResponse'
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Brand owner not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    
+    delete:
+      summary: Delete a brand owner
+      tags: [Brand Owners]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Brand Owner ID
+      responses:
+        200:
+          description: Brand owner deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Brand owner not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /brand-owners/by-brand/{brandId}:
+    get:
+      summary: Get brand owner by brand ID
+      tags: [Brand Owners]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: brandId
+          required: true
+          schema:
+            type: string
+          description: Brand ID
+      responses:
+        200:
+          description: Brand owner details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: '#/components/schemas/BrandOwnerResponse'
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Brand owner not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Enter JWT Bearer token
+  
+  schemas:
+    BrandOwnerRequest:
+      type: object
+      required:
+        - email
+        - firstName
+        - lastName
+        - password
+        - username
+        - brandId
+      properties:
+        email:
+          type: string
+          format: email
+          description: The brand owner email
+        firstName:
+          type: string
+          description: The first name of the brand owner
+        lastName:
+          type: string
+          description: The last name of the brand owner
+        password:
+          type: string
+          format: password
+          description: The brand owner password
+        username:
+          type: string
+          description: The unique username of the brand owner
+        brandId:
+          type: string
+          description: ID of the brand this owner manages
+        imageURL:
+          type: string
+          description: The image URL of the brand owner (optional)
+
+    BrandOwnerUpdateRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: The brand owner email
+        firstName:
+          type: string
+          description: The first name of the brand owner
+        lastName:
+          type: string
+          description: The last name of the brand owner
+        password:
+          type: string
+          format: password
+          description: The brand owner password
+        username:
+          type: string
+          description: The unique username of the brand owner
+        imageURL:
+          type: string
+          description: The image URL of the brand owner
+
+    BrandOwnerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The auto-generated id of the brand owner
+        email:
+          type: string
+          description: The brand owner email
+        firstName:
+          type: string
+          description: The first name of the brand owner
+        lastName:
+          type: string
+          description: The last name of the brand owner
+        username:
+          type: string
+          description: The unique username of the brand owner
+        brand:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Brand reference ID
+            path:
+              type: string
+              description: Firestore reference path to the brand
+        brandIds:
+          type: array
+          items:
+            type: string
+          description: IDs of brands this owner manages
+        role:
+          type: string
+          description: The brand owner role (always "brandOwner")
+        imageURL:
+          type: string
+          description: The image URL of the brand owner
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [error]
+        message:
+          type: string

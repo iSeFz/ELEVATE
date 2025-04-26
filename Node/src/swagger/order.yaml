@@ -6,98 +6,91 @@ components:
       bearerFormat: JWT
       description: Enter JWT Bearer token
   schemas:
-    CustomerResponse:
+    OrderResponse:
       type: object
       properties:
         id:
           type: string
-          description: The auto-generated id of the customer
-        username:
+          description: The auto-generated id of the order
+        customer:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Customer reference ID
+            path:
+              type: string
+              description: Firestore reference path to the customer
+        customerId:
           type: string
-          description: The unique username of the customer
-        email:
+          description: ID of the customer (denormalized for authorization)
+        dateCreated:
           type: string
-          description: The user email
-        phoneNumber:
+          format: date-time
+          description: Order creation timestamp
+        status:
           type: string
-          description: The user phone number
-        firstName:
-          type: string
-          description: The first name of the customer
-        lastName:
-          type: string
-          description: The last name of the customer
-        imageURL:
-          type: string
-          description: The image URL of the customer
-        loyaltyPoints:
-          type: number
-          description: The loyalty points of the customer
+          description: Current status of the order
         address:
           $ref: '#/components/schemas/Address'
-          description: The customer's address
-        wishlist:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Product reference ID
-              path:
-                type: string
-                description: Firestore reference path to the product
-          description: List of products in the customer's wishlist
-        orders:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Order reference ID
-              path:
-                type: string
-                description: Firestore reference path to the order
-          description: List of the customer's submitted orders
-        cart:
-          $ref: '#/components/schemas/Cart'
-          description: The customer's shopping cart
-        role:
+          description: Shipping address
+        phoneNumber:
           type: string
-          description: The user role for authorization purposes
+          description: Contact phone number
+        pointsRedeemed:
+          type: number
+          description: Loyalty points redeemed for this order
+        price:
+          type: number
+          description: Total order price
+        productVariant:
+          type: object
+          properties:
+            id:
+              type: string
+              description: Product variant reference ID
+            path:
+              type: string
+              description: Firestore reference path to the product variant
+        quantity:
+          type: number
+          description: Order quantity
+        payment:
+          $ref: '#/components/schemas/Payment'
+          description: Payment details
+        shipment:
+          $ref: '#/components/schemas/Shipment'
+          description: Shipment details
 
-    CustomerRequest:
+    OrderRequest:
       type: object
       required:
-        - username
-        - password
-        - email
-        - firstName
-        - lastName
+        - address
         - phoneNumber
+        - productVariantId
+        - quantity
       properties:
-        username:
-          type: string
-          description: The unique username of the customer
-        password:
-          type: string
-          description: The password of the customer
-        email:
-          type: string
-          description: The user email
-        phoneNumber:
-          type: string
-          description: The user phone number
-        firstName:
-          type: string
-          description: The first name of the customer
-        lastName:
-          type: string
-          description: The last name of the customer
         address:
           $ref: '#/components/schemas/Address'
-          description: The customer's address
+          description: Shipping address
+        phoneNumber:
+          type: string
+          description: Contact phone number
+        pointsRedeemed:
+          type: number
+          description: Loyalty points to redeem
+        productVariantId:
+          type: string
+          description: ID of the product variant
+        quantity:
+          type: number
+          description: Quantity to order
+        payment:
+          $ref: '#/components/schemas/PaymentRequest'
+          description: Payment details
+        shipment:
+          $ref: '#/components/schemas/ShipmentRequest'
+          description: Shipment details
 
     Address:
       type: object
@@ -115,27 +108,68 @@ components:
           type: string
           description: Street name
 
-    CartItem:
+    Payment:
       type: object
       properties:
-        id:
+        dateCreated:
           type: string
-          description: ID of the order reference
-        path:
+          format: date-time
+          description: Payment date
+        method:
           type: string
-          description: Firestore reference path to the order
-
-    Cart:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/CartItem'
-          description: Non-submitted orders
-        subtotal:
+          description: Payment method used
+        price:
           type: number
-          description: Total price of all items in the cart
+          description: Payment amount
+
+    PaymentRequest:
+      type: object
+      required:
+        - method
+      properties:
+        method:
+          type: string
+          description: Payment method to use
+
+    Shipment:
+      type: object
+      properties:
+        dateCreated:
+          type: string
+          format: date-time
+          description: Shipment creation date
+        dateDelivery:
+          type: string
+          format: date-time
+          description: Expected or actual delivery date
+        fees:
+          type: number
+          description: Shipping fees
+        method:
+          type: string
+          description: Shipping method
+
+    ShipmentRequest:
+      type: object
+      required:
+        - method
+      properties:
+        method:
+          type: string
+          description: Shipping method to use
+
+    OrderStatusUpdate:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          description: New status for the order
+        dateDelivery:
+          type: string
+          format: date-time
+          description: Updated delivery date (if applicable)
 
     SuccessResponse:
       type: object
@@ -159,15 +193,33 @@ components:
 
 # Defining Paths
 paths:
-  /customers:
+  /orders:
     get:
-      summary: Retrieve a list of all existing customers
-      tags: [Customers]
+      summary: Retrieve all orders (admin/staff only)
+      tags: [Orders]
       security:
         - bearerAuth: []
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+            description: Filter orders by status
+        - in: query
+          name: startDate
+          schema:
+            type: string
+            format: date
+          description: Filter orders created after this date
+        - in: query
+          name: endDate
+          schema:
+            type: string
+            format: date
+          description: Filter orders created before this date
       responses:
         200:
-          description: A list of customers
+          description: A list of orders
           content:
             application/json:
               schema:
@@ -179,7 +231,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/CustomerResponse'
+                      $ref: '#/components/schemas/OrderResponse'
         401:
           description: Unauthorized - Invalid or missing token
           content:
@@ -199,20 +251,19 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
     post:
-      summary: Add a new customer
-      tags: [Customers]
+      summary: Create a new order
+      tags: [Orders]
       security:
         - bearerAuth: []
-      description: Create a new customer (Admin access required)
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CustomerRequest'
+              $ref: '#/components/schemas/OrderRequest'
       responses:
         201:
-          description: The customer was successfully added
+          description: Order created successfully
           content:
             application/json:
               schema:
@@ -221,24 +272,16 @@ paths:
                   status:
                     type: string
                     enum: [success]
-                  message:
-                    type: string
                   data:
-                    $ref: '#/components/schemas/CustomerResponse'
+                    $ref: '#/components/schemas/OrderResponse'
         400:
-          description: Failed to add customer due to invalid data
+          description: Invalid input
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         401:
           description: Unauthorized - Invalid or missing token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        403:
-          description: Forbidden - Insufficient permissions
           content:
             application/json:
               schema:
@@ -250,22 +293,22 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /customers/{id}:
+  /orders/{id}:
     get:
-      summary: Retrieve a customer by ID
-      tags: [Customers]
+      summary: Get an order by ID
+      tags: [Orders]
       security:
         - bearerAuth: []
       parameters:
         - in: path
           name: id
           required: true
-          description: The ID of the customer
           schema:
             type: string
+          description: Order ID
       responses:
         200:
-          description: Customer data
+          description: Order details
           content:
             application/json:
               schema:
@@ -275,13 +318,7 @@ paths:
                     type: string
                     enum: [success]
                   data:
-                    $ref: '#/components/schemas/CustomerResponse'
-        400:
-          description: Failed to get customer due to invalid ID
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                    $ref: '#/components/schemas/OrderResponse'
         401:
           description: Unauthorized - Invalid or missing token
           content:
@@ -295,7 +332,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         404:
-          description: Customer not found
+          description: Order not found
           content:
             application/json:
               schema:
@@ -307,49 +344,38 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
     put:
-      summary: Update a customer
-      tags: [Customers]
+      summary: Update an order
+      tags: [Orders]
       security:
         - bearerAuth: []
       parameters:
         - in: path
           name: id
           required: true
-          description: The ID of the customer
           schema:
             type: string
+          description: Order ID
       requestBody:
-        description: You can only provide the fields you want to update
+        required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                firstName:
-                  type: string
-                imageURL:
-                  type: string
-                lastName:
-                  type: string
-                password:
-                  type: string
-                phoneNumber:
-                  type: string
-                username:
-                  type: string
-                address:
-                  $ref: '#/components/schemas/Address'
+              $ref: '#/components/schemas/OrderRequest'
       responses:
         200:
-          description: The customer was successfully updated
+          description: Order updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessResponse'
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: '#/components/schemas/OrderResponse'
         400:
-          description: Failed to update customer due to invalid data
+          description: Invalid input
           content:
             application/json:
               schema:
@@ -367,7 +393,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         404:
-          description: Customer not found
+          description: Order not found
           content:
             application/json:
               schema:
@@ -379,26 +405,77 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
     delete:
-      summary: Delete a customer
-      tags: [Customers]
+      summary: Delete an order (admin only)
+      tags: [Orders]
       security:
         - bearerAuth: []
       parameters:
         - in: path
           name: id
           required: true
-          description: The ID of the customer
           schema:
             type: string
+          description: Order ID
       responses:
         200:
-          description: The customer was successfully deleted
+          description: Order deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Order not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /orders/{id}/status:
+    patch:
+      summary: Update an order's status (admin/staff only)
+      tags: [Orders]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Order ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderStatusUpdate'
+      responses:
+        200:
+          description: Order status updated successfully
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/SuccessResponse'
         400:
-          description: Failed to delete customer due to invalid ID
+          description: Invalid input
           content:
             application/json:
               schema:
@@ -416,7 +493,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         404:
-          description: Customer not found
+          description: Order not found
           content:
             application/json:
               schema:
@@ -428,22 +505,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /customers/email:
+  /orders/by-customer:
     get:
-      summary: Retrieve a customer by email
-      tags: [Customers]
+      summary: Get orders by authenticated customer
+      tags: [Orders]
       security:
         - bearerAuth: []
-      parameters:
-        - in: query
-          name: email
-          required: true
-          description: The email of the customer
-          schema:
-            type: string
       responses:
         200:
-          description: Customer data
+          description: List of customer's orders
           content:
             application/json:
               schema:
@@ -453,78 +523,11 @@ paths:
                     type: string
                     enum: [success]
                   data:
-                    $ref: '#/components/schemas/CustomerResponse'
-        400:
-          description: Failed to get customer due to missing email parameter
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OrderResponse'
         401:
           description: Unauthorized - Invalid or missing token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        403:
-          description: Forbidden - Insufficient permissions
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        404:
-          description: Customer not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        500:
-          description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
-  /customers/{id}/cart:
-    get:
-      summary: Get a customer's shopping cart
-      tags: [Customers]
-      security:
-        - bearerAuth: []
-      parameters:
-        - in: path
-          name: id
-          required: true
-          description: The ID of the customer
-          schema:
-            type: string
-      responses:
-        200:
-          description: Customer's cart retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    enum: [success]
-                  data:
-                    $ref: '#/components/schemas/Cart'
-        401:
-          description: Unauthorized - Invalid or missing token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        403:
-          description: Forbidden - Insufficient permissions
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        404:
-          description: Customer not found
           content:
             application/json:
               schema:
