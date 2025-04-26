@@ -57,8 +57,17 @@ export const updateCustomer = async (req: Request, res: Response) => {
     try {
         const customerID = req.params.id;
         const userRole = req.user?.role;
+        const userID = req.user?.id;
         
-        // Authorization check is now handled by middleware
+        // Add proper authorization check
+        // Only admins/staff or the customer themselves can update the customer profile
+        if (userRole !== 'admin' && userRole !== 'staff' && userID !== customerID) {
+            return res.status(403).json({ 
+                status: 'error', 
+                message: 'You are not authorized to update this customer profile' 
+            });
+        }
+        
         const newCustomerData = sanitizeCustomerData(req.body, userRole);
         
         // Check if customer exists first

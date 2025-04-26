@@ -35,6 +35,19 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
     tags: [
       { name: 'Customers', description: 'All APIs related to customers' },
       { name: 'Products', description: 'All APIs related to products' },
+    ],
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+          description: 'Enter JWT Bearer token',
+        },
+      },
+    },
+    security: [
+      { bearerAuth: [] }
     ]
   },
   // Use path.join for better cross-platform compatibility

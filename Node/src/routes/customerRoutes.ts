@@ -14,6 +14,7 @@ router.get('/:id', authenticate, CustomerController.getCustomer);
 router.post('/', authenticate, authorize(['admin']), CustomerController.addCustomer);
 
 // Users can update their own data, admins can update any user
+// We'll handle specific authorization in the controller
 router.put('/:id', authenticate, CustomerController.updateCustomer);
 
 // Only admins can delete customer accounts
