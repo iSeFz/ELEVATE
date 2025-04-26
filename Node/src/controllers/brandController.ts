@@ -122,7 +122,7 @@ const sanitizeBrandData = (newBrandData: any): Partial<Brand> => {
     const brandFields = [
         'addresses', 'brandName', 'brandOwner', 'email', 'imageURL',
         'industry', 'phoneNumbers', 'rating', 'storyDescription', 
-        'subscription', 'websites'
+        'subscription', 'websites', 'productIds'
     ];
     
     const sanitizedData: Partial<Brand> = {};

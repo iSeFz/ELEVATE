@@ -57,6 +57,11 @@ components:
         brandOwnerId:
           type: string
           description: ID of the brand owner (denormalized for authorization)
+        productIds:
+          type: array
+          items:
+            type: string
+          description: IDs of products associated with this brand (denormalized for querying)
         subscription:
           $ref: '#/components/schemas/Subscription'
           description: Brand's subscription details
@@ -97,6 +102,11 @@ components:
           items:
             $ref: '#/components/schemas/Website'
           description: Brand's websites
+        productIds:
+          type: array
+          items:
+            type: string
+          description: IDs of products associated with this brand (denormalized for querying)
         subscription:
           $ref: '#/components/schemas/Subscription'
           description: Brand's subscription details

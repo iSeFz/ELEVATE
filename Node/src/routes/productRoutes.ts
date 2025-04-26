@@ -7,13 +7,13 @@ const router = express.Router();
 // Public routes - no authentication required
 router.get('/', ProductController.getAllProducts);
 router.get('/:id', ProductController.getProduct);
-router.get('/:id/variants', ProductController.getProductWithVariants);
-router.get('/category', ProductController.getProductsByCategory);
-router.get('/brand', ProductController.getProductsByBrand);
+router.get('/category/:id', ProductController.getProductsByCategory);
+router.get('/brand/:id', ProductController.getProductsByBrand);
 
 // Protected routes - brand owners can manage their own products
 router.post('/', authenticate, authorize(['admin', 'staff', 'brandOwner']), ProductController.addProduct);
 router.put('/:id', authenticate, authorizeProductAccess, ProductController.updateProduct);
+router.patch('/:id/variants', authenticate, authorizeProductAccess, ProductController.updateProductVariants);
 router.delete('/:id', authenticate, authorizeProductAccess, ProductController.deleteProduct);
 
 export default router;

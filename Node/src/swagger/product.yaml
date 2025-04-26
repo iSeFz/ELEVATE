@@ -45,6 +45,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create a new product
+      tags: [Products]
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        201:
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/ProductResponse'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /products/{id}:
     get:
@@ -158,6 +202,11 @@ paths:
           schema:
             type: string
           description: Brand ID
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          description: Number of items to skip for pagination, limit is 10 by default
       responses:
         200:
           description: List of products for the brand
@@ -180,6 +229,44 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /products/category/{categoryId}:
+    get:
+      summary: Get products by category
+      tags: [Products]
+      parameters:
+        - in: path
+          name: category
+          required: true
+          schema:
+            type: string
+          description: Category name
+        - in: query
+          name: offset
+          schema:
+            type: integer
+          description: Number of items to skip for pagination
+      responses:
+        200:
+          description: List of products for the category
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductResponse'
+        404:
+          description: Category not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
 components:
   securitySchemes:
     bearerAuth:
@@ -188,6 +275,32 @@ components:
       bearerFormat: JWT
       description: Enter JWT Bearer token
   schemas:
+    ProductVariantEmbedded:
+      type: object
+      properties:
+        colors:
+          type: array
+          items:
+            type: string
+          description: Available colors for this variant
+        discount:
+          type: number
+          description: Discount percentage for this variant
+        images:
+          type: array
+          items:
+            type: string
+          description: Image URLs for this variant
+        price:
+          type: number
+          description: Price of this variant
+        size:
+          type: string
+          description: Size of this variant
+        stock:
+          type: number
+          description: Available stock for this variant
+
     ProductRequest:
       type: object
       required:
@@ -219,6 +332,11 @@ components:
         brandId:
           type: string
           description: ID of the brand that owns this product
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariantEmbedded'
+          description: Array of product variants
 
     ProductResponse:
       type: object
@@ -286,19 +404,8 @@ components:
         variants:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Variant reference ID
-              path:
-                type: string
-                description: Firestore reference path to the variant
-        variantIds:
-          type: array
-          items:
-            type: string
-          description: IDs of product variants (denormalized for querying)
+            $ref: '#/components/schemas/ProductVariantEmbedded'
+          description: Array of embedded product variants
         dateCreated:
           type: string
           format: date-time

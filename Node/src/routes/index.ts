@@ -2,7 +2,6 @@ import express from 'express';
 import ProductRoutes from './productRoutes.js';
 import CustomerRoutes from './customerRoutes.js';
 import BrandRoutes from './brandRoutes.js';
-import ProductVariantRoutes from './productVariantRoutes.js';
 import ReviewRoutes from './reviewRoutes.js';
 import OrderRoutes from './orderRoutes.js';
 import InventoryRoutes from './inventoryRoutes.js';
@@ -24,7 +23,6 @@ router.use('/docs', SwaggerRoutes);
 
 // Core API routes
 router.use('/products', ProductRoutes);
-router.use('/product-variants', ProductVariantRoutes);
 router.use('/reviews', ReviewRoutes);
 router.use('/customers', CustomerRoutes);
 router.use('/brands', BrandRoutes);

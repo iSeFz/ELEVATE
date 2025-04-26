@@ -13,8 +13,8 @@ router.get('/name', BrandController.getBrandByName);
 
 // We don't need this endpoint as creating brands is handled by brand owner post endpoint
 // router.post('/', authenticate, authorize(['admin', 'staff', 'brandOwner']), BrandController.addBrand);
+// router.delete('/:id', authenticate, authorizeBrandAccess, BrandController.deleteBrand);
 
 router.put('/:id', authenticate, authorizeBrandAccess, BrandController.updateBrand);
-router.delete('/:id', authenticate, authorizeBrandAccess, BrandController.deleteBrand);
 
 export default router;

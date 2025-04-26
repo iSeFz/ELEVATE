@@ -1,7 +1,7 @@
 import { Timestamp } from 'firebase-admin/firestore';
 import { Address, FirestoreReference } from './common.js';
 import { Customer } from './customer.js';
-import { ProductVariant } from './productVariant.js';
+import { Product, ProductVariant } from './product.js';
 
 export interface Payment {
     dateCreated: Timestamp;
@@ -27,7 +27,11 @@ export interface Order {
     phoneNumber: string;
     pointsRedeemed: number;
     price: number;
-    productVariant: FirestoreReference<ProductVariant>;
+    // Update to reference the product and include variant information
+    product: FirestoreReference<Product>;
+    productId: string; // Denormalized for easier queries
+    // Store the selected variant directly
+    selectedVariant: ProductVariant;
     quantity: number;
     shipment: Shipment;
     status: string;

@@ -23,4 +23,5 @@ export interface Brand {
     storyDescription: string;
     subscription: Subscription;
     websites: Website[];
+    productIds?: string[]; // Denormalized for easier queries
 }

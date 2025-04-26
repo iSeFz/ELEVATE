@@ -66,10 +66,11 @@ export const addBrand = async (brand: Brand) => {
         const { id, ...brandData } = brand;
         
         // Initialize empty collections if not provided
-        if (!brandData.addresses) brandData.addresses = [];
-        if (!brandData.websites) brandData.websites = [];
-        if (!brandData.phoneNumbers) brandData.phoneNumbers = [];
-        brandData.subscription = {
+        brandData.addresses ??= [];
+        brandData.websites ??= [];
+        brandData.phoneNumbers ??= [];
+        brandData.productIds ??= [];
+        brandData.subscription ??= {
             plan: 'free',
             price: 0,
             startDate: admin.firestore.Timestamp.now(),

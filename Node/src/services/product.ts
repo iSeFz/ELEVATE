@@ -5,6 +5,7 @@ import { Timestamp } from 'firebase-admin/firestore';
 
 const firestore = admin.firestore();
 const productCollection = 'product';
+const brandCollection = 'brand';
 
 export const getAllProducts = async () => {
     try {
@@ -26,7 +27,7 @@ export const getProduct = async (productID: string) => {
     try {
         const docRef = firestore.collection(productCollection).doc(productID);
         const docSnap = await docRef.get();
-        
+
         if (docSnap.exists) {
             return { id: docSnap.id, ...docSnap.data() } as Product;
         } else {
@@ -37,14 +38,13 @@ export const getProduct = async (productID: string) => {
     }
 };
 
-export const getProductsByCategory = async (category: string) => {
+export const getProductsByCategory = async (category: string, offset: number = 0) => {
     if (!category) {
         throw new Error('Please provide a category');
     }
     try {
         const snapshot = await firestore.collection(productCollection)
-            .where("category", "==", category)
-            .get();
+            .where("category", "==", category).offset(offset).limit(10).get();
 
         const products: Product[] = [];
         snapshot.forEach((doc) => {
@@ -56,20 +56,42 @@ export const getProductsByCategory = async (category: string) => {
     }
 };
 
-export const getProductsByBrand = async (brandID: string) => {
+export const getProductsByBrand = async (brandID: string, offset: number = 0) => {
     if (!brandID) {
         throw new Error('Please provide a brand ID');
     }
     try {
-        const brandRef = firestore.collection('brand').doc(brandID);
-        const snapshot = await firestore.collection(productCollection)
-            .where("brand", "==", brandRef)
-            .get();
+        // Get the brand document to access its productIds array
+        const brandDoc = await firestore.collection(brandCollection).doc(brandID).get();
 
+        if (!brandDoc.exists) {
+            throw new Error('Brand not found');
+        }
+
+        const brandData = brandDoc.data();
+        const productIds = brandData?.productIds ?? [];
+
+        if (productIds.length === 0) {
+            return []; // Return empty array if no products are associated with this brand
+        }
+
+        // Use a batched get operation to retrieve all products by their IDs
         const products: Product[] = [];
-        snapshot.forEach((doc) => {
-            products.push({ id: doc.id, ...doc.data() } as Product);
+
+        const chunk = productIds.slice(offset, offset + 10);
+
+        const productRefs = chunk.map((id: string) =>
+            firestore.collection(productCollection).doc(id)
+        );
+
+        const productSnapshots = await firestore.getAll(...productRefs);
+
+        productSnapshots.forEach(doc => {
+            if (doc.exists) {
+                products.push({ id: doc.id, ...doc.data() } as Product);
+            }
         });
+
         return products;
     } catch (error: any) {
         throw new Error(error.message);
@@ -85,62 +107,35 @@ export const addProduct = async (product: Product) => {
 
         const customId = product.id;
         const { id, ...productData } = product;
-        
+
         // Initialize empty arrays and default values if not provided
-        if (!productData.dateCreated) productData.dateCreated = Timestamp.now();
-        if (!productData.averageRating) productData.averageRating = 0;
-        if (!productData.totalReviews) productData.totalReviews = 0;
-        if (!productData.department) productData.department = [];
-        if (!productData.reviews) productData.reviews = [];
-        if (!productData.variants) productData.variants = [];
-        if (!productData.stock) productData.stock = 0;
-        
-        // Add denormalized brandId from the brand reference
-        if (productData.brand) {
-            // Store brandId for denormalized access
-            productData.brandId = productData.brand.id;
-            
-            // Extract review IDs from references
-            if (productData.reviews && productData.reviews.length > 0) {
-                productData.reviewIds = productData.reviews.map(ref => ref.id);
-            } else {
-                productData.reviewIds = [];
-            }
-            
-            // Extract variant IDs from references
-            if (productData.variants && productData.variants.length > 0) {
-                productData.variantIds = productData.variants.map(ref => ref.id);
-            } else {
-                productData.variantIds = [];
-            }
-            
-            // Try to get brandOwnerId from the brand document
-            try {
-                const brandDoc = await productData.brand.get();
-                if (brandDoc.exists) {
-                    const brandData = brandDoc.data();
-                    if (brandData?.brandOwnerId) {
-                        // Use existing denormalized data from brand
-                        productData.brandOwnerId = brandData.brandOwnerId;
-                    } else if (brandData?.owner) {
-                        // Or use the reference directly
-                        productData.brandOwnerId = brandData.owner.id;
-                    }
-                }
-            } catch (error) {
-                console.error('Error populating denormalized fields for product:', error);
-                // Continue without denormalized brandOwnerId
-            }
-        }
-        
+        productData.dateCreated ??= Timestamp.now();
+        productData.averageRating ??= 0;
+        productData.totalReviews ??= 0;
+        productData.department ??= [];
+        productData.reviewIds ??= [];
+        productData.variants ??= [];
+
+        // Create the product document
+        let productId;
         if (customId) {
             const docRef = firestore.collection(productCollection).doc(customId);
             await docRef.set(productData);
-            return { id: customId, ...productData };
+            productId = customId;
         } else {
             const docRef = await firestore.collection(productCollection).add(productData);
-            return { id: docRef.id, ...productData };
+            productId = docRef.id;
         }
+
+        // Update the brand's productIds array with the new product ID
+        if (productData.brandId) {
+            const brandRef = firestore.collection(brandCollection).doc(productData.brandId);
+            await brandRef.update({
+                productIds: admin.firestore.FieldValue.arrayUnion(productId)
+            });
+        }
+
+        return { id: productId, ...productData };
     } catch (error: any) {
         throw new Error(error.message);
     }
@@ -150,7 +145,7 @@ export const updateProduct = async (productID: string, newProductData: Partial<P
     if (!productID) {
         throw new Error('Please provide a product ID');
     }
-    
+
     try {
         const missedUpdateData = checkMissingProductUpdateData(newProductData);
         if (missedUpdateData) {
@@ -159,7 +154,10 @@ export const updateProduct = async (productID: string, newProductData: Partial<P
 
         const productRef = firestore.collection(productCollection).doc(productID);
         await productRef.update(newProductData);
-        return true;
+
+        // Return the updated product
+        const updatedProduct = await getProduct(productID);
+        return updatedProduct;
     } catch (error: any) {
         throw new Error(error.message);
     }
@@ -170,8 +168,24 @@ export const deleteProduct = async (productID: string) => {
         throw new Error('Please provide a product ID');
     }
     try {
+        // First, get the product to find its brand
+        const product = await getProduct(productID);
+        if (!product) {
+            throw new Error('Product not found');
+        }
+
+        // Delete the product
         const productRef = firestore.collection(productCollection).doc(productID);
         await productRef.delete();
+
+        // Remove product ID from the brand's productIds array
+        if (product.brandId) {
+            const brandRef = firestore.collection(brandCollection).doc(product.brandId);
+            await brandRef.update({
+                productIds: admin.firestore.FieldValue.arrayRemove(productID)
+            });
+        }
+
         return true;
     } catch (error: any) {
         throw new Error(error.message);
