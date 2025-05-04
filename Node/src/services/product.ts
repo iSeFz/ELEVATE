@@ -38,13 +38,13 @@ export const getProduct = async (productID: string) => {
     }
 };
 
-export const getProductsByCategory = async (category: string, offset: number = 0) => {
+export const getProductsByCategory = async (category: string, page: number = 0) => {
     if (!category) {
         throw new Error('Please provide a category');
     }
     try {
         const snapshot = await firestore.collection(productCollection)
-            .where("category", "==", category).offset(offset).limit(10).get();
+            .where("category", "==", category).offset(page*10).limit(10).get();
 
         const products: Product[] = [];
         snapshot.forEach((doc) => {
@@ -56,7 +56,8 @@ export const getProductsByCategory = async (category: string, offset: number = 0
     }
 };
 
-export const getProductsByBrand = async (brandID: string, offset: number = 0) => {
+export const getProductsByBrand = async (brandID: string, page: number = 0) => {
+    const offset = page * 10; // Calculate the offset for pagination
     if (!brandID) {
         throw new Error('Please provide a brand ID');
     }
@@ -106,15 +107,21 @@ export const addProduct = async (product: Product) => {
         }
 
         const customId = product.id;
-        const { id, ...productData } = product;
 
-        // Initialize empty arrays and default values if not provided
-        productData.dateCreated ??= Timestamp.now();
-        productData.averageRating ??= 0;
-        productData.totalReviews ??= 0;
-        productData.department ??= [];
-        productData.reviewIds ??= [];
-        productData.variants ??= [];
+        const productData: Product = {
+            brandOwnerId: product.brandOwnerId,
+            brandId: product.brandId,
+            name: product.name,
+            category: product.category,
+            description: product.description,
+            material: product.material,
+            dateCreated: product.dateCreated ?? Timestamp.now(),
+            averageRating: product.averageRating ?? 0,
+            totalReviews: product.totalReviews ?? 0,
+            department: product.department ?? [],
+            reviewIds: product.reviewIds ?? [],
+            variants: product.variants ?? [],
+        }
 
         // Create the product document
         let productId;

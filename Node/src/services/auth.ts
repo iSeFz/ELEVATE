@@ -120,7 +120,7 @@ const handleFirebaseAuthError = (error: any): AuthError => {
 };
 
 // Generic signup function that handles different user types
-export const genericSignup = async (userData: any, userType: 'customer' | 'staff' | 'brandOwner') => {
+export const genericSignup = async (userData: any, userType: 'customer' | 'staff' | 'brandOwner', otherClaims = {}) => {
     // Validate data based on user type
     let missedData = null;
 
@@ -148,7 +148,7 @@ export const genericSignup = async (userData: any, userType: 'customer' | 'staff
             emailVerified: false,
         });
 
-        auth.setCustomUserClaims(userRecord.uid, { role: userType });
+        auth.setCustomUserClaims(userRecord.uid, { role: userType, ...otherClaims });
 
         // Remove password from data stored in Firestore
         const { password, id, ...cleanedData } = userData;

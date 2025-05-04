@@ -5,15 +5,10 @@ paths:
       tags: [Products]
       parameters:
         - in: query
-          name: limit
-          schema:
-            type: integer
-          description: Number of products to return
-        - in: query
           name: page
           schema:
             type: integer
-          description: Page number for pagination
+          description: Page number for pagination, default is 0, page size is 10
         - in: query
           name: category
           schema:
@@ -50,6 +45,12 @@ paths:
       tags: [Products]
       security:
         - bearerAuth: []
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: string
+          description: Pass this to use admin access over the userId
       requestBody:
         required: true
         content:

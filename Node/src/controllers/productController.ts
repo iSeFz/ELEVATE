@@ -1,10 +1,27 @@
 import { Request, Response } from 'express';
 import * as productService from '../services/product.js';
-import * as brandService from '../services/brand.js';
+import * as brandOwnerService from '../services/brandOwner.js';
 import { Product } from '../types/models/product.js';
 
 export const getAllProducts = async (req: Request, res: Response) => {
+    const category = req.query.category as string;
+    const brand = req.query.brand as string;
+    const page = parseInt(req.query.page as string) || 0;
+
+    if (category && brand) {
+        return res.status(400).json({ status: 'error', message: 'Please provide either category or brand, not both' });
+    }
+
     try {
+        if (category) {
+            const products = await productService.getProductsByCategory(category, page);
+            return res.status(200).json({ status: 'success', data: products });
+        }
+        if (brand) {
+            const products = await productService.getProductsByBrand(brand, page);
+            return res.status(200).json({ status: 'success', data: products });
+        }
+        // If no filters are provided, return all products
         const products = await productService.getAllProducts();
         return res.status(200).json({ status: 'success', data: products });
     } catch (error: any) {
@@ -27,55 +44,6 @@ export const getProduct = async (req: Request, res: Response) => {
     }
 };
 
-export const getProductsByCategory = async (req: Request, res: Response) => {
-    try {
-        const category = req.query.category as string;
-        const offset = parseInt(req.query.offset as string) || 0;
-
-        if (!category) {
-            return res.status(400).json({ status: 'error', message: 'Category parameter is required' });
-        }
-
-        const products = await productService.getProductsByCategory(category, offset);
-        return res.status(200).json({ status: 'success', data: products });
-    } catch (error: any) {
-        return res.status(400).json({ status: 'error', message: error.message });
-    }
-};
-
-export const getProductsByBrand = async (req: Request, res: Response) => {
-    try {
-        // Getting brand ID from parameters
-        const brandID = req.params.id;
-        const offset = parseInt(req.query.offset as string) || 0;
-
-        if (!brandID) {
-            return res.status(400).json({ status: 'error', message: 'Brand ID parameter is required' });
-        }
-
-        const products = await productService.getProductsByBrand(brandID, offset);
-        return res.status(200).json({ status: 'success', data: products });
-    } catch (error: any) {
-        return res.status(400).json({ status: 'error', message: error.message });
-    }
-};
-
-export const getProductWithVariants = async (req: Request, res: Response) => {
-    try {
-        const productID = req.params.id;
-        const product = await productService.getProduct(productID);
-
-        if (!product) {
-            return res.status(404).json({ status: 'error', message: 'Product not found' });
-        }
-
-        // No need to fetch variants separately as they're now embedded
-        return res.status(200).json({ status: 'success', data: product });
-    } catch (error: any) {
-        return res.status(400).json({ status: 'error', message: error.message });
-    }
-};
-
 export const addProduct = async (req: Request, res: Response) => {
     try {
         const productData = req.body as Product;
@@ -84,7 +52,20 @@ export const addProduct = async (req: Request, res: Response) => {
         // Remove any ID if provided - always use auto-generated IDs for products
         delete productData.id;
 
+        // Get brandOwner to find the associated brandId
+        const brandOwner = await brandOwnerService.getBrandOwnerById(brandOwnerId!);
+
+        if (!brandOwner) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'Brand owner not found'
+            });
+        }
+
+        // Set the brandOwnerId and brandId from the brand owner's data
         productData.brandOwnerId = brandOwnerId!;
+        productData.brandId = brandOwner.brandId;
+
         const newProduct = await productService.addProduct(productData);
         return res.status(201).json({
             status: 'success',
@@ -100,12 +81,6 @@ export const updateProduct = async (req: Request, res: Response) => {
     try {
         const productID = req.params.id;
         const newProductData = sanitizeProductData(req.body);
-
-        // Check if product exists first
-        const existingProduct = await productService.getProduct(productID);
-        if (!existingProduct) {
-            return res.status(404).json({ status: 'error', message: 'Product not found' });
-        }
 
         // Authorization check is handled by the authorizeProductAccess middleware
         const updatedProduct = await productService.updateProduct(productID, newProductData);

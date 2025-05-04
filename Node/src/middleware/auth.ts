@@ -29,10 +29,11 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         if (ENABLE_TEST_AUTH || req.headers[TEST_AUTH_HEADER.toLowerCase()] === TEST_AUTH_KEY) {
             // For testing, we'll set a mock user
             req.user = {
-                id: req.body?.userId ?? 'testUserId', // Attch `userId` in the request body to act as this user (Must enable admin access env)
+                id: req.query?.userId as string  ?? 'testUserId', // Attch `userId` in the request query to act as this user (Must enable admin access env)
                 email: req.user?.email ?? 'test@test.com',
                 role: 'admin'
             };
+            console.log("Admin Access", req.query?.userId);
             delete req.body?.userId;
             return next();
         }

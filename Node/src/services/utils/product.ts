@@ -2,8 +2,8 @@ import { Product, ProductVariant } from '../../types/models/product.js';
 
 export const checkMissingProductData = (product: any) => {
     const currentProduct = product as Product;
-    if (currentProduct.name == null || currentProduct.brandId == null || 
-        currentProduct.category == null || currentProduct.description == null) {
+    if (currentProduct.name == null || currentProduct.brandId == null || currentProduct.brandOwnerId == null ||
+        currentProduct.category == null || currentProduct.description == null || currentProduct.material == null) {
         return 'Product name, brand id, category, and description are required';
     }
     return checkMissingProductVariantData(currentProduct.variants);
@@ -24,7 +24,7 @@ export const checkMissingProductVariantData = (productVariants: any) => {
             variant.stock == null || variant.colors == null ||
             variant.images == null || variant.discount == null) {
             message = 'Product variant data is missing required fields';
-        } 
+        }
     })
     return message;
 };
