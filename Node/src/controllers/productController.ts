@@ -47,13 +47,13 @@ export const getProduct = async (req: Request, res: Response) => {
 export const addProduct = async (req: Request, res: Response) => {
     try {
         const productData = req.body as Product;
-        const brandOwnerId = req.user?.id;
+        const brandOwnerId = req.user?.id as string;
 
         // Remove any ID if provided - always use auto-generated IDs for products
         delete productData.id;
 
         // Get brandOwner to find the associated brandId
-        const brandOwner = await brandOwnerService.getBrandOwnerById(brandOwnerId!);
+        const brandOwner = await brandOwnerService.getBrandOwnerById(brandOwnerId);
 
         if (!brandOwner) {
             return res.status(404).json({
@@ -63,7 +63,7 @@ export const addProduct = async (req: Request, res: Response) => {
         }
 
         // Set the brandOwnerId and brandId from the brand owner's data
-        productData.brandOwnerId = brandOwnerId!;
+        productData.brandOwnerId = brandOwnerId;
         productData.brandId = brandOwner.brandId;
 
         const newProduct = await productService.addProduct(productData);
@@ -80,44 +80,13 @@ export const addProduct = async (req: Request, res: Response) => {
 export const updateProduct = async (req: Request, res: Response) => {
     try {
         const productID = req.params.id;
-        const newProductData = sanitizeProductData(req.body);
+        const newProductData = req.body as Partial<Product>;
 
         // Authorization check is handled by the authorizeProductAccess middleware
         const updatedProduct = await productService.updateProduct(productID, newProductData);
         return res.status(200).json({
             status: 'success',
             message: 'Product updated successfully',
-            data: updatedProduct
-        });
-    } catch (error: any) {
-        return res.status(400).json({ status: 'error', message: error.message });
-    }
-};
-
-export const updateProductVariants = async (req: Request, res: Response) => {
-    try {
-        const productID = req.params.id;
-        const { variants } = req.body;
-
-        if (!variants || !Array.isArray(variants)) {
-            return res.status(400).json({
-                status: 'error',
-                message: 'Variants array is required'
-            });
-        }
-
-        // Check if product exists first
-        const existingProduct = await productService.getProduct(productID);
-        if (!existingProduct) {
-            return res.status(404).json({ status: 'error', message: 'Product not found' });
-        }
-
-        // Update only the variants field
-        const updatedProduct = await productService.updateProduct(productID, { variants });
-
-        return res.status(200).json({
-            status: 'success',
-            message: 'Product variants updated successfully',
             data: updatedProduct
         });
     } catch (error: any) {
@@ -141,24 +110,4 @@ export const deleteProduct = async (req: Request, res: Response) => {
     } catch (error: any) {
         return res.status(400).json({ status: 'error', message: error.message });
     }
-};
-
-// Helper function to sanitize product data
-const sanitizeProductData = (newProductData: any): Partial<Product> => {
-    // List of allowed product fields based on our new Product type
-    const productFields = [
-        'averageRating', 'brand', 'category', 'dateCreated', 'department',
-        'description', 'material', 'name', 'reviews', 'stock',
-        'totalReviews', 'variants'
-    ];
-
-    const sanitizedData: Partial<Product> = {};
-
-    for (const key in newProductData) {
-        if (productFields.includes(key)) {
-            sanitizedData[key as keyof Product] = newProductData[key];
-        }
-    }
-
-    return sanitizedData;
 };

@@ -1,5 +1,5 @@
 import { admin } from '../config/firebase.js';
-import { checkMissingProductData, checkMissingProductUpdateData } from './utils/product.js';
+import { checkMissingProductData, sanitizeProductData } from './utils/product.js';
 import { Product } from '../types/models/product.js';
 import { Timestamp } from 'firebase-admin/firestore';
 
@@ -115,12 +115,13 @@ export const addProduct = async (product: Product) => {
             category: product.category,
             description: product.description,
             material: product.material,
-            dateCreated: product.dateCreated ?? Timestamp.now(),
             averageRating: product.averageRating ?? 0,
             totalReviews: product.totalReviews ?? 0,
             department: product.department ?? [],
             reviewIds: product.reviewIds ?? [],
             variants: product.variants ?? [],
+            createdAt: product.createdAt ?? Timestamp.now(),
+            updatedAt: product.updatedAt ?? Timestamp.now()
         }
 
         // Create the product document
@@ -152,13 +153,9 @@ export const updateProduct = async (productID: string, newProductData: Partial<P
     if (!productID) {
         throw new Error('Please provide a product ID');
     }
+    newProductData = sanitizeProductData(newProductData);
 
     try {
-        const missedUpdateData = checkMissingProductUpdateData(newProductData);
-        if (missedUpdateData) {
-            throw new Error(missedUpdateData);
-        }
-
         const productRef = firestore.collection(productCollection).doc(productID);
         await productRef.update(newProductData);
 

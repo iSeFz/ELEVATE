@@ -16,12 +16,14 @@ export interface Product {
     brandId: string;
     brandOwnerId: string;
     category: string;
-    dateCreated: Timestamp;
     department: string[];
     description: string;
     material: string;
     name: string;
-    reviewIds?: string[];
+    reviewIds: string[];
     totalReviews: number;
     variants: ProductVariant[];
+
+    createdAt: Timestamp;
+    updatedAt: Timestamp;
 }

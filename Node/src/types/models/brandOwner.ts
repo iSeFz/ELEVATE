@@ -1,21 +1,15 @@
-import { FirestoreReference } from './common.js';
-import { Brand } from './brand.js';
+import { Timestamp } from "firebase-admin/firestore";
 
 export interface BrandOwner {
     id?: string;
-        
-    // Denormalized field for querying and relationship with Brand
-    brandId: string;
-    
+    brandId: string; // Denormalized field for authorization
     email: string;
     firstName: string;
     lastName: string;
     imageURL: string;
     username: string;
-    
-    // Added fields for authentication
-    password?: string;
-    
-    // Added role for consistency with auth patterns
-    role: string;
+    createdAt: Timestamp;
+    updatedAt: Timestamp;
+
+    password?: string; // Optional for authentication purposes
 }

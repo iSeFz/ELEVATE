@@ -1,6 +1,5 @@
 import { Timestamp } from 'firebase-admin/firestore';
-import { Address, FirestoreReference, Website } from './common.js';
-import { BrandOwner } from './brandOwner.js';
+import { Address, Website } from './common.js';
 
 export interface Subscription {
     plan: string;
@@ -13,8 +12,7 @@ export interface Brand {
     id?: string;
     addresses: Address[];
     brandName: string;
-    // Denormalized field for authorization
-    brandOwnerId?: string;
+    brandOwnerId: string; // Denormalized field for authorization
     email: string;
     imageURL: string;
     industry: string;
@@ -23,5 +21,8 @@ export interface Brand {
     storyDescription: string;
     subscription: Subscription;
     websites: Website[];
-    productIds?: string[]; // Denormalized for easier queries
+    productIds: string[]; // Denormalized for easier queries
+
+    createdAt: Timestamp;
+    updatedAt: Timestamp;
 }

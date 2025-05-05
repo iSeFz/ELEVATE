@@ -1,45 +1,24 @@
 import { Request, Response } from 'express';
 import * as authService from '../services/auth.js';
-import { AuthError, AuthErrorType } from '../services/auth.js';
-import { Customer } from '../types/models/customer.js';
+import { AuthError } from '../services/auth.js';
 import { Staff } from '../types/models/staff.js';
 import { BrandOwner } from '../types/models/brandOwner.js';
 import * as customerService from '../services/customer.js';
 import * as staffService from '../services/staff.js';
+import * as brandService from '../services/brand.js';
 import * as brandOwnerService from '../services/brandOwner.js';
+import { Brand } from '../types/models/brand.js';
 
 export const signup = async (req: Request, res: Response) => {
     try {
-        const customerData: Customer = {
-            id: '',
-            username: req.body.username,
-            email: req.body.email,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            phoneNumber: req.body.phoneNumber,
-            password: req.body.password,
-            imageURL: req.body.imageURL ?? '',
-            address: req.body.address ?? {},
-            loyaltyPoints: 0,
-            role: 'customer',
-            cart: {
-                items: [],
-                subtotal: 0
-            },
-            wishlist: [],
-            orders: []
-        };
+        const userRecord = await authService.signup(req.body);
 
-        const userRecord = await authService.signup(customerData);
-
-        // Return success response without password
-        const { password, ...safeCustomerData } = customerData;
         return res.status(201).json({
             status: 'success',
             message: 'Registration successful',
             data: {
-                ...safeCustomerData,
                 id: userRecord.uid,
+                email: userRecord.email,
             }
         });
     } catch (error: any) {
@@ -51,7 +30,7 @@ export const signup = async (req: Request, res: Response) => {
                 message: error.message
             });
         }
-        
+
         console.error('Signup error:', error);
         return res.status(500).json({
             status: 'error',
@@ -64,7 +43,7 @@ export const login = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
         const userData = await authService.login(email, password);
-        
+
         return res.status(200).json({
             status: 'success',
             message: 'Login successful',
@@ -79,7 +58,7 @@ export const login = async (req: Request, res: Response) => {
                 message: error.message
             });
         }
-        
+
         console.error('Login error:', error);
         return res.status(500).json({
             status: 'error',
@@ -121,7 +100,7 @@ export const staffSignup = async (req: Request, res: Response) => {
                 message: error.message
             });
         }
-        
+
         console.error('Staff signup error:', error);
         return res.status(500).json({
             status: 'error',
@@ -133,60 +112,27 @@ export const staffSignup = async (req: Request, res: Response) => {
 export const brandOwnerSignup = async (req: Request, res: Response) => {
     try {
         // Extract both brand owner and brand data from the request
-        const { brandData, ...brandOwnerData } = req.body;
-        
-        // Initialize brand owner data with empty brandId
-        const newBrandOwner = {
-            id: '',
-            username: brandOwnerData.username,
-            email: brandOwnerData.email,
-            firstName: brandOwnerData.firstName,
-            lastName: brandOwnerData.lastName,
-            imageURL: brandOwnerData.imageURL ?? '',
-            password: brandOwnerData.password,
-            role: 'brandOwner',
-            brandId: '', // Initially empty, will be updated after brand creation
-        };
+        let { brandData, ...brandOwnerData }: { brandData: Brand } & BrandOwner = req.body;
 
-        // Validate brand owner data
-        if (!newBrandOwner.email || !newBrandOwner.password || !newBrandOwner.firstName || 
-            !newBrandOwner.lastName) {
-            return res.status(400).json({
-                status: 'error',
-                message: 'Missing required brand owner fields'
-            });
-        }
-
-        // Validate brand data
-        if (!brandData?.brandName) {
-            return res.status(400).json({
-                status: 'error',
-                message: 'Brand data is required with at least the brandName field'
-            });
-        }
+        authService.validateBrandAndOwnerData(brandOwnerData, brandData);
 
         // 1. Create brand owner account
-        const userRecord = await authService.brandOwnerSignup(newBrandOwner as BrandOwner);
+        const userRecord = await authService.brandOwnerSignup(brandOwnerData);
         const brandOwnerId = userRecord.uid;
 
         // 2. Create brand with reference to the brand owner
-        const brandToCreate = {
-            ...brandData,
-            brandOwnerId: brandOwnerId,
-        };
+        brandData.brandOwnerId = brandOwnerId; // Set the brand ID to the brand owner ID
 
         // Import brand service
-        const brandService = await import('../services/brand.js');
-        const newBrand = await brandService.addBrand(brandToCreate);
-        
+        const newBrand = await brandService.addBrand(brandData);
+
         // 3. Update brand owner with brand reference
-        const brandOwnerService = await import('../services/brandOwner.js');
-        await brandOwnerService.updateBrandOwner(brandOwnerId, { 
-            brandId: newBrand.id 
+        await brandOwnerService.updateBrandOwner(brandOwnerId, {
+            brandId: newBrand.id
         });
 
         // Return success response without password
-        const { password, ...safeBrandOwnerData } = newBrandOwner;
+        const { password, ...safeBrandOwnerData } = brandOwnerData;
         return res.status(201).json({
             status: 'success',
             message: 'Brand owner and brand registration successful',
@@ -208,11 +154,11 @@ export const brandOwnerSignup = async (req: Request, res: Response) => {
                 message: error.message
             });
         }
-        
+
         console.error('Brand owner signup error:', error);
         return res.status(500).json({
             status: 'error',
-            message: error.message || 'An unexpected error occurred during brand owner registration'
+            message: error.message ?? 'An unexpected error occurred during brand owner registration'
         });
     }
 };
@@ -221,7 +167,7 @@ export const staffLogin = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
         const userData = await authService.staffLogin(email, password);
-        
+
         return res.status(200).json({
             status: 'success',
             message: 'Staff login successful',
@@ -236,7 +182,7 @@ export const staffLogin = async (req: Request, res: Response) => {
                 message: error.message
             });
         }
-        
+
         console.error('Staff login error:', error);
         return res.status(500).json({
             status: 'error',
@@ -249,7 +195,7 @@ export const brandOwnerLogin = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
         const userData = await authService.brandOwnerLogin(email, password);
-        
+
         return res.status(200).json({
             status: 'success',
             message: 'Brand owner login successful',
@@ -264,7 +210,7 @@ export const brandOwnerLogin = async (req: Request, res: Response) => {
                 message: error.message
             });
         }
-        
+
         console.error('Brand owner login error:', error);
         return res.status(500).json({
             status: 'error',
@@ -336,7 +282,7 @@ export const getCurrentUser = async (req: Request, res: Response) => {
         console.error('Get current user error:', error);
         return res.status(500).json({
             status: 'error',
-            message: error.message || 'An error occurred while retrieving user profile'
+            message: error.message ?? 'An error occurred while retrieving user profile'
         });
     }
 };

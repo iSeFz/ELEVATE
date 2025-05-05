@@ -236,3 +236,8 @@ export const authorizeInventoryAccess = createResourceAuthorizationMiddleware(
     authorizationService.checkInventoryAuthorization,
     'Inventory'
 );
+
+export const authorizeBrandOwnerProfileAccess = createResourceAuthorizationMiddleware(
+    authorizationService.checkBrandOwnerProfileAuthorization,
+    'Brand Owner Profile'
+);

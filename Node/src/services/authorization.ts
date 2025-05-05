@@ -202,6 +202,24 @@ export const checkInventoryAuthorization = async (inventoryId: string, userId: s
 };
 
 /**
+ * Check if a user is authorized to access a brand owner profile
+ * Brand owners can only access their own profile, while admin and staff can access any profile
+ */
+export const checkBrandOwnerProfileAuthorization = async (brandOwnerId: string, userId: string, userRole: string): Promise<boolean> => {
+    // Admin and staff can access all brand owner profiles
+    if (userRole === 'admin' || userRole === 'staff') {
+        return true;
+    }
+
+    // Brand owners can only access their own profile
+    if (userRole === 'brandOwner') {
+        return brandOwnerId === userId;
+    }
+
+    return false;
+};
+
+/**
  * Helper function to extract resource owner ID from request parameters
  * Used with the authorizeOwner middleware
  */

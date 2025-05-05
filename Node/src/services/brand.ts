@@ -63,18 +63,27 @@ export const addBrand = async (brand: Brand) => {
         }
 
         const customId = brand.id;
-        const { id, ...brandData } = brand;
-        
-        // Initialize empty collections if not provided
-        brandData.addresses ??= [];
-        brandData.websites ??= [];
-        brandData.phoneNumbers ??= [];
-        brandData.productIds ??= [];
-        brandData.subscription ??= {
-            plan: 'free',
-            price: 0,
-            startDate: admin.firestore.Timestamp.now(),
-            endDate: admin.firestore.Timestamp.fromMillis(admin.firestore.Timestamp.now().toMillis() + 30 * 24 * 60 * 60 * 1000) // 30 days from now
+
+        const brandData: Brand = {
+            brandName: brand.brandName,
+            brandOwnerId: brand.brandOwnerId,
+            email: brand.email,
+            industry: brand.industry,
+            rating: brand.rating || 0,
+            storyDescription: brand.storyDescription || '',
+            imageURL: brand.imageURL || '',
+            phoneNumbers: brand.phoneNumbers || [],
+            websites: brand.websites || [],
+            productIds: brand.productIds || [],
+            addresses: brand.addresses || [],
+            subscription: brand.subscription || {
+                plan: 'free',
+                price: 0,
+                startDate: admin.firestore.Timestamp.now(),
+                endDate: admin.firestore.Timestamp.fromMillis(admin.firestore.Timestamp.now().toMillis() + 30 * 24 * 60 * 60 * 1000) // 30 days from now
+            },
+            createdAt: admin.firestore.Timestamp.now(),
+            updatedAt: admin.firestore.Timestamp.now(),
         }
         
         if (customId) {

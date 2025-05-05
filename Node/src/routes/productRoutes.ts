@@ -11,7 +11,6 @@ router.get('/:id', ProductController.getProduct);
 // Protected routes - brand owners can manage their own products
 router.post('/', authenticate, authorize(['admin', 'staff', 'brandOwner']), ProductController.addProduct);
 router.put('/:id', authenticate, authorizeProductAccess, ProductController.updateProduct);
-router.patch('/:id/variants', authenticate, authorizeProductAccess, ProductController.updateProductVariants);
 router.delete('/:id', authenticate, authorizeProductAccess, ProductController.deleteProduct);
 
 export default router;

@@ -119,7 +119,7 @@ const sanitizeCustomerData = (newCustomerData: any, userRole?: string): Partial<
     ];
     
     // Allow admin to update additional fields
-    if (userRole === 'admin') {
+    if (userRole === 'admin' || userRole === 'staff') {
         customerFields = [
             ...customerFields,
             'loyaltyPoints', 'role'

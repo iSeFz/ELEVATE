@@ -3,9 +3,8 @@ import { Staff } from '../../types/models/staff.js';
 
 export const checkMissingCustomerRequestData = (customer: any) => {
     const currentCustomer = customer as Customer;
-    if (currentCustomer.username == null || currentCustomer.email == null || currentCustomer.password == null
-        || currentCustomer.firstName == null || currentCustomer.lastName == null || currentCustomer.phoneNumber == null) {
-        return 'All fields are required';
+    if (currentCustomer.username == null || currentCustomer.email == null || currentCustomer.password == null) {
+        return 'Please provide at least: username, email , and password';
     }
     if (customer.password.length < 6) {
         return 'Password must be at least 6 characters';

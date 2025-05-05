@@ -1,26 +1,26 @@
-import { Address, FirestoreReference } from './common.js';
-import { Order } from './order.js';
-import { Product } from './product.js';
+import { Timestamp } from 'firebase-admin/firestore';
+import { Address } from './common.js';
 
 export interface Cart {
     subtotal: number;
-    items: FirestoreReference<Order>[]; // non-submitted orders
+    items: string[]; // non-submitted orders
 }
 
 export interface Customer {
     id?: string;
     address: Address;
-    cart?: Cart;
+    cart: Cart;
     email: string;
     firstName: string;
     lastName: string;
     imageURL: string;
     loyaltyPoints: number;
-    orders: FirestoreReference<Order>[]; // Submitted orders
+    orders: string[]; // Submitted orders
     phoneNumber: string;
     username: string;
-    wishlist: FirestoreReference<Product>[];
-    // Optional field not in schema but likely needed for authentication
-    password?: string;
-    role?: string; // Optional field for role-based access control
+    wishlist: string[];
+    createdAt: Timestamp;
+    updatedAt: Timestamp;
+
+    password?: string; // Optional for authentication purposes
 }

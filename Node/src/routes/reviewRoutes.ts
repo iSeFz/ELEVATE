@@ -1,6 +1,6 @@
 import express from 'express';
 import * as ReviewController from '../controllers/reviewController.js';
-import { authenticate, authorize, authorizeReviewAccess } from '../middleware/auth.js';
+import { authenticate, authorizeReviewAccess } from '../middleware/auth.js';
 
 const router = express.Router();
 

@@ -2,9 +2,12 @@ import { Brand } from '../../types/models/brand.js';
 
 export const checkMissingBrandData = (brand: any) => {
     const currentBrand = brand as Brand;
+    if (brand == null) {
+        return 'Brand data is required';
+    }
     if (currentBrand.brandName == null || currentBrand.email == null || 
-        currentBrand.industry == null) {
-        return 'Brand name, email, industry, and phone numbers are required';
+        currentBrand.industry == null || currentBrand.storyDescription == null) {
+        return 'Brand name, email, industry, and story description are required';
     }
     return null;
 };

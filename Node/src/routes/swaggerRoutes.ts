@@ -11,11 +11,6 @@ const projectRoot = process.env.VERCEL
   ? '/var/task/Node' // Use the correct path in Vercel
   : process.cwd();   // Use working directory in local dev
 
-console.log("Environment:", process.env.NODE_ENV);
-console.log("PWD:", process.env.PWD);
-console.log("Project root:", projectRoot);
-console.log("Current working directory:", process.cwd());
-
 const swaggerOptions: swaggerJsDoc.OAS3Options = {
   definition: {
     openapi: '3.0.0',

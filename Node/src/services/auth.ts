@@ -6,6 +6,9 @@ import { BrandOwner } from '../types/models/brandOwner.js';
 import { checkMissingCustomerRequestData } from './utils/customer.js';
 import { checkMissingStaffData } from './utils/staff.js';
 import { checkMissingBrandOwnerData } from './utils/brandOwner.js';
+import { Brand } from '../types/models/brand.js';
+import { checkMissingBrandData } from './utils/brand.js';
+import { Timestamp } from 'firebase-admin/firestore';
 
 const auth = admin.auth();
 const firestore = admin.firestore();
@@ -153,25 +156,8 @@ export const genericSignup = async (userData: any, userType: 'customer' | 'staff
         // Remove password from data stored in Firestore
         const { password, id, ...cleanedData } = userData;
 
-        // Set role for the user
-        cleanedData.role = userType;
-
-        // Apply type-specific defaults
-        if (userType === 'customer') {
-            cleanedData.loyaltyPoints = 0;
-            cleanedData.orders = [];
-            cleanedData.cart = {
-                items: [],
-                subtotal: 0,
-            };
-            cleanedData.wishlist = [];
-        }
-
         // Save user data to Firestore
-        await firestore.collection(userType).doc(userRecord.uid).set({
-            ...cleanedData,
-            createdAt: new Date()
-        });
+        await firestore.collection(userType).doc(userRecord.uid).set(cleanedData);
 
         return userRecord;
     } catch (error: any) {
@@ -179,9 +165,48 @@ export const genericSignup = async (userData: any, userType: 'customer' | 'staff
     }
 };
 
+// Validations for brand and brand owner data
+export const validateBrandAndOwnerData = (brandOwner: BrandOwner, brand: Brand) => {
+    const missedBrandData = checkMissingBrandData(brand);
+    if (missedBrandData) {
+        throw new Error(missedBrandData);
+    }
+
+    const missedBrandOwnerData = checkMissingBrandOwnerData(brandOwner);
+    if (missedBrandOwnerData) {
+        throw new AuthError(
+            missedBrandOwnerData,
+            AuthErrorType.INVALID_SIGNUP_DATA,
+            'auth/invalid-signup-data',
+            400
+        );
+    }
+
+    return { brandOwner, brand };
+}
+
 // Type-specific signup functions that use the generic function
 export const signup = async (customer: Customer) => {
-    return genericSignup(customer, 'customer');
+    const customerData: Customer = {
+        username: customer.username,
+        email: customer.email,
+        password: customer.password,
+        firstName: customer.firstName ?? '',
+        lastName: customer.lastName ?? '',
+        phoneNumber: customer.phoneNumber ?? '',
+        imageURL: customer.imageURL ?? '',
+        address: customer.address ?? {},
+        loyaltyPoints: customer.loyaltyPoints ?? 0,
+        cart: customer.cart ?? {
+            items: [],
+            subtotal: 0
+        },
+        wishlist: customer.wishlist ?? [],
+        orders: customer.orders ?? [],
+        createdAt: admin.firestore.Timestamp.now(),
+        updatedAt: admin.firestore.Timestamp.now(),
+    };
+    return genericSignup(customerData, 'customer');
 };
 
 export const staffSignup = async (staff: Staff) => {
@@ -189,7 +214,18 @@ export const staffSignup = async (staff: Staff) => {
 };
 
 export const brandOwnerSignup = async (brandOwner: BrandOwner) => {
-    return genericSignup(brandOwner, 'brandOwner');
+    const brandOwnerData: BrandOwner = {
+        brandId: brandOwner.brandId ?? "", // Will be updated after brand creation
+        email: brandOwner.email,
+        password: brandOwner.password,
+        firstName: brandOwner.firstName,
+        lastName: brandOwner.lastName,
+        username: brandOwner.username,
+        imageURL: brandOwner.imageURL ?? '',
+        createdAt: brandOwner.createdAt ?? admin.firestore.Timestamp.now(),
+        updatedAt: brandOwner.updatedAt ?? admin.firestore.Timestamp.now(),
+    }
+    return genericSignup(brandOwnerData, 'brandOwner');
 };
 
 export const login = async (email: string, password: string) => {
@@ -309,7 +345,7 @@ export const login = async (email: string, password: string) => {
 export const staffLogin = async (email: string, password: string) => {
     // Reusing the generic login function but verifying it's a staff account
     const userData = await login(email, password);
-    
+
     if (userData.user.role !== 'staff') {
         throw new AuthError(
             'This account is not a staff account',
@@ -318,14 +354,14 @@ export const staffLogin = async (email: string, password: string) => {
             403
         );
     }
-    
+
     return userData;
 };
 
 export const brandOwnerLogin = async (email: string, password: string) => {
     // Reusing the generic login function but verifying it's a brand owner account
     const userData = await login(email, password);
-    
+
     if (userData.user.role !== 'brandOwner') {
         throw new AuthError(
             'This account is not a brand owner account',
@@ -334,7 +370,7 @@ export const brandOwnerLogin = async (email: string, password: string) => {
             403
         );
     }
-    
+
     return userData;
 };
 

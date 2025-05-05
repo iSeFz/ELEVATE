@@ -121,6 +121,12 @@ paths:
       tags: [Reviews]
       security:
         - bearerAuth: []
+      parameters:
+        - in: query
+          name: userId
+          schema:
+            type: string
+          description: Pass this to use admin access over the userId
       requestBody:
         required: true
         content:

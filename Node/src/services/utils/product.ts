@@ -16,6 +16,26 @@ export const checkMissingProductUpdateData = (product: any) => {
     return null;
 };
 
+export const sanitizeProductData = (newProductData: any): Partial<Product> => {
+    const excludedFields = ['id', 'brandId', 'brandOwnerId', 'createdAt'];
+    const sanitizedData: Partial<Product> = {};
+    
+    const productFields: Array<keyof Product> = [
+        'averageRating', 'brandId', 'brandOwnerId', 'category', 'updatedAt', 
+        'department', 'description', 'material', 'name', 'reviewIds', 
+        'totalReviews', 'variants'
+    ];
+
+    for (const key in newProductData) {
+        // Only include fields that are part of the Product interface and not in excluded list
+        if (productFields.includes(key as keyof Product) && !excludedFields.includes(key)) {
+            sanitizedData[key as keyof Product] = newProductData[key];
+        }
+    }
+
+    return sanitizedData;
+};
+
 export const checkMissingProductVariantData = (productVariants: any) => {
     const currentProductVariant = (productVariants ?? []) as ProductVariant[];
     let message: string | null = null;
