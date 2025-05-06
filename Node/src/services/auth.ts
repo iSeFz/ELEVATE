@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Customer } from '../types/models/customer.js';
 import { Staff } from '../types/models/staff.js';
 import { BrandOwner } from '../types/models/brandOwner.js';
-import { checkMissingCustomerRequestData } from './utils/customer.js';
+import { checkMissingCustomerRequestData, generateEmptyCustomerData } from './utils/customer.js';
 import { checkMissingStaffData } from './utils/staff.js';
 import { checkMissingBrandOwnerData } from './utils/brandOwner.js';
 import { Brand } from '../types/models/brand.js';
@@ -188,23 +188,10 @@ export const validateBrandAndOwnerData = (brandOwner: BrandOwner, brand: Brand) 
 // Type-specific signup functions that use the generic function
 export const signup = async (customer: Customer) => {
     const customerData: Customer = {
+        ...generateEmptyCustomerData(),
         username: customer.username,
         email: customer.email,
         password: customer.password,
-        firstName: customer.firstName ?? '',
-        lastName: customer.lastName ?? '',
-        phoneNumber: customer.phoneNumber ?? '',
-        imageURL: customer.imageURL ?? '',
-        address: customer.address ?? {},
-        loyaltyPoints: customer.loyaltyPoints ?? 0,
-        cart: customer.cart ?? {
-            items: [],
-            subtotal: 0
-        },
-        wishlist: customer.wishlist ?? [],
-        orders: customer.orders ?? [],
-        createdAt: admin.firestore.Timestamp.now(),
-        updatedAt: admin.firestore.Timestamp.now(),
     };
     return genericSignup(customerData, 'customer');
 };
@@ -222,8 +209,8 @@ export const brandOwnerSignup = async (brandOwner: BrandOwner) => {
         lastName: brandOwner.lastName,
         username: brandOwner.username,
         imageURL: brandOwner.imageURL ?? '',
-        createdAt: brandOwner.createdAt ?? admin.firestore.Timestamp.now(),
-        updatedAt: brandOwner.updatedAt ?? admin.firestore.Timestamp.now(),
+        createdAt: brandOwner.createdAt ?? Timestamp.now(),
+        updatedAt: brandOwner.updatedAt ?? Timestamp.now(),
     }
     return genericSignup(brandOwnerData, 'brandOwner');
 };

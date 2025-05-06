@@ -1,6 +1,7 @@
 import { admin } from '../config/firebase.js';
 import { checkMissingBrandData, checkMissingBrandUpdateData } from './utils/brand.js';
 import { Brand } from '../types/models/brand.js';
+import { Timestamp } from 'firebase-admin/firestore';
 
 const firestore = admin.firestore();
 const brandCollection = 'brand';
@@ -79,11 +80,11 @@ export const addBrand = async (brand: Brand) => {
             subscription: brand.subscription || {
                 plan: 'free',
                 price: 0,
-                startDate: admin.firestore.Timestamp.now(),
-                endDate: admin.firestore.Timestamp.fromMillis(admin.firestore.Timestamp.now().toMillis() + 30 * 24 * 60 * 60 * 1000) // 30 days from now
+                startDate: Timestamp.now(),
+                endDate: Timestamp.fromMillis(Timestamp.now().toMillis() + 30 * 24 * 60 * 60 * 1000) // 30 days from now
             },
-            createdAt: admin.firestore.Timestamp.now(),
-            updatedAt: admin.firestore.Timestamp.now(),
+            createdAt: Timestamp.now(),
+            updatedAt: Timestamp.now(),
         }
         
         if (customId) {

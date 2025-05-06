@@ -8,6 +8,12 @@ const router = express.Router();
 router.get('/', ProductController.getAllProducts);
 router.get('/:id', ProductController.getProduct);
 
+// Product variant routes
+router.get('/:productId/variants/:variantId', ProductController.getProductVariant);
+router.post('/:productId/variants', authenticate, authorizeProductAccess, ProductController.addProductVariant);
+router.put('/:productId/variants/:variantId', authenticate, authorizeProductAccess, ProductController.updateProductVariant);
+router.delete('/:productId/variants/:variantId', authenticate, authorizeProductAccess, ProductController.deleteProductVariant);
+
 // Protected routes - brand owners can manage their own products
 router.post('/', authenticate, authorize(['admin', 'staff', 'brandOwner']), ProductController.addProduct);
 router.put('/:id', authenticate, authorizeProductAccess, ProductController.updateProduct);

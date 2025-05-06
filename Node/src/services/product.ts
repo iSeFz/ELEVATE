@@ -1,11 +1,29 @@
 import { admin } from '../config/firebase.js';
 import { checkMissingProductData, sanitizeProductData } from './utils/product.js';
-import { Product } from '../types/models/product.js';
+import { Product, ProductVariant } from '../types/models/product.js';
 import { Timestamp } from 'firebase-admin/firestore';
 
 const firestore = admin.firestore();
 const productCollection = 'product';
 const brandCollection = 'brand';
+
+// Helper function to generate unique IDs for product variants
+const generateVariantId = (): string => {
+    return `variant_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+};
+
+// Helper function to ensure all variants have IDs
+const ensureVariantIds = (variants: ProductVariant[]): ProductVariant[] => {
+    if (!variants || !Array.isArray(variants)) return [];
+    
+    return variants.map(variant => {
+        // If variant has no ID, generate one
+        if (!variant.id) {
+            return { ...variant, id: generateVariantId() };
+        }
+        return variant;
+    });
+};
 
 export const getAllProducts = async () => {
     try {
@@ -108,6 +126,9 @@ export const addProduct = async (product: Product) => {
 
         const customId = product.id;
 
+        // Ensure all variants have IDs
+        const variantsWithIds = ensureVariantIds(product.variants);
+
         const productData: Product = {
             brandOwnerId: product.brandOwnerId,
             brandId: product.brandId,
@@ -119,7 +140,7 @@ export const addProduct = async (product: Product) => {
             totalReviews: product.totalReviews ?? 0,
             department: product.department ?? [],
             reviewIds: product.reviewIds ?? [],
-            variants: product.variants ?? [],
+            variants: variantsWithIds,
             createdAt: product.createdAt ?? Timestamp.now(),
             updatedAt: product.updatedAt ?? Timestamp.now()
         }
@@ -153,9 +174,18 @@ export const updateProduct = async (productID: string, newProductData: Partial<P
     if (!productID) {
         throw new Error('Please provide a product ID');
     }
+    
     newProductData = sanitizeProductData(newProductData);
 
     try {
+        // If variants are being updated, ensure they all have IDs
+        if (newProductData.variants) {
+            newProductData.variants = ensureVariantIds(newProductData.variants);
+        }
+        
+        // Always update the timestamp
+        newProductData.updatedAt = Timestamp.now();
+        
         const productRef = firestore.collection(productCollection).doc(productID);
         await productRef.update(newProductData);
 
@@ -193,5 +223,119 @@ export const deleteProduct = async (productID: string) => {
         return true;
     } catch (error: any) {
         throw new Error(error.message);
+    }
+};
+
+// Function to get a specific variant by ID
+export const getProductVariant = async (productID: string, variantID: string) => {
+    if (!productID || !variantID) {
+        throw new Error('Product ID and variant ID are required');
+    }
+    
+    try {
+        const product = await getProduct(productID);
+        if (!product) {
+            throw new Error('Product not found');
+        }
+        
+        const variant = product.variants.find(v => v.id === variantID);
+        if (!variant) {
+            return null;
+        }
+        
+        return variant;
+    } catch (error: any) {
+        throw new Error(`Failed to get product variant: ${error.message}`);
+    }
+};
+
+// Function to add a new variant to a product
+export const addProductVariant = async (productID: string, variant: ProductVariant) => {
+    if (!productID) {
+        throw new Error('Product ID is required');
+    }
+    
+    try {
+        // Ensure the variant has an ID
+        variant.id ??= generateVariantId();
+        
+        const productRef = firestore.collection(productCollection).doc(productID);
+        await productRef.update({
+            variants: admin.firestore.FieldValue.arrayUnion(variant),
+            updatedAt: Timestamp.now()
+        });
+        
+        return variant;
+    } catch (error: any) {
+        throw new Error(`Failed to add product variant: ${error.message}`);
+    }
+};
+
+// Function to update a specific variant
+export const updateProductVariant = async (productID: string, variantID: string, updatedVariant: Partial<ProductVariant>) => {
+    if (!productID || !variantID) {
+        throw new Error('Product ID and variant ID are required');
+    }
+    
+    try {
+        const product = await getProduct(productID);
+        if (!product) {
+            throw new Error('Product not found');
+        }
+        
+        const variantIndex = product.variants.findIndex(v => v.id === variantID);
+        if (variantIndex === -1) {
+            throw new Error('Variant not found');
+        }
+        
+        // Create updated variants array
+        const updatedVariants = [...product.variants];
+        updatedVariants[variantIndex] = {
+            ...updatedVariants[variantIndex],
+            ...updatedVariant,
+            id: variantID // Ensure ID remains unchanged
+        };
+        
+        // Update the product with the modified variants array
+        await firestore.collection(productCollection).doc(productID).update({
+            variants: updatedVariants,
+            updatedAt: Timestamp.now()
+        });
+        
+        return updatedVariants[variantIndex];
+    } catch (error: any) {
+        throw new Error(`Failed to update product variant: ${error.message}`);
+    }
+};
+
+// Function to delete a specific variant
+export const deleteProductVariant = async (productID: string, variantID: string) => {
+    if (!productID || !variantID) {
+        throw new Error('Product ID and variant ID are required');
+    }
+    
+    try {
+        const product = await getProduct(productID);
+        if (!product) {
+            throw new Error('Product not found');
+        }
+        
+        const variantToRemove = product.variants.find(v => v.id === variantID);
+        if (!variantToRemove) {
+            throw new Error('Variant not found');
+        }
+        
+        // Filter out the variant to remove
+        const updatedVariants = product.variants.filter(v => v.id !== variantID);
+        
+        // Update the product with the modified variants array
+        await firestore.collection(productCollection).doc(productID).update({
+            variants: updatedVariants,
+            updatedAt: Timestamp.now()
+        });
+        
+        return true;
+    } catch (error: any) {
+        throw new Error(`Failed to delete product variant: ${error.message}`);
     }
 };

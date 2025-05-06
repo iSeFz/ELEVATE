@@ -1,3 +1,4 @@
+import { Timestamp } from 'firebase-admin/firestore';
 import { Review } from '../../types/models/review.js';
 
 export const checkMissingReviewData = (review: any) => {
@@ -44,3 +45,16 @@ export const sanitizeReviewData = (newReviewData: any): Partial<Review> => {
 
     return sanitizedData;
 };
+
+export const generateEmptyReviewData = (): Review => ({
+    id: "",
+    customerId: "",
+    productId: "",
+
+    title: "",
+    content: "",
+    rating: 0,
+
+    createdAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+});

@@ -1,3 +1,4 @@
+import { Timestamp } from 'firebase-admin/firestore';
 import { BrandOwner } from '../../types/models/brandOwner.js';
 
 export const checkMissingBrandOwnerData = (brandOwner: any) => {
@@ -34,3 +35,18 @@ export const sanitizeBrandOwnerData = (newBrandOwnerData: any): Partial<BrandOwn
 
     return sanitizedData;
 };
+
+export const generateEmptyBrandOwnerData = (): BrandOwner => ({
+    id: "",
+    brandId: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    imageURL: "",
+    username: "",
+
+    createdAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+
+    password: "", // Optional for authentication purposes
+});

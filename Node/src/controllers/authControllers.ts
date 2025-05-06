@@ -31,7 +31,6 @@ export const signup = async (req: Request, res: Response) => {
             });
         }
 
-        console.error('Signup error:', error);
         return res.status(500).json({
             status: 'error',
             message: 'An unexpected error occurred during registration'

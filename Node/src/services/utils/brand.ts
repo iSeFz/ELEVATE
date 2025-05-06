@@ -1,3 +1,4 @@
+import { Timestamp } from 'firebase-admin/firestore';
 import { Brand } from '../../types/models/brand.js';
 
 export const checkMissingBrandData = (brand: any) => {
@@ -18,3 +19,27 @@ export const checkMissingBrandUpdateData = (brand: any) => {
     }
     return null;
 };
+
+export const generateEmptyBrandData = (): Brand => ({
+    id: "",
+    addresses: [],
+    brandName: "",
+    brandOwnerId: "",
+    email: "",
+    imageURL: "",
+    industry: "",
+    phoneNumbers: [],
+    rating: 0,
+    storyDescription: "",
+    subscription: {
+        plan: "free",
+        price: 0,
+        startDate: Timestamp.now(),
+        endDate: Timestamp.now(),
+    },
+    websites: [],
+    productIds: [],
+
+    createdAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+});

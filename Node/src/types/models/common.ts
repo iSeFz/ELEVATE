@@ -1,10 +1,10 @@
 import { DocumentReference } from 'firebase-admin/firestore';
 
 export interface Address {
-    building?: number;
-    city?: string;
-    postalCode?: number;
-    street?: string;
+    building: number;
+    city: string;
+    postalCode: number;
+    street: string;
 }
 
 export interface Website {

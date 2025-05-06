@@ -1,3 +1,4 @@
+import { Timestamp } from 'firebase-admin/firestore';
 import { Product, ProductVariant } from '../../types/models/product.js';
 
 export const checkMissingProductData = (product: any) => {
@@ -19,11 +20,10 @@ export const checkMissingProductUpdateData = (product: any) => {
 export const sanitizeProductData = (newProductData: any): Partial<Product> => {
     const excludedFields = ['id', 'brandId', 'brandOwnerId', 'createdAt'];
     const sanitizedData: Partial<Product> = {};
-    
+
     const productFields: Array<keyof Product> = [
-        'averageRating', 'brandId', 'brandOwnerId', 'category', 'updatedAt', 
-        'department', 'description', 'material', 'name', 'reviewIds', 
-        'totalReviews', 'variants'
+        'reviewSummary', 'category', 'updatedAt', 'brandName',
+        'department', 'description', 'material', 'name', 'variants'
     ];
 
     for (const key in newProductData) {
@@ -37,6 +37,9 @@ export const sanitizeProductData = (newProductData: any): Partial<Product> => {
 };
 
 export const checkMissingProductVariantData = (productVariants: any) => {
+    if (!Array.isArray(productVariants) || productVariants.length === 0) {
+        return 'Product variants must be an array and cannot be empty';
+    }
     const currentProductVariant = (productVariants ?? []) as ProductVariant[];
     let message: string | null = null;
     currentProductVariant.forEach((variant) => {
@@ -48,3 +51,31 @@ export const checkMissingProductVariantData = (productVariants: any) => {
     })
     return message;
 };
+
+export const generateEmptyProductData = (): Product => ({
+    id: "",
+    brandId: "",
+    brandOwnerId: "",
+    brandName: "",
+    category: "",
+    department: [],
+    description: "",
+    material: "",
+    name: "",
+    variants: [],
+    reviewSummary: {
+        averageRating: 0,
+        totalReviews: 0,
+        ratingDistribution: {
+            '1': 0,
+            '2': 0,
+            '3': 0,
+            '4': 0,
+            '5': 0,
+        },
+        reviewIds: [],
+    },
+
+    createdAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+});

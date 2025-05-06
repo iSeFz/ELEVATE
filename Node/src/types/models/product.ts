@@ -10,19 +10,32 @@ export interface ProductVariant {
     stock: number;
 }
 
+export interface ProductReviewSummary {
+    averageRating: number;
+    totalReviews: number;
+    ratingDistribution: {
+        '1': number;
+        '2': number;
+        '3': number;
+        '4': number;
+        '5': number;
+    };
+    // Most helpful or recent reviews for quick display
+    reviewIds?: string[]; // IDs of featured reviews
+}
+
 export interface Product {
     id?: string;
-    averageRating: number;
     brandId: string;
     brandOwnerId: string;
+    brandName: string;
     category: string;
     department: string[];
     description: string;
     material: string;
     name: string;
-    reviewIds: string[];
-    totalReviews: number;
     variants: ProductVariant[];
+    reviewSummary: ProductReviewSummary;
 
     createdAt: Timestamp;
     updatedAt: Timestamp;

@@ -1,3 +1,4 @@
+import { Timestamp } from 'firebase-admin/firestore';
 import { Customer } from '../../types/models/customer.js';
 import { Staff } from '../../types/models/staff.js';
 
@@ -37,3 +38,63 @@ export const checkMissingStaffCredentials = (staff: any) => {
     }
     return null;
 }
+
+export const sanitizeCustomerData = (newCustomerData: any): Partial<Customer> => {
+    const excludedFields: Array<keyof Customer> = ['id', 'createdAt', 'password'];
+    const sanitizedData: Partial<Customer> = {};
+
+    const productFields: Array<keyof Customer> = [
+        'address',
+        'cart',
+        'email',
+        'firstName',
+        'lastName',
+        'imageURL',
+        'loyaltyPoints',
+        'orders',
+        'phoneNumber',
+        'username',
+        'wishlist',
+        'updatedAt'
+    ];
+
+    for (const key in newCustomerData) {
+        // Only include fields that are part of the Product interface and not in excluded list
+        if (productFields.includes(key as keyof Customer) && !excludedFields.includes(key as keyof Customer)) {
+            sanitizedData[key as keyof Customer] = newCustomerData[key];
+        }
+    }
+
+    return sanitizedData;
+};
+
+export const generateEmptyCustomerData = (): Customer => ({
+    id: "",
+    address: {
+        city: "",
+        postalCode: 0,
+        street: "",
+        building: 0,
+    },
+    cart: {
+        items: [],
+        subtotal: 0,
+        updatedAt: Timestamp.now(),
+    },
+    email: "",
+    firstName: "",
+    lastName: "",
+    imageURL: "",
+    loyaltyPoints: 0,
+    orders: {
+        total: 0,
+        items: [],
+    },
+    phoneNumber: "",
+    username: "",
+
+    createdAt: Timestamp.now(),
+    updatedAt: Timestamp.now(),
+
+    wishlist: [],
+});
