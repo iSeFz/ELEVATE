@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import * as authService from '../services/auth.js';
 import { AuthError } from '../services/auth.js';
-import { Staff } from '../types/models/staff.js';
 import { BrandOwner } from '../types/models/brandOwner.js';
 import * as customerService from '../services/customer.js';
 import * as staffService from '../services/staff.js';
@@ -23,6 +22,7 @@ export const signup = async (req: Request, res: Response) => {
         });
     } catch (error: any) {
         if (error instanceof AuthError) {
+            console.error('AuthError during signup:', error);
             return res.status(error.statusCode).json({
                 status: 'error',
                 code: error.code,
@@ -58,7 +58,6 @@ export const login = async (req: Request, res: Response) => {
             });
         }
 
-        console.error('Login error:', error);
         return res.status(500).json({
             status: 'error',
             message: 'An unexpected error occurred during login'
@@ -68,27 +67,15 @@ export const login = async (req: Request, res: Response) => {
 
 export const staffSignup = async (req: Request, res: Response) => {
     try {
-        const staffData = {
-            id: '',
-            username: req.body.username,
-            email: req.body.email,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            phoneNumber: req.body.phoneNumber,
-            password: req.body.password,
-            imageURL: req.body.imageURL ?? '',
-            role: 'staff',
-        };
+        const userRecord = await authService.staffSignup(req.body);
 
-        const userRecord = await authService.staffSignup(staffData as Staff);
-
-        // Return success response without password
-        const { password, ...safeStaffData } = staffData;
-        safeStaffData.id = userRecord.uid; // Add the UID to the response data
         return res.status(201).json({
             status: 'success',
             message: 'Staff registration successful',
-            data: safeStaffData
+            data: {
+                id: userRecord.uid,
+                email: userRecord.email,
+            }
         });
     } catch (error: any) {
         if (error instanceof AuthError) {
@@ -113,7 +100,7 @@ export const brandOwnerSignup = async (req: Request, res: Response) => {
         // Extract both brand owner and brand data from the request
         let { brandData, ...brandOwnerData }: { brandData: Brand } & BrandOwner = req.body;
 
-        authService.validateBrandAndOwnerData(brandOwnerData, brandData);
+        authService.checkRequiredFieldForBrandAndBrandOwnera(brandOwnerData, brandData);
 
         // 1. Create brand owner account
         const userRecord = await authService.brandOwnerSignup(brandOwnerData);

@@ -1,11 +1,11 @@
-import { Timestamp } from 'firebase-admin/firestore';
-import { Product, ProductVariant } from '../../types/models/product.js';
+import { Product, productDataValidators, ProductVariant } from '../../types/models/product.js';
+import { convertToTimestamp } from './common.js';
 
-export const checkMissingProductData = (product: any) => {
+export const checkRequiredProductData = (product: any) => {
     const currentProduct = product as Product;
     if (currentProduct.name == null || currentProduct.brandId == null || currentProduct.brandOwnerId == null ||
         currentProduct.category == null || currentProduct.description == null || currentProduct.material == null) {
-        return 'Product name, brand id, category, and description are required';
+        return 'Product name, category, matrial, and description are required';
     }
     return checkMissingProductVariantData(currentProduct.variants);
 };
@@ -52,30 +52,38 @@ export const checkMissingProductVariantData = (productVariants: any) => {
     return message;
 };
 
-export const generateEmptyProductData = (): Product => ({
-    id: "",
-    brandId: "",
-    brandOwnerId: "",
-    brandName: "",
-    category: "",
-    department: [],
-    description: "",
-    material: "",
-    name: "",
-    variants: [],
-    reviewSummary: {
-        averageRating: 0,
-        totalReviews: 0,
-        ratingDistribution: {
-            '1': 0,
-            '2': 0,
-            '3': 0,
-            '4': 0,
-            '5': 0,
+export const generateFullyProductData = (product: Product): Product => {
+    const fullyData: Product = {
+        id: product.id ?? "",
+        brandId: product.brandId ?? "",
+        brandOwnerId: product.brandOwnerId ?? "",
+        brandName: product.brandName ?? "",
+        category: product.category ?? "",
+        department: product.department ?? [],
+        description: product.description ?? "",
+        material: product.material ?? "",
+        name: product.name ?? "",
+        variants: product.variants ?? [],
+        reviewSummary: product.reviewSummary ?? {
+            averageRating: 0,
+            totalReviews: 0,
+            ratingDistribution: {
+                '1': 0,
+                '2': 0,
+                '3': 0,
+                '4': 0,
+                '5': 0,
+            },
+            reviewIds: [],
         },
-        reviewIds: [],
-    },
 
-    createdAt: Timestamp.now(),
-    updatedAt: Timestamp.now(),
-});
+        createdAt: convertToTimestamp(product.createdAt),
+        updatedAt: convertToTimestamp(product.updatedAt),
+    };
+
+    if (!productDataValidators(fullyData)) {
+        throw new Error('Invalid product data, check types and formats');
+    }
+
+    return fullyData;
+}

@@ -1,7 +1,6 @@
 import { admin } from '../config/firebase.js';
-import { checkMissingBrandData, checkMissingBrandUpdateData } from './utils/brand.js';
+import { checkRequiredBrandData, checkMissingBrandUpdateData, generateFullyBrandData } from './utils/brand.js';
 import { Brand } from '../types/models/brand.js';
-import { Timestamp } from 'firebase-admin/firestore';
 
 const firestore = admin.firestore();
 const brandCollection = 'brand';
@@ -26,7 +25,7 @@ export const getBrand = async (brandID: string) => {
     try {
         const docRef = firestore.collection(brandCollection).doc(brandID);
         const docSnap = await docRef.get();
-        
+
         if (docSnap.exists) {
             return { id: docSnap.id, ...docSnap.data() } as Brand;
         } else {
@@ -58,43 +57,15 @@ export const getBrandByName = async (brandName: string) => {
 
 export const addBrand = async (brand: Brand) => {
     try {
-        const missedBrandData = checkMissingBrandData(brand);
+        const missedBrandData = checkRequiredBrandData(brand);
         if (missedBrandData) {
             throw new Error(missedBrandData);
         }
 
-        const customId = brand.id;
+        const brandData = generateFullyBrandData(brand);
 
-        const brandData: Brand = {
-            brandName: brand.brandName,
-            brandOwnerId: brand.brandOwnerId,
-            email: brand.email,
-            industry: brand.industry,
-            rating: brand.rating || 0,
-            storyDescription: brand.storyDescription || '',
-            imageURL: brand.imageURL || '',
-            phoneNumbers: brand.phoneNumbers || [],
-            websites: brand.websites || [],
-            productIds: brand.productIds || [],
-            addresses: brand.addresses || [],
-            subscription: brand.subscription || {
-                plan: 'free',
-                price: 0,
-                startDate: Timestamp.now(),
-                endDate: Timestamp.fromMillis(Timestamp.now().toMillis() + 30 * 24 * 60 * 60 * 1000) // 30 days from now
-            },
-            createdAt: Timestamp.now(),
-            updatedAt: Timestamp.now(),
-        }
-        
-        if (customId) {
-            const docRef = firestore.collection(brandCollection).doc(customId);
-            await docRef.set(brandData);
-            return { id: customId, ...brandData };
-        } else {
-            const docRef = await firestore.collection(brandCollection).add(brandData);
-            return { id: docRef.id, ...brandData };
-        }
+        const docRef = await firestore.collection(brandCollection).add(brandData);
+        return { ...brandData, id: docRef.id };
     } catch (error: any) {
         throw new Error(error.message);
     }
@@ -104,7 +75,7 @@ export const updateBrand = async (brandID: string, newBrandData: Partial<Brand>)
     if (!brandID) {
         throw new Error('Please provide a brand ID');
     }
-    
+
     try {
         const missedUpdateData = checkMissingBrandUpdateData(newBrandData);
         if (missedUpdateData) {

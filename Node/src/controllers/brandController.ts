@@ -46,13 +46,12 @@ export const getBrandByName = async (req: Request, res: Response) => {
     }
 };
 
+// Don't use it, the brand is created once the brand owner is created
 export const addBrand = async (req: Request, res: Response) => {
     try {
         const brandData = req.body;
         const requestingUserID = req.user?.id;
         const userRole = req.user?.role;
-
-        // Authorization check is now handled by middleware
         
         // If user is a brand owner, ensure the brand is linked to them
         if (userRole === 'brandOwner') {

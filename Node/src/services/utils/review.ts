@@ -1,30 +1,16 @@
-import { Timestamp } from 'firebase-admin/firestore';
-import { Review } from '../../types/models/review.js';
+import { Review, reviewDataValidators } from '../../types/models/review.js';
+import { convertToTimestamp } from './common.js';
 
 export const checkMissingReviewData = (review: any) => {
     const currentReview = review as Review;
     if (currentReview.title == null || currentReview.content == null ||
-        currentReview.customerId == null || currentReview.productId == null
+        currentReview.customerId == null /* Obtained from token */ || currentReview.productId == null
         || currentReview.rating == null) {
-        return 'Review title, content, customer id, product id, and rating are required';
+        return 'Review title, content, product id, and rating are required';
     }
     if (currentReview.rating < 1 || currentReview.rating > 5) {
         return 'Rating must be between 1 and 5';
     }
-    return null;
-};
-
-export const checkMissingReviewUpdateData = (review: Partial<Review>) => {
-    if (Object.keys(review).length === 0) {
-        return 'No data provided for update';
-    }
-
-    if (review.rating !== undefined) {
-        if (review.rating < 1 || review.rating > 5) {
-            return 'Rating must be between 1 and 5';
-        }
-    }
-
     return null;
 };
 
@@ -33,7 +19,7 @@ export const sanitizeReviewData = (newReviewData: any): Partial<Review> => {
     const sanitizedData: Partial<Review> = {};
 
     const productFields: Array<keyof Review> = [
-        'content', 'customerId', 'rating', 'updatedAt'
+        'content', 'title', 'rating', 'updatedAt'
     ];
 
     for (const key in newReviewData) {
@@ -46,15 +32,23 @@ export const sanitizeReviewData = (newReviewData: any): Partial<Review> => {
     return sanitizedData;
 };
 
-export const generateEmptyReviewData = (): Review => ({
-    id: "",
-    customerId: "",
-    productId: "",
+export const generateFullyReviewData = (review: Review): Review => {
+    const fullyData: Review = {
+        id: review.id ?? "",
+        customerId: review.customerId ?? "",
+        productId: review.productId ?? "",
 
-    title: "",
-    content: "",
-    rating: 0,
+        title: review.title ?? "",
+        content: review.content ?? "",
+        rating: review.rating ?? 0,
 
-    createdAt: Timestamp.now(),
-    updatedAt: Timestamp.now(),
-});
+        createdAt: convertToTimestamp(review.createdAt),
+        updatedAt: convertToTimestamp(review.updatedAt),
+    };
+
+    if (!reviewDataValidators(fullyData)) {
+        throw new Error('Invalid review data, check types and formats');
+    }
+
+    return fullyData;
+}

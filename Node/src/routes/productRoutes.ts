@@ -9,7 +9,6 @@ router.get('/', ProductController.getAllProducts);
 router.get('/:id', ProductController.getProduct);
 
 // Product variant routes
-router.get('/:productId/variants/:variantId', ProductController.getProductVariant);
 router.post('/:productId/variants', authenticate, authorizeProductAccess, ProductController.addProductVariant);
 router.put('/:productId/variants/:variantId', authenticate, authorizeProductAccess, ProductController.updateProductVariant);
 router.delete('/:productId/variants/:variantId', authenticate, authorizeProductAccess, ProductController.deleteProductVariant);

@@ -25,7 +25,7 @@ export const getStaff = async (staffID: string) => {
     try {
         const docRef = firestore.collection(staffCollection).doc(staffID);
         const docSnap = await docRef.get();
-        
+
         if (docSnap.exists) {
             return { id: docSnap.id, ...docSnap.data() };
         } else {
@@ -62,17 +62,10 @@ export const addStaff = async (staff: Staff) => {
             throw new Error(missedStaffData);
         }
 
-        const customId = staff.id;
         const { id, password, ...staffData } = staff;
-        
-        if (customId) {
-            const docRef = firestore.collection(staffCollection).doc(customId);
-            await docRef.set(staffData);
-            return { id: customId, ...staffData };
-        } else {
-            const docRef = await firestore.collection(staffCollection).add(staffData);
-            return { id: docRef.id, ...staffData };
-        }
+
+        const docRef = await firestore.collection(staffCollection).add(staffData);
+        return { ...staffData, id: docRef.id };
     } catch (error: any) {
         throw new Error(error.message);
     }
@@ -82,7 +75,7 @@ export const updateStaff = async (staffID: string, newStaffData: Partial<Staff>)
     if (!staffID) {
         throw new Error('Please provide a staff ID');
     }
-    
+
     try {
         const missedUpdateData = checkMissingStaffUpdateData(newStaffData);
         if (missedUpdateData) {

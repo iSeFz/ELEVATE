@@ -1,7 +1,7 @@
-import { Order, OrderStatus } from '../../types/models/order.js';
+import { Order, orderDataValidators, OrderStatus } from '../../types/models/order.js';
 import * as productService from '../product.js';
 import { admin } from '../../config/firebase.js';
-import { Timestamp } from 'firebase-admin/firestore';
+import { convertToTimestamp } from './common.js';
 
 export const checkMissingOrderData = (order: any) => {
     const currentOrder = order as Order;
@@ -154,30 +154,39 @@ export const calculateLoyaltyPointsEarned = (orderTotal: number): number => {
     return Math.floor(orderTotal * conversionRate);
 };
 
-export const generateEmptyOrderData = (): Order => ({
-    id: "",
-    customerId: "",
-    address: {
-        building: 0,
-        city: "",
-        postalCode: 0,
-        street: "",
-    },
-    payment: {
-        createdAt: Timestamp.now(),
-        method: "cash-on-delivery",
-        price: 0,
-    },
-    phoneNumber: "",
-    pointsRedeemed: 0,
-    price: 0,
-    status: OrderStatus.PENDING,
-    shipment: {
-        createdAt: Timestamp.now(),
-        fees: 0,
-        method: "standard",
-    },
-    createdAt: Timestamp.now(),
-    updatedAt: Timestamp.now(),
-    products: [],
-});
+export const generateFullyOrderData = (order: Order): Order => {
+    const fullyData: Order = {
+        id: order.id ?? "",
+        address: order.address ?? {
+            city: "",
+            postalCode: 0,
+            street: "",
+            building: 0,
+        },
+        customerId: order.customerId ?? "",
+        phoneNumber: order.phoneNumber ?? "",
+        price: order.price ?? 0,
+        products: order.products ?? [],
+        shipment: order.shipment ?? {
+            fees: 0,
+            method: "standard",
+            trackingNumber: "",
+        },
+        payment: {
+            method: order.payment?.method ?? "cash-on-delivery",
+            price: order.payment?.price ?? 0,
+            createdAt: convertToTimestamp(order.payment?.createdAt),
+        },
+        status: order.status ?? OrderStatus.PENDING,
+        pointsRedeemed: order.pointsRedeemed ?? 0,
+
+        createdAt: convertToTimestamp(order.createdAt),
+        updatedAt: convertToTimestamp(order.updatedAt),
+    };
+
+    if (!orderDataValidators(fullyData)) {
+        throw new Error('Invalid order data, check types and formats');
+    }
+
+    return fullyData;
+}

@@ -1,10 +1,11 @@
-import { Timestamp } from 'firebase-admin/firestore';
-import { Customer } from '../../types/models/customer.js';
+import { Customer, customerDataValidators } from '../../types/models/customer.js';
 import { Staff } from '../../types/models/staff.js';
+import { AuthError, AuthErrorType } from '../auth.js';
+import { convertToTimestamp } from './common.js';
 
-export const checkMissingCustomerRequestData = (customer: any) => {
+export const checkRequiredCustomerData = (customer: any) => {
     const currentCustomer = customer as Customer;
-    if (currentCustomer.username == null || currentCustomer.email == null || currentCustomer.password == null) {
+    if (currentCustomer.email == null || currentCustomer.password == null) {
         return 'Please provide at least: username, email , and password';
     }
     if (customer.password.length < 6) {
@@ -68,33 +69,45 @@ export const sanitizeCustomerData = (newCustomerData: any): Partial<Customer> =>
     return sanitizedData;
 };
 
-export const generateEmptyCustomerData = (): Customer => ({
-    id: "",
-    address: {
-        city: "",
-        postalCode: 0,
-        street: "",
-        building: 0,
-    },
-    cart: {
-        items: [],
-        subtotal: 0,
-        updatedAt: Timestamp.now(),
-    },
-    email: "",
-    firstName: "",
-    lastName: "",
-    imageURL: "",
-    loyaltyPoints: 0,
-    orders: {
-        total: 0,
-        items: [],
-    },
-    phoneNumber: "",
-    username: "",
+export const generateFullyCustomerData = (customer: Customer): Customer => {
+    const fullyData: Customer = {
+        id: customer.id ?? "",
+        address: customer.address ?? {
+            city: "",
+            postalCode: 0,
+            street: "",
+            building: 0,
+        },
+        cart: {
+            items: customer.cart?.items ?? [],
+            subtotal: customer.cart?.subtotal ?? 0,
+            updatedAt: convertToTimestamp(customer.cart?.updatedAt),
+        },
+        email: customer.email ?? "",
+        password: customer.password ?? "",
+        firstName: customer.firstName ?? "",
+        lastName: customer.lastName ?? "",
+        imageURL: customer.imageURL ?? "",
+        loyaltyPoints: customer.loyaltyPoints ?? 0,
+        orders: customer.orders ?? {
+            total: 0,
+            items: [],
+        },
+        phoneNumber: customer.phoneNumber ?? "",
+        username: customer.username ?? "",
 
-    createdAt: Timestamp.now(),
-    updatedAt: Timestamp.now(),
+        createdAt: convertToTimestamp(customer.createdAt),
+        updatedAt: convertToTimestamp(customer.updatedAt),
 
-    wishlist: [],
-});
+        wishlist: customer.wishlist ?? [],
+    };
+
+    if (!customerDataValidators(fullyData)) {
+        throw new AuthError(
+            "Invalid customer data, check types and formats",
+            AuthErrorType.INVALID_DATA_TYPES,
+        );
+    }
+
+    return fullyData;
+}

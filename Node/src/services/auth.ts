@@ -3,11 +3,11 @@ import axios from 'axios';
 import { Customer } from '../types/models/customer.js';
 import { Staff } from '../types/models/staff.js';
 import { BrandOwner } from '../types/models/brandOwner.js';
-import { checkMissingCustomerRequestData, generateEmptyCustomerData } from './utils/customer.js';
-import { checkMissingStaffData } from './utils/staff.js';
-import { checkMissingBrandOwnerData } from './utils/brandOwner.js';
+import { checkRequiredCustomerData, generateFullyCustomerData } from './utils/customer.js';
+import { checkMissingStaffData, generateFullyStaffData } from './utils/staff.js';
+import { checkRequiredBrandOwnerData, generateFullyBrandOwnerData } from './utils/brandOwner.js';
 import { Brand } from '../types/models/brand.js';
-import { checkMissingBrandData } from './utils/brand.js';
+import { checkRequiredBrandData, generateFullyBrandData } from './utils/brand.js';
 import { Timestamp } from 'firebase-admin/firestore';
 
 const auth = admin.auth();
@@ -22,6 +22,7 @@ export enum AuthErrorType {
     USER_NOT_FOUND = 'user_not_found',
     TOO_MANY_ATTEMPTS = 'too_many_attempts',
     INVALID_SIGNUP_DATA = 'invalid_signup_data',
+    INVALID_DATA_TYPES = 'invalid_data_types',
     WEAK_PASSWORD = 'weak_password',
     SERVER_ERROR = 'server_error',
     USER_DISABLED = 'user_disabled',
@@ -63,88 +64,30 @@ const checkMissingCredentials = (credentials: { email?: string, password?: strin
     }
 };
 
-// Convert Firebase auth errors to our custom AuthError format
-const handleFirebaseAuthError = (error: any): AuthError => {
-    const errorCode = error.code || '';
-    let message = error.message || 'An unknown authentication error occurred';
-    let type = AuthErrorType.UNKNOWN_ERROR;
-    let statusCode = 400;
-
-    switch (errorCode) {
-        case 'auth/email-already-exists':
-            message = 'The email address is already in use by another account.';
-            type = AuthErrorType.EMAIL_ALREADY_EXISTS;
-            break;
-        case 'auth/invalid-email':
-            message = 'The email address is not valid.';
-            type = AuthErrorType.INVALID_EMAIL;
-            break;
-        case 'auth/invalid-password':
-            message = 'The password must be at least 6 characters.';
-            type = AuthErrorType.INVALID_PASSWORD;
-            break;
-        case 'auth/weak-password':
-            message = 'The password is too weak. Please use a stronger password.';
-            type = AuthErrorType.WEAK_PASSWORD;
-            break;
-        case 'auth/user-not-found':
-            message = 'No user found with this email address.';
-            type = AuthErrorType.USER_NOT_FOUND;
-            statusCode = 404;
-            break;
-        case 'auth/wrong-password':
-            message = 'Incorrect password. Please try again.';
-            type = AuthErrorType.INVALID_PASSWORD;
-            statusCode = 401;
-            break;
-        case 'auth/too-many-requests':
-            message = 'Too many unsuccessful login attempts. Please try again later or reset your password.';
-            type = AuthErrorType.TOO_MANY_ATTEMPTS;
-            statusCode = 429;
-            break;
-        case 'auth/user-disabled':
-            message = 'This account has been disabled. Please contact support.';
-            type = AuthErrorType.USER_DISABLED;
-            statusCode = 403;
-            break;
-        case 'auth/internal-error':
-            message = 'Authentication server error. Please try again later.';
-            type = AuthErrorType.SERVER_ERROR;
-            statusCode = 500;
-            break;
-        default:
-            console.error('Unhandled Firebase auth error:', error);
-            message = 'Authentication failed. Please try again.';
-            type = AuthErrorType.UNKNOWN_ERROR;
-            statusCode = error.statusCode || 400;
-    }
-
-    return new AuthError(message, type, errorCode, statusCode);
-};
-
 // Generic signup function that handles different user types
 export const genericSignup = async (userData: any, userType: 'customer' | 'staff' | 'brandOwner', otherClaims = {}) => {
     // Validate data based on user type
     let missedData = null;
-
-    if (userType === 'customer') {
-        missedData = checkMissingCustomerRequestData(userData);
-    } else if (userType === 'staff') {
-        missedData = checkMissingStaffData(userData);
-    } else if (userType === 'brandOwner') {
-        missedData = checkMissingBrandOwnerData(userData);
-    }
-
-    if (missedData) {
-        throw new AuthError(
-            missedData,
-            AuthErrorType.INVALID_SIGNUP_DATA,
-            'auth/invalid-signup-data',
-            400
-        );
-    }
-
+    
     try {
+        if (userType === 'customer') {
+            missedData = checkRequiredCustomerData(userData);
+            userData = generateFullyCustomerData(userData);
+        } else if (userType === 'staff') {
+            missedData = checkMissingStaffData(userData);
+            userData = generateFullyStaffData(userData);
+        } else if (userType === 'brandOwner') {
+            missedData = checkRequiredBrandOwnerData(userData);
+            userData = generateFullyBrandOwnerData(userData);
+        }
+        if (missedData) {
+            throw new AuthError(
+                missedData,
+                AuthErrorType.INVALID_SIGNUP_DATA,
+                'auth/invalid-signup-data',
+                400
+            );
+        }
         const userRecord = await auth.createUser({
             email: userData.email,
             password: userData.password,
@@ -161,18 +104,23 @@ export const genericSignup = async (userData: any, userType: 'customer' | 'staff
 
         return userRecord;
     } catch (error: any) {
-        throw handleFirebaseAuthError(error);
+        console.error('Error in AUTH file:', error);
+        if (error instanceof AuthError) {
+            throw error;
+        }
+        throw new AuthError(error.message, AuthErrorType.UNKNOWN_ERROR);
     }
 };
 
 // Validations for brand and brand owner data
-export const validateBrandAndOwnerData = (brandOwner: BrandOwner, brand: Brand) => {
-    const missedBrandData = checkMissingBrandData(brand);
+export const checkRequiredFieldForBrandAndBrandOwnera = (brandOwner: BrandOwner, brand: Brand) => {
+    const missedBrandData = checkRequiredBrandData(brand);
     if (missedBrandData) {
         throw new Error(missedBrandData);
     }
+    brand = generateFullyBrandData(brand);
 
-    const missedBrandOwnerData = checkMissingBrandOwnerData(brandOwner);
+    const missedBrandOwnerData = checkRequiredBrandOwnerData(brandOwner);
     if (missedBrandOwnerData) {
         throw new AuthError(
             missedBrandOwnerData,
@@ -181,19 +129,14 @@ export const validateBrandAndOwnerData = (brandOwner: BrandOwner, brand: Brand) 
             400
         );
     }
+    brandOwner = generateFullyBrandOwnerData(brandOwner);
 
     return { brandOwner, brand };
 }
 
 // Type-specific signup functions that use the generic function
 export const signup = async (customer: Customer) => {
-    const customerData: Customer = {
-        ...generateEmptyCustomerData(),
-        username: customer.username,
-        email: customer.email,
-        password: customer.password,
-    };
-    return genericSignup(customerData, 'customer');
+    return await genericSignup(customer, 'customer');
 };
 
 export const staffSignup = async (staff: Staff) => {
@@ -201,18 +144,7 @@ export const staffSignup = async (staff: Staff) => {
 };
 
 export const brandOwnerSignup = async (brandOwner: BrandOwner) => {
-    const brandOwnerData: BrandOwner = {
-        brandId: brandOwner.brandId ?? "", // Will be updated after brand creation
-        email: brandOwner.email,
-        password: brandOwner.password,
-        firstName: brandOwner.firstName,
-        lastName: brandOwner.lastName,
-        username: brandOwner.username,
-        imageURL: brandOwner.imageURL ?? '',
-        createdAt: brandOwner.createdAt ?? Timestamp.now(),
-        updatedAt: brandOwner.updatedAt ?? Timestamp.now(),
-    }
-    return genericSignup(brandOwnerData, 'brandOwner');
+    return await genericSignup(brandOwner, 'brandOwner');
 };
 
 export const login = async (email: string, password: string) => {

@@ -1,5 +1,5 @@
 import { admin } from '../config/firebase.js';
-import { checkMissingReviewData, checkMissingReviewUpdateData, sanitizeReviewData } from './utils/review.js';
+import { checkMissingReviewData, generateFullyReviewData, sanitizeReviewData } from './utils/review.js';
 import { Review } from '../types/models/review.js';
 import { Timestamp } from 'firebase-admin/firestore';
 import * as productService from './product.js';
@@ -85,26 +85,11 @@ export const addReview = async (review: Review) => {
             throw new Error(missedReviewData);
         }
 
-        const customId = review.id;
-        const reviewData: Review = {
-            customerId: review.customerId,
-            productId: review.productId,
-            content: review.content,
-            title: review.title,
-            rating: review.rating ?? 0,
-            createdAt: review.createdAt ?? Timestamp.now(),
-            updatedAt: review.updatedAt ?? Timestamp.now(),
-        }
+        const reviewData = generateFullyReviewData(review);
 
         let savedReview;
-        if (customId) {
-            const docRef = firestore.collection(reviewCollection).doc(customId);
-            await docRef.set(reviewData);
-            savedReview = { id: customId, ...reviewData };
-        } else {
-            const docRef = await firestore.collection(reviewCollection).add(reviewData);
-            savedReview = { id: docRef.id, ...reviewData };
-        }
+        const docRef = await firestore.collection(reviewCollection).add(reviewData);
+        savedReview = { ...reviewData, id: docRef.id };
 
         // Update product's review data
         await updateProductAfterReviewAdd(savedReview);
@@ -120,22 +105,29 @@ export const updateReview = async (reviewID: string, newReviewData: Partial<Revi
         throw new Error('Please provide a review ID');
     }
 
+    // Sanitize the input data first to remove unauthorized fields
     newReviewData = sanitizeReviewData(newReviewData);
 
     try {
-        const missedUpdateData = checkMissingReviewUpdateData(newReviewData);
-        if (missedUpdateData) {
-            throw new Error(missedUpdateData);
-        }
-
         // Get the existing review to compare ratings
         const existingReview = await getReview(reviewID);
         if (!existingReview) {
             throw new Error('Review not found');
         }
 
+        // Merge existing review with new data to create a complete review object
+        const updatedReview = {
+            ...existingReview,
+            ...newReviewData,
+            updatedAt: Timestamp.now()
+        };
+
+        // Validate and convert the merged data
+        const validatedReviewData = generateFullyReviewData(updatedReview as Review);
+
+        // Update the review
         const reviewRef = firestore.collection(reviewCollection).doc(reviewID);
-        await reviewRef.update(newReviewData);
+        await reviewRef.update(validatedReviewData as Partial<Review>);
 
         // If rating changed, update product's average rating
         if (newReviewData.rating !== undefined && newReviewData.rating !== existingReview.rating) {
@@ -179,19 +171,28 @@ async function updateProductAfterReviewAdd(review: Review) {
     if (!product) return;
 
     // Add review ID to product's reviewIds array
-    const updatedReviewIds = [...(product.reviewIds || []), review.id!];
+    const updatedReviewIds = [...(product.reviewSummary.reviewIds || []), review.id!];
 
     // Calculate new average rating
-    const currentTotal = product.averageRating * product.totalReviews;
+    const currentTotal = product.reviewSummary.averageRating * product.reviewSummary.totalReviews;
     const newTotal = currentTotal + review.rating;
-    const newCount = product.totalReviews + 1;
+    const newCount = product.reviewSummary.totalReviews + 1;
     const newAverage = newTotal / newCount;
+
+    // Update rating distribution
+    const ratingDistribution = { ...product.reviewSummary.ratingDistribution };
+    const ratingKey = review.rating.toString() as keyof typeof ratingDistribution;
+    ratingDistribution[ratingKey] = (ratingDistribution[ratingKey] || 0) + 1;
 
     // Update product
     await productService.updateProduct(review.productId, {
-        reviewIds: updatedReviewIds,
-        totalReviews: newCount,
-        averageRating: newAverage,
+        reviewSummary: {
+            ...product.reviewSummary,
+            reviewIds: updatedReviewIds,
+            totalReviews: newCount,
+            averageRating: newAverage,
+            ratingDistribution
+        },
         updatedAt: Timestamp.now()
     });
 }
@@ -201,13 +202,27 @@ async function updateProductAfterReviewUpdate(existingReview: Review, newRating:
     if (!product) return;
 
     // Calculate new average
-    const currentTotal = product.averageRating * product.totalReviews;
+    const currentTotal = product.reviewSummary.averageRating * product.reviewSummary.totalReviews;
     const adjustedTotal = currentTotal - existingReview.rating + newRating;
-    const newAverage = adjustedTotal / product.totalReviews;
+    const newAverage = adjustedTotal / product.reviewSummary.totalReviews;
+
+    // Update rating distribution
+    const ratingDistribution = { ...product.reviewSummary.ratingDistribution };
+    const oldRatingKey = existingReview.rating.toString() as keyof typeof ratingDistribution;
+    const newRatingKey = newRating.toString() as keyof typeof ratingDistribution;
+    
+    // Decrease count for old rating
+    ratingDistribution[oldRatingKey] = Math.max(0, (ratingDistribution[oldRatingKey] || 0) - 1);
+    // Increase count for new rating
+    ratingDistribution[newRatingKey] = (ratingDistribution[newRatingKey] || 0) + 1;
 
     // Update product
     await productService.updateProduct(existingReview.productId, {
-        averageRating: newAverage,
+        reviewSummary: {
+            ...product.reviewSummary,
+            averageRating: newAverage,
+            ratingDistribution
+        },
         updatedAt: Timestamp.now()
     });
 }
@@ -217,23 +232,32 @@ async function updateProductAfterReviewDelete(review: Review) {
     if (!product) return;
 
     // Remove review ID from product's reviewIds array
-    const updatedReviewIds = product.reviewIds.filter(id => id !== review.id);
+    const updatedReviewIds = (product.reviewSummary.reviewIds || []).filter(id => id !== review.id);
 
     // Calculate new average (handle case where this was the only review)
     let newAverage = 0;
-    let newCount = product.totalReviews - 1;
+    let newCount = product.reviewSummary.totalReviews - 1;
 
     if (newCount > 0) {
-        const currentTotal = product.averageRating * product.totalReviews;
+        const currentTotal = product.reviewSummary.averageRating * product.reviewSummary.totalReviews;
         const adjustedTotal = currentTotal - review.rating;
         newAverage = adjustedTotal / newCount;
     }
 
+    // Update rating distribution
+    const ratingDistribution = { ...product.reviewSummary.ratingDistribution };
+    const ratingKey = review.rating.toString() as keyof typeof ratingDistribution;
+    ratingDistribution[ratingKey] = Math.max(0, (ratingDistribution[ratingKey] || 0) - 1);
+
     // Update product
     await productService.updateProduct(review.productId, {
-        reviewIds: updatedReviewIds,
-        totalReviews: newCount,
-        averageRating: newAverage,
+        reviewSummary: {
+            ...product.reviewSummary,
+            reviewIds: updatedReviewIds,
+            totalReviews: newCount,
+            averageRating: newAverage,
+            ratingDistribution
+        },
         updatedAt: Timestamp.now()
     });
 }

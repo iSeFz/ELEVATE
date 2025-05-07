@@ -1,7 +1,7 @@
-import { Timestamp } from 'firebase-admin/firestore';
-import { BrandOwner } from '../../types/models/brandOwner.js';
+import { BrandOwner, brandOwnerDataValidators } from '../../types/models/brandOwner.js';
+import { convertToTimestamp } from './common.js';
 
-export const checkMissingBrandOwnerData = (brandOwner: any) => {
+export const checkRequiredBrandOwnerData = (brandOwner: any) => {
     const currentBrandOwner = brandOwner as BrandOwner;
     if (currentBrandOwner.email == null || currentBrandOwner.firstName == null ||
         currentBrandOwner.lastName == null || currentBrandOwner.username == null ||
@@ -19,11 +19,11 @@ export const checkMissingBrandOwnerUpdateData = (brandOwner: any) => {
 };
 
 export const sanitizeBrandOwnerData = (newBrandOwnerData: any): Partial<BrandOwner> => {
-    const excludedFields = ['id', 'brandId', 'email', 'createdAt'];
+    const excludedFields = ['id', 'email', 'createdAt'];
     const sanitizedData: Partial<BrandOwner> = {};
 
     const productFields: Array<keyof BrandOwner> = [
-        "firstName", "lastName", "imageURL", "username", "updatedAt"
+        "brandId", "firstName", "lastName", "imageURL", "username", "updatedAt"
     ];
 
     for (const key in newBrandOwnerData) {
@@ -36,17 +36,25 @@ export const sanitizeBrandOwnerData = (newBrandOwnerData: any): Partial<BrandOwn
     return sanitizedData;
 };
 
-export const generateEmptyBrandOwnerData = (): BrandOwner => ({
-    id: "",
-    brandId: "",
-    email: "",
-    firstName: "",
-    lastName: "",
-    imageURL: "",
-    username: "",
+export const generateFullyBrandOwnerData = (brandOwner: BrandOwner): BrandOwner => {
+    const fullyData: BrandOwner = {
+        id: brandOwner.id ?? "",
+        brandId: brandOwner.brandId ?? "",
+        email: brandOwner.email ?? "",
+        firstName: brandOwner.firstName ?? "",
+        lastName: brandOwner.lastName ?? "",
+        imageURL: brandOwner.imageURL ?? "",
+        username: brandOwner.username ?? "",
 
-    createdAt: Timestamp.now(),
-    updatedAt: Timestamp.now(),
+        createdAt: convertToTimestamp(brandOwner.createdAt),
+        updatedAt: convertToTimestamp(brandOwner.updatedAt),
 
-    password: "", // Optional for authentication purposes
-});
+        password: brandOwner.password ?? "", // Optional for authentication purposes
+    };
+
+    if (!brandOwnerDataValidators(fullyData)) {
+        throw new Error('Invalid brand owner data, check types and formats');
+    }
+
+    return fullyData;
+}

@@ -112,39 +112,6 @@ export const deleteProduct = async (req: Request, res: Response) => {
     }
 };
 
-export const getProductVariant = async (req: Request, res: Response) => {
-    try {
-        const productID = req.params.productId;
-        const variantID = req.params.variantId;
-        
-        if (!productID || !variantID) {
-            return res.status(400).json({ 
-                status: 'error', 
-                message: 'Product ID and variant ID are required' 
-            });
-        }
-        
-        const variant = await productService.getProductVariant(productID, variantID);
-        
-        if (!variant) {
-            return res.status(404).json({ 
-                status: 'error', 
-                message: 'Product variant not found' 
-            });
-        }
-        
-        return res.status(200).json({ 
-            status: 'success', 
-            data: variant 
-        });
-    } catch (error: any) {
-        return res.status(400).json({ 
-            status: 'error', 
-            message: error.message 
-        });
-    }
-};
-
 export const addProductVariant = async (req: Request, res: Response) => {
     try {
         const productID = req.params.productId;

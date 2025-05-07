@@ -1,4 +1,4 @@
-import { Staff } from '../../types/models/staff.js';
+import { Staff, staffDataValidators } from '../../types/models/staff.js';
 
 export const checkMissingStaffData = (staff: any) => {
     const currentStaff = staff as Staff;
@@ -17,14 +17,21 @@ export const checkMissingStaffUpdateData = (staff: any) => {
     return null;
 };
 
-export const generateEmptyStaffData = (): Staff => ({
-    id: "",
-    email: "",
-    firstName: "",
-    lastName: "",
-    inventoryId: "",
-    phoneNumber: "",
-    username: "",
-    password: "", // Optional for authentication purposes
-    imageURL: "",
-});
+export const generateFullyStaffData = (staff: Staff): Staff => {
+    const fullyData: Staff = {
+        id: staff.id ?? "",
+        email: staff.email ?? "",
+        firstName: staff.firstName ?? "",
+        lastName: staff.lastName ?? "",
+        phoneNumber: staff.phoneNumber ?? "",
+        username: staff.username ?? "",
+        password: staff.password ?? "", // Optional for authentication purposes
+        imageURL: staff.imageURL ?? "",
+    };
+
+    if(staffDataValidators(fullyData)) {
+        throw new Error('Invalid staff data, check types and formats');
+    }
+
+    return fullyData;
+}

@@ -54,7 +54,7 @@ export const getCustomer = async (customerID: string) => {
         const docSnap = await docRef.get();
 
         if (docSnap.exists) {
-            return { id: docSnap.id, ...docSnap.data() };
+            return { id: docSnap.id, ...docSnap.data() } as Customer;
         } else {
             return null;
         }

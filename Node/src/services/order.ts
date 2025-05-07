@@ -183,7 +183,7 @@ export const addOrder = async (order: Order) => {
         }
 
         await batch.commit();
-        return { id: docId, ...orderData };
+        return { ...orderData, id: docId };
     } catch (error: any) {
         throw new Error(`Failed to add order: ${error.message}`);
     }
