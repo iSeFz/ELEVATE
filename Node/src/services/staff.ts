@@ -1,5 +1,5 @@
 import { admin } from '../config/firebase.js';
-import { checkMissingStaffData, checkMissingStaffUpdateData } from './utils/staff.js';
+import { checkMissingStaffUpdateData } from './utils/staff.js';
 import { Staff } from '../types/models/staff.js';
 
 const firestore = admin.firestore();
@@ -57,11 +57,6 @@ export const getStaffByEmail = async (email: string) => {
 
 export const addStaff = async (staff: Staff) => {
     try {
-        const missedStaffData = checkMissingStaffData(staff);
-        if (missedStaffData) {
-            throw new Error(missedStaffData);
-        }
-
         const { id, password, ...staffData } = staff;
 
         const docRef = await firestore.collection(staffCollection).add(staffData);

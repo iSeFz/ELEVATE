@@ -59,7 +59,7 @@ export const cartItemDataValidators = (value: CartItem): boolean => {
         id: (v: CartItem['id']) => typeof v === 'string' || v === undefined,
         productId: (v: CartItem['productId']) => typeof v === 'string',
         variantId: (v: CartItem['variantId']) => typeof v === 'string',
-        quantity: (v: CartItem['quantity']) => typeof v === 'number',
+        quantity: (v: CartItem['quantity']) => typeof v === 'number' && v > 0,
         brandName: (v: CartItem['brandName']) => typeof v === 'string',
         productName: (v: CartItem['productName']) => typeof v === 'string',
         size: (v: CartItem['size']) => typeof v === 'string',

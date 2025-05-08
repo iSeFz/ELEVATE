@@ -1,5 +1,5 @@
 import { admin } from '../config/firebase.js';
-import { checkRequiredProductData, generateFullyProductData, sanitizeProductData } from './utils/product.js';
+import { generateFullyProductData } from './utils/product.js';
 import { Product, ProductVariant } from '../types/models/product.js';
 import { Timestamp } from 'firebase-admin/firestore';
 
@@ -119,10 +119,6 @@ export const getProductsByBrand = async (brandID: string, page: number = 0) => {
 
 export const addProduct = async (product: Product) => {
     try {
-        const missedProductData = checkRequiredProductData(product);
-        if (missedProductData) {
-            throw new Error(missedProductData);
-        }
         const productData = generateFullyProductData(product);
 
         // Ensure all variants have IDs
@@ -152,8 +148,6 @@ export const updateProduct = async (productID: string, newProductData: Partial<P
     if (!productID) {
         throw new Error('Please provide a product ID');
     }
-
-    newProductData = sanitizeProductData(newProductData);
 
     try {
         // If variants are being updated, ensure they all have IDs

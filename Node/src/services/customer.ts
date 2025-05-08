@@ -1,7 +1,6 @@
 import { admin } from '../config/firebase.js';
 import { Customer } from '../types/models/customer.js';
 import { deleteCredentialsUsingUID } from './auth.js';
-import { sanitizeCustomerData } from './utils/customer.js';
 
 const firestore = admin.firestore();
 const customerCollection = 'customer';
@@ -90,7 +89,6 @@ export const updateCustomer = async (customerID: string, newCustomerData: any) =
     if (!customerID) {
         throw new Error('Please provide a customer ID');
     }
-    newCustomerData = sanitizeCustomerData(newCustomerData);
     try {
         const customerRef = firestore.collection(customerCollection).doc(customerID);
         await customerRef.update(newCustomerData);

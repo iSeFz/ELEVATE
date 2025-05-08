@@ -3,12 +3,9 @@ import axios from 'axios';
 import { Customer } from '../types/models/customer.js';
 import { Staff } from '../types/models/staff.js';
 import { BrandOwner } from '../types/models/brandOwner.js';
-import { checkRequiredCustomerData, generateFullyCustomerData } from './utils/customer.js';
-import { checkMissingStaffData, generateFullyStaffData } from './utils/staff.js';
-import { checkRequiredBrandOwnerData, generateFullyBrandOwnerData } from './utils/brandOwner.js';
-import { Brand } from '../types/models/brand.js';
-import { checkRequiredBrandData, generateFullyBrandData } from './utils/brand.js';
-import { Timestamp } from 'firebase-admin/firestore';
+import { generateFullyCustomerData } from './utils/customer.js';
+import { generateFullyStaffData } from './utils/staff.js';
+import { generateFullyBrandOwnerData } from './utils/brandOwner.js';
 
 const auth = admin.auth();
 const firestore = admin.firestore();
@@ -44,40 +41,17 @@ export class AuthError extends Error {
     }
 }
 
-// Helper function to check auth credentials
-const checkMissingCredentials = (credentials: { email?: string, password?: string }) => {
-    if (!credentials.email) {
-        throw new AuthError(
-            'Email is required',
-            AuthErrorType.MISSING_CREDENTIALS,
-            'auth/missing-email',
-            400
-        );
-    }
-    if (!credentials.password) {
-        throw new AuthError(
-            'Password is required',
-            AuthErrorType.MISSING_CREDENTIALS,
-            'auth/missing-password',
-            400
-        );
-    }
-};
-
 // Generic signup function that handles different user types
 export const genericSignup = async (userData: any, userType: 'customer' | 'staff' | 'brandOwner', otherClaims = {}) => {
     // Validate data based on user type
     let missedData = null;
-    
+
     try {
         if (userType === 'customer') {
-            missedData = checkRequiredCustomerData(userData);
             userData = generateFullyCustomerData(userData);
         } else if (userType === 'staff') {
-            missedData = checkMissingStaffData(userData);
             userData = generateFullyStaffData(userData);
         } else if (userType === 'brandOwner') {
-            missedData = checkRequiredBrandOwnerData(userData);
             userData = generateFullyBrandOwnerData(userData);
         }
         if (missedData) {
@@ -112,30 +86,8 @@ export const genericSignup = async (userData: any, userType: 'customer' | 'staff
     }
 };
 
-// Validations for brand and brand owner data
-export const checkRequiredFieldForBrandAndBrandOwnera = (brandOwner: BrandOwner, brand: Brand) => {
-    const missedBrandData = checkRequiredBrandData(brand);
-    if (missedBrandData) {
-        throw new Error(missedBrandData);
-    }
-    brand = generateFullyBrandData(brand);
-
-    const missedBrandOwnerData = checkRequiredBrandOwnerData(brandOwner);
-    if (missedBrandOwnerData) {
-        throw new AuthError(
-            missedBrandOwnerData,
-            AuthErrorType.INVALID_SIGNUP_DATA,
-            'auth/invalid-signup-data',
-            400
-        );
-    }
-    brandOwner = generateFullyBrandOwnerData(brandOwner);
-
-    return { brandOwner, brand };
-}
-
 // Type-specific signup functions that use the generic function
-export const signup = async (customer: Customer) => {
+export const customerSignup = async (customer: Customer) => {
     return await genericSignup(customer, 'customer');
 };
 
@@ -147,11 +99,10 @@ export const brandOwnerSignup = async (brandOwner: BrandOwner) => {
     return await genericSignup(brandOwner, 'brandOwner');
 };
 
-export const login = async (email: string, password: string) => {
+// Enhanced base login function that handles common functionality
+export const baseLogin = async (email: string, password: string, userType: 'customer' | 'brandOwner' | 'staff') => {
     try {
-        // Check for missing credentials
-        checkMissingCredentials({ email, password });
-
+        // Authenticate with Firebase
         const response = await axios.post(verifyCredentialsURL, {
             email,
             password,
@@ -160,144 +111,61 @@ export const login = async (email: string, password: string) => {
 
         const { localId: uid, idToken } = response.data;
 
-        // Get additional user data from Firestore
-        const userDoc = await firestore.collection('customer').doc(uid).get();
-        let userData = userDoc.exists ? userDoc.data() : null;
-        let role = 'customer';
-        let collectionName = 'customer';
+        // Get user data from Firestore based on user type
+        const userDoc = await firestore.collection(userType).doc(uid).get();
 
-        // If no user found in customer collection, check other collections
-        if (!userData) {
-            // Check staff collection
-            const staffDoc = await firestore.collection('staff').doc(uid).get();
-            if (staffDoc.exists) {
-                userData = staffDoc.data();
-                role = userData?.role ?? 'staff';
-                collectionName = 'staff';
-            } else {
-                // Check brand owner collection
-                const brandOwnerDoc = await firestore.collection('brandOwner').doc(uid).get();
-                if (brandOwnerDoc.exists) {
-                    userData = brandOwnerDoc.data();
-                    role = 'brandOwner';
-                    collectionName = 'brandOwner';
-                }
-            }
+        if (!userDoc.exists) {
+            throw new AuthError(
+                `No ${userType} found with this email address.`,
+                AuthErrorType.USER_NOT_FOUND,
+                'auth/user-not-found',
+                404
+            );
         }
 
-        // If still no user data found, create a minimal record
-        if (!userData) {
-            console.warn(`User ${uid} authenticated but no Firestore record found`);
-            userData = { email };
-        }
+        const userData = userDoc.data();
 
+        // Return standardized user object
         return {
             user: {
                 id: uid,
                 email,
-                role,
-                collectionName,
+                role: userType,
+                collectionName: userType,
                 ...userData
             },
             token: idToken
         };
-    } catch (error: any) {
-        // Handle axios errors specifically
-        if (error.response) {
-            const firebaseError = error.response.data.error || {};
-
-            // Map Firebase REST API error messages
-            switch (firebaseError.message) {
-                case 'EMAIL_NOT_FOUND':
-                    throw new AuthError(
-                        'No user found with this email address.',
-                        AuthErrorType.USER_NOT_FOUND,
-                        'auth/user-not-found',
-                        404
-                    );
-                case 'INVALID_PASSWORD':
-                    throw new AuthError(
-                        'Incorrect password. Please try again.',
-                        AuthErrorType.INVALID_PASSWORD,
-                        'auth/wrong-password',
-                        401
-                    );
-                case 'USER_DISABLED':
-                    throw new AuthError(
-                        'This account has been disabled. Please contact support.',
-                        AuthErrorType.USER_DISABLED,
-                        'auth/user-disabled',
-                        403
-                    );
-                case 'TOO_MANY_ATTEMPTS_TRY_LATER':
-                    throw new AuthError(
-                        'Too many unsuccessful login attempts. Please try again later.',
-                        AuthErrorType.TOO_MANY_ATTEMPTS,
-                        'auth/too-many-requests',
-                        429
-                    );
-                default:
-                    throw new AuthError(
-                        'Authentication failed. Please check your email and password.',
-                        AuthErrorType.UNKNOWN_ERROR,
-                        firebaseError.message || 'auth/unknown-error',
-                        401
-                    );
-            }
-        }
-
-        // If it's already our custom AuthError, just rethrow it
+    } catch (error) {
         if (error instanceof AuthError) {
             throw error;
         }
-
-        // For any other errors
         throw new AuthError(
-            'Authentication failed. Please try again later.',
-            AuthErrorType.SERVER_ERROR,
-            'auth/server-error',
-            500
+            'Authentication failed. Please check your email and password.',
+            AuthErrorType.UNKNOWN_ERROR,
+            'auth/unknown-error',
+            401
         );
     }
 };
 
-export const staffLogin = async (email: string, password: string) => {
-    // Reusing the generic login function but verifying it's a staff account
-    const userData = await login(email, password);
-
-    if (userData.user.role !== 'staff') {
-        throw new AuthError(
-            'This account is not a staff account',
-            AuthErrorType.USER_NOT_FOUND,
-            'auth/user-not-staff',
-            403
-        );
-    }
-
-    return userData;
+// Simplified customer login function
+export const customerLogin = async (email: string, password: string) => {
+    return baseLogin(email, password, 'customer');
 };
 
+// Simplified brand owner login function
 export const brandOwnerLogin = async (email: string, password: string) => {
-    // Reusing the generic login function but verifying it's a brand owner account
-    const userData = await login(email, password);
+    return baseLogin(email, password, 'brandOwner');
+};
 
-    if (userData.user.role !== 'brandOwner') {
-        throw new AuthError(
-            'This account is not a brand owner account',
-            AuthErrorType.USER_NOT_FOUND,
-            'auth/user-not-brand-owner',
-            403
-        );
-    }
-
-    return userData;
+// Simplified staff login function
+export const staffLogin = async (email: string, password: string) => {
+    return baseLogin(email, password, 'staff');
 };
 
 export const deleteCredentialsUsingEmailAndPassword = async (email: string, password: string) => {
     try {
-        // Check for missing credentials
-        checkMissingCredentials({ email, password });
-
         const response = await axios.post(verifyCredentialsURL, {
             email,
             password,
@@ -312,7 +180,7 @@ export const deleteCredentialsUsingEmailAndPassword = async (email: string, pass
     } catch (error: any) {
         // Handle axios errors specifically
         if (error.response) {
-            const firebaseError = error.response.data.error || {};
+            const firebaseError = error.response.data.error ?? {};
 
             switch (firebaseError.message) {
                 case 'EMAIL_NOT_FOUND':
@@ -333,7 +201,7 @@ export const deleteCredentialsUsingEmailAndPassword = async (email: string, pass
                     throw new AuthError(
                         'Authentication failed. Please check your email and password.',
                         AuthErrorType.UNKNOWN_ERROR,
-                        firebaseError.message || 'auth/unknown-error',
+                        firebaseError.message ?? 'auth/unknown-error',
                         401
                     );
             }
@@ -383,7 +251,7 @@ export const deleteCredentialsUsingUID = async (uid: string) => {
         throw new AuthError(
             'Failed to delete user. Please try again later.',
             AuthErrorType.SERVER_ERROR,
-            error.code || 'auth/server-error',
+            error.code ?? 'auth/server-error',
             500
         );
     }

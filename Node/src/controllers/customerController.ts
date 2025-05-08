@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import * as customerService from '../services/customer.js';
-import { signup } from './authControllers.js';
+import { customerSignup } from './authControllers.js';
 
 export const getAllCustomers = async (req: Request, res: Response) => {
     try {
@@ -63,7 +63,7 @@ export const getCustomerByEmail = async (req: Request, res: Response) => {
     }
 };
 
-export const addCustomer = async (req: Request, res: Response) => signup(req, res);
+export const addCustomer = async (req: Request, res: Response) => customerSignup(req, res);
 
 export const updateCustomer = async (req: Request, res: Response) => {
     try {

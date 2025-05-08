@@ -20,8 +20,9 @@ export type FirestoreReference<T> = DocumentReference<T>;
 export const commonDataValidators = <T>(value: T,
     validators: Record<keyof T, (value: any) => boolean>): boolean => {
     let result = typeof value === 'object' && value !== null;
-    for (const key in validators) {
+    for (const key in value) {
         const serachedKey = key as keyof T;
+        if (!validators[serachedKey]) return false;
         result = result && validators[serachedKey](value[serachedKey]);
     }
     return result;

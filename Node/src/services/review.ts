@@ -1,5 +1,5 @@
 import { admin } from '../config/firebase.js';
-import { checkMissingReviewData, generateFullyReviewData, sanitizeReviewData } from './utils/review.js';
+import { generateFullyReviewData } from './utils/review.js';
 import { Review } from '../types/models/review.js';
 import { Timestamp } from 'firebase-admin/firestore';
 import * as productService from './product.js';
@@ -80,11 +80,6 @@ export const getReviewsByProduct = async (productID: string) => {
 
 export const addReview = async (review: Review) => {
     try {
-        const missedReviewData = checkMissingReviewData(review);
-        if (missedReviewData) {
-            throw new Error(missedReviewData);
-        }
-
         const reviewData = generateFullyReviewData(review);
 
         let savedReview;
@@ -104,9 +99,6 @@ export const updateReview = async (reviewID: string, newReviewData: Partial<Revi
     if (!reviewID) {
         throw new Error('Please provide a review ID');
     }
-
-    // Sanitize the input data first to remove unauthorized fields
-    newReviewData = sanitizeReviewData(newReviewData);
 
     try {
         // Get the existing review to compare ratings

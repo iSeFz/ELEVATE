@@ -3,17 +3,6 @@ import { Staff } from '../../types/models/staff.js';
 import { AuthError, AuthErrorType } from '../auth.js';
 import { convertToTimestamp } from './common.js';
 
-export const checkRequiredCustomerData = (customer: any) => {
-    const currentCustomer = customer as Customer;
-    if (currentCustomer.email == null || currentCustomer.password == null) {
-        return 'Please provide at least: username, email , and password';
-    }
-    if (customer.password.length < 6) {
-        return 'Password must be at least 6 characters';
-    }
-    return null;
-};
-
 export const checkMissingFullCustomerData = (customer: any) => {
     const currentCustomer = customer as Customer;
     if (currentCustomer.username == null || currentCustomer.email == null || currentCustomer.password == null
@@ -39,35 +28,6 @@ export const checkMissingStaffCredentials = (staff: any) => {
     }
     return null;
 }
-
-export const sanitizeCustomerData = (newCustomerData: any): Partial<Customer> => {
-    const excludedFields: Array<keyof Customer> = ['id', 'createdAt', 'password'];
-    const sanitizedData: Partial<Customer> = {};
-
-    const productFields: Array<keyof Customer> = [
-        'address',
-        'cart',
-        'email',
-        'firstName',
-        'lastName',
-        'imageURL',
-        'loyaltyPoints',
-        'orders',
-        'phoneNumber',
-        'username',
-        'wishlist',
-        'updatedAt'
-    ];
-
-    for (const key in newCustomerData) {
-        // Only include fields that are part of the Product interface and not in excluded list
-        if (productFields.includes(key as keyof Customer) && !excludedFields.includes(key as keyof Customer)) {
-            sanitizedData[key as keyof Customer] = newCustomerData[key];
-        }
-    }
-
-    return sanitizedData;
-};
 
 export const generateFullyCustomerData = (customer: Customer): Customer => {
     const fullyData: Customer = {

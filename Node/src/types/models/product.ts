@@ -22,7 +22,7 @@ export interface ProductReviewSummary {
         '5': number;
     };
     // Most helpful or recent reviews for quick display
-    reviewIds?: string[]; // IDs of featured reviews
+    reviewIds: string[]; // IDs of featured reviews
 }
 
 export interface Product {

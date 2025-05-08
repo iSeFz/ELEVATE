@@ -1,7 +1,6 @@
 import { admin } from '../config/firebase.js';
 import { BrandOwner } from '../types/models/brandOwner.js';
 import { deleteCredentialsUsingUID } from './auth.js';
-import { sanitizeBrandOwnerData } from './utils/brandOwner.js';
 
 const firestore = admin.firestore();
 const brandOwnerCollection = firestore.collection('brandOwner');
@@ -56,7 +55,6 @@ export const updateBrandOwner = async (
     id: string,
     data: Partial<BrandOwner>
 ): Promise<BrandOwner | null> => {
-    data = sanitizeBrandOwnerData(data);
     try {
         // Check if brand owner exists
         const brandOwnerDoc = await brandOwnerCollection.doc(id).get();

@@ -8,9 +8,9 @@ import * as brandService from '../services/brand.js';
 import * as brandOwnerService from '../services/brandOwner.js';
 import { Brand } from '../types/models/brand.js';
 
-export const signup = async (req: Request, res: Response) => {
+export const customerSignup = async (req: Request, res: Response) => {
     try {
-        const userRecord = await authService.signup(req.body);
+        const userRecord = await authService.customerSignup(req.body);
 
         return res.status(201).json({
             status: 'success',
@@ -38,10 +38,10 @@ export const signup = async (req: Request, res: Response) => {
     }
 };
 
-export const login = async (req: Request, res: Response) => {
+export const customerLogin = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
-        const userData = await authService.login(email, password);
+        const userData = await authService.customerLogin(email, password);
 
         return res.status(200).json({
             status: 'success',
@@ -99,8 +99,6 @@ export const brandOwnerSignup = async (req: Request, res: Response) => {
     try {
         // Extract both brand owner and brand data from the request
         let { brandData, ...brandOwnerData }: { brandData: Brand } & BrandOwner = req.body;
-
-        authService.checkRequiredFieldForBrandAndBrandOwnera(brandOwnerData, brandData);
 
         // 1. Create brand owner account
         const userRecord = await authService.brandOwnerSignup(brandOwnerData);

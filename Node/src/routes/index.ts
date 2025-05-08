@@ -8,14 +8,11 @@ import OrderRoutes from './orderRoutes.js';
 import StaffRoutes from './staffRoutes.js';
 import BrandOwnerRoutes from './brandOwnerRoutes.js';
 import SwaggerRoutes from './swaggerRoutes.js';
-import { signup, login, getCurrentUser } from '../controllers/authControllers.js';
+import { getCurrentUser } from '../controllers/authControllers.js';
 import { authenticate } from '../middleware/auth.js';
 
 const router = express.Router();
 
-// Auth routes
-router.post('/signup', signup);
-router.post('/login', login);
 router.get('/me', authenticate, getCurrentUser);
 
 // API documentation

@@ -1,8 +1,14 @@
 import express from 'express';
 import * as CustomerController from '../controllers/customerController.js';
 import { authenticate, authorize, authorizeCustomerAccess } from '../middleware/auth.js';
+import { customerSignup, customerLogin } from '../controllers/authControllers.js';
+import * as AuthValidators from '../middleware/validators/auth.js';
+import * as CustomerValidators from '../middleware/validators/customer.js';
 
 const router = express.Router();
+
+router.post('/signup', CustomerValidators.validateSignupCustomer, customerSignup);
+router.post('/login', AuthValidators.validateLogin, customerLogin);
 
 // Protected routes requiring authentication
 router.get('/', authenticate, authorize(['admin', 'staff']), CustomerController.getAllCustomers);
@@ -13,11 +19,8 @@ router.get('/:id', authenticate, authorizeCustomerAccess, CustomerController.get
 // Get orders for a specific customer - using the new middleware
 router.get('/:id/orders', authenticate, authorizeCustomerAccess, CustomerController.getCustomerOrders);
 
-// Only admins can create customers via this endpoint (regular signup uses auth routes)
-router.post('/', authenticate, authorize(['admin']), CustomerController.addCustomer);
-
 // Users can update their own data, admins can update any user
-router.put('/:id', authenticate, authorizeCustomerAccess, CustomerController.updateCustomer);
+router.put('/:id', authenticate, authorizeCustomerAccess, CustomerValidators.validateUpdateBrand, CustomerController.updateCustomer);
 
 // Only admins can delete customer accounts
 router.delete('/:id', authenticate, authorize(['admin']), CustomerController.deleteCustomer);

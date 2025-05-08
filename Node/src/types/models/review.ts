@@ -22,7 +22,7 @@ export const reviewDataValidators = (value: Review): boolean => {
 
         title: (v: Review['title']) => typeof v === 'string',
         content: (v: Review['content']) => typeof v === 'string',
-        rating: (v: Review['rating']) => typeof v === 'number',
+        rating: (v: Review['rating']) => typeof v === 'number' && v >= 1 && v <= 5 && Number.isInteger(v),
 
         createdAt: (v: Review['createdAt']) => v instanceof Timestamp,
         updatedAt: (v: Review['updatedAt']) => v instanceof Timestamp,

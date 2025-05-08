@@ -2,6 +2,9 @@ import { Request, Response } from 'express';
 import * as cartService from '../services/cart.js';
 import { CartItem } from '../types/models/customer.js';
 
+/**
+ * User must be authenticated to access the cart.
+ */
 export const getCart = async (req: Request, res: Response) => {
     try {
         const customerId = req.user?.id;
@@ -27,37 +30,19 @@ export const getCart = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * User must be authenticated to add items to the cart.
+ * 
+ * Required data:
+ * - productId: String - ID of the product
+ * - variantId: String - ID of the specific product variant
+ * - color: String - Color of the product
+ * - quantity: Number (optional, defaults to 1) - Quantity to add
+ */
 export const addToCart = async (req: Request, res: Response) => {
     try {
-        const customerId = req.user?.id;
-
-        if (!customerId) {
-            return res.status(401).json({
-                status: 'error',
-                message: 'Unauthorized'
-            });
-        }
-
+        const customerId = req.user!.id;
         const cartItem = req.body as Partial<CartItem>;
-
-        if (!cartItem.productId || !cartItem.variantId) {
-            return res.status(400).json({
-                status: 'error',
-                message: 'Product ID and variant ID are required'
-            });
-        }
-
-        if (!cartItem.quantity || cartItem.quantity <= 0) {
-            cartItem.quantity = 1; // Default to 1 if not specified or invalid
-        }
-
-        if (!cartItem.color) {
-            return res.status(400).json({
-                status: 'error',
-                message: 'Color is required'
-            });
-        }
-
         const updatedCart = await cartService.addToCart(customerId, cartItem);
 
         return res.status(200).json({
@@ -73,32 +58,18 @@ export const addToCart = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * User must be authenticated to update items in the cart.
+ * 
+ * Required data:
+ * - id: String - ID of the cart item to update
+ * - quantity: Number - New quantity for the item
+ */
 export const updateCartItem = async (req: Request, res: Response) => {
     try {
-        const customerId = req.user?.id;
+        const customerId = req.user!.id;
         const { id } = req.params;
         const { quantity } = req.body;
-
-        if (!customerId) {
-            return res.status(401).json({
-                status: 'error',
-                message: 'Unauthorized'
-            });
-        }
-
-        if (!id) {
-            return res.status(400).json({
-                status: 'error',
-                message: 'Item ID is required'
-            });
-        }
-
-        if (!quantity || isNaN(quantity) || quantity <= 0) {
-            return res.status(400).json({
-                status: 'error',
-                message: 'Valid quantity greater than 0 is required'
-            });
-        }
 
         const updatedCart = await cartService.updateCartItem(
             customerId,
@@ -119,24 +90,13 @@ export const updateCartItem = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * User must be authenticated to remove items from the cart.
+ */
 export const removeFromCart = async (req: Request, res: Response) => {
     try {
-        const customerId = req.user?.id;
+        const customerId = req.user!.id;
         const { id } = req.params;
-
-        if (!customerId) {
-            return res.status(401).json({
-                status: 'error',
-                message: 'Unauthorized'
-            });
-        }
-
-        if (!id) {
-            return res.status(400).json({
-                status: 'error',
-                message: 'Item ID is required'
-            });
-        }
 
         const updatedCart = await cartService.removeFromCart(customerId, id);
 
@@ -153,16 +113,12 @@ export const removeFromCart = async (req: Request, res: Response) => {
     }
 };
 
+/**
+ * User must be authenticated to clear the cart.
+ */
 export const clearCart = async (req: Request, res: Response) => {
     try {
-        const customerId = req.user?.id;
-
-        if (!customerId) {
-            return res.status(401).json({
-                status: 'error',
-                message: 'Unauthorized'
-            });
-        }
+        const customerId = req.user!.id;
 
         const emptyCart = await cartService.clearCart(customerId);
 

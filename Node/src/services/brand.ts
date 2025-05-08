@@ -1,5 +1,5 @@
 import { admin } from '../config/firebase.js';
-import { checkRequiredBrandData, checkMissingBrandUpdateData, generateFullyBrandData } from './utils/brand.js';
+import { generateFullyBrandData } from './utils/brand.js';
 import { Brand } from '../types/models/brand.js';
 
 const firestore = admin.firestore();
@@ -57,11 +57,6 @@ export const getBrandByName = async (brandName: string) => {
 
 export const addBrand = async (brand: Brand) => {
     try {
-        const missedBrandData = checkRequiredBrandData(brand);
-        if (missedBrandData) {
-            throw new Error(missedBrandData);
-        }
-
         const brandData = generateFullyBrandData(brand);
 
         const docRef = await firestore.collection(brandCollection).add(brandData);
@@ -77,11 +72,6 @@ export const updateBrand = async (brandID: string, newBrandData: Partial<Brand>)
     }
 
     try {
-        const missedUpdateData = checkMissingBrandUpdateData(newBrandData);
-        if (missedUpdateData) {
-            throw new Error(missedUpdateData);
-        }
-
         const brandRef = firestore.collection(brandCollection).doc(brandID);
         await brandRef.update(newBrandData);
         return true;

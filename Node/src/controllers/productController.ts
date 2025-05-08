@@ -82,7 +82,6 @@ export const updateProduct = async (req: Request, res: Response) => {
         const productID = req.params.id;
         const newProductData = req.body as Partial<Product>;
 
-        // Authorization check is handled by the authorizeProductAccess middleware
         const updatedProduct = await productService.updateProduct(productID, newProductData);
         return res.status(200).json({
             status: 'success',
@@ -117,16 +116,6 @@ export const addProductVariant = async (req: Request, res: Response) => {
         const productID = req.params.productId;
         const variantData = req.body as ProductVariant;
         
-        if (!productID) {
-            return res.status(400).json({ 
-                status: 'error', 
-                message: 'Product ID is required' 
-            });
-        }
-        
-        // Remove any ID if provided - we'll generate one in the service
-        delete variantData.id;
-        
         const newVariant = await productService.addProductVariant(productID, variantData);
         
         return res.status(201).json({
@@ -147,16 +136,6 @@ export const updateProductVariant = async (req: Request, res: Response) => {
         const productID = req.params.productId;
         const variantID = req.params.variantId;
         const updatedVariantData = req.body as Partial<ProductVariant>;
-        
-        if (!productID || !variantID) {
-            return res.status(400).json({ 
-                status: 'error', 
-                message: 'Product ID and variant ID are required' 
-            });
-        }
-        
-        // Remove the ID from the update data to prevent changing it
-        delete updatedVariantData.id;
         
         const updatedVariant = await productService.updateProductVariant(
             productID, 

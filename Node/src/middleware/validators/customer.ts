@@ -1,0 +1,92 @@
+import { Request, Response, NextFunction } from 'express';
+import { Customer, customerDataValidators } from '../../types/models/customer.js';
+import { validateObjectStructure } from './common.js';
+
+export const validateSignupCustomer = (req: Request, res: Response, next: NextFunction) => {
+    const customer: Customer = req.body;
+
+    if (customer.email == null || typeof customer.email !== 'string') {
+        return res.status(400).json({
+            status: 'error',
+            message: 'Email must be a string'
+        });
+    }
+
+    if (customer.password == null || typeof customer.password !== 'string') {
+        return res.status(400).json({
+            status: 'error',
+            message: 'Password must be a string'
+        });
+    }
+
+    if(customer.password.length < 6) {
+        return res.status(400).json({
+            status: 'error',
+            message: 'Password must be at least 6 characters'
+        });
+    }
+
+    next();
+}
+
+const expectedUpdateCustomerData: Partial<Customer> = {
+    firstName: "String",
+    lastName: "String",
+    email: "String",
+    phoneNumber: "String",
+    address: {
+        postalCode: 123456,
+        building: 123,
+        city: "String",
+        street: "String",
+    },
+    imageURL: "String",
+    username: "String",
+}
+/**
+ * Required Parameters:
+ * - id: String - ID of the brand owner to update
+ * 
+ * Data to update:
+ * - firstName: String
+ * - lastName: String
+ * - email: String
+ * - phoneNumber: String
+ * - address: Address object
+ *   - postalCode: Number
+ *   - building: Number
+ *   - city: String
+ *   - street: String
+ *  - imageURL: String
+ *  - username: String
+ */
+export const validateUpdateBrand = (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const customer = req.body as Customer;
+    // Check if the overall structure matches
+    if (!validateObjectStructure(customer, expectedUpdateCustomerData, "partially")) {
+        return res.status(400).json({
+            status: 'error',
+            message: 'Request structure doesn\'t match expected format (Any of the fields can be updated)',
+            expectedFormat: expectedUpdateCustomerData
+        });
+    }
+
+    if (!id) {
+        return res.status(400).json({
+            status: 'error',
+            message: 'Brand ID is required'
+        });
+    }
+
+    const isBrandOwnerValid = customerDataValidators(customer);
+    if (!isBrandOwnerValid) {
+        return res.status(400).json({
+            status: 'error',
+            message: 'Invalid brand data types.',
+            expectedFormat: expectedUpdateCustomerData
+        });
+    }
+
+    next();
+}
