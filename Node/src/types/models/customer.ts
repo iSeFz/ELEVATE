@@ -2,6 +2,7 @@ import { Timestamp } from 'firebase-admin/firestore';
 import { Address, addressDataValidators, commonDataValidators, TimestampUnion } from './common.js';
 
 export interface CartItem {
+    id?: string; // Optional ID for the item, useful for updates
     productId: string;
     variantId: string;
     quantity: number;
@@ -55,6 +56,7 @@ export interface Customer {
 
 export const cartItemDataValidators = (value: CartItem): boolean => {
     const validators: Record<keyof CartItem, (value: any) => boolean> = {
+        id: (v: CartItem['id']) => typeof v === 'string' || v === undefined,
         productId: (v: CartItem['productId']) => typeof v === 'string',
         variantId: (v: CartItem['variantId']) => typeof v === 'string',
         quantity: (v: CartItem['quantity']) => typeof v === 'number',

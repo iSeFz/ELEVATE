@@ -25,6 +25,10 @@ export const getCart = async (customerId: string) => {
     }
 };
 
+const generateCartItemtId = (): string => {
+    return `cartItem_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
+};
+
 export const addToCart = async (customerId: string, item: Partial<CartItem>) => {
     if (!customerId) {
         throw new Error('Please provide a customer ID');
@@ -67,9 +71,14 @@ export const addToCart = async (customerId: string, item: Partial<CartItem>) => 
             throw new Error('Not enough stock available' + ', product name: ' + product.name + ', available stock: ' + variant.stock + ', requested quantity: ' + (item.quantity ?? 1));
         }
 
+        // Check if the selected color is valid
+        if (item.color && !variant.colors.includes(item.color)) {
+            throw new Error(`Selected color (${item.color}) is not available for this variant, product name: ${product.name}, available colors: ${variant.colors.join(', ')}`);
+        }
+
         // Check if the item is already in the cart
         const existingItemIndex = currentCart.items.findIndex(
-            cartItem => cartItem.productId === item.productId && cartItem.variantId === item.variantId
+            cartItem => cartItem.productId === item.productId && cartItem.variantId === item.variantId && cartItem.color === (item.color ?? variant.colors[0])
         );
 
         const updatedItems = [...currentCart.items];
@@ -93,6 +102,7 @@ export const addToCart = async (customerId: string, item: Partial<CartItem>) => 
             const productImage = variant.images && variant.images.length > 0 ? variant.images[0] : '';
 
             updatedItems.push({
+                id: generateCartItemtId(),
                 productId: item.productId,
                 variantId: item.variantId,
                 quantity: item.quantity ?? 1,
@@ -127,13 +137,13 @@ export const addToCart = async (customerId: string, item: Partial<CartItem>) => 
     }
 };
 
-export const updateCartItem = async (customerId: string, productId: string, variantId: string, quantity: number) => {
+export const updateCartItem = async (customerId: string, cartItemId: string, quantity: number) => {
     if (!customerId) {
         throw new Error('Please provide a customer ID');
     }
 
-    if (!productId || !variantId) {
-        throw new Error('Product ID and variant ID are required');
+    if (!cartItemId) {
+        throw new Error('Cart item ID is required');
     }
 
     if (quantity <= 0) {
@@ -153,28 +163,26 @@ export const updateCartItem = async (customerId: string, productId: string, vari
         const currentCart = customerData.cart || { items: [], subtotal: 0, updatedAt: admin.firestore.Timestamp.now() };
 
         // Find the item in the cart
-        const itemIndex = currentCart.items.findIndex(
-            item => item.productId === productId && item.variantId === variantId
-        );
+        const itemIndex = currentCart.items.findIndex(item => item.id === cartItemId);
 
         if (itemIndex === -1) {
-            throw new Error('Item not found in cart, product ID: ' + productId + ', variant ID: ' + variantId);
+            throw new Error(`Item not found in cart, item ID: ${cartItemId}`);
         }
 
         // Verify product and variant exist and check stock
-        const productRef = firestore.collection('product').doc(productId);
+        const productRef = firestore.collection('product').doc(currentCart.items[itemIndex].productId);
         const productDoc = await productRef.get();
 
         if (!productDoc.exists) {
-            throw new Error('Product not found, product ID: ' + productId);
+            throw new Error(`Product of this item cart not found, product name: ${currentCart.items[itemIndex].productName}, product ID: ${currentCart.items[itemIndex].productId}`);
         }
 
         const product = productDoc.data() as any;
 
         // Find the variant
-        const variant = product.variants.find((v: any) => v.id === variantId);
+        const variant = product.variants.find((v: any) => v.id === currentCart.items[itemIndex].variantId);
         if (!variant) {
-            throw new Error('Product variant not found, variant ID: ' + variantId);
+            throw new Error(`Product variant not found, variant ID: ${currentCart.items[itemIndex].variantId}`);
         }
 
         // Check if stock is available
@@ -211,13 +219,13 @@ export const updateCartItem = async (customerId: string, productId: string, vari
     }
 };
 
-export const removeFromCart = async (customerId: string, productId: string, variantId: string) => {
+export const removeFromCart = async (customerId: string, cartItemId: string) => {
     if (!customerId) {
         throw new Error('Please provide a customer ID');
     }
 
-    if (!productId || !variantId) {
-        throw new Error('Product ID and variant ID are required');
+    if (!cartItemId) {
+        throw new Error('Cart item ID is required');
     }
 
     try {
@@ -233,12 +241,10 @@ export const removeFromCart = async (customerId: string, productId: string, vari
         const currentCart = customerData.cart || { items: [], subtotal: 0, updatedAt: admin.firestore.Timestamp.now() };
 
         // Find the item in the cart
-        const itemIndex = currentCart.items.findIndex(
-            item => item.productId === productId && item.variantId === variantId
-        );
+        const itemIndex = currentCart.items.findIndex(item => item.id === cartItemId);
 
         if (itemIndex === -1) {
-            throw new Error('Item not found in cart, product ID: ' + productId + ', variant ID: ' + variantId);
+            throw new Error(`Item not found in cart, item ID: ${cartItemId}`);
         }
 
         // Remove item

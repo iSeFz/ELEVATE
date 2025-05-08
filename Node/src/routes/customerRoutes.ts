@@ -1,6 +1,5 @@
 import express from 'express';
 import * as CustomerController from '../controllers/customerController.js';
-import * as CartController from '../controllers/cartController.js';
 import { authenticate, authorize, authorizeCustomerAccess } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -22,12 +21,5 @@ router.put('/:id', authenticate, authorizeCustomerAccess, CustomerController.upd
 
 // Only admins can delete customer accounts
 router.delete('/:id', authenticate, authorize(['admin']), CustomerController.deleteCustomer);
-
-// Cart routes - customers can only access their own cart
-router.get('/cart', authenticate, CartController.getCart);
-router.post('/cart/items', authenticate, CartController.addToCart);
-router.put('/cart/items/:productId/:variantId', authenticate, CartController.updateCartItem);
-router.delete('/cart/items/:productId/:variantId', authenticate, CartController.removeFromCart);
-router.delete('/cart', authenticate, CartController.clearCart);
 
 export default router;

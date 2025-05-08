@@ -51,6 +51,13 @@ export const addToCart = async (req: Request, res: Response) => {
             cartItem.quantity = 1; // Default to 1 if not specified or invalid
         }
 
+        if (!cartItem.color) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Color is required'
+            });
+        }
+
         const updatedCart = await cartService.addToCart(customerId, cartItem);
 
         return res.status(200).json({
@@ -69,7 +76,7 @@ export const addToCart = async (req: Request, res: Response) => {
 export const updateCartItem = async (req: Request, res: Response) => {
     try {
         const customerId = req.user?.id;
-        const { productId, variantId } = req.params;
+        const { id } = req.params;
         const { quantity } = req.body;
 
         if (!customerId) {
@@ -79,10 +86,10 @@ export const updateCartItem = async (req: Request, res: Response) => {
             });
         }
 
-        if (!productId || !variantId) {
+        if (!id) {
             return res.status(400).json({
                 status: 'error',
-                message: 'Product ID and variant ID are required'
+                message: 'Item ID is required'
             });
         }
 
@@ -95,8 +102,7 @@ export const updateCartItem = async (req: Request, res: Response) => {
 
         const updatedCart = await cartService.updateCartItem(
             customerId,
-            productId,
-            variantId,
+            id,
             Number(quantity)
         );
 
@@ -116,7 +122,7 @@ export const updateCartItem = async (req: Request, res: Response) => {
 export const removeFromCart = async (req: Request, res: Response) => {
     try {
         const customerId = req.user?.id;
-        const { productId, variantId } = req.params;
+        const { id } = req.params;
 
         if (!customerId) {
             return res.status(401).json({
@@ -125,14 +131,14 @@ export const removeFromCart = async (req: Request, res: Response) => {
             });
         }
 
-        if (!productId || !variantId) {
+        if (!id) {
             return res.status(400).json({
                 status: 'error',
-                message: 'Product ID and variant ID are required'
+                message: 'Item ID is required'
             });
         }
 
-        const updatedCart = await cartService.removeFromCart(customerId, productId, variantId);
+        const updatedCart = await cartService.removeFromCart(customerId, id);
 
         return res.status(200).json({
             status: 'success',
