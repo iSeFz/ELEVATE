@@ -4,6 +4,7 @@ import { commonDataValidators, TimestampUnion } from "./common.js";
 export interface BrandOwner {
     id?: string;
     brandId: string; // Denormalized field for authorization
+    brandName: string;
     email: string;
     firstName: string;
     lastName: string;
@@ -18,8 +19,9 @@ export interface BrandOwner {
 
 export const brandOwnerDataValidators = (value: BrandOwner): boolean => {
     const validators: Record<keyof BrandOwner, (value: any) => boolean> = {
-        id: (v) => typeof v === 'string',
+        id: (v) => typeof v === 'string' || v === undefined,
         brandId: (v) => typeof v === 'string',
+        brandName: (v) => typeof v === 'string',
         email: (v) => typeof v === 'string',
         firstName: (v) => typeof v === 'string',
         lastName: (v) => typeof v === 'string',

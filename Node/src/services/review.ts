@@ -7,14 +7,36 @@ import * as productService from './product.js';
 const firestore = admin.firestore();
 const reviewCollection = 'review';
 
-export const getAllReviews = async () => {
+export const getAllReviewsOfProduct = async (productId: string, page = 1) => {
+    const limit = 10;
+    const offset = (page - 1) * limit;
     try {
-        const snapshot = await firestore.collection(reviewCollection).get();
-        const reviews: Review[] = [];
-        snapshot.forEach((doc) => {
-            reviews.push({ id: doc.id, ...doc.data() } as Review);
-        });
-        return reviews;
+        const productData = await productService.getProduct(productId);
+        if (!productData) {
+            throw new Error('Product not found');
+        }
+        const reviewIds = productData.reviewSummary.reviewIds || [];
+        const paginatedReviewIds = reviewIds.slice(offset, offset + limit);
+        const hasNextPage = reviewIds.length > offset + limit;
+        const orderPromises = paginatedReviewIds.map(reviewId =>
+            firestore.collection(reviewCollection).doc(reviewId).get()
+        );
+        const reviewDocs = await Promise.all(orderPromises);
+        const reviews = reviewDocs.map(doc => {
+            if (doc.exists) {
+                return { ...doc.data(), id: doc.id };
+            }
+            return null;
+        }).filter(order => order !== null);
+
+        return {
+            reviews,
+            pagination: {
+                page,
+                limit,
+                hasNextPage
+            }
+        };
     } catch (error: any) {
         throw new Error(error.message);
     }
@@ -29,50 +51,10 @@ export const getReview = async (reviewID: string) => {
         const docSnap = await docRef.get();
 
         if (docSnap.exists) {
-            return { id: docSnap.id, ...docSnap.data() } as Review;
+            return { ...docSnap.data(), id: docSnap.id } as Review;
         } else {
             return null;
         }
-    } catch (error: any) {
-        throw new Error(error.message);
-    }
-};
-
-export const getReviewsByCustomer = async (customerID: string) => {
-    if (!customerID) {
-        throw new Error('Please provide a customer ID');
-    }
-    try {
-        const customerRef = firestore.collection('customer').doc(customerID);
-        const snapshot = await firestore.collection(reviewCollection)
-            .where("customer", "==", customerRef)
-            .get();
-
-        const reviews: Review[] = [];
-        snapshot.forEach((doc) => {
-            reviews.push({ id: doc.id, ...doc.data() } as Review);
-        });
-        return reviews;
-    } catch (error: any) {
-        throw new Error(error.message);
-    }
-};
-
-export const getReviewsByProduct = async (productID: string) => {
-    if (!productID) {
-        throw new Error('Please provide a product ID');
-    }
-    try {
-        const productRef = firestore.collection('product').doc(productID);
-        const snapshot = await firestore.collection(reviewCollection)
-            .where("product", "==", productRef)
-            .get();
-
-        const reviews: Review[] = [];
-        snapshot.forEach((doc) => {
-            reviews.push({ id: doc.id, ...doc.data() } as Review);
-        });
-        return reviews;
     } catch (error: any) {
         throw new Error(error.message);
     }
@@ -202,7 +184,7 @@ async function updateProductAfterReviewUpdate(existingReview: Review, newRating:
     const ratingDistribution = { ...product.reviewSummary.ratingDistribution };
     const oldRatingKey = existingReview.rating.toString() as keyof typeof ratingDistribution;
     const newRatingKey = newRating.toString() as keyof typeof ratingDistribution;
-    
+
     // Decrease count for old rating
     ratingDistribution[oldRatingKey] = Math.max(0, (ratingDistribution[oldRatingKey] || 0) - 1);
     // Increase count for new rating

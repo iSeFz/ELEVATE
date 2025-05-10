@@ -29,9 +29,9 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         if (ENABLE_TEST_AUTH || req.headers[TEST_AUTH_HEADER.toLowerCase()] === TEST_AUTH_KEY) {
             // For testing, we'll set a mock user
             req.user = {
-                id: req.query?.userId as string  ?? 'testUserId', // Attch `userId` in the request query to act as this user (Must enable admin access env)
-                email: req.user?.email ?? 'test@test.com',
-                role: 'admin'
+                id: req.query?.userId as string  ?? 'shawky.ebrahim2514', // Attch `userId` in the request query to act as this user (Must enable admin access env)
+                email: req.query?.email as string ?? 'shawky.ebrahim2514@gmail.com',
+                role: req.query?.role as string ?? 'admin'
             };
             console.log("Admin Access", req.query?.userId);
             delete req.body?.userId;

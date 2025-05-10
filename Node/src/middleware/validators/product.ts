@@ -2,6 +2,33 @@ import { Request, Response, NextFunction } from 'express';
 import { validateObjectStructure } from './common.js';
 import { Product, productDataValidators, ProductVariant, productVariantDataValidators } from '../../types/models/product.js';
 
+const expectedProductData: Partial<Product> = {
+    name: "String",
+    category: "String",
+    description: "String",
+    material: "String",
+    department: ["String"],
+    variants: [{
+        colors: ["String"],
+        discount: 0,
+        images: ["String"],
+        price: 0,
+        size: "String",
+        stock: 0,
+    }],
+    reviewSummary: {
+        averageRating: 0,
+        totalReviews: 0,
+        ratingDistribution: {
+            '1': 0,
+            '2': 0,
+            '3': 0,
+            '4': 0,
+            '5': 0,
+        },
+        reviewIds: ["String"]
+    },
+};
 const expectedAddProductData: Partial<Product> = {
     name: "String",
     category: "String",
@@ -17,7 +44,7 @@ const expectedAddProductData: Partial<Product> = {
  */
 export const validateAddProduct = (req: Request, res: Response, next: NextFunction) => {
     // Check if the overall structure matches
-    if (!validateObjectStructure(req.body, expectedAddProductData)) {
+    if (!validateObjectStructure(req.body, expectedAddProductData, "partially")) {
         return res.status(400).json({
             status: 'error',
             message: 'Request structure doesn\'t match expected format',

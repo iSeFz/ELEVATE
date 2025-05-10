@@ -98,9 +98,10 @@ export const staffSignup = async (req: Request, res: Response) => {
 export const brandOwnerSignup = async (req: Request, res: Response) => {
     try {
         // Extract both brand owner and brand data from the request
-        let { brandData, ...brandOwnerData }: { brandData: Brand } & BrandOwner = req.body;
+        let { brand: brandData, ...brandOwnerData }: { brand: Brand } & BrandOwner = req.body;
 
         // 1. Create brand owner account
+        brandOwnerData.brandName = brandData.brandName;
         const userRecord = await authService.brandOwnerSignup(brandOwnerData);
         const brandOwnerId = userRecord.uid;
 
@@ -235,8 +236,9 @@ export const getCurrentUser = async (req: Request, res: Response) => {
                 // or we could return basic information from the token
                 userData = {
                     id: userId,
+                    name: "Shawky Ebrahim Ahmed",
                     email: req.user.email,
-                    role: 'admin'
+                    role: userRole
                 };
                 break;
             default:

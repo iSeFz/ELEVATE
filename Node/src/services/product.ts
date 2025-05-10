@@ -30,7 +30,7 @@ export const getAllProducts = async () => {
         const snapshot = await firestore.collection(productCollection).get();
         const products: Product[] = [];
         snapshot.forEach((doc) => {
-            products.push({ id: doc.id, ...doc.data() } as Product);
+            products.push({ ...doc.data(), id: doc.id } as Product);
         });
         return products;
     } catch (error: any) {
@@ -47,7 +47,7 @@ export const getProduct = async (productID: string) => {
         const docSnap = await docRef.get();
 
         if (docSnap.exists) {
-            return { id: docSnap.id, ...docSnap.data() } as Product;
+            return { ...docSnap.data(), id: docSnap.id } as Product;
         } else {
             return null;
         }
@@ -56,17 +56,18 @@ export const getProduct = async (productID: string) => {
     }
 };
 
-export const getProductsByCategory = async (category: string, page: number = 0) => {
+export const getProductsByCategory = async (category: string, page: number = 1) => {
+    const offset = (page - 1) * 10; // Calculate the offset for pagination
     if (!category) {
         throw new Error('Please provide a category');
     }
     try {
         const snapshot = await firestore.collection(productCollection)
-            .where("category", "==", category).offset(page * 10).limit(10).get();
+            .where("category", "==", category).offset(offset).limit(10).get();
 
         const products: Product[] = [];
         snapshot.forEach((doc) => {
-            products.push({ id: doc.id, ...doc.data() } as Product);
+            products.push({ ...doc.data(), id: doc.id } as Product);
         });
         return products;
     } catch (error: any) {
@@ -74,8 +75,8 @@ export const getProductsByCategory = async (category: string, page: number = 0) 
     }
 };
 
-export const getProductsByBrand = async (brandID: string, page: number = 0) => {
-    const offset = page * 10; // Calculate the offset for pagination
+export const getProductsByBrand = async (brandID: string, page: number = 1) => {
+    const offset = (page - 1) * 10; // Calculate the offset for pagination
     if (!brandID) {
         throw new Error('Please provide a brand ID');
     }
@@ -107,7 +108,7 @@ export const getProductsByBrand = async (brandID: string, page: number = 0) => {
 
         productSnapshots.forEach(doc => {
             if (doc.exists) {
-                products.push({ id: doc.id, ...doc.data() } as Product);
+                products.push({ ...doc.data(), id: doc.id } as Product);
             }
         });
 
@@ -161,9 +162,7 @@ export const updateProduct = async (productID: string, newProductData: Partial<P
         const productRef = firestore.collection(productCollection).doc(productID);
         await productRef.update(newProductData);
 
-        // Return the updated product
-        const updatedProduct = await getProduct(productID);
-        return updatedProduct;
+        return true;
     } catch (error: any) {
         throw new Error(error.message);
     }
@@ -195,6 +194,28 @@ export const deleteProduct = async (productID: string) => {
         return true;
     } catch (error: any) {
         throw new Error(error.message);
+    }
+};
+
+export const getProductVariant = async (productID: string, variantID: string) => {
+    if (!productID || !variantID) {
+        throw new Error('Product ID and variant ID are required');
+    }
+
+    try {
+        const product = await getProduct(productID);
+        if (!product) {
+            throw new Error('Product not found');
+        }
+
+        const variant = product.variants.find(v => v.id === variantID);
+        if (!variant) {
+            return null;
+        }
+
+        return variant;
+    } catch (error: any) {
+        throw new Error(`Failed to get product variant: ${error.message}`);
     }
 };
 

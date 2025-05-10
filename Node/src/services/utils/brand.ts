@@ -4,7 +4,6 @@ import { convertToTimestamp } from './common.js';
 
 export const generateFullyBrandData = (brand: Brand): Brand => {
     const fullyData: Brand = {
-        id: brand.id ?? "",
         addresses: brand.addresses ?? [],
         brandName: brand.brandName ?? "",
         brandOwnerId: brand.brandOwnerId ?? "",
@@ -26,6 +25,9 @@ export const generateFullyBrandData = (brand: Brand): Brand => {
         createdAt: convertToTimestamp(brand.createdAt),
         updatedAt: convertToTimestamp(brand.updatedAt), // Always update timestamp
     };
+    if (brand.id) {
+        fullyData.id = brand.id;
+    }
 
     if (!brandDataValidators(fullyData)) {
         throw new Error('Invalid brand data, check types and formats');

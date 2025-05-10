@@ -38,22 +38,13 @@ components:
         addresses:
           type: array
           items:
-            $ref: '#/components/schemas/Address'
+            $ref: "#/components/schemas/Address"
           description: Brand's physical addresses
         websites:
           type: array
           items:
-            $ref: '#/components/schemas/Website'
+            $ref: "#/components/schemas/Website"
           description: Brand's websites
-        owner:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Brand owner reference ID
-            path:
-              type: string
-              description: Firestore reference path to the brand owner
         brandOwnerId:
           type: string
           description: ID of the brand owner (denormalized for authorization)
@@ -63,8 +54,12 @@ components:
             type: string
           description: IDs of products associated with this brand (denormalized for querying)
         subscription:
-          $ref: '#/components/schemas/Subscription'
+          $ref: "#/components/schemas/Subscription"
           description: Brand's subscription details
+        createdAt:
+          $ref: "#/components/schemas/Timestamp"
+        updatedAt:
+          $ref: "#/components/schemas/Timestamp"
 
     BrandRequest:
       type: object
@@ -95,12 +90,12 @@ components:
         addresses:
           type: array
           items:
-            $ref: '#/components/schemas/Address'
+            $ref: "#/components/schemas/Address"
           description: Brand's physical addresses
         websites:
           type: array
           items:
-            $ref: '#/components/schemas/Website'
+            $ref: "#/components/schemas/Website"
           description: Brand's websites
         productIds:
           type: array
@@ -108,24 +103,11 @@ components:
             type: string
           description: IDs of products associated with this brand (denormalized for querying)
         subscription:
-          $ref: '#/components/schemas/Subscription'
+          $ref: "#/components/schemas/Subscription"
           description: Brand's subscription details
-
-    Address:
-      type: object
-      properties:
-        building:
-          type: number
-          description: Building number
-        city:
+        brandOwnerId:
           type: string
-          description: City name
-        postalCode:
-          type: number
-          description: Postal code
-        street:
-          type: string
-          description: Street name
+          description: ID of the brand owner (required for admin creation)
 
     Website:
       type: object
@@ -147,12 +129,10 @@ components:
           type: number
           description: Subscription price
         startDate:
-          type: string
-          format: date-time
+          $ref: "#/components/schemas/Timestamp"
           description: Subscription start date
         endDate:
-          type: string
-          format: date-time
+          $ref: "#/components/schemas/Timestamp"
           description: Subscription end date
 
     SuccessResponse:
@@ -179,8 +159,15 @@ components:
 paths:
   /brands:
     get:
-      summary: Retrieve all brands
+      summary: Retrieve all brands with pagination
       tags: [Brands]
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Page number for pagination
       responses:
         200:
           description: A list of brands
@@ -195,13 +182,13 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/BrandResponse'
+                      $ref: "#/components/schemas/BrandResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   /brands/{id}:
     get:
@@ -226,19 +213,19 @@ paths:
                     type: string
                     enum: [success]
                   data:
-                    $ref: '#/components/schemas/BrandResponse'
+                    $ref: "#/components/schemas/BrandResponse"
         404:
           description: Brand not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
     put:
       summary: Update a brand
       tags: [Brands]
@@ -281,87 +268,55 @@ paths:
                 addresses:
                   type: array
                   items:
-                    $ref: '#/components/schemas/Address'
+                    $ref: "#/components/schemas/Address"
                   description: Brand's physical addresses
                 websites:
                   type: array
                   items:
-                    $ref: '#/components/schemas/Website'
+                    $ref: "#/components/schemas/Website"
                   description: Brand's websites
                 subscription:
-                  $ref: '#/components/schemas/Subscription'
+                  $ref: "#/components/schemas/Subscription"
                   description: Brand's subscription details
+                productIds:
+                  type: array
+                  items:
+                    type: string
+                  description: IDs of products associated with this brand
       responses:
         200:
           description: The brand was successfully updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessResponse'
+                $ref: "#/components/schemas/SuccessResponse"
         400:
           description: Failed to update brand due to invalid data
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         401:
           description: Unauthorized - Invalid or missing token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         403:
           description: Forbidden - Insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
           description: Brand not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
-  /brands/name:
-    get:
-      summary: Retrieve a brand by name
-      tags: [Brands]
-      parameters:
-        - in: query
-          name: name
-          required: true
-          description: The name of the brand
-          schema:
-            type: string
-      responses:
-        200:
-          description: Brand data
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    enum: [success]
-                  data:
-                    $ref: '#/components/schemas/BrandResponse'
-        404:
-          description: Brand not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        500:
-          description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"

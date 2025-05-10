@@ -2,7 +2,7 @@ paths:
   /brand-owners/signup:
     post:
       summary: Register a new brand owner and create their brand
-      tags: [Brand Owners]
+      tags: [Authentication]
       requestBody:
         required: true
         content:
@@ -47,7 +47,7 @@ paths:
   /brand-owners/login:
     post:
       summary: Brand owner login
-      tags: [Brand Owners]
+      tags: [Authentication]
       requestBody:
         required: true
         content:
@@ -129,6 +129,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     
   /brand-owners/{id}:
     get:
@@ -174,6 +180,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     
     put:
       summary: Update a brand owner
@@ -206,6 +218,12 @@ paths:
                     enum: [success]
                   data:
                     $ref: '#/components/schemas/BrandOwnerResponse'
+        400:
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         401:
           description: Unauthorized - Invalid or missing token
           content:
@@ -220,6 +238,12 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
         404:
           description: Brand owner not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
           content:
             application/json:
               schema:
@@ -270,46 +294,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         500:
-          description: Failed to delete associated brand
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
-  /brand-owners/by-brand/{brandId}:
-    get:
-      summary: Get brand owner by brand ID
-      tags: [Brand Owners]
-      security:
-        - bearerAuth: []
-      parameters:
-        - in: path
-          name: brandId
-          required: true
-          schema:
-            type: string
-          description: Brand ID
-      responses:
-        200:
-          description: Brand owner details
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    enum: [success]
-                  data:
-                    $ref: '#/components/schemas/BrandOwnerResponse'
-        401:
-          description: Unauthorized - Invalid or missing token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        404:
-          description: Brand owner not found
+          description: Server error
           content:
             application/json:
               schema:
@@ -332,7 +317,7 @@ components:
         - lastName
         - password
         - username
-        - brandData
+        - brand
       properties:
         email:
           type: string
@@ -354,7 +339,7 @@ components:
         imageURL:
           type: string
           description: The image URL of the brand owner (optional)
-        brandData:
+        brand:
           type: object
           required:
             - brandName
@@ -439,16 +424,16 @@ components:
         lastName:
           type: string
           description: The last name of the brand owner
-        password:
-          type: string
-          format: password
-          description: The brand owner password
         username:
           type: string
           description: The unique username of the brand owner
         imageURL:
           type: string
           description: The image URL of the brand owner
+        password:
+          type: string
+          format: password
+          description: The brand owner password
 
     BrandOwnerResponse:
       type: object
@@ -471,28 +456,29 @@ components:
         brandId:
           type: string
           description: ID of the brand this owner manages
-        role:
-          type: string
-          description: The brand owner role (always "brandOwner")
         imageURL:
           type: string
           description: The image URL of the brand owner
-
-    Address:
-      type: object
-      properties:
-        building:
-          type: number
-          description: Building number
-        city:
-          type: string
-          description: City name
-        postalCode:
-          type: number
-          description: Postal code
-        street:
-          type: string
-          description: Street name
+        createdAt:
+          type: object
+          properties:
+            _seconds:
+              type: number
+              description: Seconds since Unix epoch
+            _nanoseconds:
+              type: number
+              description: Nanoseconds fraction
+          description: Timestamp when the brand owner was created
+        updatedAt:
+          type: object
+          properties:
+            _seconds:
+              type: number
+              description: Seconds since Unix epoch
+            _nanoseconds:
+              type: number
+              description: Nanoseconds fraction
+          description: Timestamp when the brand owner was last updated
 
     Website:
       type: object
@@ -515,3 +501,18 @@ components:
           enum: [error]
         message:
           type: string
+    
+    AuthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success]
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+              description: JWT token for authentication
+            user:
+              $ref: '#/components/schemas/BrandOwnerResponse'

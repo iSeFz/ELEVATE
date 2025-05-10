@@ -5,12 +5,13 @@ import { Brand } from '../types/models/brand.js';
 const firestore = admin.firestore();
 const brandCollection = 'brand';
 
-export const getAllBrands = async () => {
+export const getAllBrands = async (page = 1) => {
+    const offset = (page - 1) * 10; // Calculate the offset for pagination
     try {
-        const snapshot = await firestore.collection(brandCollection).get();
+        const snapshot = await firestore.collection(brandCollection).offset(offset).limit(10).get();
         const brands: Brand[] = [];
         snapshot.forEach((doc) => {
-            brands.push({ id: doc.id, ...doc.data() } as Brand);
+            brands.push({ ...doc.data(), id: doc.id } as Brand);
         });
         return brands;
     } catch (error: any) {
@@ -27,7 +28,7 @@ export const getBrand = async (brandID: string) => {
         const docSnap = await docRef.get();
 
         if (docSnap.exists) {
-            return { id: docSnap.id, ...docSnap.data() } as Brand;
+            return { ...docSnap.data(), id: docSnap.id } as Brand;
         } else {
             return null;
         }
@@ -47,7 +48,7 @@ export const getBrandByName = async (brandName: string) => {
 
         const brands: Brand[] = [];
         snapshot.forEach((doc) => {
-            brands.push({ id: doc.id, ...doc.data() } as Brand);
+            brands.push({ ...doc.data(), id: doc.id } as Brand);
         });
         return brands.length > 0 ? brands[0] : null;
     } catch (error: any) {

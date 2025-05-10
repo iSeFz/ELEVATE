@@ -6,7 +6,7 @@ import { Product, ProductVariant } from '../types/models/product.js';
 export const getAllProducts = async (req: Request, res: Response) => {
     const category = req.query.category as string;
     const brand = req.query.brand as string;
-    const page = parseInt(req.query.page as string) || 0;
+    const page = parseInt(req.query.page as string) || 1;
 
     if (category && brand) {
         return res.status(400).json({ status: 'error', message: 'Please provide either category or brand, not both' });
@@ -48,11 +48,6 @@ export const addProduct = async (req: Request, res: Response) => {
     try {
         const productData = req.body as Product;
         const brandOwnerId = req.user?.id as string;
-
-        // Remove any ID if provided - always use auto-generated IDs for products
-        delete productData.id;
-
-        // Get brandOwner to find the associated brandId
         const brandOwner = await brandOwnerService.getBrandOwnerById(brandOwnerId);
 
         if (!brandOwner) {
@@ -64,6 +59,7 @@ export const addProduct = async (req: Request, res: Response) => {
 
         // Set the brandOwnerId and brandId from the brand owner's data
         productData.brandOwnerId = brandOwnerId;
+        productData.brandName = brandOwner.brandName;
         productData.brandId = brandOwner.brandId;
 
         const newProduct = await productService.addProduct(productData);
@@ -82,11 +78,10 @@ export const updateProduct = async (req: Request, res: Response) => {
         const productID = req.params.id;
         const newProductData = req.body as Partial<Product>;
 
-        const updatedProduct = await productService.updateProduct(productID, newProductData);
+        await productService.updateProduct(productID, newProductData);
         return res.status(200).json({
             status: 'success',
             message: 'Product updated successfully',
-            data: updatedProduct
         });
     } catch (error: any) {
         return res.status(400).json({ status: 'error', message: error.message });
@@ -115,18 +110,18 @@ export const addProductVariant = async (req: Request, res: Response) => {
     try {
         const productID = req.params.productId;
         const variantData = req.body as ProductVariant;
-        
+
         const newVariant = await productService.addProductVariant(productID, variantData);
-        
+
         return res.status(201).json({
             status: 'success',
             message: 'Product variant added successfully',
             data: newVariant
         });
     } catch (error: any) {
-        return res.status(400).json({ 
-            status: 'error', 
-            message: error.message 
+        return res.status(400).json({
+            status: 'error',
+            message: error.message
         });
     }
 };
@@ -136,22 +131,22 @@ export const updateProductVariant = async (req: Request, res: Response) => {
         const productID = req.params.productId;
         const variantID = req.params.variantId;
         const updatedVariantData = req.body as Partial<ProductVariant>;
-        
+
         const updatedVariant = await productService.updateProductVariant(
-            productID, 
-            variantID, 
+            productID,
+            variantID,
             updatedVariantData
         );
-        
+
         return res.status(200).json({
             status: 'success',
             message: 'Product variant updated successfully',
             data: updatedVariant
         });
     } catch (error: any) {
-        return res.status(400).json({ 
-            status: 'error', 
-            message: error.message 
+        return res.status(400).json({
+            status: 'error',
+            message: error.message
         });
     }
 };
@@ -160,24 +155,24 @@ export const deleteProductVariant = async (req: Request, res: Response) => {
     try {
         const productID = req.params.productId;
         const variantID = req.params.variantId;
-        
+
         if (!productID || !variantID) {
-            return res.status(400).json({ 
-                status: 'error', 
-                message: 'Product ID and variant ID are required' 
+            return res.status(400).json({
+                status: 'error',
+                message: 'Product ID and variant ID are required'
             });
         }
-        
+
         await productService.deleteProductVariant(productID, variantID);
-        
+
         return res.status(200).json({
             status: 'success',
             message: 'Product variant deleted successfully'
         });
     } catch (error: any) {
-        return res.status(400).json({ 
-            status: 'error', 
-            message: error.message 
+        return res.status(400).json({
+            status: 'error',
+            message: error.message
         });
     }
 };

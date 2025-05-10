@@ -34,40 +34,34 @@ components:
           type: number
           description: The loyalty points of the customer
         address:
-          $ref: '#/components/schemas/Address'
+          $ref: "#/components/schemas/Address"
           description: The customer's address
         wishlist:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Product reference ID
-              path:
-                type: string
-                description: Firestore reference path to the product
-          description: List of products in the customer's wishlist
+            $ref: "#/components/schemas/WishlistItem"
+          description: The customer's wishlist items
         orders:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
+          type: object
+          properties:
+            total:
+              type: number
+              description: Total number of orders
+            items:
+              type: array
+              items:
                 type: string
-                description: Order reference ID
-              path:
-                type: string
-                description: Firestore reference path to the order
-          description: List of the customer's submitted orders
+              description: Array of order IDs
+          description: The customer's orders information
         cart:
-          $ref: '#/components/schemas/Cart'
+          $ref: "#/components/schemas/Cart"
           description: The customer's shopping cart
-        role:
-          type: string
-          description: The user role for authorization purposes
+        createdAt:
+          $ref: "#/components/schemas/Timestamp"
+        updatedAt:
+          $ref: "#/components/schemas/Timestamp"
 
-    CustomerRequest:
+    CustomerSignupRequest:
       type: object
       required:
         - username
@@ -82,7 +76,7 @@ components:
           description: The unique username of the customer
         password:
           type: string
-          description: The password of the customer
+          description: The password of the customer (must be at least 6 characters)
         email:
           type: string
           description: The user email
@@ -96,8 +90,46 @@ components:
           type: string
           description: The last name of the customer
         address:
-          $ref: '#/components/schemas/Address'
+          $ref: "#/components/schemas/Address"
           description: The customer's address
+
+    CustomerRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The unique username of the customer
+        email:
+          type: string
+          description: The user email
+        phoneNumber:
+          type: string
+          description: The user phone number
+        firstName:
+          type: string
+          description: The first name of the customer
+        lastName:
+          type: string
+          description: The last name of the customer
+        address:
+          $ref: "#/components/schemas/Address"
+          description: The customer's address
+        imageURL:
+          type: string
+          description: The image URL of the customer
+
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          description: Customer email
+        password:
+          type: string
+          description: Customer password
 
     Address:
       type: object
@@ -120,10 +152,34 @@ components:
       properties:
         id:
           type: string
-          description: ID of the order reference
-        path:
+          description: Optional ID for the item, useful for updates
+        productId:
           type: string
-          description: Firestore reference path to the order
+          description: ID of the product
+        variantId:
+          type: string
+          description: ID of the product variant
+        quantity:
+          type: number
+          description: Quantity of the item
+        brandName:
+          type: string
+          description: Brand name for quick display
+        productName:
+          type: string
+          description: Product name for quick display
+        size:
+          type: string
+          description: Variant size
+        color:
+          type: string
+          description: Selected color
+        price:
+          type: number
+          description: Price at the time of adding to cart
+        imageURL:
+          type: string
+          description: Product image for quick display
 
     Cart:
       type: object
@@ -131,11 +187,49 @@ components:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/CartItem'
-          description: Non-submitted orders
+            $ref: "#/components/schemas/CartItem"
+          description: Items in the cart
         subtotal:
           type: number
           description: Total price of all items in the cart
+        updatedAt:
+          $ref: "#/components/schemas/Timestamp"
+          description: Timestamp when the cart was last updated
+
+    WishlistItem:
+      type: object
+      properties:
+        productId:
+          type: string
+          description: ID of the product
+        addedAt:
+          $ref: "#/components/schemas/Timestamp"
+          description: Timestamp when the item was added to the wishlist
+        brandName:
+          type: string
+          description: Brand name for quick display
+        name:
+          type: string
+          description: Product name for quick display
+        imageURL:
+          type: string
+          description: Product image for quick display
+        price:
+          type: number
+          description: Price at the time of adding to wishlist
+
+    PaginationInfo:
+      type: object
+      properties:
+        page:
+          type: number
+          description: Current page number
+        limit:
+          type: number
+          description: Number of items per page
+        hasNextPage:
+          type: number
+          description: Indicates if there is a next page
 
     SuccessResponse:
       type: object
@@ -157,14 +251,46 @@ components:
         message:
           type: string
 
+    AuthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success]
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+              description: JWT token
+            customer:
+              $ref: "#/components/schemas/CustomerResponse"
+    Timestamp:
+      type: object
+      properties:
+        _seconds:
+          type: number
+          description: Seconds since Unix epoch
+        _nanoseconds:
+          type: number
+          description: Nanoseconds fraction
+
 # Defining Paths
 paths:
   /customers:
     get:
-      summary: Retrieve a list of all existing customers
+      summary: Retrieve a list of all existing customers (Admin only)
       tags: [Customers]
       security:
         - bearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          description: Page number for pagination
       responses:
         200:
           description: A list of customers
@@ -179,88 +305,99 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/CustomerResponse'
+                      $ref: "#/components/schemas/CustomerResponse"
+                  pagination:
+                    $ref: "#/components/schemas/PaginationInfo"
         401:
           description: Unauthorized - Invalid or missing token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         403:
           description: Forbidden - Insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /customers/signup:
     post:
-      summary: Add a new customer
-      tags: [Customers]
-      security:
-        - bearerAuth: []
-      description: Create a new customer (Admin access required)
+      summary: Register a new customer
+      tags: [Authentication]
+      requestBody:
+        description: It is enough (Mandatory) to provide email and password only and the rest of the fields are optional
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerSignupRequest"
+      responses:
+        201:
+          description: Customer registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        400:
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /customers/login:
+    post:
+      summary: Log in a customer
+      tags: [Authentication]
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CustomerRequest'
+              $ref: "#/components/schemas/LoginRequest"
       responses:
-        201:
-          description: The customer was successfully added
+        200:
+          description: Customer logged in successfully
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    enum: [success]
-                  message:
-                    type: string
-                  data:
-                    $ref: '#/components/schemas/CustomerResponse'
+                $ref: "#/components/schemas/AuthResponse"
         400:
-          description: Failed to add customer due to invalid data
+          description: Invalid login credentials
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        401:
-          description: Unauthorized - Invalid or missing token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        403:
-          description: Forbidden - Insufficient permissions
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
-  /customers/{id}:
+  /customers/me:
     get:
-      summary: Retrieve a customer by ID
+      summary: Get the authenticated customer's profile
       tags: [Customers]
       security:
         - bearerAuth: []
       parameters:
-        - in: path
-          name: id
-          required: true
-          description: The ID of the customer
+        - in: query
+          name: userId
+          description: Custom user ID (For admin use)
           schema:
             type: string
       responses:
@@ -275,119 +412,100 @@ paths:
                     type: string
                     enum: [success]
                   data:
-                    $ref: '#/components/schemas/CustomerResponse'
+                    $ref: "#/components/schemas/CustomerResponse"
         400:
           description: Failed to get customer due to invalid ID
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         401:
           description: Unauthorized - Invalid or missing token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         403:
           description: Forbidden - Insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
           description: Customer not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
     put:
       summary: Update a customer
       tags: [Customers]
       security:
         - bearerAuth: []
       parameters:
-        - in: path
-          name: id
-          required: true
-          description: The ID of the customer
+        - in: query
+          name: userId
+          description: Custom user ID (For admin use)
           schema:
             type: string
       requestBody:
-        description: You can only provide the fields you want to update
+        description: You can provide only the fields you want to update
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                firstName:
-                  type: string
-                imageURL:
-                  type: string
-                lastName:
-                  type: string
-                password:
-                  type: string
-                phoneNumber:
-                  type: string
-                username:
-                  type: string
-                address:
-                  $ref: '#/components/schemas/Address'
+              $ref: "#/components/schemas/CustomerRequest"
       responses:
         200:
           description: The customer was successfully updated
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessResponse'
+                $ref: "#/components/schemas/SuccessResponse"
         400:
           description: Failed to update customer due to invalid data
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         401:
           description: Unauthorized - Invalid or missing token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         403:
           description: Forbidden - Insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
           description: Customer not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
     delete:
-      summary: Delete a customer
+      summary: Delete a customer (For admin use)
       tags: [Customers]
       security:
         - bearerAuth: []
       parameters:
-        - in: path
-          name: id
-          required: true
-          description: The ID of the customer
+        - in: query
+          name: userId
+          description: Custom user ID (For admin use)
           schema:
             type: string
       responses:
@@ -396,54 +514,60 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessResponse'
+                $ref: "#/components/schemas/SuccessResponse"
         400:
           description: Failed to delete customer due to invalid ID
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         401:
           description: Unauthorized - Invalid or missing token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         403:
           description: Forbidden - Insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
           description: Customer not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
-  /customers/email:
+  /customers/me/orders:
     get:
-      summary: Retrieve a customer by email
+      summary: Get all orders for the authenticated customer
       tags: [Customers]
       security:
         - bearerAuth: []
       parameters:
         - in: query
-          name: email
-          required: true
-          description: The email of the customer
+          name: userId
+          description: Custom user ID (For admin use)
           schema:
             type: string
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+          description: Page number for pagination
       responses:
         200:
-          description: Customer data
+          description: List of customer orders
           content:
             application/json:
               schema:
@@ -453,41 +577,178 @@ paths:
                     type: string
                     enum: [success]
                   data:
-                    $ref: '#/components/schemas/CustomerResponse'
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/OrderResponse"
+                  pagination:
+                    $ref: "#/components/schemas/PaginationInfo"
         400:
-          description: Failed to get customer due to missing email parameter
+          description: Failed to get orders due to invalid ID or parameters
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         401:
           description: Unauthorized - Invalid or missing token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         403:
           description: Forbidden - Insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
           description: Customer not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
-  /customers/{id}/cart:
+  /customers/me/cart:
     get:
-      summary: Get a customer's shopping cart
+      summary: Get the authenticated customer's shopping cart
+      tags: [Customers]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: userId
+          description: Custom user ID (For admin use)
+          schema:
+            type: string
+      responses:
+        200:
+          description: Cart retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: "#/components/schemas/Cart"
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      summary: Clear the authenticated customer's shopping cart
+      tags: [Customers]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: userId
+          description: Custom user ID (For admin use)
+          schema:
+            type: string
+      responses:
+        200:
+          description: Cart cleared successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /customers/me/cart/items:
+    post:
+      summary: Add an item to the cart for the authenticated customer
+      tags: [Customers]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: query
+          name: userId
+          description: Custom user ID (For admin use)
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - productId
+                - variantId
+                - quantity
+              properties:
+                productId:
+                  type: string
+                  description: ID of the product to add
+                variantId:
+                  type: string
+                  description: ID of the product variant
+                quantity:
+                  type: integer
+                  minimum: 1
+                  description: Quantity to add
+      responses:
+        200:
+          description: Item added to cart successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        400:
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        404:
+          description: Product or variant not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /customers/me/cart/items/{id}:
+    put:
+      summary: Update a cart item for the authenticated customer
       tags: [Customers]
       security:
         - bearerAuth: []
@@ -495,43 +756,97 @@ paths:
         - in: path
           name: id
           required: true
-          description: The ID of the customer
           schema:
             type: string
+          description: Cart item ID
+        - in: query
+          name: userId
+          description: Custom user ID (For admin use)
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - quantity
+              properties:
+                quantity:
+                  type: integer
+                  minimum: 1
+                  description: New quantity
       responses:
         200:
-          description: Customer's cart retrieved successfully
+          description: Cart item updated successfully
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    enum: [success]
-                  data:
-                    $ref: '#/components/schemas/Cart'
+                $ref: "#/components/schemas/SuccessResponse"
+        400:
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         401:
           description: Unauthorized - Invalid or missing token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        403:
-          description: Forbidden - Insufficient permissions
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
-          description: Customer not found
+          description: Cart item not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      summary: Remove an item from the cart
+      tags: [Customers]
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Cart item ID
+        - in: query
+          name: userId
+          description: Custom user ID (For admin use)
+          schema:
+            type: string
+      responses:
+        200:
+          description: Item removed from cart successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        404:
+          description: Cart item not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"

@@ -10,8 +10,8 @@ export const checkMissingBrandOwnerUpdateData = (brandOwner: any) => {
 
 export const generateFullyBrandOwnerData = (brandOwner: BrandOwner): BrandOwner => {
     const fullyData: BrandOwner = {
-        id: brandOwner.id ?? "",
         brandId: brandOwner.brandId ?? "",
+        brandName: brandOwner.brandName ?? "",
         email: brandOwner.email ?? "",
         firstName: brandOwner.firstName ?? "",
         lastName: brandOwner.lastName ?? "",
@@ -23,6 +23,9 @@ export const generateFullyBrandOwnerData = (brandOwner: BrandOwner): BrandOwner 
 
         password: brandOwner.password ?? "", // Optional for authentication purposes
     };
+    if (brandOwner.id) {
+        fullyData.id = brandOwner.id;
+    }
 
     if (!brandOwnerDataValidators(fullyData)) {
         throw new Error('Invalid brand owner data, check types and formats');

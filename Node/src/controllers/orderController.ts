@@ -34,38 +34,6 @@ export const getOrder = async (req: Request, res: Response) => {
     }
 };
 
-export const getOrdersByCustomer = async (req: Request, res: Response) => {
-    try {
-        const requestingUserID = req.user?.id;
-        const userRole = req.user?.role;
-        
-        // For non-admin/staff users, enforce using their own ID
-        if (userRole !== 'admin' && userRole !== 'staff') {
-            const orders = await orderService.getOrdersByCustomer(requestingUserID!);
-            return res.status(200).json({ 
-                status: 'success', 
-                count: orders.length,
-                data: orders 
-            });
-        }
-        
-        // Admin/staff can query any customer's orders
-        const customerID = req.query.customerId as string;
-        if (!customerID) {
-            return res.status(400).json({ status: 'error', message: 'Customer ID parameter is required' });
-        }
-        
-        const orders = await orderService.getOrdersByCustomer(customerID);
-        return res.status(200).json({ 
-            status: 'success',
-            count: orders.length, 
-            data: orders 
-        });
-    } catch (error: any) {
-        return res.status(400).json({ status: 'error', message: error.message });
-    }
-};
-
 export const getOrdersByProduct = async (req: Request, res: Response) => {
     try {
         const productID = req.params.productId;

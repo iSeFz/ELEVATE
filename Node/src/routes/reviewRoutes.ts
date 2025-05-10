@@ -6,14 +6,8 @@ import { authenticate, authorizeReviewAccess } from '../middleware/auth.js';
 const router = express.Router();
 
 // Public routes - no authentication required
-router.get('/', ReviewController.getAllReviews);
+router.get('/', ReviewController.getAllReviewsOfProduct);
 router.get('/:id', ReviewController.getReview);
-router.get('/by-product', ReviewController.getReviewsByProduct);
-
-// Users can view their own reviews
-router.get('/by-customer',
-    authenticate,
-    ReviewController.getReviewsByCustomer);
 
 // Users must be authenticated to create reviews
 router.post('/',

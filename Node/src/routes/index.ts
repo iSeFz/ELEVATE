@@ -1,7 +1,6 @@
 import express from 'express';
 import ProductRoutes from './productRoutes.js';
 import CustomerRoutes from './customerRoutes.js';
-import CartRoutes from './cartRoutes.js';
 import BrandRoutes from './brandRoutes.js';
 import ReviewRoutes from './reviewRoutes.js';
 import OrderRoutes from './orderRoutes.js';
@@ -22,7 +21,6 @@ router.use('/docs', SwaggerRoutes);
 router.use('/products', ProductRoutes);
 router.use('/reviews', ReviewRoutes);
 router.use('/customers', CustomerRoutes);
-router.use('/cart', CartRoutes);
 router.use('/brands', BrandRoutes);
 router.use('/orders', OrderRoutes);
 

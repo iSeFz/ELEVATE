@@ -10,7 +10,7 @@ export const getAllStaff = async () => {
         const snapshot = await firestore.collection(staffCollection).get();
         const staffMembers: Staff[] = [];
         snapshot.forEach((doc) => {
-            staffMembers.push({ id: doc.id, ...doc.data() } as Staff);
+            staffMembers.push({ ...doc.data(), id: doc.id } as Staff);
         });
         return staffMembers;
     } catch (error: any) {
@@ -27,7 +27,7 @@ export const getStaff = async (staffID: string) => {
         const docSnap = await docRef.get();
 
         if (docSnap.exists) {
-            return { id: docSnap.id, ...docSnap.data() };
+            return { ...docSnap.data(), id: docSnap.id };
         } else {
             return null;
         }
@@ -47,7 +47,7 @@ export const getStaffByEmail = async (email: string) => {
 
         const staffMembers: Staff[] = [];
         snapshot.forEach((doc) => {
-            staffMembers.push({ id: doc.id, ...doc.data() } as Staff);
+            staffMembers.push({ ...doc.data(), id: doc.id } as Staff);
         });
         return staffMembers.length > 0 ? staffMembers[0] : null;
     } catch (error: any) {

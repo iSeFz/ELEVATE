@@ -31,7 +31,6 @@ export const checkMissingStaffCredentials = (staff: any) => {
 
 export const generateFullyCustomerData = (customer: Customer): Customer => {
     const fullyData: Customer = {
-        id: customer.id ?? "",
         address: customer.address ?? {
             city: "",
             postalCode: 0,
@@ -61,6 +60,9 @@ export const generateFullyCustomerData = (customer: Customer): Customer => {
 
         wishlist: customer.wishlist ?? [],
     };
+    if (customer.id) {
+        fullyData.id = customer.id;
+    }
 
     if (!customerDataValidators(fullyData)) {
         throw new AuthError(

@@ -4,7 +4,8 @@ import { Brand } from '../types/models/brand.js';
 
 export const getAllBrands = async (req: Request, res: Response) => {
     try {
-        const brands = await brandService.getAllBrands();
+        const page = parseInt(req.query.page as string) || 1;
+        const brands = await brandService.getAllBrands(page);
         return res.status(200).json({ status: 'success', data: brands });
     } catch (error: any) {
         return res.status(500).json({ status: 'error', message: error.message });
