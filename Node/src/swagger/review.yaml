@@ -1,10 +1,4 @@
 components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-      description: Enter JWT Bearer token
   schemas:
     ReviewResponse:
       type: object
@@ -122,8 +116,6 @@ paths:
     post:
       summary: Create a new review
       tags: [Reviews]
-      security:
-        - bearerAuth: []
       parameters:
         - in: query
           name: userId
@@ -211,8 +203,6 @@ paths:
     put:
       summary: Update a review
       tags: [Reviews]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -278,8 +268,6 @@ paths:
     delete:
       summary: Delete a review
       tags: [Reviews]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: id

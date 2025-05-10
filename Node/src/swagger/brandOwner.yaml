@@ -100,8 +100,6 @@ paths:
     get:
       summary: Get all brand owners (admin only)
       tags: [Brand Owners]
-      security:
-        - bearerAuth: []
       responses:
         200:
           description: List of all brand owners
@@ -140,8 +138,6 @@ paths:
     get:
       summary: Get a brand owner by ID
       tags: [Brand Owners]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -190,8 +186,6 @@ paths:
     put:
       summary: Update a brand owner
       tags: [Brand Owners]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -252,8 +246,6 @@ paths:
     delete:
       summary: Delete a brand owner and their associated brand
       tags: [Brand Owners]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -301,13 +293,6 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
 
 components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-      description: Enter JWT Bearer token
-  
   schemas:
     BrandOwnerSignupRequest:
       type: object

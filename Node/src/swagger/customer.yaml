@@ -1,10 +1,14 @@
+securityDefinitions:
+  accountId:
+    type: apiKey
+    in: header
+    name: X-ACCOUNT
+    description: All requests must include the `X-ACCOUNT` header containing your account ID.
+
+# Apply the "X-ACCOUNT" header globally to all paths and operations
+security:
+  - accountId: []
 components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-      description: Enter JWT Bearer token
   schemas:
     CustomerResponse:
       type: object
@@ -281,8 +285,6 @@ paths:
     get:
       summary: Retrieve a list of all existing customers (Admin only)
       tags: [Customers]
-      security:
-        - bearerAuth: []
       parameters:
         - in: query
           name: page
@@ -392,8 +394,6 @@ paths:
     get:
       summary: Get the authenticated customer's profile
       tags: [Customers]
-      security:
-        - bearerAuth: []
       parameters:
         - in: query
           name: userId
@@ -446,8 +446,6 @@ paths:
     put:
       summary: Update a customer
       tags: [Customers]
-      security:
-        - bearerAuth: []
       parameters:
         - in: query
           name: userId
@@ -500,8 +498,6 @@ paths:
     delete:
       summary: Delete a customer (For admin use)
       tags: [Customers]
-      security:
-        - bearerAuth: []
       parameters:
         - in: query
           name: userId
@@ -550,8 +546,6 @@ paths:
     get:
       summary: Get all orders for the authenticated customer
       tags: [Customers]
-      security:
-        - bearerAuth: []
       parameters:
         - in: query
           name: userId
@@ -617,8 +611,6 @@ paths:
     get:
       summary: Get the authenticated customer's shopping cart
       tags: [Customers]
-      security:
-        - bearerAuth: []
       parameters:
         - in: query
           name: userId
@@ -653,8 +645,6 @@ paths:
     delete:
       summary: Clear the authenticated customer's shopping cart
       tags: [Customers]
-      security:
-        - bearerAuth: []
       parameters:
         - in: query
           name: userId
@@ -685,8 +675,6 @@ paths:
     post:
       summary: Add an item to the cart for the authenticated customer
       tags: [Customers]
-      security:
-        - bearerAuth: []
       parameters:
         - in: query
           name: userId
@@ -750,8 +738,6 @@ paths:
     put:
       summary: Update a cart item for the authenticated customer
       tags: [Customers]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -811,8 +797,6 @@ paths:
     delete:
       summary: Remove an item from the cart
       tags: [Customers]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -840,6 +824,193 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         404:
           description: Cart item not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /customers/me/wishlist:
+    get:
+      summary: Get the authenticated customer's wishlist
+      tags: [Customers]
+      parameters:
+        - in: query
+          name: page
+          description: Page number for pagination
+          schema:
+            type: integer
+            default: 1
+            minimum: 1
+        - in: query
+          name: userId
+          description: Custom user ID (For admin use)
+          schema:
+            type: string
+      responses:
+        200:
+          description: Wishlist retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/WishlistItem"
+                  pagination:
+                    type: object
+                    properties:
+                      page:
+                        type: integer
+                        description: Current page number
+                      limit:
+                        type: integer
+                        description: Number of items per page
+                      hasNextPage:
+                        type: boolean
+                        description: Whether there are more pages available
+        400:
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    delete:
+      summary: Clear the authenticated customer's wishlist
+      tags: [Customers]
+      parameters:
+        - in: query
+          name: userId
+          description: Custom user ID (For admin use)
+          schema:
+            type: string
+      responses:
+        200:
+          description: Wishlist cleared successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /customers/me/wishlist/items:
+    post:
+      summary: Add an item to the wishlist for the authenticated customer
+      tags: [Customers]
+      parameters:
+        - in: query
+          name: userId
+          description: Custom user ID (For admin use)
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - productId
+              properties:
+                productId:
+                  type: string
+                  description: ID of the product to add
+      responses:
+        200:
+          description: Item added to wishlist successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        400:
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        404:
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /customers/me/wishlist/items/{productId}:
+    delete:
+      summary: Remove an item from the wishlist
+      tags: [Customers]
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: string
+          description: Product ID
+        - in: query
+          name: userId
+          description: Custom user ID (For admin use)
+          schema:
+            type: string
+      responses:
+        200:
+          description: Item removed from wishlist successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessResponse"
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        404:
+          description: Item not found in wishlist
           content:
             application/json:
               schema:

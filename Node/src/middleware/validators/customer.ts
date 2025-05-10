@@ -4,8 +4,6 @@ import { validateObjectStructure } from './common.js';
 
 export const validateGetAllCustomers = (req: Request, res: Response, next: NextFunction) => {
     const page = req.query.page ? parseInt(req.query.page as string) : 1;
-
-    // Validate page
     if (isNaN(page) || page < 1) {
         return res.status(400).json({
             status: 'error',

@@ -4,7 +4,7 @@ import { FirebaseError } from 'firebase-admin';
 import * as authorizationService from '../services/authorization.js';
 
 // Test key for bypassing auth in development environments
-const TEST_AUTH_KEY = 'ELEVATE_TEST_KEY';
+const TEST_AUTH_KEY = process.env.ADMIN_ACCESS_TOKEN ?? 'shawkyebrahim2514';
 const TEST_AUTH_HEADER = 'X-Test-Auth';
 const ENABLE_TEST_AUTH = process.env.ADMIN_ACCESS === 'true';
 
@@ -24,12 +24,13 @@ export const AuthErrorCodes = {
  * Middleware to verify Firebase authentication token
  */
 export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
+    console.log("User try to access: ", req.baseUrl, req.path);
     try {
         // Test backdoor for development - disabled in production
         if (ENABLE_TEST_AUTH || req.headers[TEST_AUTH_HEADER.toLowerCase()] === TEST_AUTH_KEY) {
             // For testing, we'll set a mock user
             req.user = {
-                id: req.query?.userId as string  ?? 'shawky.ebrahim2514', // Attch `userId` in the request query to act as this user (Must enable admin access env)
+                id: req.query?.userId as string ?? 'shawky.ebrahim2514', // Attch `userId` in the request query to act as this user (Must enable admin access env)
                 email: req.query?.email as string ?? 'shawky.ebrahim2514@gmail.com',
                 role: req.query?.role as string ?? 'admin'
             };
@@ -154,9 +155,9 @@ export const authorize = (roles: string[]) => {
  * Type definition for resource authorization check functions
  */
 type ResourceAuthorizationCheck = (
-  resourceId: string, 
-  userId: string, 
-  userRole: string
+    resourceId: string,
+    userId: string,
+    userRole: string
 ) => Promise<boolean>;
 
 /**
@@ -166,7 +167,8 @@ type ResourceAuthorizationCheck = (
  */
 const createResourceAuthorizationMiddleware = (
     checkFunction: ResourceAuthorizationCheck,
-    resourceNameForErrors: string
+    resourceNameForErrors: string,
+    resourceId: string | null = null
 ) => {
     return async (req: Request, res: Response, next: NextFunction) => {
         if (!req.user) {
@@ -177,7 +179,7 @@ const createResourceAuthorizationMiddleware = (
             });
         }
 
-        const resourceId = req.params.id;
+        resourceId ??= req.params.id;
         if (!resourceId) {
             return res.status(400).json({
                 status: 'error',
@@ -228,9 +230,17 @@ export const authorizeBrandAccess = createResourceAuthorizationMiddleware(
 );
 
 export const authorizeProductAccess = createResourceAuthorizationMiddleware(
-    authorizationService.checkProductAuthorization, 
+    authorizationService.checkProductAuthorization,
     'Product'
 );
+
+export const authorizeProductVariantAccess = ((req: Request, res: Response, next: NextFunction) => {
+    return createResourceAuthorizationMiddleware(
+        authorizationService.checkProductAuthorization,
+        'Product',
+        req.params.productId
+    )(req, res, next);
+})
 
 export const authorizeInventoryAccess = createResourceAuthorizationMiddleware(
     authorizationService.checkInventoryAuthorization,

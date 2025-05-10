@@ -1,10 +1,4 @@
 components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-      description: Enter JWT Bearer token
   schemas:
     BrandResponse:
       type: object
@@ -229,8 +223,6 @@ paths:
     put:
       summary: Update a brand
       tags: [Brands]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: id

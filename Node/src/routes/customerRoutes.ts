@@ -5,6 +5,7 @@ import { customerSignup, customerLogin } from '../controllers/authControllers.js
 import * as AuthValidators from '../middleware/validators/auth.js';
 import * as CustomerValidators from '../middleware/validators/customer.js';
 import CartRoutes from './cartRoutes.js';
+import WishlistRoutes from './wishlistRoutes.js';
 
 const router = express.Router();
 
@@ -21,6 +22,9 @@ router.post('/login', AuthValidators.validateLogin, customerLogin);
 
 // Cart endpoints
 router.use('/me/cart', CartRoutes);
+
+// Wishlist endpoints
+router.use('/me/wishlist', WishlistRoutes);
 
 // Get orders for a specific customer - using the new middleware
 router.get('/me/orders',

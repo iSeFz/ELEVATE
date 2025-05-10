@@ -1,10 +1,4 @@
 components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-      description: Enter JWT Bearer token
   schemas:
     OrderResponse:
       type: object
@@ -197,8 +191,6 @@ paths:
     get:
       summary: Retrieve all orders (admin/staff only)
       tags: [Orders]
-      security:
-        - bearerAuth: []
       parameters:
         - in: query
           name: status
@@ -253,8 +245,6 @@ paths:
     post:
       summary: Create a new order
       tags: [Orders]
-      security:
-        - bearerAuth: []
       parameters:
         - in: query
           name: userId
@@ -303,8 +293,6 @@ paths:
     get:
       summary: Get an order by ID
       tags: [Orders]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -352,8 +340,6 @@ paths:
     put:
       summary: Update an order
       tags: [Orders]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -413,8 +399,6 @@ paths:
     delete:
       summary: Delete an order (admin only)
       tags: [Orders]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -458,8 +442,6 @@ paths:
     patch:
       summary: Update an order's status (admin/staff only)
       tags: [Orders]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -515,8 +497,6 @@ paths:
     get:
       summary: Get orders by authenticated customer
       tags: [Orders]
-      security:
-        - bearerAuth: []
       responses:
         200:
           description: List of customer's orders

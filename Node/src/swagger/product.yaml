@@ -7,11 +7,6 @@ components:
         - description
         - material
         - category
-        - department
-        - brandId
-        - brandOwnerId
-        - brandName
-        - variants
       properties:
         name:
           type: string
@@ -35,9 +30,6 @@ components:
           items:
             $ref: '#/components/schemas/ProductVariantRequest'
           description: Variants of the product
-        reviewSummary:
-          $ref: '#/components/schemas/ProductReviewSummary'
-          description: Summary of product reviews
 
     ProductResponse:
       type: object
@@ -253,8 +245,6 @@ paths:
     post:
       summary: Create a new product
       tags: [Products]
-      security:
-        - bearerAuth: []
       parameters:
         - in: query
           name: userId
@@ -354,8 +344,6 @@ paths:
     put:
       summary: Update a product
       tags: [Products]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -364,6 +352,7 @@ paths:
             type: string
           description: Product ID
       requestBody:
+        description: You can submit any field to update
         required: true
         content:
           application/json:
@@ -382,8 +371,7 @@ paths:
                     enum: [success]
                   message:
                     type: string
-                  data:
-                    $ref: '#/components/schemas/ProductResponse'
+                    
         400:
           description: Bad request
           content:
@@ -418,8 +406,6 @@ paths:
     delete:
       summary: Delete a product
       tags: [Products]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -463,8 +449,6 @@ paths:
     post:
       summary: Add a variant to a product
       tags: [Products]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: productId
@@ -528,8 +512,6 @@ paths:
     put:
       summary: Update a specific product variant
       tags: [Products]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: productId
@@ -598,8 +580,6 @@ paths:
     delete:
       summary: Delete a specific product variant
       tags: [Products]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: productId

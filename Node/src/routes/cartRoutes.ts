@@ -5,10 +5,13 @@ import * as CartValidators from '../middleware/validators/cart.js';
 
 const router = express.Router();
 
-router.get('/', authenticate, CartController.getCart);
-router.post('/items', authenticate, CartValidators.validateAddToCart, CartController.addToCart);
-router.put('/items/:id', authenticate, CartValidators.validateUpdateCartItem, CartController.updateCartItem);
-router.delete('/items/:id', authenticate, CartValidators.validateRemoveFromCart, CartController.removeFromCart);
-router.delete('/', authenticate, CartController.clearCart);
+// All cart routes require authentication
+router.use(authenticate);
+
+router.get('/', CartController.getCart);
+router.post('/items', CartValidators.validateAddToCart, CartController.addToCart);
+router.put('/items/:id', CartValidators.validateUpdateCartItem, CartController.updateCartItem);
+router.delete('/items/:id', CartValidators.validateRemoveFromCart, CartController.removeFromCart);
+router.delete('/', CartController.clearCart);
 
 export default router;

@@ -173,10 +173,23 @@ export const deleteProduct = async (productID: string) => {
         throw new Error('Please provide a product ID');
     }
     try {
-        // First, get the product to find its brand
+        // First, get the product to find its brand and review IDs
         const product = await getProduct(productID);
         if (!product) {
             throw new Error('Product not found');
+        }
+
+        // Get all review IDs associated with this product
+        const reviewIds = product.reviewSummary?.reviewIds || [];
+
+        // Delete all associated reviews
+        const reviewDeletePromises = reviewIds.map(reviewId =>
+            firestore.collection('review').doc(reviewId).delete()
+        );
+
+        // Wait for all review deletions to complete
+        if (reviewDeletePromises.length > 0) {
+            await Promise.all(reviewDeletePromises);
         }
 
         // Delete the product
@@ -223,6 +236,7 @@ export const getProductVariant = async (productID: string, variantID: string) =>
 // Function to add a new variant to a product
 export const addProductVariant = async (productID: string, variant: ProductVariant) => {
     if (!productID) {
+        console.error('Product ID is required');
         throw new Error('Product ID is required');
     }
 

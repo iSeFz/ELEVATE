@@ -1,7 +1,7 @@
 import express from 'express';
 import * as ProductController from '../controllers/productController.js';
 import * as ProductValidators from '../middleware/validators/product.js';
-import { authenticate, authorize, authorizeProductAccess } from '../middleware/auth.js';
+import { authenticate, authorize, authorizeProductAccess, authorizeProductVariantAccess } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -12,17 +12,17 @@ router.get('/:id', ProductController.getProduct);
 // Product variant routes
 router.post('/:productId/variants',
     authenticate,
-    authorizeProductAccess,
+    authorizeProductVariantAccess,
     ProductValidators.validateAddProductVariant,
     ProductController.addProductVariant);
 router.put('/:productId/variants/:variantId',
     authenticate,
-    authorizeProductAccess,
+    authorizeProductVariantAccess,
     ProductValidators.validateUpdateProductVariant,
     ProductController.updateProductVariant);
 router.delete('/:productId/variants/:variantId',
     authenticate,
-    authorizeProductAccess,
+    authorizeProductVariantAccess,
     ProductValidators.validateDeleteProductVariant,
     ProductController.deleteProductVariant);
 

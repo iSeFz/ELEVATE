@@ -33,7 +33,6 @@ export const getProduct = async (req: Request, res: Response) => {
     try {
         const productID = req.params.id;
         const product = await productService.getProduct(productID);
-
         if (!product) {
             return res.status(404).json({ status: 'error', message: 'Product not found' });
         }
