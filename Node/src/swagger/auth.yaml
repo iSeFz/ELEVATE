@@ -94,11 +94,6 @@ paths:
       tags: [Authentication]
       parameters:
         - in: query
-          name: userId
-          schema:
-            type: string
-          description: User ID to fetch profile for (Admin use only)
-        - in: query
           name: userRole
           schema:
             type: string

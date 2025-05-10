@@ -245,12 +245,6 @@ paths:
     post:
       summary: Create a new order
       tags: [Orders]
-      parameters:
-        - in: query
-          name: userId
-          schema:
-            type: string
-          description: Pass this to use admin access over the userId
       requestBody:
         required: true
         content:

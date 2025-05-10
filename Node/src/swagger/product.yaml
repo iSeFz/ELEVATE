@@ -245,12 +245,6 @@ paths:
     post:
       summary: Create a new product
       tags: [Products]
-      parameters:
-        - in: query
-          name: userId
-          schema:
-            type: string
-          description: User ID to fetch profile for (Admin feature)
       requestBody:
         description: You can only subbmit (name, category, description, material)
         required: true

@@ -394,12 +394,6 @@ paths:
     get:
       summary: Get the authenticated customer's profile
       tags: [Customers]
-      parameters:
-        - in: query
-          name: userId
-          description: Custom user ID (For admin use)
-          schema:
-            type: string
       responses:
         200:
           description: Customer data
@@ -446,12 +440,6 @@ paths:
     put:
       summary: Update a customer
       tags: [Customers]
-      parameters:
-        - in: query
-          name: userId
-          description: Custom user ID (For admin use)
-          schema:
-            type: string
       requestBody:
         description: You can provide only the fields you want to update
         content:
@@ -498,12 +486,6 @@ paths:
     delete:
       summary: Delete a customer (For admin use)
       tags: [Customers]
-      parameters:
-        - in: query
-          name: userId
-          description: Custom user ID (For admin use)
-          schema:
-            type: string
       responses:
         200:
           description: The customer was successfully deleted
@@ -547,11 +529,6 @@ paths:
       summary: Get all orders for the authenticated customer
       tags: [Customers]
       parameters:
-        - in: query
-          name: userId
-          description: Custom user ID (For admin use)
-          schema:
-            type: string
         - in: query
           name: page
           schema:
@@ -611,12 +588,6 @@ paths:
     get:
       summary: Get the authenticated customer's shopping cart
       tags: [Customers]
-      parameters:
-        - in: query
-          name: userId
-          description: Custom user ID (For admin use)
-          schema:
-            type: string
       responses:
         200:
           description: Cart retrieved successfully
@@ -645,12 +616,6 @@ paths:
     delete:
       summary: Clear the authenticated customer's shopping cart
       tags: [Customers]
-      parameters:
-        - in: query
-          name: userId
-          description: Custom user ID (For admin use)
-          schema:
-            type: string
       responses:
         200:
           description: Cart cleared successfully
@@ -675,12 +640,6 @@ paths:
     post:
       summary: Add an item to the cart for the authenticated customer
       tags: [Customers]
-      parameters:
-        - in: query
-          name: userId
-          description: Custom user ID (For admin use)
-          schema:
-            type: string
       requestBody:
         required: true
         content:
@@ -745,11 +704,6 @@ paths:
           schema:
             type: string
           description: Cart item ID
-        - in: query
-          name: userId
-          description: Custom user ID (For admin use)
-          schema:
-            type: string
       requestBody:
         required: true
         content:
@@ -804,11 +758,6 @@ paths:
           schema:
             type: string
           description: Cart item ID
-        - in: query
-          name: userId
-          description: Custom user ID (For admin use)
-          schema:
-            type: string
       responses:
         200:
           description: Item removed from cart successfully
@@ -847,11 +796,6 @@ paths:
             type: integer
             default: 1
             minimum: 1
-        - in: query
-          name: userId
-          description: Custom user ID (For admin use)
-          schema:
-            type: string
       responses:
         200:
           description: Wishlist retrieved successfully
@@ -900,12 +844,6 @@ paths:
     delete:
       summary: Clear the authenticated customer's wishlist
       tags: [Customers]
-      parameters:
-        - in: query
-          name: userId
-          description: Custom user ID (For admin use)
-          schema:
-            type: string
       responses:
         200:
           description: Wishlist cleared successfully
@@ -930,12 +868,6 @@ paths:
     post:
       summary: Add an item to the wishlist for the authenticated customer
       tags: [Customers]
-      parameters:
-        - in: query
-          name: userId
-          description: Custom user ID (For admin use)
-          schema:
-            type: string
       requestBody:
         required: true
         content:
@@ -991,11 +923,6 @@ paths:
           schema:
             type: string
           description: Product ID
-        - in: query
-          name: userId
-          description: Custom user ID (For admin use)
-          schema:
-            type: string
       responses:
         200:
           description: Item removed from wishlist successfully

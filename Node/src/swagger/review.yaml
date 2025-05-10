@@ -116,12 +116,6 @@ paths:
     post:
       summary: Create a new review
       tags: [Reviews]
-      parameters:
-        - in: query
-          name: userId
-          description: Custom user ID (For admin use)
-          schema:
-            type: string
       requestBody:
         description: You must provide all these data
         required: true
