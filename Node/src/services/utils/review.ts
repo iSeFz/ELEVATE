@@ -3,7 +3,6 @@ import { convertToTimestamp } from './common.js';
 
 export const generateFullyReviewData = (review: Review): Review => {
     const fullyData: Review = {
-        id: review.id ?? "",
         customerId: review.customerId ?? "",
         productId: review.productId ?? "",
 
@@ -14,6 +13,9 @@ export const generateFullyReviewData = (review: Review): Review => {
         createdAt: convertToTimestamp(review.createdAt),
         updatedAt: convertToTimestamp(review.updatedAt),
     };
+    if (review.id) {
+        fullyData.id = review.id;
+    }
 
     if (!reviewDataValidators(fullyData)) {
         throw new Error('Invalid review data, check types and formats');

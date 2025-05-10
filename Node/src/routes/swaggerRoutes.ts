@@ -37,13 +37,26 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
           type: 'http',
           scheme: 'bearer',
           bearerFormat: 'JWT',
-          description: 'Enter JWT Bearer token',
+          description: 'Enter JWT Bearer (For real requests, use the token from the login response)',
         },
+        userId: {
+          type: 'apiKey',
+          in: 'query',
+          name: 'userId',
+          description: `The ID of the user to be used in the request (For endpoints that require a user ID to be performed)
+                        (Admin use only - Must provide the admin access token as well)`,
+        },
+        adminAccessHeaderToken: {
+          type: 'apiKey',
+          in: 'header',
+          name: 'X-Test-Auth',
+          description: 'The token to be used for admin access',
+        }
       },
     },
     security: [
-      { bearerAuth: [] }
-    ]
+      { bearerAuth: [], userId: [], adminAccessHeaderToken: [] }
+    ],
   },
   // Use path.join for better cross-platform compatibility
   apis: [path.join(projectRoot, 'src', 'swagger', '*.yaml')],

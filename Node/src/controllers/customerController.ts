@@ -4,16 +4,7 @@ import { customerSignup } from './authControllers.js';
 
 export const getAllCustomers = async (req: Request, res: Response) => {
     try {
-        // Extract page from query params, default to 1 if not provided
-        const page = req.query.page ? parseInt(req.query.page as string) : 1;
-
-        // Validate page
-        if (isNaN(page) || page < 1) {
-            return res.status(400).json({
-                status: 'error',
-                message: 'Invalid page number. Page must be a positive integer.'
-            });
-        }
+        const page = parseInt(req.query.page as string);
 
         const result = await customerService.getAllCustomers(page);
         return res.status(200).json({
@@ -28,7 +19,7 @@ export const getAllCustomers = async (req: Request, res: Response) => {
 
 export const getCustomer = async (req: Request, res: Response) => {
     try {
-        const customerID = req.params.id;
+        const customerID = req.user?.id!;
         const customer = await customerService.getCustomer(customerID);
 
         if (!customer) {
@@ -67,7 +58,7 @@ export const addCustomer = async (req: Request, res: Response) => customerSignup
 
 export const updateCustomer = async (req: Request, res: Response) => {
     try {
-        const customerID = req.params.id;
+        const customerID = req.user?.id!;
 
         await customerService.updateCustomer(customerID, req.body);
         return res.status(200).json({ status: 'success', message: 'Customer updated successfully' });
@@ -78,7 +69,7 @@ export const updateCustomer = async (req: Request, res: Response) => {
 
 export const deleteCustomer = async (req: Request, res: Response) => {
     try {
-        const customerID = req.params.id;
+        const customerID = req.user?.id!;
 
         await customerService.deleteCustomer(customerID);
         return res.status(200).json({ status: 'success', message: 'Customer deleted successfully' });
@@ -89,11 +80,9 @@ export const deleteCustomer = async (req: Request, res: Response) => {
 
 export const getCustomerOrders = async (req: Request, res: Response) => {
     try {
-        const customerID = req.params.id;
-
+        const customerID = req.user?.id!;
         const page = req.query.page ? parseInt(req.query.page as string) : 1;
 
-        // Validate page
         if (isNaN(page) || page < 1) {
             return res.status(400).json({
                 status: 'error',

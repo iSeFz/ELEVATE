@@ -2,6 +2,33 @@ import { Request, Response, NextFunction } from 'express';
 import { validateObjectStructure } from './common.js';
 import { Product, productDataValidators, ProductVariant, productVariantDataValidators } from '../../types/models/product.js';
 
+const expectedProductData: Partial<Product> = {
+    name: "String",
+    category: "String",
+    description: "String",
+    material: "String",
+    department: ["String"],
+    variants: [{
+        colors: ["String"],
+        discount: 0,
+        images: ["String"],
+        price: 0,
+        size: "String",
+        stock: 0,
+    }],
+    reviewSummary: {
+        averageRating: 0,
+        totalReviews: 0,
+        ratingDistribution: {
+            '1': 0,
+            '2': 0,
+            '3': 0,
+            '4': 0,
+            '5': 0,
+        },
+        reviewIds: ["String"]
+    },
+};
 const expectedAddProductData: Partial<Product> = {
     name: "String",
     category: "String",
@@ -42,18 +69,7 @@ const expectedUpdateProductData: Partial<Product> = {
     category: "String",
     description: "String",
     material: "String",
-    reviewSummary: {
-        averageRating: 0,
-        totalReviews: 0,
-        ratingDistribution: {
-            '1': 0,
-            '2': 0,
-            '3': 0,
-            '4': 0,
-            '5': 0,
-        },
-        reviewIds: ["String"]
-    },
+    department: ["String"],
     variants: [{
         colors: ["String"],
         discount: 0,
@@ -90,11 +106,11 @@ const expectedUpdateProductData: Partial<Product> = {
  */
 export const validateUpdateProduct = (req: Request, res: Response, next: NextFunction) => {
     // Check if the overall structure matches
-    if (!validateObjectStructure(req.body, expectedAddProductData, "partially")) {
+    if (!validateObjectStructure(req.body, expectedUpdateProductData, "partially")) {
         return res.status(400).json({
             status: 'error',
             message: 'Request structure doesn\'t match expected format (Any of the fields can be updated)',
-            expectedFormat: expectedAddProductData
+            expectedFormat: expectedUpdateProductData
         });
     }
     const isProductValid = productDataValidators(req.body as Product);
@@ -102,7 +118,7 @@ export const validateUpdateProduct = (req: Request, res: Response, next: NextFun
         return res.status(400).json({
             status: 'error',
             message: 'Invalid product data types.',
-            expectedFormat: expectedAddProductData
+            expectedFormat: expectedUpdateProductData
         });
     }
 

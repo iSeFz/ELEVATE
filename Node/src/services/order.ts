@@ -2,7 +2,6 @@ import { admin } from '../config/firebase.js';
 import { calculateOrderTotal, checkMissingOrderData, checkMissingOrderUpdateData, validateCustomerPoints, calculateLoyaltyPointsEarned } from './utils/order.js';
 import { Order, OrderStatus } from '../types/models/order.js';
 import { Timestamp } from 'firebase-admin/firestore';
-import * as productService from './product.js';
 
 const firestore = admin.firestore();
 const orderCollection = 'order';
@@ -16,7 +15,7 @@ export const getAllOrders = async () => {
 
         const orders: Order[] = [];
         snapshot.forEach((doc) => {
-            orders.push({ id: doc.id, ...doc.data() } as Order);
+            orders.push({ ...doc.data(), id: doc.id } as Order);
         });
         return orders;
     } catch (error: any) {
@@ -33,32 +32,12 @@ export const getOrder = async (orderID: string) => {
         const docSnap = await docRef.get();
 
         if (docSnap.exists) {
-            return { id: docSnap.id, ...docSnap.data() } as Order;
+            return { ...docSnap.data(), id: docSnap.id } as Order;
         } else {
             return null;
         }
     } catch (error: any) {
         throw new Error(`Failed to get order: ${error.message}`);
-    }
-};
-
-export const getOrdersByCustomer = async (customerID: string) => {
-    if (!customerID) {
-        throw new Error('Please provide a customer ID');
-    }
-    try {
-        const snapshot = await firestore.collection(orderCollection)
-            .where("customerId", "==", customerID)
-            .orderBy('createdAt', 'desc')
-            .get();
-
-        const orders: Order[] = [];
-        snapshot.forEach((doc) => {
-            orders.push({ id: doc.id, ...doc.data() } as Order);
-        });
-        return orders;
-    } catch (error: any) {
-        throw new Error(`Failed to get customer orders: ${error.message}`);
     }
 };
 
@@ -76,7 +55,7 @@ export const getOrdersByProduct = async (productID: string) => {
 
         const orders: Order[] = [];
         snapshot.forEach((doc) => {
-            orders.push({ id: doc.id, ...doc.data() } as Order);
+            orders.push({ ...doc.data(), id: doc.id } as Order);
         });
         return orders;
     } catch (error: any) {
@@ -160,7 +139,7 @@ export const addOrder = async (order: Order) => {
             }
             
             const productData = productDoc.data();
-            const variants = productData?.variants || [];
+            const variants = productData?.variants ?? [];
             const variantIndex = variants.findIndex((v: any) => v.id === item.variantId);
             
             if (variantIndex === -1) {
@@ -263,7 +242,7 @@ export const getOrdersByStatus = async (status: OrderStatus) => {
 
         const orders: Order[] = [];
         snapshot.forEach((doc) => {
-            orders.push({ id: doc.id, ...doc.data() } as Order);
+            orders.push({ ...doc.data(), id: doc.id } as Order);
         });
         return orders;
     } catch (error: any) {

@@ -34,7 +34,7 @@ export const getDocById = async <T>(collection: string, docId: string): Promise<
     const docSnap = await docRef.get();
     
     if (docSnap.exists) {
-      return { id: docSnap.id, ...docSnap.data() } as T;
+      return { ...docSnap.data(), id: docSnap.id } as T;
     }
     return null;
   } catch (error) {
@@ -71,7 +71,7 @@ export const getDocsByIds = async <T>(collection: string, docIds: string[]): Pro
         .get();
       
       snapshot.forEach(doc => {
-        results.push({ id: doc.id, ...doc.data() } as T);
+        results.push({ ...doc.data(), id: doc.id } as T);
       });
     }
     

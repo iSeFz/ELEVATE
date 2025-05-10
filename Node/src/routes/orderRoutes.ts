@@ -13,9 +13,6 @@ router.get('/status/:status', authenticate, authorize(['admin', 'staff']), Order
 // Get orders containing a specific product - staff/admin only
 router.get('/by-product/:productId', authenticate, authorize(['admin', 'staff']), OrderController.getOrdersByProduct);
 
-// Users can view their own orders
-router.get('/by-customer', authenticate, OrderController.getOrdersByCustomer);
-
 // Users can access their own orders, staff/admin can access any order
 router.get('/:id', authenticate, authorizeOrderAccess, OrderController.getOrder);
 

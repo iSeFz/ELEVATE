@@ -19,7 +19,7 @@ export const getAllCustomers = async (page = 1) => {
 
         const customers: Customer[] = [];
         snapshot.forEach((doc) => {
-            customers.push({ id: doc.id, ...doc.data() } as Customer);
+            customers.push({ ...doc.data(), id: doc.id } as Customer);
         });
 
         // Get one more document to check if there's a next page
@@ -53,7 +53,7 @@ export const getCustomer = async (customerID: string) => {
         const docSnap = await docRef.get();
 
         if (docSnap.exists) {
-            return { id: docSnap.id, ...docSnap.data() } as Customer;
+            return { ...docSnap.data(), id: docSnap.id } as Customer;
         } else {
             return null;
         }
@@ -73,7 +73,7 @@ export const getCustomerWithEmail = async (customerEmail: string) => {
 
         const customers: Customer[] = [];
         snapshot.forEach((doc) => {
-            customers.push({ id: doc.id, ...doc.data() } as Customer);
+            customers.push({ ...doc.data(), id: doc.id } as Customer);
         });
         return customers;
     } catch (error: any) {
@@ -162,7 +162,7 @@ export const getCustomerOrders = async (customerID: string, page = 1) => {
         // Transform the order docs into order objects
         const orders = orderDocs.map(doc => {
             if (doc.exists) {
-                return { id: doc.id, ...doc.data() };
+                return { ...doc.data(), id: doc.id };
             }
             return null;
         }).filter(order => order !== null); // Filter out any null values (orders that might be deleted)

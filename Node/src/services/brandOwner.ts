@@ -13,8 +13,8 @@ export const getAllBrandOwners = async (): Promise<BrandOwner[]> => {
     try {
         const snapshot = await brandOwnerCollection.get();
         return snapshot.docs.map(doc => ({
+            ...doc.data(),
             id: doc.id,
-            ...doc.data()
         } as BrandOwner));
     } catch (error) {
         console.error('Error getting all brand owners:', error);
@@ -36,8 +36,8 @@ export const getBrandOwnerById = async (id: string): Promise<BrandOwner | null> 
         }
 
         return {
+            ...doc.data(),
             id: doc.id,
-            ...doc.data()
         } as BrandOwner;
     } catch (error) {
         console.error(`Error getting brand owner with ID ${id}:`, error);
@@ -54,7 +54,7 @@ export const getBrandOwnerById = async (id: string): Promise<BrandOwner | null> 
 export const updateBrandOwner = async (
     id: string,
     data: Partial<BrandOwner>
-): Promise<BrandOwner | null> => {
+) => {
     try {
         // Check if brand owner exists
         const brandOwnerDoc = await brandOwnerCollection.doc(id).get();
@@ -69,12 +69,7 @@ export const updateBrandOwner = async (
         // Update the document
         await brandOwnerCollection.doc(id).update(updateData);
 
-        // Get the updated document
-        const updatedDoc = await brandOwnerCollection.doc(id).get();
-        return {
-            id: updatedDoc.id,
-            ...updatedDoc.data()
-        } as BrandOwner;
+        return true;
     } catch (error) {
         console.error(`Error updating brand owner with ID ${id}:`, error);
         throw new Error(`Failed to update brand owner with ID ${id}`);

@@ -8,7 +8,6 @@ const router = express.Router();
 // Public routes - no authentication required
 router.get('/', BrandController.getAllBrands);
 router.get('/:id', BrandController.getBrand);
-router.get('/name', BrandController.getBrandByName);
 
 router.put('/:id', authenticate, authorizeBrandAccess, BrandValidators.validateUpdateBrand, BrandController.updateBrand);
 

@@ -2,10 +2,14 @@ import { Request, Response } from 'express';
 import * as reviewService from '../services/review.js';
 import { Review } from '../types/models/review.js';
 
-export const getAllReviews = async (req: Request, res: Response) => {
-    // This route is already protected by the authorize middleware in the router
+export const getAllReviewsOfProduct = async (req: Request, res: Response) => {
     try {
-        const reviews = await reviewService.getAllReviews();
+        const page = parseInt(req.query.page as string) || 1;
+        const productID = req.query.productId as string;
+        if (!productID) {
+            return res.status(400).json({ status: 'error', message: 'Product ID parameter is required' });
+        }
+        const reviews = await reviewService.getAllReviewsOfProduct(productID, page);
         return res.status(200).json({ status: 'success', data: reviews });
     } catch (error: any) {
         return res.status(500).json({ status: 'error', message: error.message });
@@ -25,45 +29,6 @@ export const getReview = async (req: Request, res: Response) => {
         // Authorization check is now handled by middleware
 
         return res.status(200).json({ status: 'success', data: review });
-    } catch (error: any) {
-        return res.status(400).json({ status: 'error', message: error.message });
-    }
-};
-
-export const getReviewsByProduct = async (req: Request, res: Response) => {
-    try {
-        const productID = req.query.productId as string;
-
-        if (!productID) {
-            return res.status(400).json({ status: 'error', message: 'Product ID parameter is required' });
-        }
-
-        const reviews = await reviewService.getReviewsByProduct(productID);
-        return res.status(200).json({ status: 'success', data: reviews });
-    } catch (error: any) {
-        return res.status(400).json({ status: 'error', message: error.message });
-    }
-};
-
-export const getReviewsByCustomer = async (req: Request, res: Response) => {
-    try {
-        const requestingUserID = req.user?.id;
-        const userRole = req.user?.role;
-        
-        // For regular users, only allow access to their own reviews
-        if (userRole !== 'admin' && userRole !== 'staff') {
-            const reviews = await reviewService.getReviewsByCustomer(requestingUserID!);
-            return res.status(200).json({ status: 'success', data: reviews });
-        }
-        
-        // Admin/staff can access any customer's reviews
-        const customerID = req.query.customerId as string;
-        if (!customerID) {
-            return res.status(400).json({ status: 'error', message: 'Customer ID parameter is required' });
-        }
-
-        const reviews = await reviewService.getReviewsByCustomer(customerID);
-        return res.status(200).json({ status: 'success', data: reviews });
     } catch (error: any) {
         return res.status(400).json({ status: 'error', message: error.message });
     }

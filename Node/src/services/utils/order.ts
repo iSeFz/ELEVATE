@@ -156,7 +156,6 @@ export const calculateLoyaltyPointsEarned = (orderTotal: number): number => {
 
 export const generateFullyOrderData = (order: Order): Order => {
     const fullyData: Order = {
-        id: order.id ?? "",
         address: order.address ?? {
             city: "",
             postalCode: 0,
@@ -183,6 +182,9 @@ export const generateFullyOrderData = (order: Order): Order => {
         createdAt: convertToTimestamp(order.createdAt),
         updatedAt: convertToTimestamp(order.updatedAt),
     };
+    if (order.id) {
+        fullyData.id = order.id;
+    }
 
     if (!orderDataValidators(fullyData)) {
         throw new Error('Invalid order data, check types and formats');

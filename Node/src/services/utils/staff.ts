@@ -9,7 +9,6 @@ export const checkMissingStaffUpdateData = (staff: any) => {
 
 export const generateFullyStaffData = (staff: Staff): Staff => {
     const fullyData: Staff = {
-        id: staff.id ?? "",
         email: staff.email ?? "",
         firstName: staff.firstName ?? "",
         lastName: staff.lastName ?? "",
@@ -18,8 +17,11 @@ export const generateFullyStaffData = (staff: Staff): Staff => {
         password: staff.password ?? "", // Optional for authentication purposes
         imageURL: staff.imageURL ?? "",
     };
+    if (staff.id) {
+        fullyData.id = staff.id;
+    }
 
-    if(staffDataValidators(fullyData)) {
+    if (staffDataValidators(fullyData)) {
         throw new Error('Invalid staff data, check types and formats');
     }
 

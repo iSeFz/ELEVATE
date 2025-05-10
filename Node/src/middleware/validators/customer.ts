@@ -2,6 +2,18 @@ import { Request, Response, NextFunction } from 'express';
 import { Customer, customerDataValidators } from '../../types/models/customer.js';
 import { validateObjectStructure } from './common.js';
 
+export const validateGetAllCustomers = (req: Request, res: Response, next: NextFunction) => {
+    const page = req.query.page ? parseInt(req.query.page as string) : 1;
+    if (isNaN(page) || page < 1) {
+        return res.status(400).json({
+            status: 'error',
+            message: 'Invalid page number. Page must be a positive integer.'
+        });
+    }
+
+    next();
+}
+
 export const validateSignupCustomer = (req: Request, res: Response, next: NextFunction) => {
     const customer: Customer = req.body;
 
@@ -19,7 +31,7 @@ export const validateSignupCustomer = (req: Request, res: Response, next: NextFu
         });
     }
 
-    if(customer.password.length < 6) {
+    if (customer.password.length < 6) {
         return res.status(400).json({
             status: 'error',
             message: 'Password must be at least 6 characters'
@@ -61,7 +73,6 @@ const expectedUpdateCustomerData: Partial<Customer> = {
  *  - username: String
  */
 export const validateUpdateBrand = (req: Request, res: Response, next: NextFunction) => {
-    const { id } = req.params;
     const customer = req.body as Customer;
     // Check if the overall structure matches
     if (!validateObjectStructure(customer, expectedUpdateCustomerData, "partially")) {
@@ -69,13 +80,6 @@ export const validateUpdateBrand = (req: Request, res: Response, next: NextFunct
             status: 'error',
             message: 'Request structure doesn\'t match expected format (Any of the fields can be updated)',
             expectedFormat: expectedUpdateCustomerData
-        });
-    }
-
-    if (!id) {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Brand ID is required'
         });
     }
 

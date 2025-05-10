@@ -1,14 +1,210 @@
+components:
+  schemas:
+    ProductRequest:
+      type: object
+      required:
+        - name
+        - description
+        - material
+        - category
+      properties:
+        name:
+          type: string
+          description: Name of the product
+        description:
+          type: string
+          description: Description of the product
+        material:
+          type: string
+          description: Material of the product
+        category:
+          type: string
+          description: Category of the product
+        department:
+          type: array
+          items:
+            type: string
+          description: Departments the product belongs to
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariantRequest'
+          description: Variants of the product
+
+    ProductResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the product
+        name:
+          type: string
+          description: Name of the product
+        description:
+          type: string
+          description: Description of the product
+        material:
+          type: string
+          description: Material of the product
+        category:
+          type: string
+          description: Category of the product
+        department:
+          type: array
+          items:
+            type: string
+          description: Departments the product belongs to
+        brandId:
+          type: string
+          description: ID of the brand
+        brandOwnerId:
+          type: string
+          description: ID of the brand owner
+        brandName:
+          type: string
+          description: Name of the brand
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductVariantEmbedded'
+          description: Variants of the product
+        reviewSummary:
+          $ref: '#/components/schemas/ProductReviewSummary'
+          description: Summary of product reviews
+        createdAt:
+          $ref: "#/components/schemas/Timestamp"
+          description: Timestamp when the product was created
+        updatedAt:
+          $ref: "#/components/schemas/Timestamp"
+          description: Timestamp when the product was last updated
+
+    ProductVariantRequest:
+      type: object
+      required:
+        - colors
+        - discount
+        - images
+        - price
+        - size
+        - stock
+      properties:
+        colors:
+          type: array
+          items:
+            type: string
+          description: Available colors for this variant
+        discount:
+          type: number
+          description: Discount percentage for this variant
+        images:
+          type: array
+          items:
+            type: string
+          description: URLs of images for this variant
+        price:
+          type: number
+          format: float
+          description: Price of this variant
+        size:
+          type: string
+          description: Size of the variant (e.g., S, M, L)
+        stock:
+          type: integer
+          description: Quantity in stock for this variant
+
+    ProductVariantEmbedded:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the variant
+        colors:
+          type: array
+          items:
+            type: string
+          description: Available colors for this variant
+        discount:
+          type: number
+          description: Discount percentage for this variant
+        images:
+          type: array
+          items:
+            type: string
+          description: URLs of images for this variant
+        price:
+          type: number
+          format: float
+          description: Price of this variant
+        size:
+          type: string
+          description: Size of the variant (e.g., S, M, L)
+        stock:
+          type: integer
+          description: Quantity in stock for this variant
+
+    ProductReviewSummary:
+      type: object
+      properties:
+        averageRating:
+          type: number
+          format: float
+          description: Average rating of the product
+        totalReviews:
+          type: integer
+          description: Total number of reviews for the product
+        ratingDistribution:
+          type: object
+          properties:
+            '1':
+              type: integer
+              description: Number of 1-star ratings
+            '2':
+              type: integer
+              description: Number of 2-star ratings
+            '3':
+              type: integer
+              description: Number of 3-star ratings
+            '4':
+              type: integer
+              description: Number of 4-star ratings
+            '5':
+              type: integer
+              description: Number of 5-star ratings
+        reviewIds:
+          type: array
+          items:
+            type: string
+          description: IDs of featured reviews
+
+    SuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success]
+        message:
+          type: string
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [error]
+        message:
+          type: string
 paths:
   /products:
     get:
-      summary: Retrieve all products
+      summary: Retrieve all products (Admin only)
       tags: [Products]
       parameters:
         - in: query
           name: page
           schema:
             type: integer
-          description: Page number for pagination, default is 0, page size is 10
+            default: 1
+          description: Page number for pagination, default is 1, page size is 10
         - in: query
           name: category
           schema:
@@ -40,18 +236,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
     post:
       summary: Create a new product
       tags: [Products]
-      security:
-        - bearerAuth: []
       parameters:
         - in: query
           name: userId
           schema:
             type: string
-          description: Pass this to use admin access over the userId
+          description: User ID to fetch profile for (Admin feature)
       requestBody:
+        description: You can only subbmit (name, category, description, material)
         required: true
         content:
           application/json:
@@ -90,6 +291,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /products/{id}:
     get:
@@ -121,12 +328,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
     put:
       summary: Update a product
       tags: [Products]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -135,6 +352,7 @@ paths:
             type: string
           description: Product ID
       requestBody:
+        description: You can submit any field to update
         required: true
         content:
           application/json:
@@ -151,10 +369,23 @@ paths:
                   status:
                     type: string
                     enum: [success]
-                  data:
-                    $ref: '#/components/schemas/ProductResponse'
+                  message:
+                    type: string
+                    
         400:
           description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
           content:
             application/json:
               schema:
@@ -165,12 +396,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
     delete:
       summary: Delete a product
       tags: [Products]
-      security:
-        - bearerAuth: []
       parameters:
         - in: path
           name: id
@@ -185,32 +420,51 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SuccessResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         404:
           description: Product not found
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
-  /products/brand/{brandId}:
-    get:
-      summary: Get products by brand ID
+  /products/{productId}/variants:
+    post:
+      summary: Add a variant to a product
       tags: [Products]
       parameters:
         - in: path
-          name: brandId
+          name: productId
           required: true
           schema:
             type: string
-          description: Brand ID
-        - in: query
-          name: offset
-          schema:
-            type: integer
-          description: Number of items to skip for pagination, limit is 10 by default
+          description: Product ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductVariantRequest'
       responses:
-        200:
-          description: List of products for the brand
+        201:
+          description: Product variant added successfully
           content:
             application/json:
               schema:
@@ -219,36 +473,67 @@ paths:
                   status:
                     type: string
                     enum: [success]
+                  message:
+                    type: string
                   data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/ProductResponse'
+                    $ref: '#/components/schemas/ProductVariantEmbedded'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
         404:
-          description: Brand not found
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-  /products/category/{categoryId}:
-    get:
-      summary: Get products by category
+  /products/{productId}/variants/{variantId}:
+    put:
+      summary: Update a specific product variant
       tags: [Products]
       parameters:
         - in: path
-          name: category
+          name: productId
           required: true
           schema:
             type: string
-          description: Category name
-        - in: query
-          name: offset
+          description: Product ID
+        - in: path
+          name: variantId
+          required: true
           schema:
-            type: integer
-          description: Number of items to skip for pagination
+            type: string
+          description: Variant ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductVariantRequest'
       responses:
         200:
-          description: List of products for the category
+          description: Product variant updated successfully
           content:
             application/json:
               schema:
@@ -257,177 +542,91 @@ paths:
                   status:
                     type: string
                     enum: [success]
+                  message:
+                    type: string
                   data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/ProductResponse'
-        404:
-          description: Category not found
+                    $ref: '#/components/schemas/ProductVariantEmbedded'
+        400:
+          description: Bad request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-
-components:
-  securitySchemes:
-    bearerAuth:
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
-      description: Enter JWT Bearer token
-  schemas:
-    ProductVariantEmbedded:
-      type: object
-      properties:
-        colors:
-          type: array
-          items:
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Product or variant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    
+    delete:
+      summary: Delete a specific product variant
+      tags: [Products]
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
             type: string
-          description: Available colors for this variant
-        discount:
-          type: number
-          description: Discount percentage for this variant
-        images:
-          type: array
-          items:
+          description: Product ID
+        - in: path
+          name: variantId
+          required: true
+          schema:
             type: string
-          description: Image URLs for this variant
-        price:
-          type: number
-          description: Price of this variant
-        size:
-          type: string
-          description: Size of this variant
-        stock:
-          type: number
-          description: Available stock for this variant
-
-    ProductRequest:
-      type: object
-      required:
-        - name
-        - description
-        - category
-        - brandId
-      properties:
-        name:
-          type: string
-          description: Product name
-        description:
-          type: string
-          description: Product description
-        category:
-          type: string
-          description: Product category
-        department:
-          type: array
-          items:
-            type: string
-          description: Departments the product belongs to
-        material:
-          type: string
-          description: Product material
-        stock:
-          type: number
-          description: Available stock
-        brandId:
-          type: string
-          description: ID of the brand that owns this product
-        variants:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductVariantEmbedded'
-          description: Array of product variants
-
-    ProductResponse:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The auto-generated id of the product
-        name:
-          type: string
-          description: Product name
-        description:
-          type: string
-          description: Product description
-        category:
-          type: string
-          description: Product category
-        department:
-          type: array
-          items:
-            type: string
-          description: Departments the product belongs to
-        material:
-          type: string
-          description: Product material
-        averageRating:
-          type: number
-          description: Average product rating
-        totalReviews:
-          type: number
-          description: Total number of reviews
-        stock:
-          type: number
-          description: Available stock
-        brand:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Brand reference ID
-            path:
-              type: string
-              description: Firestore reference path to the brand
-        brandId:
-          type: string
-          description: ID of the brand (denormalized for authorization)
-        brandOwnerId:
-          type: string
-          description: ID of the brand owner (denormalized for authorization)
-        reviews:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                description: Review reference ID
-              path:
-                type: string
-                description: Firestore reference path to the review
-        reviewIds:
-          type: array
-          items:
-            type: string
-          description: IDs of reviews (denormalized for querying)
-        variants:
-          type: array
-          items:
-            $ref: '#/components/schemas/ProductVariantEmbedded'
-          description: Array of embedded product variants
-        dateCreated:
-          type: string
-          format: date-time
-          description: Creation date
-
-    SuccessResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum: [success]
-        message:
-          type: string
-        data:
-          type: object
-
-    ErrorResponse:
-      type: object
-      properties:
-        status:
-          type: string
-          enum: [error]
-        message:
-          type: string
+          description: Variant ID
+      responses:
+        200:
+          description: Product variant deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Product or variant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'

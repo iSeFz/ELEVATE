@@ -4,25 +4,51 @@ import { authenticate, authorize, authorizeCustomerAccess } from '../middleware/
 import { customerSignup, customerLogin } from '../controllers/authControllers.js';
 import * as AuthValidators from '../middleware/validators/auth.js';
 import * as CustomerValidators from '../middleware/validators/customer.js';
+import CartRoutes from './cartRoutes.js';
+import WishlistRoutes from './wishlistRoutes.js';
 
 const router = express.Router();
 
+// Protected routes requiring authentication
+router.get('/',
+    authenticate,
+    authorize(['admin', 'staff']),
+    CustomerValidators.validateGetAllCustomers,
+    CustomerController.getAllCustomers);
+
+// Auth endpoints
 router.post('/signup', CustomerValidators.validateSignupCustomer, customerSignup);
 router.post('/login', AuthValidators.validateLogin, customerLogin);
 
-// Protected routes requiring authentication
-router.get('/', authenticate, authorize(['admin', 'staff']), CustomerController.getAllCustomers);
+// Cart endpoints
+router.use('/me/cart', CartRoutes);
 
-// Users can access their own data, admins/staff can access any user's data
-router.get('/:id', authenticate, authorizeCustomerAccess, CustomerController.getCustomer);
+// Wishlist endpoints
+router.use('/me/wishlist', WishlistRoutes);
 
 // Get orders for a specific customer - using the new middleware
-router.get('/:id/orders', authenticate, authorizeCustomerAccess, CustomerController.getCustomerOrders);
+router.get('/me/orders',
+    authenticate,
+    authorizeCustomerAccess,
+    CustomerController.getCustomerOrders);
+
+// Users can access their own data, admins/staff can access any user's data
+router.get('/me',
+    authenticate,
+    authorizeCustomerAccess,
+    CustomerController.getCustomer);
 
 // Users can update their own data, admins can update any user
-router.put('/:id', authenticate, authorizeCustomerAccess, CustomerValidators.validateUpdateBrand, CustomerController.updateCustomer);
+router.put('/me',
+    authenticate,
+    authorizeCustomerAccess,
+    CustomerValidators.validateUpdateBrand,
+    CustomerController.updateCustomer);
 
 // Only admins can delete customer accounts
-router.delete('/:id', authenticate, authorize(['admin']), CustomerController.deleteCustomer);
+router.delete('/me',
+    authenticate,
+    authorize(['admin']),
+    CustomerController.deleteCustomer);
 
 export default router;

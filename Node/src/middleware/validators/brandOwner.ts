@@ -35,17 +35,16 @@ const expecteSignupData: { brand: Partial<Brand> } & Partial<BrandOwner> = {
 };
 /**
  * Required Parameters:
- * 
+ * - brandOwner: BrandOwner - Brand owner data
  *   - brandName: String - Name of the brand
  *   - email: String - Email of the brand
  *   - industry: String - Industry of the brand
  *   - storyDescription: String - Story description of the brand
  *  
- * - brandOwner: BrandOwner - Brand owner data
- *   - email: String - Email of the brand owner
- *   - password: String - Password of the brand owner
- *   - firstName: String - First name of the brand owner
- *   - lastName: String - Last name of the brand owner
+ * - email: String - Email of the brand owner
+ * - password: String - Password of the brand owner
+ * - firstName: String - First name of the brand owner
+ * - lastName: String - Last name of the brand owner
  */
 export const validateSignupBrandOwner = (req: Request, res: Response, next: NextFunction) => {
     // Check if the overall structure matches

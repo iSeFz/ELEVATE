@@ -19,7 +19,6 @@ export const checkMissingProductVariantData = (productVariants: any) => {
 
 export const generateFullyProductData = (product: Product): Product => {
     const fullyData: Product = {
-        id: product.id ?? "",
         brandId: product.brandId ?? "",
         brandOwnerId: product.brandOwnerId ?? "",
         brandName: product.brandName ?? "",
@@ -45,6 +44,9 @@ export const generateFullyProductData = (product: Product): Product => {
         createdAt: convertToTimestamp(product.createdAt),
         updatedAt: convertToTimestamp(product.updatedAt),
     };
+    if(product.id) {
+        fullyData.id = product.id;
+    }
 
     if (!productDataValidators(fullyData)) {
         throw new Error('Invalid product data, check types and formats');
