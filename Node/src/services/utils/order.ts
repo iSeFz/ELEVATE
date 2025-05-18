@@ -154,26 +154,54 @@ export const calculateLoyaltyPointsEarned = (orderTotal: number): number => {
     return Math.floor(orderTotal * conversionRate);
 };
 
+const emptyOrder: Order = {
+    address: {
+        city: "",
+        postalCode: 0,
+        street: "",
+        building: 0,
+    },
+    customerId: "",
+    phoneNumber: "",
+    price: 0,
+    products: [],
+    shipment: {
+        fees: 0,
+        method: "standard",
+        trackingNumber: "",
+        createdAt: "",
+        deliveredAt: "",
+        carrier: "",
+    },
+    payment: {
+        method: "cash-on-delivery",
+        price: 0,
+        createdAt: "",
+    },
+    status: OrderStatus.PENDING,
+    pointsRedeemed: 0,
+    createdAt: "",
+    updatedAt: "",
+};
+
 export const generateFullyOrderData = (order: Order): Order => {
     const fullyData: Order = {
-        address: order.address ?? {
-            city: "",
-            postalCode: 0,
-            street: "",
-            building: 0,
-        },
-        customerId: order.customerId ?? "",
-        phoneNumber: order.phoneNumber ?? "",
-        price: order.price ?? 0,
-        products: order.products ?? [],
-        shipment: order.shipment ?? {
-            fees: 0,
-            method: "standard",
-            trackingNumber: "",
+        address: order.address ?? emptyOrder.address,
+        customerId: order.customerId ?? emptyOrder.customerId,
+        phoneNumber: order.phoneNumber ?? emptyOrder.phoneNumber,
+        price: order.price ?? emptyOrder.price,
+        products: order.products ?? emptyOrder.products,
+        shipment: {
+            fees: order.shipment?.fees ?? emptyOrder.shipment.fees,
+            method: order.shipment?.method ?? emptyOrder.shipment.method,
+            trackingNumber: order.shipment?.trackingNumber ?? emptyOrder.shipment.trackingNumber,
+            carrier: order.shipment?.carrier ?? emptyOrder.shipment.carrier,
+            createdAt: convertToTimestamp(order.shipment?.createdAt),
+            deliveredAt: convertToTimestamp(order.shipment?.deliveredAt),
         },
         payment: {
-            method: order.payment?.method ?? "cash-on-delivery",
-            price: order.payment?.price ?? 0,
+            method: order.payment?.method ?? emptyOrder.payment.method,
+            price: order.payment?.price ?? emptyOrder.payment.price,
             createdAt: convertToTimestamp(order.payment?.createdAt),
         },
         status: order.status ?? OrderStatus.PENDING,

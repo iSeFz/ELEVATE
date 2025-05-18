@@ -7,15 +7,25 @@ export const checkMissingStaffUpdateData = (staff: any) => {
     return null;
 };
 
+const emptyStaff: Staff = {
+    email: "",
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    username: "",
+    imageURL: "",
+    password: "", // Optional for authentication purposes
+}
+
 export const generateFullyStaffData = (staff: Staff): Staff => {
     const fullyData: Staff = {
-        email: staff.email ?? "",
-        firstName: staff.firstName ?? "",
-        lastName: staff.lastName ?? "",
-        phoneNumber: staff.phoneNumber ?? "",
-        username: staff.username ?? "",
-        password: staff.password ?? "", // Optional for authentication purposes
-        imageURL: staff.imageURL ?? "",
+        email: staff.email ?? emptyStaff.email,
+        firstName: staff.firstName ?? emptyStaff.firstName,
+        lastName: staff.lastName ?? emptyStaff.lastName,
+        phoneNumber: staff.phoneNumber ?? emptyStaff.phoneNumber,
+        username: staff.username ?? emptyStaff.username,
+        password: staff.password ?? emptyStaff.password, // Optional for authentication purposes
+        imageURL: staff.imageURL ?? emptyStaff.imageURL,
     };
     if (staff.id) {
         fullyData.id = staff.id;

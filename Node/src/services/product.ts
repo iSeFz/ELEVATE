@@ -149,21 +149,22 @@ export const deleteProduct = async (productID: string) => {
         throw new Error('Please provide a product ID');
     }
     try {
-        // First, get the product to find its brand and review IDs
+        // First, get the product to ensure it exists
         const product = await getProduct(productID);
         if (!product) {
             throw new Error('Product not found');
         }
 
-        // Get all review IDs associated with this product
-        const reviewIds = product.reviewSummary?.reviewIds || [];
+        // Query and delete all reviews associated with this product
+        const reviewSnapshot = await firestore.collection('review')
+            .where('productId', '==', productID)
+            .get();
 
-        // Delete all associated reviews
-        const reviewDeletePromises = reviewIds.map(reviewId =>
-            firestore.collection('review').doc(reviewId).delete()
-        );
+        const reviewDeletePromises: Promise<FirebaseFirestore.WriteResult>[] = [];
+        reviewSnapshot.forEach((doc) => {
+            reviewDeletePromises.push(firestore.collection('review').doc(doc.id).delete());
+        });
 
-        // Wait for all review deletions to complete
         if (reviewDeletePromises.length > 0) {
             await Promise.all(reviewDeletePromises);
         }

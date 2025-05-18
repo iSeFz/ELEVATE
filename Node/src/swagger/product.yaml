@@ -170,11 +170,6 @@ components:
             '5':
               type: integer
               description: Number of 5-star ratings
-        reviewIds:
-          type: array
-          items:
-            type: string
-          description: IDs of featured reviews
 
     SuccessResponse:
       type: object

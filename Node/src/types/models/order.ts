@@ -9,11 +9,11 @@ export interface Payment {
 
 export interface Shipment {
     createdAt: TimestampUnion;
-    deliveredAt?: TimestampUnion;
+    deliveredAt: TimestampUnion;
     fees: number;
     method: string;
     trackingNumber?: string;
-    carrier?: string;
+    carrier: string;
 }
 
 export enum OrderStatus {

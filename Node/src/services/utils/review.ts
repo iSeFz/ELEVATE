@@ -1,14 +1,26 @@
 import { Review, reviewDataValidators } from '../../types/models/review.js';
 import { convertToTimestamp } from './common.js';
 
+const emptyReview: Review = {
+    customerId: "",
+    productId: "",
+
+    title: "",
+    content: "",
+    rating: 0,
+
+    createdAt: "",
+    updatedAt: "",
+}
+
 export const generateFullyReviewData = (review: Review): Review => {
     const fullyData: Review = {
-        customerId: review.customerId ?? "",
-        productId: review.productId ?? "",
+        customerId: review.customerId ?? emptyReview.customerId,
+        productId: review.productId ?? emptyReview.productId,
 
-        title: review.title ?? "",
-        content: review.content ?? "",
-        rating: review.rating ?? 0,
+        title: review.title ?? emptyReview.title,
+        content: review.content ?? emptyReview.content,
+        rating: review.rating ?? emptyReview.rating,
 
         createdAt: convertToTimestamp(review.createdAt),
         updatedAt: convertToTimestamp(review.updatedAt),

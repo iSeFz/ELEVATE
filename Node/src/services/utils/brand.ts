@@ -2,27 +2,48 @@ import { Timestamp } from 'firebase-admin/firestore';
 import { Brand, brandDataValidators } from '../../types/models/brand.js';
 import { convertToTimestamp } from './common.js';
 
+const emptyBrand: Brand = {
+    addresses: [],
+    brandName: "",
+    brandOwnerId: "",
+    email: "",
+    imageURL: "",
+    industry: "",
+    phoneNumbers: [],
+    rating: 0,
+    storyDescription: "",
+    subscription: {
+        plan: "free",
+        price: 0,
+        startDate: "",
+        endDate: "",
+    },
+    websites: [],
+    createdAt: "",
+    updatedAt: "",
+}
+
 export const generateFullyBrandData = (brand: Brand): Brand => {
     const fullyData: Brand = {
-        addresses: brand.addresses ?? [],
-        brandName: brand.brandName ?? "",
-        brandOwnerId: brand.brandOwnerId ?? "",
-        email: brand.email ?? "",
-        imageURL: brand.imageURL ?? "",
-        industry: brand.industry ?? "",
-        phoneNumbers: brand.phoneNumbers ?? [],
-        rating: brand.rating ?? 0,
-        storyDescription: brand.storyDescription ?? "",
+        addresses: brand.addresses ?? emptyBrand.addresses,
+        brandName: brand.brandName ?? emptyBrand.brandName,
+        brandOwnerId: brand.brandOwnerId ?? emptyBrand.brandOwnerId,
+        email: brand.email ?? emptyBrand.email,
+        imageURL: brand.imageURL ?? emptyBrand.imageURL,
+        industry: brand.industry ?? emptyBrand.industry,
+        phoneNumbers: brand.phoneNumbers ?? emptyBrand.phoneNumbers,
+        rating: brand.rating ?? emptyBrand.rating,
+        storyDescription: brand.storyDescription ?? emptyBrand.storyDescription,
         subscription: {
-            plan: brand.subscription?.plan ?? "free",
-            price: brand.subscription?.price ?? 0,
+            plan: brand.subscription?.plan ?? emptyBrand.subscription.plan,
+            price: brand.subscription?.price ?? emptyBrand.subscription.price,
             startDate: convertToTimestamp(brand.subscription?.startDate),
             endDate: convertToTimestamp(brand.subscription?.endDate ?? Timestamp.fromMillis(Timestamp.now().toMillis() + 30 * 24 * 60 * 60 * 1000)),
         },
-        websites: brand.websites ?? [],
+        websites: brand.websites ?? emptyBrand.websites,
 
         createdAt: convertToTimestamp(brand.createdAt),
-        updatedAt: convertToTimestamp(brand.updatedAt), // Always update timestamp
+        updatedAt: convertToTimestamp(brand.updatedAt),
     };
     if (brand.id) {
         fullyData.id = brand.id;

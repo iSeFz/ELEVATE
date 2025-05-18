@@ -17,29 +17,43 @@ export const checkMissingProductVariantData = (productVariants: any) => {
     return message;
 };
 
+const emptyProduct: Product = {
+    brandId: "",
+    brandOwnerId: "",
+    brandName: "",
+    category: "",
+    department: [],
+    description: "",
+    material: "",
+    name: "",
+    variants: [],
+    reviewSummary: {
+        averageRating: 0,
+        totalReviews: 0,
+        ratingDistribution: {
+            '1': 0,
+            '2': 0,
+            '3': 0,
+            '4': 0,
+            '5': 0,
+        },
+    },
+    createdAt: "",
+    updatedAt: "",
+}
+
 export const generateFullyProductData = (product: Product): Product => {
     const fullyData: Product = {
-        brandId: product.brandId ?? "",
-        brandOwnerId: product.brandOwnerId ?? "",
-        brandName: product.brandName ?? "",
-        category: product.category ?? "",
-        department: product.department ?? [],
-        description: product.description ?? "",
-        material: product.material ?? "",
-        name: product.name ?? "",
-        variants: product.variants ?? [],
-        reviewSummary: product.reviewSummary ?? {
-            averageRating: 0,
-            totalReviews: 0,
-            ratingDistribution: {
-                '1': 0,
-                '2': 0,
-                '3': 0,
-                '4': 0,
-                '5': 0,
-            },
-            reviewIds: [],
-        },
+        brandId: product.brandId ?? emptyProduct.brandId,
+        brandOwnerId: product.brandOwnerId ?? emptyProduct.brandOwnerId,
+        brandName: product.brandName ?? emptyProduct.brandName,
+        category: product.category ?? emptyProduct.category,
+        department: product.department ?? emptyProduct.department,
+        description: product.description ?? emptyProduct.description,
+        material: product.material ?? emptyProduct.material,
+        name: product.name ?? emptyProduct.name,
+        variants: product.variants ?? emptyProduct.variants,
+        reviewSummary: product.reviewSummary ?? emptyProduct.reviewSummary,
 
         createdAt: convertToTimestamp(product.createdAt),
         updatedAt: convertToTimestamp(product.updatedAt),

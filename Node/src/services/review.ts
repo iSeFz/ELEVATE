@@ -11,23 +11,26 @@ export const getAllReviewsOfProduct = async (productId: string, page = 1) => {
     const limit = 10;
     const offset = (page - 1) * limit;
     try {
+        // Ensure the product exists
         const productData = await productService.getProduct(productId);
         if (!productData) {
             throw new Error('Product not found');
         }
-        const reviewIds = productData.reviewSummary.reviewIds || [];
-        const paginatedReviewIds = reviewIds.slice(offset, offset + limit);
-        const hasNextPage = reviewIds.length > offset + limit;
-        const orderPromises = paginatedReviewIds.map(reviewId =>
-            firestore.collection(reviewCollection).doc(reviewId).get()
-        );
-        const reviewDocs = await Promise.all(orderPromises);
-        const reviews = reviewDocs.map(doc => {
-            if (doc.exists) {
-                return { ...doc.data(), id: doc.id };
-            }
-            return null;
-        }).filter(order => order !== null);
+
+        // Query reviews by productId, ordered by createdAt (latest first)
+        const snapshot = await firestore.collection(reviewCollection)
+            .where('productId', '==', productId)
+            .orderBy('createdAt', 'desc')
+            .offset(offset)
+            .limit(limit)
+            .get();
+
+        const reviews = snapshot.docs.map(doc => ({
+            ...doc.data(),
+            id: doc.id
+        }));
+
+        const hasNextPage = reviews.length === limit;
 
         return {
             reviews,
@@ -144,9 +147,6 @@ async function updateProductAfterReviewAdd(review: Review) {
     const product = await productService.getProduct(review.productId);
     if (!product) return;
 
-    // Add review ID to product's reviewIds array
-    const updatedReviewIds = [...(product.reviewSummary.reviewIds || []), review.id!];
-
     // Calculate new average rating
     const currentTotal = product.reviewSummary.averageRating * product.reviewSummary.totalReviews;
     const newTotal = currentTotal + review.rating;
@@ -158,11 +158,9 @@ async function updateProductAfterReviewAdd(review: Review) {
     const ratingKey = review.rating.toString() as keyof typeof ratingDistribution;
     ratingDistribution[ratingKey] = (ratingDistribution[ratingKey] || 0) + 1;
 
-    // Update product
     await productService.updateProduct(review.productId, {
         reviewSummary: {
             ...product.reviewSummary,
-            reviewIds: updatedReviewIds,
             totalReviews: newCount,
             averageRating: newAverage,
             ratingDistribution
@@ -205,9 +203,6 @@ async function updateProductAfterReviewDelete(review: Review) {
     const product = await productService.getProduct(review.productId);
     if (!product) return;
 
-    // Remove review ID from product's reviewIds array
-    const updatedReviewIds = (product.reviewSummary.reviewIds || []).filter(id => id !== review.id);
-
     // Calculate new average (handle case where this was the only review)
     let newAverage = 0;
     let newCount = product.reviewSummary.totalReviews - 1;
@@ -223,11 +218,9 @@ async function updateProductAfterReviewDelete(review: Review) {
     const ratingKey = review.rating.toString() as keyof typeof ratingDistribution;
     ratingDistribution[ratingKey] = Math.max(0, (ratingDistribution[ratingKey] || 0) - 1);
 
-    // Update product
     await productService.updateProduct(review.productId, {
         reviewSummary: {
             ...product.reviewSummary,
-            reviewIds: updatedReviewIds,
             totalReviews: newCount,
             averageRating: newAverage,
             ratingDistribution

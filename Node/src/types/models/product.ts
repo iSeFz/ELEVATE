@@ -21,8 +21,6 @@ export interface ProductReviewSummary {
         '4': number;
         '5': number;
     };
-    // Most helpful or recent reviews for quick display
-    reviewIds: string[]; // IDs of featured reviews
 }
 
 export interface Product {
@@ -62,7 +60,6 @@ export const productReviewSummaryDataValidators = (value: ProductReviewSummary):
         ratingDistribution: (v: ProductReviewSummary['ratingDistribution']) => {
             return typeof v === 'object' && Object.keys(v).length === 5 && Object.values(v).every(val => typeof val === 'number');
         },
-        reviewIds: (v: ProductReviewSummary['reviewIds']) => Array.isArray(v) && v.every(id => typeof id === 'string') || v === undefined,
     }
     return commonDataValidators<ProductReviewSummary>(value, validators);
 }

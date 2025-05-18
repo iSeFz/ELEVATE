@@ -8,15 +8,28 @@ export const checkMissingBrandOwnerUpdateData = (brandOwner: any) => {
     return null;
 };
 
+const emptyBrandOwner: BrandOwner = {
+    brandId: "",
+    brandName: "",
+    email: "",
+    firstName: "",
+    lastName: "",
+    imageURL: "",
+    username: "",
+    createdAt: "",
+    updatedAt: "",
+    password: "", // Optional for authentication purposes
+}
+
 export const generateFullyBrandOwnerData = (brandOwner: BrandOwner): BrandOwner => {
     const fullyData: BrandOwner = {
-        brandId: brandOwner.brandId ?? "",
-        brandName: brandOwner.brandName ?? "",
-        email: brandOwner.email ?? "",
-        firstName: brandOwner.firstName ?? "",
-        lastName: brandOwner.lastName ?? "",
-        imageURL: brandOwner.imageURL ?? "",
-        username: brandOwner.username ?? "",
+        brandId: brandOwner.brandId ?? emptyBrandOwner.brandId,
+        brandName: brandOwner.brandName ?? emptyBrandOwner.brandName,
+        email: brandOwner.email ?? emptyBrandOwner.email,
+        firstName: brandOwner.firstName ?? emptyBrandOwner.firstName,
+        lastName: brandOwner.lastName ?? emptyBrandOwner.lastName,
+        imageURL: brandOwner.imageURL ?? emptyBrandOwner.imageURL,
+        username: brandOwner.username ?? emptyBrandOwner.username,
 
         createdAt: convertToTimestamp(brandOwner.createdAt),
         updatedAt: convertToTimestamp(brandOwner.updatedAt),

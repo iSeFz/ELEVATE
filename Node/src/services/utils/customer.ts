@@ -29,31 +29,52 @@ export const checkMissingStaffCredentials = (staff: any) => {
     return null;
 }
 
+const emptyCustomer: Customer = {
+    address: {
+        city: "",
+        postalCode: 0,
+        street: "",
+        building: 0,
+    },
+    cart: {
+        items: [],
+        subtotal: 0,
+        updatedAt: "",
+    },
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+    imageURL: "",
+    loyaltyPoints: 0,
+    orders: {
+        total: 0,
+        items: [],
+    },
+    phoneNumber: "",
+    username: "",
+    createdAt: "",
+    updatedAt: "",
+    wishlist: [],
+};
+
 export const generateFullyCustomerData = (customer: Customer): Customer => {
     const fullyData: Customer = {
-        address: customer.address ?? {
-            city: "",
-            postalCode: 0,
-            street: "",
-            building: 0,
-        },
+        address: customer.address ?? emptyCustomer.address,
         cart: {
-            items: customer.cart?.items ?? [],
-            subtotal: customer.cart?.subtotal ?? 0,
+            items: customer.cart?.items ?? emptyCustomer.cart.items,
+            subtotal: customer.cart?.subtotal ?? emptyCustomer.cart.subtotal,
             updatedAt: convertToTimestamp(customer.cart?.updatedAt),
         },
-        email: customer.email ?? "",
-        password: customer.password ?? "",
-        firstName: customer.firstName ?? "",
-        lastName: customer.lastName ?? "",
-        imageURL: customer.imageURL ?? "",
-        loyaltyPoints: customer.loyaltyPoints ?? 0,
-        orders: customer.orders ?? {
-            total: 0,
-            items: [],
-        },
-        phoneNumber: customer.phoneNumber ?? "",
-        username: customer.username ?? "",
+        email: customer.email ?? emptyCustomer.email,
+        password: customer.password ?? emptyCustomer.password,
+        firstName: customer.firstName ?? emptyCustomer.firstName,
+        lastName: customer.lastName ?? emptyCustomer.lastName,
+        imageURL: customer.imageURL ?? emptyCustomer.imageURL,
+        loyaltyPoints: customer.loyaltyPoints ?? emptyCustomer.loyaltyPoints,
+        orders: customer.orders ?? emptyCustomer.orders,
+        phoneNumber: customer.phoneNumber ?? emptyCustomer.phoneNumber,
+        username: customer.username ?? emptyCustomer.username,
 
         createdAt: convertToTimestamp(customer.createdAt),
         updatedAt: convertToTimestamp(customer.updatedAt),

@@ -26,7 +26,6 @@ const expectedProductData: Partial<Product> = {
             '4': 0,
             '5': 0,
         },
-        reviewIds: ["String"]
     },
 };
 const expectedAddProductData: Partial<Product> = {
@@ -103,7 +102,6 @@ const expectedUpdateProductData: Partial<Product> = {
         *  - '3': Number - Number of 3-star reviews
         *  - '4': Number - Number of 4-star reviews
         *  - '5': Number - Number of 5-star reviews
-      * - reviewIds: Array - IDs of the reviews
     * - variants: Array - Variants of the product
       *  - colors: Array - Colors of the variant
       * - discount: Number - Discount of the variant
