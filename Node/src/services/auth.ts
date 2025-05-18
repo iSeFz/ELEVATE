@@ -1,4 +1,4 @@
-import { admin, verifyCredentialsURL } from '../config/firebase.js';
+import { admin, SEND_RESET_EMAIL_URL, verifyCredentialsURL } from '../config/firebase.js';
 import axios from 'axios';
 import { Customer } from '../types/models/customer.js';
 import { Staff } from '../types/models/staff.js';
@@ -250,6 +250,27 @@ export const deleteCredentialsUsingUID = async (uid: string) => {
 
         throw new AuthError(
             'Failed to delete user. Please try again later.',
+            AuthErrorType.SERVER_ERROR,
+            error.code ?? 'auth/server-error',
+            500
+        );
+    }
+};
+
+export const sendPasswordResetEmail = async (email: string) => {
+    try {
+        await axios.post(SEND_RESET_EMAIL_URL, {
+            requestType: 'PASSWORD_RESET',
+            email,
+        });
+        return true;
+    } catch (error: any) {
+        if (error.response?.data?.error?.message === 'EMAIL_NOT_FOUND') {
+            // For security, don't reveal if email exists
+            return true;
+        }
+        throw new AuthError(
+            'Failed to send password reset email.',
             AuthErrorType.SERVER_ERROR,
             error.code ?? 'auth/server-error',
             500

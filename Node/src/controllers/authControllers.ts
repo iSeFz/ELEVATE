@@ -272,3 +272,25 @@ export const getCurrentUser = async (req: Request, res: Response) => {
         });
     }
 };
+
+export const forgotPassword = async (req: Request, res: Response) => {
+    try {
+        const { email } = req.body;
+        if (!email) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Email is required'
+            });
+        }
+        await authService.sendPasswordResetEmail(email);
+        return res.status(200).json({
+            status: 'success',
+            message: 'If the email exists, a password reset link has been sent.'
+        });
+    } catch (error: any) {
+        return res.status(500).json({
+            status: 'error',
+            message: error.message ?? 'Failed to send password reset email'
+        });
+    }
+};

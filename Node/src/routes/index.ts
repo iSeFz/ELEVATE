@@ -7,12 +7,14 @@ import OrderRoutes from './orderRoutes.js';
 import StaffRoutes from './staffRoutes.js';
 import BrandOwnerRoutes from './brandOwnerRoutes.js';
 import SwaggerRoutes from './swaggerRoutes.js';
-import { getCurrentUser } from '../controllers/authControllers.js';
+import { getCurrentUser, forgotPassword } from '../controllers/authControllers.js';
 import { authenticate } from '../middleware/auth.js';
 
 const router = express.Router();
 
 router.get('/me', authenticate, getCurrentUser);
+
+router.post('/forgot-password', forgotPassword);
 
 // API documentation
 router.use('/docs', SwaggerRoutes);

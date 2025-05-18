@@ -6,7 +6,11 @@ admin.initializeApp({
   databaseURL: "https://elevate-fcai-cu-default-rtdb.europe-west1.firebasedatabase.app"
 });
 
-const verifyCredentialsURL = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${"AIzaSyDupVh4a_BioIJteaPBRZKgBFBGhhDKY8Q"}`;
+const firestoreKey = "AIzaSyDupVh4a_BioIJteaPBRZKgBFBGhhDKY8Q";
+
+const verifyCredentialsURL = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firestoreKey}`;
+
+const SEND_RESET_EMAIL_URL = `https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=${firestoreKey}`;
 
 const firestoreDocuments = {
   "address": "address",
@@ -30,4 +34,4 @@ const firestoreDocuments = {
   "review": "review",
 }
 
-export { admin, verifyCredentialsURL };
+export { admin, verifyCredentialsURL, SEND_RESET_EMAIL_URL };
