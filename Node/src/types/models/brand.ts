@@ -21,7 +21,6 @@ export interface Brand {
     storyDescription: string;
     subscription: Subscription;
     websites: Website[];
-    productIds: string[]; // Denormalized for easier queries
 
     createdAt: TimestampUnion;
     updatedAt: TimestampUnion;
@@ -59,7 +58,6 @@ export const brandDataValidators = (value: Brand): boolean => {
     
         websites: (v: Brand['websites']) => Array.isArray(v) && v.every(site => websiteDataValidators(site)),
     
-        productIds: (v: Brand['productIds']) => Array.isArray(v) && v.every(id => typeof id === 'string'),
         createdAt: (v: Brand['createdAt']) => v instanceof Timestamp,
         updatedAt: (v: Brand['updatedAt']) => v instanceof Timestamp,
     }

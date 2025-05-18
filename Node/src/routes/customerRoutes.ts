@@ -1,6 +1,6 @@
 import express from 'express';
 import * as CustomerController from '../controllers/customerController.js';
-import { authenticate, authorize, authorizeCustomerAccess } from '../middleware/auth.js';
+import { authenticate, authorize } from '../middleware/auth.js';
 import { customerSignup, customerLogin } from '../controllers/authControllers.js';
 import * as AuthValidators from '../middleware/validators/auth.js';
 import * as CustomerValidators from '../middleware/validators/customer.js';
@@ -29,19 +29,16 @@ router.use('/me/wishlist', WishlistRoutes);
 // Get orders for a specific customer - using the new middleware
 router.get('/me/orders',
     authenticate,
-    authorizeCustomerAccess,
     CustomerController.getCustomerOrders);
 
 // Users can access their own data, admins/staff can access any user's data
 router.get('/me',
     authenticate,
-    authorizeCustomerAccess,
     CustomerController.getCustomer);
 
 // Users can update their own data, admins can update any user
 router.put('/me',
     authenticate,
-    authorizeCustomerAccess,
     CustomerValidators.validateUpdateBrand,
     CustomerController.updateCustomer);
 

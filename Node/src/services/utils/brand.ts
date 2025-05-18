@@ -20,7 +20,6 @@ export const generateFullyBrandData = (brand: Brand): Brand => {
             endDate: convertToTimestamp(brand.subscription?.endDate ?? Timestamp.fromMillis(Timestamp.now().toMillis() + 30 * 24 * 60 * 60 * 1000)),
         },
         websites: brand.websites ?? [],
-        productIds: brand.productIds ?? [],
 
         createdAt: convertToTimestamp(brand.createdAt),
         updatedAt: convertToTimestamp(brand.updatedAt), // Always update timestamp

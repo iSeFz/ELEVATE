@@ -115,14 +115,6 @@ export const addProduct = async (product: Product) => {
         const docRef = await firestore.collection(productCollection).add(productData);
         productId = docRef.id;
 
-        // Update the brand's productIds array with the new product ID
-        if (productData.brandId) {
-            const brandRef = firestore.collection(brandCollection).doc(productData.brandId);
-            await brandRef.update({
-                productIds: admin.firestore.FieldValue.arrayUnion(productId)
-            });
-        }
-
         return { ...productData, id: productId };
     } catch (error: any) {
         throw new Error(error.message);
@@ -179,14 +171,6 @@ export const deleteProduct = async (productID: string) => {
         // Delete the product
         const productRef = firestore.collection(productCollection).doc(productID);
         await productRef.delete();
-
-        // Remove product ID from the brand's productIds array
-        if (product.brandId) {
-            const brandRef = firestore.collection(brandCollection).doc(product.brandId);
-            await brandRef.update({
-                productIds: admin.firestore.FieldValue.arrayRemove(productID)
-            });
-        }
 
         return true;
     } catch (error: any) {

@@ -20,7 +20,6 @@ const expectedUpdateBrandData: Partial<Brand> = {
         url: "String",
         type: "String",
     }],
-    productIds: ["String"],
 }
 /**
  * Required Parameters:
@@ -43,7 +42,6 @@ const expectedUpdateBrandData: Partial<Brand> = {
  * - websites: Array of Website objects
  *   - url: String
  *   - type: String
- * - productIds: Array of Strings
  */
 export const validateUpdateBrand = (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
