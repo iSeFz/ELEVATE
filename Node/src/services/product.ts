@@ -63,7 +63,11 @@ export const getProductsByCategory = async (category: string, page: number = 1) 
     }
     try {
         const snapshot = await firestore.collection(productCollection)
-            .where("category", "==", category).offset(offset).limit(10).get();
+            .where("category", "==", category)
+            .orderBy("createdAt", "desc")
+            .offset(offset)
+            .limit(10)
+            .get();
 
         const products: Product[] = [];
         snapshot.forEach((doc) => {
@@ -81,37 +85,17 @@ export const getProductsByBrand = async (brandID: string, page: number = 1) => {
         throw new Error('Please provide a brand ID');
     }
     try {
-        // Get the brand document to access its productIds array
-        const brandDoc = await firestore.collection(brandCollection).doc(brandID).get();
+        const snapshot = await firestore.collection(productCollection)
+            .where("brandId", "==", brandID)
+            .orderBy("createdAt", "desc")
+            .offset(offset)
+            .limit(10)
+            .get();
 
-        if (!brandDoc.exists) {
-            throw new Error('Brand not found');
-        }
-
-        const brandData = brandDoc.data();
-        const productIds = brandData?.productIds ?? [];
-
-        if (productIds.length === 0) {
-            return []; // Return empty array if no products are associated with this brand
-        }
-
-        // Use a batched get operation to retrieve all products by their IDs
         const products: Product[] = [];
-
-        const chunk = productIds.slice(offset, offset + 10);
-
-        const productRefs = chunk.map((id: string) =>
-            firestore.collection(productCollection).doc(id)
-        );
-
-        const productSnapshots = await firestore.getAll(...productRefs);
-
-        productSnapshots.forEach(doc => {
-            if (doc.exists) {
-                products.push({ ...doc.data(), id: doc.id } as Product);
-            }
+        snapshot.forEach((doc) => {
+            products.push({ ...doc.data(), id: doc.id } as Product);
         });
-
         return products;
     } catch (error: any) {
         throw new Error(error.message);

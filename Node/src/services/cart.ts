@@ -101,7 +101,7 @@ export const addToCart = async (customerId: string, item: Partial<CartItem>) => 
             const selectedColor = item.color ?? variant.colors[0];
             const productImage = variant.images && variant.images.length > 0 ? variant.images[0] : '';
 
-            updatedItems.push({
+            updatedItems.unshift({
                 id: generateCartItemtId(),
                 productId: item.productId,
                 variantId: item.variantId,
@@ -137,7 +137,11 @@ export const addToCart = async (customerId: string, item: Partial<CartItem>) => 
     }
 };
 
-export const updateCartItem = async (customerId: string, cartItemId: string, quantity: number) => {
+export const updateCartItem = async (
+    customerId: string,
+    cartItemId: string,
+    updates: { quantity?: number; color?: string }
+) => {
     if (!customerId) {
         throw new Error('Please provide a customer ID');
     }
@@ -146,8 +150,12 @@ export const updateCartItem = async (customerId: string, cartItemId: string, qua
         throw new Error('Cart item ID is required');
     }
 
-    if (quantity <= 0) {
+    if (updates.quantity !== undefined && updates.quantity <= 0) {
         throw new Error('Quantity must be greater than 0');
+    }
+
+    if (updates.quantity === undefined && updates.color === undefined) {
+        throw new Error('At least one of quantity or color must be provided');
     }
 
     try {
@@ -163,38 +171,71 @@ export const updateCartItem = async (customerId: string, cartItemId: string, qua
         const currentCart = customerData.cart || { items: [], subtotal: 0, updatedAt: admin.firestore.Timestamp.now() };
 
         // Find the item in the cart
-        const itemIndex = currentCart.items.findIndex(item => item.id === cartItemId);
+        let itemIndex = currentCart.items.findIndex(item => item.id === cartItemId);
 
         if (itemIndex === -1) {
             throw new Error(`Item not found in cart, item ID: ${cartItemId}`);
         }
 
+        const currentItem = currentCart.items[itemIndex];
+
         // Verify product and variant exist and check stock
-        const productRef = firestore.collection('product').doc(currentCart.items[itemIndex].productId);
+        const productRef = firestore.collection('product').doc(currentItem.productId);
         const productDoc = await productRef.get();
 
         if (!productDoc.exists) {
-            throw new Error(`Product of this item cart not found, product name: ${currentCart.items[itemIndex].productName}, product ID: ${currentCart.items[itemIndex].productId}`);
+            throw new Error(`Product of this cart item not found, product name: ${currentItem.productName}, product ID: ${currentItem.productId}`);
         }
 
-        const product = productDoc.data() as any;
+        const product = productDoc.data() as Product;
 
         // Find the variant
-        const variant = product.variants.find((v: any) => v.id === currentCart.items[itemIndex].variantId);
+        const variant = product.variants.find((v: any) => v.id === currentItem.variantId);
         if (!variant) {
-            throw new Error(`Product variant not found, variant ID: ${currentCart.items[itemIndex].variantId}`);
+            throw new Error(`Product variant not found, variant ID: ${currentItem.variantId}`);
         }
 
-        // Check if stock is available
-        if (variant.stock < quantity) {
-            throw new Error('Not enough stock available, product name: ' + product.name + ', available stock: ' + variant.stock + ', requested quantity: ' + quantity);
+        // If color is being updated, check if it's valid
+        let newColor = currentItem.color;
+        if (updates.color) {
+            if (!variant.colors.includes(updates.color)) {
+                throw new Error(`Selected color (${updates.color}) is not available for this variant, product name: ${product.name}, available colors: ${variant.colors.join(', ')}`);
+            }
+            newColor = updates.color;
         }
 
-        // Update item quantity
-        const updatedItems = [...currentCart.items];
+        // If color is changed, check if another cart item with same product, variant, and color exists
+        let updatedItems = [...currentCart.items];
+        let newQuantity = updates.quantity ?? currentItem.quantity;
+
+        if (updates.color && updates.color !== currentItem.color) {
+            const duplicateIndex = updatedItems.findIndex(
+                (item, idx) =>
+                    idx !== itemIndex &&
+                    item.productId === currentItem.productId &&
+                    item.variantId === currentItem.variantId &&
+                    item.color === updates.color
+            );
+            if (duplicateIndex !== -1) {
+                // Merge quantities
+                newQuantity += updatedItems[duplicateIndex].quantity;
+                // Remove the duplicate item
+                updatedItems.splice(duplicateIndex, 1);
+                // Adjust itemIndex if needed
+                if (duplicateIndex < itemIndex) itemIndex--;
+            }
+        }
+
+        // Check stock for the new quantity
+        if (variant.stock < newQuantity) {
+            throw new Error('Not enough stock available, product name: ' + product.name + ', available stock: ' + variant.stock + ', requested quantity: ' + newQuantity);
+        }
+
+        // Update item
         updatedItems[itemIndex] = {
             ...updatedItems[itemIndex],
-            quantity: quantity
+            quantity: newQuantity,
+            color: newColor
         };
 
         // Calculate subtotal

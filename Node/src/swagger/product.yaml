@@ -196,7 +196,7 @@ components:
 paths:
   /products:
     get:
-      summary: Retrieve all products (Admin only)
+      summary: Retrieve all products
       tags: [Products]
       parameters:
         - in: query

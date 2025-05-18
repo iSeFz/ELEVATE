@@ -89,12 +89,12 @@ export const addToWishlist = async (customerId: string, productId: string) => {
             addedAt: admin.firestore.Timestamp.now(),
             brandName: product.brandName,
             name: product.name,
-            imageURL: product.variants[0].images[0] || '',
-            price: product.variants[0].price
+            imageURL: product.variants[0]?.images[0] || '',
+            price: product.variants[0]?.price ?? 0,
         };
 
         // Add to wishlist
-        const updatedWishlist = [...currentWishlist, newWishlistItem];
+        const updatedWishlist = [newWishlistItem, ...currentWishlist];
 
         // Update customer document
         await customerRef.update({

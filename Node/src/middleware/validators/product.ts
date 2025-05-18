@@ -60,6 +60,14 @@ export const validateAddProduct = (req: Request, res: Response, next: NextFuncti
         });
     }
 
+    // Ensure that the variants array has at least one variant
+    if (!req.body.variants || req.body.variants.length === 0) {
+        return res.status(400).json({
+            status: 'error',
+            message: 'At least one variant is required'
+        });
+    }
+
     next();
 };
 

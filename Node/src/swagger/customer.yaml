@@ -650,6 +650,7 @@ paths:
                 - productId
                 - variantId
                 - quantity
+                - color
               properties:
                 productId:
                   type: string
@@ -661,6 +662,9 @@ paths:
                   type: integer
                   minimum: 1
                   description: Quantity to add
+                color:
+                  type: string
+                  description: Selected color
       responses:
         200:
           description: Item added to cart successfully
@@ -712,11 +716,15 @@ paths:
               type: object
               required:
                 - quantity
+                - color
               properties:
                 quantity:
                   type: integer
                   minimum: 1
                   description: New quantity
+                color:
+                  type: string
+                  description: New selected color
       responses:
         200:
           description: Cart item updated successfully

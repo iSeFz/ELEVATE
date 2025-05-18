@@ -44,7 +44,7 @@ export const validateAddToCart = (req: Request, res: Response, next: NextFunctio
  */
 export const validateUpdateCartItem = (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    const { quantity } = req.body;
+    const { quantity, color } = req.body;
 
     if (!id) {
         return res.status(400).json({
@@ -53,10 +53,24 @@ export const validateUpdateCartItem = (req: Request, res: Response, next: NextFu
         });
     }
 
-    if (!quantity || isNaN(quantity) || quantity <= 0) {
+    if (quantity === undefined && color === undefined) {
+        return res.status(400).json({
+            status: 'error',
+            message: 'At least one of quantity or color is required'
+        });
+    }
+
+    if (quantity && (isNaN(quantity) || quantity <= 0)) {
         return res.status(400).json({
             status: 'error',
             message: 'Valid quantity greater than 0 is required'
+        });
+    }
+
+    if (color && typeof color !== 'string') {
+        return res.status(400).json({
+            status: 'error',
+            message: 'Color must be a string'
         });
     }
 

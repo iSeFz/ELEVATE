@@ -123,8 +123,12 @@ export const addOrder = async (order: Order) => {
         // Update the customer's orders array, subtract redeemed points, and add earned points
         if (orderData.customerId) {
             const customerRef = firestore.collection(customerCollection).doc(orderData.customerId);
+            const customerDoc = await customerRef.get();
+            const currentOrders = (customerDoc.data()?.orders?.items ?? []) as string[];
+            const updatedOrders = [docId, ...currentOrders];
             batch.update(customerRef, {
-                orders: admin.firestore.FieldValue.arrayUnion(docId),
+                'orders.items': updatedOrders,
+                'orders.total': updatedOrders.length,
                 loyaltyPoints: admin.firestore.FieldValue.increment(pointsEarned - orderData.pointsRedeemed)
             });
         }

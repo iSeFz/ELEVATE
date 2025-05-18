@@ -69,12 +69,12 @@ export const updateCartItem = async (req: Request, res: Response) => {
     try {
         const customerId = req.user!.id;
         const { id } = req.params;
-        const { quantity } = req.body;
+        const { quantity, color } = req.body;
 
         const updatedCart = await cartService.updateCartItem(
             customerId,
             id,
-            Number(quantity)
+            { quantity, color }
         );
 
         return res.status(200).json({
