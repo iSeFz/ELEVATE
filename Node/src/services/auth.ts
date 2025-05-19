@@ -1,4 +1,4 @@
-import { admin, SEND_RESET_EMAIL_URL, verifyCredentialsURL } from '../config/firebase.js';
+import { admin, CONFIRM_RESET_PASSWORD_URL, SEND_RESET_EMAIL_URL, verifyCredentialsURL } from '../config/firebase.js';
 import axios from 'axios';
 import { Customer } from '../types/models/customer.js';
 import { Staff } from '../types/models/staff.js';
@@ -301,6 +301,23 @@ export const sendPasswordResetEmail = async (email: string) => {
         }
         throw new AuthError(
             'Failed to send password reset email.',
+            AuthErrorType.SERVER_ERROR,
+            error.code ?? 'auth/server-error',
+            500
+        );
+    }
+};
+
+export const confirmPasswordReset = async (oobCode: string, newPassword: string) => {
+    try {
+        await axios.post(CONFIRM_RESET_PASSWORD_URL, {
+            oobCode,
+            newPassword,
+        });
+        return true;
+    } catch (error: any) {
+        throw new AuthError(
+            'Failed to reset password.',
             AuthErrorType.SERVER_ERROR,
             error.code ?? 'auth/server-error',
             500

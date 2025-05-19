@@ -307,7 +307,7 @@ export const getCurrentUser = async (req: Request, res: Response) => {
     }
 };
 
-export const forgotPassword = async (req: Request, res: Response) => {
+export const sendPasswordResetEmail = async (req: Request, res: Response) => {
     try {
         const { email } = req.body;
         if (!email) {
@@ -325,6 +325,28 @@ export const forgotPassword = async (req: Request, res: Response) => {
         return res.status(500).json({
             status: 'error',
             message: error.message ?? 'Failed to send password reset email'
+        });
+    }
+};
+
+export const confirmPasswordReset = async (req: Request, res: Response) => {
+    try {
+        const { oobCode, newPassword } = req.body;
+        if (!oobCode || !newPassword) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'OTP and new password are required'
+            });
+        }
+        await authService.confirmPasswordReset(oobCode, newPassword);
+        return res.status(200).json({
+            status: 'success',
+            message: 'Password has been reset successfully'
+        });
+    } catch (error: any) {
+        return res.status(500).json({
+            status: 'error',
+            message: error.message ?? 'Failed to reset password'
         });
     }
 };

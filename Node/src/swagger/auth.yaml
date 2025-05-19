@@ -1,7 +1,7 @@
 paths:
-  /forgot-password:
+  /send-password-reset:
     post:
-      summary: Request a password reset
+      summary: Send password reset email (OTP)
       tags: [Authentication]
       requestBody:
         required: true
@@ -30,6 +30,53 @@ paths:
                     type: string
         400:
           description: Invalid email
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /confirm-password-reset:
+    post:
+      summary: Confirm password reset with OTP and new password
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - oobCode
+                - newPassword
+              properties:
+                oobCode:
+                  type: string
+                  description: The OTP code received by email
+                newPassword:
+                  type: string
+                  format: password
+                  description: The new password to set
+      responses:
+        200:
+          description: Password has been reset successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+        400:
+          description: Invalid OTP or password
           content:
             application/json:
               schema:

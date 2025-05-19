@@ -360,6 +360,46 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /customers/third-party-signup:
+    post:
+      summary: Register a new customer using third-party authentication (Use it after signup using any third party service)
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - uid
+              properties:
+                email:
+                  type: string
+                  description: The user email
+                uid:
+                  type: string
+                  description: The unique identifier from the third-party service (That related to the email in Firebase)
+      responses:
+        201:
+          description: Customer registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        400:
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
   /customers/login:
     post:
       summary: Log in a customer
