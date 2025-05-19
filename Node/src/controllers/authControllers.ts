@@ -16,7 +16,7 @@ export const customerSignup = async (req: Request, res: Response) => {
             status: 'success',
             message: 'Registration successful',
             data: {
-                id: userRecord.uid,
+                id: userRecord.id,
                 email: userRecord.email,
             }
         });
@@ -37,6 +37,40 @@ export const customerSignup = async (req: Request, res: Response) => {
         });
     }
 };
+
+export const thirdPartySignup = async (req: Request, res: Response) => {
+    try {
+        const { uid, email } = req.body;
+        const userRecord = await authService.thirdPartySignup({
+            id: uid,
+            email: email,
+        });
+
+        return res.status(201).json({
+            status: 'success',
+            message: 'Third-party registration successful',
+            data: {
+                id: userRecord.id,
+                email: userRecord.email,
+            }
+        });
+    } catch (error: any) {
+        if (error instanceof AuthError) {
+            console.error('AuthError during third-party signup:', error);
+            return res.status(error.statusCode).json({
+                status: 'error',
+                code: error.code,
+                type: error.type,
+                message: error.message
+            });
+        }
+
+        return res.status(500).json({
+            status: 'error',
+            message: 'An unexpected error occurred during third-party registration'
+        });
+    }
+}
 
 export const customerLogin = async (req: Request, res: Response) => {
     try {
@@ -73,7 +107,7 @@ export const staffSignup = async (req: Request, res: Response) => {
             status: 'success',
             message: 'Staff registration successful',
             data: {
-                id: userRecord.uid,
+                id: userRecord.id,
                 email: userRecord.email,
             }
         });
@@ -103,7 +137,7 @@ export const brandOwnerSignup = async (req: Request, res: Response) => {
         // 1. Create brand owner account
         brandOwnerData.brandName = brandData.brandName;
         const userRecord = await authService.brandOwnerSignup(brandOwnerData);
-        const brandOwnerId = userRecord.uid;
+        const brandOwnerId = userRecord.id;
 
         // 2. Create brand with reference to the brand owner
         brandData.brandOwnerId = brandOwnerId; // Set the brand ID to the brand owner ID

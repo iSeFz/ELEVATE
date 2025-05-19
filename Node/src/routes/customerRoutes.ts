@@ -1,7 +1,7 @@
 import express from 'express';
 import * as CustomerController from '../controllers/customerController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
-import { customerSignup, customerLogin } from '../controllers/authControllers.js';
+import { customerSignup, customerLogin, thirdPartySignup } from '../controllers/authControllers.js';
 import * as AuthValidators from '../middleware/validators/auth.js';
 import * as CustomerValidators from '../middleware/validators/customer.js';
 import CartRoutes from './cartRoutes.js';
@@ -18,6 +18,7 @@ router.get('/',
 
 // Auth endpoints
 router.post('/signup', CustomerValidators.validateSignupCustomer, customerSignup);
+router.post('/third-party-signup', AuthValidators.validateThirdPartySignup, thirdPartySignup);
 router.post('/login', AuthValidators.validateLogin, customerLogin);
 
 // Cart endpoints

@@ -41,8 +41,11 @@ export class AuthError extends Error {
     }
 }
 
+type UserType = 'customer' | 'staff' | 'brandOwner';
+type SignupMethod = 'email' | 'thirdParty';
+
 // Generic signup function that handles different user types
-export const genericSignup = async (userData: any, userType: 'customer' | 'staff' | 'brandOwner', otherClaims = {}) => {
+export const genericSignup = async (userData: any, userType: UserType, signupMethod: SignupMethod, otherClaims = {}) => {
     // Validate data based on user type
     let missedData = null;
 
@@ -62,21 +65,22 @@ export const genericSignup = async (userData: any, userType: 'customer' | 'staff
                 400
             );
         }
-        const userRecord = await auth.createUser({
+        if (signupMethod === 'email') {
+            const userRecord = await auth.createUser({
+                email: userData.email,
+                password: userData.password,
+                emailVerified: false,
+            });
+            userData.id = userRecord.uid;
+        }
+
+        // Both signup methods will set custom claims and store user data in Firestore
+        setUserClaimAndCollection(userData, userType, otherClaims);
+
+        return {
+            id: userData.id,
             email: userData.email,
-            password: userData.password,
-            emailVerified: false,
-        });
-
-        auth.setCustomUserClaims(userRecord.uid, { role: userType, ...otherClaims });
-
-        // Remove password from data stored in Firestore
-        const { password, id, ...cleanedData } = userData;
-
-        // Save user data to Firestore
-        await firestore.collection(userType).doc(userRecord.uid).set(cleanedData);
-
-        return userRecord;
+        };
     } catch (error: any) {
         console.error('Error in AUTH file:', error);
         if (error instanceof AuthError) {
@@ -86,17 +90,43 @@ export const genericSignup = async (userData: any, userType: 'customer' | 'staff
     }
 };
 
+const setUserClaimAndCollection = async (userData: any, userType: UserType, otherClaims = {}) => {
+    try {
+        await auth.setCustomUserClaims(userData.id, { role: userType, ...otherClaims });
+        const { password, id, ...cleanedData } = userData;
+        try {
+            await firestore.collection(userType).doc(userData.id).set(cleanedData);
+        } catch (firestoreError: any) {
+            // Rollback: delete user from Firebase Auth if Firestore write fails
+            await auth.deleteUser(userData.id);
+            console.error('Firestore error, user deleted from Auth:', firestoreError);
+            throw new AuthError(
+                'Failed to save user data. User record has been removed from authentication.',
+                AuthErrorType.SERVER_ERROR
+            );
+        }
+    } catch (error: any) {
+        console.error('Error in AUTH file:', error);
+        throw new AuthError(error.message, AuthErrorType.UNKNOWN_ERROR);
+    }
+}
+
+export const thirdPartySignup = async (userData: any) => {
+    userData.password = "Sh@123456789"; // (No need to be used, only to pass the validation)
+    return await genericSignup(userData, "customer", 'thirdParty');
+}
+
 // Type-specific signup functions that use the generic function
 export const customerSignup = async (customer: Customer) => {
-    return await genericSignup(customer, 'customer');
+    return await genericSignup(customer, 'customer', 'email');
 };
 
 export const staffSignup = async (staff: Staff) => {
-    return genericSignup(staff, 'staff');
+    return genericSignup(staff, 'staff', 'email');
 };
 
 export const brandOwnerSignup = async (brandOwner: BrandOwner) => {
-    return await genericSignup(brandOwner, 'brandOwner');
+    return await genericSignup(brandOwner, 'brandOwner', 'email');
 };
 
 // Enhanced base login function that handles common functionality
