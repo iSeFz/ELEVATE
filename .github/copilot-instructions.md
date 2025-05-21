@@ -1,0 +1,9 @@
+- Always write clean, well-commented, and readable code.
+- Follow industry best practices for the language or framework used.
+- Use meaningful and descriptive variable and function names.
+- When possible, follow the DRY (Don't Repeat Yourself) principle.
+- Always assume the code should work in production unless told otherwise.
+- Use modern coding standards and idiomatic patterns of each language.
+- Avoid hardcoding values unless necessary.
+- Add TODO or FIXME comments where extra steps are needed but not implemented.
+- For GitHub Issue creation, follow a professional and structured markdown format,  [Apply these issue instructiosn as well](./instructions/git-issue.instructions.md).
