@@ -75,6 +75,12 @@ export const updateBrand = async (brandID: string, newBrandData: Partial<Brand>)
     try {
         const brandRef = firestore.collection(brandCollection).doc(brandID);
         await brandRef.update(newBrandData);
+
+        // If the subscription plan is being updated, update all products for this brand
+        if (newBrandData.subscription?.plan) {
+            const { updateProductsBrandSubscriptionPlan } = await import('./product.js');
+            await updateProductsBrandSubscriptionPlan(brandID, newBrandData.subscription.plan);
+        }
         return true;
     } catch (error: any) {
         throw new Error(error.message);

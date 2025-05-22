@@ -2,6 +2,7 @@ import { admin } from '../config/firebase.js';
 import { generateFullyProductData } from './utils/product.js';
 import { Product, ProductVariant } from '../types/models/product.js';
 import { Timestamp } from 'firebase-admin/firestore';
+import { SubscriptionPlan } from '../types/models/brand.js';
 
 const firestore = admin.firestore();
 const productCollection = 'product';
@@ -292,4 +293,16 @@ export const deleteProductVariant = async (productID: string, variantID: string)
     } catch (error: any) {
         throw new Error(`Failed to delete product variant: ${error.message}`);
     }
+};
+
+export const updateProductsBrandSubscriptionPlan = async (brandId: string, newPlan: SubscriptionPlan) => {
+    // Update all products for a brand with the new subscription plan
+    const productsSnapshot = await firestore.collection(productCollection)
+        .where('brandId', '==', brandId)
+        .get();
+    const batch = firestore.batch();
+    productsSnapshot.forEach(doc => {
+        batch.update(doc.ref, { brandSubscriptionPlan: newPlan });
+    });
+    await batch.commit();
 };

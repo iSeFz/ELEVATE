@@ -82,6 +82,9 @@ export const addProduct = async (req: Request, res: Response) => {
             });
         }
 
+        // Set the brandSubscriptionPlan field from the brand's current subscription
+        productData.brandSubscriptionPlan = plan;
+
         const newProduct = await productService.addProduct(productData);
         // Increment productCount for the brand
         await brandService.updateBrand(brand.id ?? '', { productCount: (brand.productCount || 0) + 1 });

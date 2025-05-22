@@ -1,5 +1,6 @@
 import { Product, productDataValidators, ProductVariant } from '../../types/models/product.js';
 import { convertToTimestamp } from './common.js';
+import { SubscriptionPlan } from '../../types/models/brand.js';
 
 export const checkMissingProductVariantData = (productVariants: any) => {
     if (!Array.isArray(productVariants) || productVariants.length === 0) {
@@ -38,6 +39,7 @@ const emptyProduct: Product = {
             '5': 0,
         },
     },
+    brandSubscriptionPlan: SubscriptionPlan.FREE, // Default, should always be set explicitly
     createdAt: "",
     updatedAt: "",
 }
@@ -54,7 +56,7 @@ export const generateFullyProductData = (product: Product): Product => {
         name: product.name ?? emptyProduct.name,
         variants: product.variants ?? emptyProduct.variants,
         reviewSummary: product.reviewSummary ?? emptyProduct.reviewSummary,
-
+        brandSubscriptionPlan: product.brandSubscriptionPlan ?? emptyProduct.brandSubscriptionPlan,
         createdAt: convertToTimestamp(product.createdAt),
         updatedAt: convertToTimestamp(product.updatedAt),
     };

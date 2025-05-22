@@ -66,6 +66,10 @@ components:
         subscription:
           $ref: '#/components/schemas/Subscription'
           description: Brand's subscription details
+        brandSubscriptionPlan:
+          type: string
+          enum: [FREE, BASIC, PREMIUM]
+          description: The current subscription plan of the brand at the time of product creation. Used for prioritization.
         variants:
           type: array
           items:

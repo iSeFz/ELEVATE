@@ -1,5 +1,6 @@
 import { Timestamp } from "firebase-admin/firestore";
 import { commonDataValidators, TimestampUnion } from "./common.js";
+import { SubscriptionPlan } from "./brand.js";
 
 export interface ProductVariant {
     id?: string;
@@ -35,6 +36,7 @@ export interface Product {
     name: string;
     variants: ProductVariant[];
     reviewSummary: ProductReviewSummary;
+    brandSubscriptionPlan: SubscriptionPlan;
 
     createdAt: TimestampUnion;
     updatedAt: TimestampUnion;
@@ -77,6 +79,7 @@ export const productDataValidators = (value: Product): boolean => {
         name: (v: Product['name']) => typeof v === 'string',
         variants: (v: Product['variants']) => Array.isArray(v) && v.every(variant => productVariantDataValidators(variant)),
         reviewSummary: (v: Product['reviewSummary']) => productReviewSummaryDataValidators(v),
+        brandSubscriptionPlan: (v: Product['brandSubscriptionPlan']) => Object.values(SubscriptionPlan).includes(v),
         createdAt: (v: Product['createdAt']) => v instanceof Timestamp,
         updatedAt: (v: Product['updatedAt']) => v instanceof Timestamp,
     }
