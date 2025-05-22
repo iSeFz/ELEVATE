@@ -8,10 +8,11 @@ import { getSubscriptionPlanDetails } from '../config/subscriptionPlans.js';
 export const getAllProducts = async (req: Request, res: Response) => {
     const category = req.query.category as string;
     const brand = req.query.brand as string;
+    const department = req.query.department as string;
     const page = parseInt(req.query.page as string) || 1;
 
-    if (category && brand) {
-        return res.status(400).json({ status: 'error', message: 'Please provide either category or brand, not both' });
+    if ((category && brand) || (category && department) || (brand && department)) {
+        return res.status(400).json({ status: 'error', message: 'Please provide only one filter: category, brand, or department' });
     }
 
     try {
@@ -23,8 +24,12 @@ export const getAllProducts = async (req: Request, res: Response) => {
             const products = await productService.getProductsByBrand(brand, page);
             return res.status(200).json({ status: 'success', data: products });
         }
+        if (department) {
+            const products = await productService.getProductsByDepartment(department, page);
+            return res.status(200).json({ status: 'success', data: products });
+        }
         // If no filters are provided, return all products
-        const products = await productService.getAllProducts();
+        const products = await productService.getAllProducts(page);
         return res.status(200).json({ status: 'success', data: products });
     } catch (error: any) {
         return res.status(500).json({ status: 'error', message: error.message });

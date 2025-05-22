@@ -26,20 +26,71 @@ const ensureVariantIds = (variants: ProductVariant[]): ProductVariant[] => {
     });
 };
 
-export const getAllProducts = async () => {
+// Helper to fetch products with custom query and pagination
+const fetchProducts = async (
+    queryBuilder: (ref: FirebaseFirestore.CollectionReference) => FirebaseFirestore.Query,
+    page: number = 1,
+    limit: number = 10
+) => {
+    const offset = (page - 1) * limit;
     try {
-        const snapshot = await firestore.collection(productCollection)
-            .orderBy("brandSubscriptionPlan", "desc")
-            .orderBy("createdAt", "desc")
-            .get();
+        const ref = firestore.collection(productCollection);
+        let query = queryBuilder(ref).offset(offset).limit(limit);
+        const snapshot = await query.get();
         const products: Product[] = [];
         snapshot.forEach((doc) => {
             products.push({ ...doc.data(), id: doc.id } as Product);
         });
-        return products;
+        const hasNextPage = products.length === limit;
+        return {
+            products,
+            pagination: {
+                page,
+                limit,
+                hasNextPage
+            }
+        };
     } catch (error: any) {
         throw new Error(error.message);
     }
+};
+
+export const getAllProducts = async (page: number = 1) =>
+    fetchProducts(
+        ref => ref.orderBy("brandSubscriptionPlan", "desc").orderBy("createdAt", "desc"),
+        page
+    );
+
+export const getProductsByCategory = async (category: string, page: number = 1) => {
+    if (!category) throw new Error('Please provide a category');
+    return fetchProducts(
+        ref => ref
+            .where("category", "==", category)
+            .orderBy("brandSubscriptionPlan", "desc")
+            .orderBy("createdAt", "desc"),
+        page
+    );
+};
+
+export const getProductsByBrand = async (brandID: string, page: number = 1) => {
+    if (!brandID) throw new Error('Please provide a brand ID');
+    return fetchProducts(
+        ref => ref
+            .where("brandId", "==", brandID)
+            .orderBy("createdAt", "desc"),
+        page
+    );
+};
+
+export const getProductsByDepartment = async (departmentValue: string, page: number = 1) => {
+    if (!departmentValue) throw new Error('Please provide a department value');
+    return fetchProducts(
+        ref => ref
+            .where("department", "array-contains", departmentValue)
+            .orderBy("brandSubscriptionPlan", "desc")
+            .orderBy("createdAt", "desc"),
+        page
+    );
 };
 
 export const getProduct = async (productID: string) => {
@@ -55,53 +106,6 @@ export const getProduct = async (productID: string) => {
         } else {
             return null;
         }
-    } catch (error: any) {
-        throw new Error(error.message);
-    }
-};
-
-export const getProductsByCategory = async (category: string, page: number = 1) => {
-    const offset = (page - 1) * 10; // Calculate the offset for pagination
-    if (!category) {
-        throw new Error('Please provide a category');
-    }
-    try {
-        const snapshot = await firestore.collection(productCollection)
-            .where("category", "==", category)
-            .orderBy("brandSubscriptionPlan", "desc")
-            .orderBy("createdAt", "desc")
-            .offset(offset)
-            .limit(10)
-            .get();
-
-        const products: Product[] = [];
-        snapshot.forEach((doc) => {
-            products.push({ ...doc.data(), id: doc.id } as Product);
-        });
-        return products;
-    } catch (error: any) {
-        throw new Error(error.message);
-    }
-};
-
-export const getProductsByBrand = async (brandID: string, page: number = 1) => {
-    const offset = (page - 1) * 10; // Calculate the offset for pagination
-    if (!brandID) {
-        throw new Error('Please provide a brand ID');
-    }
-    try {
-        const snapshot = await firestore.collection(productCollection)
-            .where("brandId", "==", brandID)
-            .orderBy("createdAt", "desc")
-            .offset(offset)
-            .limit(10)
-            .get();
-
-        const products: Product[] = [];
-        snapshot.forEach((doc) => {
-            products.push({ ...doc.data(), id: doc.id } as Product);
-        });
-        return products;
     } catch (error: any) {
         throw new Error(error.message);
     }
