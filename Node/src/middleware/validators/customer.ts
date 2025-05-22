@@ -46,12 +46,14 @@ const expectedUpdateCustomerData: Partial<Customer> = {
     lastName: "String",
     email: "String",
     phoneNumber: "String",
-    address: {
+    addresses: [{
         postalCode: 123456,
         building: 123,
         city: "String",
         street: "String",
-    },
+        latitude: 30.0313294,
+        longitude: 31.2081442,
+    }],
     imageURL: "String",
     username: "String",
 }

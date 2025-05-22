@@ -37,9 +37,11 @@ components:
         loyaltyPoints:
           type: number
           description: The loyalty points of the customer
-        address:
-          $ref: "#/components/schemas/Address"
-          description: The customer's address
+        addresses:
+          type: array
+          items:
+            $ref: "#/components/schemas/Address"
+          description: The customer's addresses (array of Address objects)
         wishlist:
           type: array
           items:
@@ -93,9 +95,11 @@ components:
         lastName:
           type: string
           description: The last name of the customer
-        address:
-          $ref: "#/components/schemas/Address"
-          description: The customer's address
+        addresses:
+          type: array
+          items:
+            $ref: "#/components/schemas/Address"
+          description: The customer's addresses (array of Address objects)
 
     CustomerRequest:
       type: object
@@ -115,9 +119,11 @@ components:
         lastName:
           type: string
           description: The last name of the customer
-        address:
-          $ref: "#/components/schemas/Address"
-          description: The customer's address
+        addresses:
+          type: array
+          items:
+            $ref: "#/components/schemas/Address"
+          description: The customer's addresses (array of Address objects)
         imageURL:
           type: string
           description: The image URL of the customer
@@ -150,6 +156,12 @@ components:
         street:
           type: string
           description: Street name
+        latitude:
+          type: number
+          description: Latitude coordinate
+        longitude:
+          type: number
+          description: Longitude coordinate
 
     CartItem:
       type: object

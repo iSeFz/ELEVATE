@@ -33,7 +33,7 @@ export interface WishlistItem {
 
 export interface Customer {
     id?: string;
-    address: Address;
+    addresses: Address[];
     cart: Cart;
     email: string;
     firstName: string;
@@ -94,7 +94,7 @@ export const wishlistItemDataValidators = (value: WishlistItem): boolean => {
 export const customerDataValidators = (value: Customer): boolean => {
     const validators: Record<keyof Customer, (value: any) => boolean> = {
         id: (v: Customer['id']) => typeof v === 'string' || v === undefined,
-        address: (v: Customer['address']) => addressDataValidators(v),
+        addresses: (v: Customer['addresses']) => Array.isArray(v) && v.every(item => addressDataValidators(item)),
         cart: (v: Customer['cart']) => cartDataValidators(v),
         email: (v: Customer['email']) => typeof v === 'string',
         firstName: (v: Customer['firstName']) => typeof v === 'string',

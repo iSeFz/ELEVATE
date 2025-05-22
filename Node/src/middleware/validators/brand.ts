@@ -8,6 +8,8 @@ const expectedUpdateBrandData: Partial<Brand> = {
         building: 123,
         city: "String",
         street: "String",
+        latitude: 30.0313294,
+        longitude: 31.2081442,
     }],
     brandName: "String",
     email: "String",

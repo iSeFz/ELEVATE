@@ -160,6 +160,8 @@ const emptyOrder: Order = {
         postalCode: 0,
         street: "",
         building: 0,
+        latitude: 30.0313294,
+        longitude: 31.2081442,
     },
     customerId: "",
     phoneNumber: "",

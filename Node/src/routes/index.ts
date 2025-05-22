@@ -7,6 +7,7 @@ import OrderRoutes from './orderRoutes.js';
 import StaffRoutes from './staffRoutes.js';
 import BrandOwnerRoutes from './brandOwnerRoutes.js';
 import SwaggerRoutes from './swaggerRoutes.js';
+import ScriptsRoutes from './scriptsRoutes.js';
 import { getCurrentUser, sendPasswordResetEmail, confirmPasswordReset } from '../controllers/authControllers.js';
 import { authenticate } from '../middleware/auth.js';
 
@@ -26,6 +27,9 @@ router.use('/reviews', ReviewRoutes);
 router.use('/customers', CustomerRoutes);
 router.use('/brands', BrandRoutes);
 router.use('/orders', OrderRoutes);
+
+// Migration scripts
+router.use('/scripts', ScriptsRoutes);
 
 // User type specific routes
 router.use('/staff', StaffRoutes);

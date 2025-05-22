@@ -5,6 +5,8 @@ export interface Address {
     city: string;
     postalCode: number;
     street: string;
+    latitude: number;
+    longitude: number;
 }
 
 export interface Website {
@@ -34,6 +36,8 @@ export const addressDataValidators = (value: Address): boolean => {
         city: (v: Address['city']) => typeof v === 'string',
         postalCode: (v: Address['postalCode']) => typeof v === 'number',
         street: (v: Address['street']) => typeof v === 'string',
+        latitude: (v: Address['latitude']) => typeof v === 'number',
+        longitude: (v: Address['longitude']) => typeof v === 'number',
     }
     return commonDataValidators<Address>(value, validators);
 }

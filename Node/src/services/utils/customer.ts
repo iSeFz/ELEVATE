@@ -30,12 +30,7 @@ export const checkMissingStaffCredentials = (staff: any) => {
 }
 
 const emptyCustomer: Customer = {
-    address: {
-        city: "",
-        postalCode: 0,
-        street: "",
-        building: 0,
-    },
+    addresses: [],
     cart: {
         items: [],
         subtotal: 0,
@@ -60,7 +55,7 @@ const emptyCustomer: Customer = {
 
 export const generateFullyCustomerData = (customer: Customer): Customer => {
     const fullyData: Customer = {
-        address: customer.address ?? emptyCustomer.address,
+        addresses: customer.addresses ?? emptyCustomer.addresses,
         cart: {
             items: customer.cart?.items ?? emptyCustomer.cart.items,
             subtotal: customer.cart?.subtotal ?? emptyCustomer.cart.subtotal,
