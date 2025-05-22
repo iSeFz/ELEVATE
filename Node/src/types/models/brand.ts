@@ -1,8 +1,15 @@
 import { Timestamp } from 'firebase-admin/firestore';
 import { Address, addressDataValidators, commonDataValidators, TimestampUnion, Website, websiteDataValidators } from './common.js';
 
+export enum SubscriptionPlan {
+    FREE = 'FREE',
+    BASIC = 'BASIC',
+    PREMIUM = 'PREMIUM',
+    // Add more plans as needed
+}
+
 export interface Subscription {
-    plan: string;
+    plan: SubscriptionPlan;
     price: number;
     startDate: TimestampUnion;
     endDate: TimestampUnion;
@@ -21,6 +28,7 @@ export interface Brand {
     storyDescription: string;
     subscription: Subscription;
     websites: Website[];
+    productCount: number; // Denormalized count of products for quota checks
 
     createdAt: TimestampUnion;
     updatedAt: TimestampUnion;
@@ -28,7 +36,7 @@ export interface Brand {
 
 export const subscriptionDataValidators = (value: Subscription): boolean => {
     const validators: Record<keyof Subscription, (value: any) => boolean> = {
-        plan: (v: Subscription['plan']) => typeof v === 'string',
+        plan: (v: Subscription['plan']) => Object.values(SubscriptionPlan).includes(v),
         price: (v: Subscription['price']) => typeof v === 'number',
         startDate: (v: Subscription['startDate']) => v instanceof Timestamp,
         endDate: (v: Subscription['endDate']) => v instanceof Timestamp,
@@ -57,6 +65,8 @@ export const brandDataValidators = (value: Brand): boolean => {
         subscription: (v: Brand['subscription']) => subscriptionDataValidators(v),
     
         websites: (v: Brand['websites']) => Array.isArray(v) && v.every(site => websiteDataValidators(site)),
+    
+        productCount: (v: Brand['productCount']) => typeof v === 'number',
     
         createdAt: (v: Brand['createdAt']) => v instanceof Timestamp,
         updatedAt: (v: Brand['updatedAt']) => v instanceof Timestamp,

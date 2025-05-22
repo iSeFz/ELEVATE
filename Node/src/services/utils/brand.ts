@@ -1,5 +1,5 @@
 import { Timestamp } from 'firebase-admin/firestore';
-import { Brand, brandDataValidators } from '../../types/models/brand.js';
+import { Brand, brandDataValidators, SubscriptionPlan } from '../../types/models/brand.js';
 import { convertToTimestamp } from './common.js';
 
 const emptyBrand: Brand = {
@@ -13,12 +13,13 @@ const emptyBrand: Brand = {
     rating: 0,
     storyDescription: "",
     subscription: {
-        plan: "free",
+        plan: SubscriptionPlan.FREE,
         price: 0,
         startDate: "",
         endDate: "",
     },
     websites: [],
+    productCount: 0,
     createdAt: "",
     updatedAt: "",
 }
@@ -41,7 +42,8 @@ export const generateFullyBrandData = (brand: Brand): Brand => {
             endDate: convertToTimestamp(brand.subscription?.endDate ?? Timestamp.fromMillis(Timestamp.now().toMillis() + 30 * 24 * 60 * 60 * 1000)),
         },
         websites: brand.websites ?? emptyBrand.websites,
-
+        productCount: brand.productCount ?? emptyBrand.productCount,
+        
         createdAt: convertToTimestamp(brand.createdAt),
         updatedAt: convertToTimestamp(brand.updatedAt),
     };

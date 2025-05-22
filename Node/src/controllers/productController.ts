@@ -1,7 +1,9 @@
 import { Request, Response } from 'express';
 import * as productService from '../services/product.js';
 import * as brandOwnerService from '../services/brandOwner.js';
+import * as brandService from '../services/brand.js';
 import { Product, ProductVariant } from '../types/models/product.js';
+import { SubscriptionPlan } from '../types/models/brand.js';
 
 export const getAllProducts = async (req: Request, res: Response) => {
     const category = req.query.category as string;
@@ -61,7 +63,29 @@ export const addProduct = async (req: Request, res: Response) => {
         productData.brandName = brandOwner.brandName;
         productData.brandId = brandOwner.brandId;
 
+        // Restrict product count based on subscription plan
+        const brand = await brandService.getBrand(brandOwner.brandId);
+        if (!brand) {
+            return res.status(404).json({ status: 'error', message: 'Brand not found' });
+        }
+        const planLimits: Record<SubscriptionPlan, number | undefined> = {
+            [SubscriptionPlan.FREE]: 20,
+            [SubscriptionPlan.BASIC]: 100,
+            [SubscriptionPlan.PREMIUM]: undefined // unlimited
+        };
+        const plan = brand.subscription?.plan;
+        const limit = planLimits[plan];
+        if (limit !== undefined && brand.productCount >= limit) {
+            return res.status(403).json({
+                status: 'error',
+                message: `${plan} subscription plan allows a maximum of ${limit} products. Please upgrade your plan to add more.`
+            });
+        }
+
         const newProduct = await productService.addProduct(productData);
+        // Increment productCount for the brand
+        await brandService.updateBrand(brand.id ?? '', { productCount: (brand.productCount || 0) + 1 });
+
         return res.status(201).json({
             status: 'success',
             message: 'Product added successfully',
@@ -95,6 +119,14 @@ export const deleteProduct = async (req: Request, res: Response) => {
         const existingProduct = await productService.getProduct(productID);
         if (!existingProduct) {
             return res.status(404).json({ status: 'error', message: 'Product not found' });
+        }
+
+        // Decrement productCount for the brand
+        if (existingProduct.brandId) {
+            const brand = await brandService.getBrand(existingProduct.brandId);
+            if (brand) {
+                await brandService.updateBrand(brand.id ?? '', { productCount: Math.max((brand.productCount || 1) - 1, 0) });
+            }
         }
 
         // Authorization check is now handled by the authorizeProductAccess middleware

@@ -63,6 +63,9 @@ components:
         brandName:
           type: string
           description: Name of the brand
+        subscription:
+          $ref: '#/components/schemas/Subscription'
+          description: Brand's subscription details
         variants:
           type: array
           items:
