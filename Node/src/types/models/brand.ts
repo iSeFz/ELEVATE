@@ -1,12 +1,6 @@
 import { Timestamp } from 'firebase-admin/firestore';
 import { Address, addressDataValidators, commonDataValidators, TimestampUnion, Website, websiteDataValidators } from './common.js';
-
-export enum SubscriptionPlan {
-    FREE = 'FREE',
-    BASIC = 'BASIC',
-    PREMIUM = 'PREMIUM',
-    // Add more plans as needed
-}
+import { SubscriptionPlan } from '../../config/subscriptionPlans.js';
 
 export interface Subscription {
     plan: SubscriptionPlan;
@@ -36,7 +30,7 @@ export interface Brand {
 
 export const subscriptionDataValidators = (value: Subscription): boolean => {
     const validators: Record<keyof Subscription, (value: any) => boolean> = {
-        plan: (v: Subscription['plan']) => Object.values(SubscriptionPlan).includes(v),
+        plan: (v: Subscription['plan']) => typeof v === 'number' && Object.values(SubscriptionPlan).includes(v),
         price: (v: Subscription['price']) => typeof v === 'number',
         startDate: (v: Subscription['startDate']) => v instanceof Timestamp,
         endDate: (v: Subscription['endDate']) => v instanceof Timestamp,

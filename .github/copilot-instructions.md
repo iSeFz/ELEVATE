@@ -15,5 +15,6 @@ Use modern coding standards and idiomatic patterns of each language.
 Avoid hardcoding values unless necessary.
 Add TODO or FIXME comments where extra steps are needed but not implemented.
 For GitHub Issue creation, follow a professional and structured markdown format,  [Apply these issue instructiosn as well](./instructions/git-issue.instructions.md).
+Copilot must follow [these professional standards](./instructions/git-commit.instructions.md) when generating **commit messages**, preparing **push descriptions**, or assisting in any **version control operations**
 Any changes to the code should be reflected to the swagger YAML files to be up to date with the code.
 Follow the existing folder structure: routes, controllers, middlewares, validators, services, utils, types.

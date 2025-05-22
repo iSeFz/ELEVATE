@@ -3,7 +3,7 @@ import * as productService from '../services/product.js';
 import * as brandOwnerService from '../services/brandOwner.js';
 import * as brandService from '../services/brand.js';
 import { Product, ProductVariant } from '../types/models/product.js';
-import { SubscriptionPlan } from '../types/models/brand.js';
+import { getSubscriptionPlanDetails } from '../config/subscriptionPlans.js';
 
 export const getAllProducts = async (req: Request, res: Response) => {
     const category = req.query.category as string;
@@ -68,17 +68,14 @@ export const addProduct = async (req: Request, res: Response) => {
         if (!brand) {
             return res.status(404).json({ status: 'error', message: 'Brand not found' });
         }
-        const planLimits: Record<SubscriptionPlan, number | undefined> = {
-            [SubscriptionPlan.FREE]: 20,
-            [SubscriptionPlan.BASIC]: 100,
-            [SubscriptionPlan.PREMIUM]: undefined // unlimited
-        };
         const plan = brand.subscription?.plan;
-        const limit = planLimits[plan];
+        const planDetails = getSubscriptionPlanDetails(plan);
+        const limit = planDetails.productLimit;
         if (limit !== undefined && brand.productCount >= limit) {
+            const planName = planDetails.name;
             return res.status(403).json({
                 status: 'error',
-                message: `${plan} subscription plan allows a maximum of ${limit} products. Please upgrade your plan to add more.`
+                message: `${planName} subscription plan allows a maximum of ${limit} products. Please upgrade your plan to add more.`
             });
         }
 

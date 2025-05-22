@@ -1,5 +1,6 @@
 import { Timestamp } from 'firebase-admin/firestore';
-import { Brand, brandDataValidators, SubscriptionPlan } from '../../types/models/brand.js';
+import { Brand, brandDataValidators } from '../../types/models/brand.js';
+import { SubscriptionPlan } from '../../config/subscriptionPlans.js';
 import { convertToTimestamp } from './common.js';
 
 const emptyBrand: Brand = {
@@ -22,7 +23,7 @@ const emptyBrand: Brand = {
     productCount: 0,
     createdAt: "",
     updatedAt: "",
-}
+};
 
 export const generateFullyBrandData = (brand: Brand): Brand => {
     const fullyData: Brand = {
@@ -43,7 +44,6 @@ export const generateFullyBrandData = (brand: Brand): Brand => {
         },
         websites: brand.websites ?? emptyBrand.websites,
         productCount: brand.productCount ?? emptyBrand.productCount,
-        
         createdAt: convertToTimestamp(brand.createdAt),
         updatedAt: convertToTimestamp(brand.updatedAt),
     };
@@ -56,4 +56,4 @@ export const generateFullyBrandData = (brand: Brand): Brand => {
     }
 
     return fullyData;
-}
+};

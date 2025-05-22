@@ -2,7 +2,7 @@ import { admin } from '../config/firebase.js';
 import { generateFullyProductData } from './utils/product.js';
 import { Product, ProductVariant } from '../types/models/product.js';
 import { Timestamp } from 'firebase-admin/firestore';
-import { SubscriptionPlan } from '../types/models/brand.js';
+import { SubscriptionPlan } from '../config/subscriptionPlans.js';
 
 const firestore = admin.firestore();
 const productCollection = 'product';
@@ -28,7 +28,10 @@ const ensureVariantIds = (variants: ProductVariant[]): ProductVariant[] => {
 
 export const getAllProducts = async () => {
     try {
-        const snapshot = await firestore.collection(productCollection).get();
+        const snapshot = await firestore.collection(productCollection)
+            .orderBy("brandSubscriptionPlan", "desc")
+            .orderBy("createdAt", "desc")
+            .get();
         const products: Product[] = [];
         snapshot.forEach((doc) => {
             products.push({ ...doc.data(), id: doc.id } as Product);
@@ -65,6 +68,7 @@ export const getProductsByCategory = async (category: string, page: number = 1) 
     try {
         const snapshot = await firestore.collection(productCollection)
             .where("category", "==", category)
+            .orderBy("brandSubscriptionPlan", "desc")
             .orderBy("createdAt", "desc")
             .offset(offset)
             .limit(10)
@@ -110,6 +114,11 @@ export const addProduct = async (product: Product) => {
         // Ensure all variants have IDs
         const variantsWithIds = ensureVariantIds(productData.variants);
         productData.variants = variantsWithIds;
+
+        // Ensure brandSubscriptionPlan is numeric
+        if (typeof productData.brandSubscriptionPlan !== 'number') {
+            throw new Error('brandSubscriptionPlan must be a numeric SubscriptionPlan enum value');
+        }
 
         // Create the product document
         let productId;
@@ -296,6 +305,11 @@ export const deleteProductVariant = async (productID: string, variantID: string)
 };
 
 export const updateProductsBrandSubscriptionPlan = async (brandId: string, newPlan: SubscriptionPlan) => {
+    // Ensure newPlan is numeric
+    if (typeof newPlan !== 'number') {
+        throw new Error('newPlan must be a numeric SubscriptionPlan enum value');
+    }
+
     // Update all products for a brand with the new subscription plan
     const productsSnapshot = await firestore.collection(productCollection)
         .where('brandId', '==', brandId)

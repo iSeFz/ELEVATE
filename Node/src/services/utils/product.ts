@@ -1,6 +1,6 @@
 import { Product, productDataValidators, ProductVariant } from '../../types/models/product.js';
 import { convertToTimestamp } from './common.js';
-import { SubscriptionPlan } from '../../types/models/brand.js';
+import { SubscriptionPlan } from '../../config/subscriptionPlans.js';
 
 export const checkMissingProductVariantData = (productVariants: any) => {
     if (!Array.isArray(productVariants) || productVariants.length === 0) {
