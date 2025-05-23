@@ -42,10 +42,6 @@ const emptyCustomer: Customer = {
     lastName: "",
     imageURL: "",
     loyaltyPoints: 0,
-    orders: {
-        total: 0,
-        items: [],
-    },
     phoneNumber: "",
     username: "",
     createdAt: "",
@@ -67,7 +63,6 @@ export const generateFullyCustomerData = (customer: Customer): Customer => {
         lastName: customer.lastName ?? emptyCustomer.lastName,
         imageURL: customer.imageURL ?? emptyCustomer.imageURL,
         loyaltyPoints: customer.loyaltyPoints ?? emptyCustomer.loyaltyPoints,
-        orders: customer.orders ?? emptyCustomer.orders,
         phoneNumber: customer.phoneNumber ?? emptyCustomer.phoneNumber,
         username: customer.username ?? emptyCustomer.username,
 

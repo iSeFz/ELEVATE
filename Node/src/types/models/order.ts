@@ -2,9 +2,8 @@ import { Timestamp } from 'firebase-admin/firestore';
 import { Address, addressDataValidators, commonDataValidators, TimestampUnion } from './common.js';
 
 export interface Payment {
-    createdAt: TimestampUnion;
     method: string;
-    price: number;
+    credentials: string;
 }
 
 export interface Shipment {
@@ -12,7 +11,7 @@ export interface Shipment {
     deliveredAt: TimestampUnion;
     fees: number;
     method: string;
-    trackingNumber?: string;
+    trackingNumber: string;
     carrier: string;
 }
 
@@ -45,21 +44,20 @@ export interface Order {
     payment: Payment;
     phoneNumber: string;
     pointsRedeemed: number;
+    pointsEarned: number;
     price: number;
     status: OrderStatus;
     shipment: Shipment;
+    products: OrderProduct[];
 
     createdAt: TimestampUnion;
     updatedAt: TimestampUnion;
-
-    products: OrderProduct[];
 }
 
 export const paymentDataValidators = (value: Payment): boolean => {
     const validators: Record<keyof Payment, (value: any) => boolean> = {
-        createdAt: (v: Payment['createdAt']) => v instanceof Timestamp,
         method: (v: Payment['method']) => typeof v === 'string',
-        price: (v: Payment['price']) => typeof v === 'number',
+        credentials: (v: Payment['credentials']) => typeof v === 'string' || v === undefined,
     }
     return commonDataValidators<Payment>(value, validators);
 }
@@ -98,6 +96,7 @@ export const orderDataValidators = (value: Order): boolean => {
         payment: (v: Order['payment']) => paymentDataValidators(v),
         phoneNumber: (v: Order['phoneNumber']) => typeof v === 'string',
         pointsRedeemed: (v: Order['pointsRedeemed']) => typeof v === 'number',
+        pointsEarned: (v: Order['pointsEarned']) => typeof v === 'number',
         price: (v: Order['price']) => typeof v === 'number',
         status: (v: Order['status']) => Object.values(OrderStatus).includes(v),
         shipment: (v: Order['shipment']) => shipmentDataValidators(v),

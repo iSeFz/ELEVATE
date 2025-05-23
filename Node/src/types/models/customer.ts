@@ -40,10 +40,6 @@ export interface Customer {
     lastName: string;
     imageURL: string;
     loyaltyPoints: number;
-    orders: {
-        total: number; // Total number of orders
-        items: string[]; // Array of order IDs
-    }
     phoneNumber: string;
     username: string;
     wishlist: WishlistItem[];
@@ -101,12 +97,6 @@ export const customerDataValidators = (value: Customer): boolean => {
         lastName: (v: Customer['lastName']) => typeof v === 'string',
         imageURL: (v: Customer['imageURL']) => typeof v === 'string',
         loyaltyPoints: (v: Customer['loyaltyPoints']) => typeof v === 'number',
-    
-        orders: (v: Customer['orders']) => typeof v === 'object' && v !== null &&
-            typeof v.total === 'number' &&
-            Array.isArray(v.items) &&
-            v.items.every(item => typeof item === 'string'),
-    
         phoneNumber: (v: Customer['phoneNumber']) => typeof v === 'string',
         username: (v: Customer['username']) => typeof v === 'string',
         wishlist: (v: Customer['wishlist']) => Array.isArray(v) && v.every(item => wishlistItemDataValidators(item)),

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import * as customerService from '../services/customer.js';
+import * as orderService from '../services/order.js';
 import { customerSignup } from './authControllers.js';
 
 export const getAllCustomers = async (req: Request, res: Response) => {
@@ -90,7 +91,7 @@ export const getCustomerOrders = async (req: Request, res: Response) => {
             });
         }
 
-        const result = await customerService.getCustomerOrders(customerID, page);
+        const result = await orderService.getCustomerOrders(customerID, page);
 
         return res.status(200).json({
             status: 'success',

@@ -63,7 +63,7 @@ export const checkMissingOrderUpdateData = (order: any) => {
     return null;
 };
 
-export const calculateOrderTotal = async (order: Order): Promise<number> => {
+export const calculateOrderProductsCost = async (order: Order): Promise<number> => {
     let total = 0;
 
     // Calculate total from all products
@@ -91,24 +91,29 @@ export const calculateOrderTotal = async (order: Order): Promise<number> => {
         }
     }
 
-    // Fallback to the order price if we couldn't calculate from products
-    if (total === 0 && order.price) {
-        total = order.price;
-    }
-
-    // Add shipment fee if available
-    if (order?.shipment?.fees) {
-        total += order.shipment.fees;
-    }
-
-    // Subtract redeemed points (if any)
-    if (order.pointsRedeemed) {
-        // Assuming 1 point = $0.01 value
-        const pointsValue = order.pointsRedeemed * 0.01;
-        total = Math.max(0, total - pointsValue);
-    }
-
     return total;
+};
+
+export const updatePriceWithRedeemedPoints = (price: number, pointsRedeemed: number) => {
+    let total = price;
+    let surplusPoints = 0;
+
+    // Assuming 1 point = $0.01 value
+    const pointsValue = pointsRedeemed * 0.01;
+
+    if (pointsValue >= total) {
+        // All price covered, surplus points exist
+        surplusPoints = Math.round((pointsValue - total) / 0.01);
+        total = 0;
+    } else {
+        // Not all price covered, no surplus
+        total = total - pointsValue;
+    }
+
+    return {
+        updatedPrice: total,
+        surplusPoints,
+    };
 };
 
 export const validateOrderStatus = (status: string): boolean => {
@@ -177,11 +182,11 @@ const emptyOrder: Order = {
     },
     payment: {
         method: "cash-on-delivery",
-        price: 0,
-        createdAt: "",
+        credentials: "none",
     },
     status: OrderStatus.PENDING,
     pointsRedeemed: 0,
+    pointsEarned: 0,
     createdAt: "",
     updatedAt: "",
 };
@@ -203,11 +208,11 @@ export const generateFullyOrderData = (order: Order): Order => {
         },
         payment: {
             method: order.payment?.method ?? emptyOrder.payment.method,
-            price: order.payment?.price ?? emptyOrder.payment.price,
-            createdAt: convertToTimestamp(order.payment?.createdAt),
+            credentials: order.payment?.credentials ?? emptyOrder.payment.credentials,
         },
         status: order.status ?? OrderStatus.PENDING,
-        pointsRedeemed: order.pointsRedeemed ?? 0,
+        pointsRedeemed: order.pointsRedeemed ?? emptyOrder.pointsRedeemed,
+        pointsEarned: order.pointsEarned ?? emptyOrder.pointsEarned,
 
         createdAt: convertToTimestamp(order.createdAt),
         updatedAt: convertToTimestamp(order.updatedAt),

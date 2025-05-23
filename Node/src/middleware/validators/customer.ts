@@ -74,9 +74,8 @@ const expectedUpdateCustomerData: Partial<Customer> = {
  *  - imageURL: String
  *  - username: String
  */
-export const validateUpdateBrand = (req: Request, res: Response, next: NextFunction) => {
+export const validateUpdateCustomer = (req: Request, res: Response, next: NextFunction) => {
     const customer = req.body as Customer;
-    // Check if the overall structure matches
     if (!validateObjectStructure(customer, expectedUpdateCustomerData, "partially")) {
         return res.status(400).json({
             status: 'error',
@@ -85,11 +84,11 @@ export const validateUpdateBrand = (req: Request, res: Response, next: NextFunct
         });
     }
 
-    const isBrandOwnerValid = customerDataValidators(customer);
-    if (!isBrandOwnerValid) {
+    const isCustomerValid = customerDataValidators(customer);
+    if (!isCustomerValid) {
         return res.status(400).json({
             status: 'error',
-            message: 'Invalid brand data types.',
+            message: 'Invalid customer data types.',
             expectedFormat: expectedUpdateCustomerData
         });
     }

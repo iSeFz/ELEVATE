@@ -1,9 +1,11 @@
 import express from 'express';
 import * as CustomerController from '../controllers/customerController.js';
+import * as OrderController from '../controllers/orderController.js';
 import { authenticate, authorize } from '../middleware/auth.js';
 import { customerSignup, customerLogin, thirdPartySignup } from '../controllers/authControllers.js';
 import * as AuthValidators from '../middleware/validators/auth.js';
 import * as CustomerValidators from '../middleware/validators/customer.js';
+import * as OrderValidators from '../middleware/validators/order.js';
 import CartRoutes from './cartRoutes.js';
 import WishlistRoutes from './wishlistRoutes.js';
 
@@ -27,10 +29,27 @@ router.use('/me/cart', CartRoutes);
 // Wishlist endpoints
 router.use('/me/wishlist', WishlistRoutes);
 
-// Get orders for a specific customer - using the new middleware
+// Order endpoints
 router.get('/me/orders',
     authenticate,
     CustomerController.getCustomerOrders);
+router.post('/me/orders',
+    authenticate,
+    OrderValidators.validateCreateOrder,
+    OrderController.addOrder);
+router.get('/me/orders/:id',
+    authenticate,
+    OrderController.getCustomerOrder);
+router.put('/me/orders/:id/confirm',
+    authenticate,
+    OrderValidators.validateConfirmOrder,
+    OrderController.confirmCustomerOrder);
+router.patch('/me/orders/:id/cancel',
+    authenticate,
+    OrderController.cancelOrder);
+router.patch('/me/orders/:id/refund',
+    authenticate,
+    OrderController.refundOrder);
 
 // Users can access their own data, admins/staff can access any user's data
 router.get('/me',
@@ -40,7 +59,7 @@ router.get('/me',
 // Users can update their own data, admins can update any user
 router.put('/me',
     authenticate,
-    CustomerValidators.validateUpdateBrand,
+    CustomerValidators.validateUpdateCustomer,
     CustomerController.updateCustomer);
 
 // Only admins can delete customer accounts

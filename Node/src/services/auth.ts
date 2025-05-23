@@ -75,7 +75,7 @@ export const genericSignup = async (userData: any, userType: UserType, signupMet
         }
 
         // Both signup methods will set custom claims and store user data in Firestore
-        setUserClaimAndCollection(userData, userType, otherClaims);
+        await setUserClaimAndCollection(userData, userType, otherClaims);
 
         return {
             id: userData.id,
