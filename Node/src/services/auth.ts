@@ -139,7 +139,7 @@ export const baseLogin = async (email: string, password: string, userType: 'cust
             returnSecureToken: true
         });
 
-        const { localId: uid, idToken, refreshToken, expiresIn } = response.data;
+        const { localId: uid, idToken: accessToken, refreshToken, expiresIn } = response.data;
 
         // Get user data from Firestore based on user type
         const userDoc = await firestore.collection(userType).doc(uid).get();
@@ -161,10 +161,9 @@ export const baseLogin = async (email: string, password: string, userType: 'cust
                 id: uid,
                 email,
                 role: userType,
-                collectionName: userType,
                 ...userData
             },
-            idToken,
+            accessToken,
             refreshToken,
             expiresIn
         };
@@ -327,7 +326,7 @@ export const confirmPasswordReset = async (oobCode: string, newPassword: string)
     }
 };
 
-export const refreshIdToken = async (refreshToken: string) => {
+export const refreshAccessToken = async (refreshToken: string) => {
     if (!refreshToken) {
         throw new AuthError(
             'Refresh token is required',
@@ -351,10 +350,10 @@ export const refreshIdToken = async (refreshToken: string) => {
             }
         );
 
-        const { id_token, refresh_token, expires_in } = response.data;
+        const { id_token: accessToken, refresh_token, expires_in } = response.data;
 
         return {
-            idToken: id_token,
+            accessToken,
             refreshToken: refresh_token,
             expiresIn: expires_in,
         };

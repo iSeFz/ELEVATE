@@ -99,3 +99,22 @@ export const deleteBrand = async (brandID: string) => {
         throw new Error(error.message);
     }
 };
+
+export const getBrandByOwnerId = async (brandOwnerId: string) => {
+    if (!brandOwnerId) {
+        throw new Error('Please provide a brand owner ID');
+    }
+    try {
+        const snapshot = await firestore.collection(brandCollection)
+            .where('brandOwnerId', '==', brandOwnerId)
+            .limit(1)
+            .get();
+        if (snapshot.empty) {
+            return null;
+        }
+        const doc = snapshot.docs[0];
+        return { ...doc.data(), id: doc.id } as Brand;
+    } catch (error: any) {
+        throw new Error(error.message);
+    }
+};

@@ -361,7 +361,7 @@ export const refreshToken = async (req: Request, res: Response) => {
             });
         }
 
-        const tokenData = await authService.refreshIdToken(refreshToken);
+        const tokenData = await authService.refreshAccessToken(refreshToken);
 
         return res.status(200).json({
             status: 'success',

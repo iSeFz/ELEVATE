@@ -214,16 +214,39 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-    put:
-      summary: Update a brand
+
+  /brands/me:
+    get:
+      summary: Retrieve the authenticated user's brand
       tags: [Brands]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          description: The ID of the brand
-          schema:
-            type: string
+      responses:
+        200:
+          description: Brand data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: "#/components/schemas/BrandResponse"
+        404:
+          description: Brand not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    put:
+      summary: Update the authenticated user's brand
+      tags: [Brands]
       requestBody:
         description: You can only provide the fields you want to update
         content:

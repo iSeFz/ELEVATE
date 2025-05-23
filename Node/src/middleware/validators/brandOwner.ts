@@ -3,24 +3,6 @@ import { BrandOwner, brandOwnerDataValidators } from '../../types/models/brandOw
 import { Brand, brandDataValidators } from '../../types/models/brand.js';
 import { validateObjectStructure } from './common.js';
 
-/**
- * Required Parameters:
- * - id: String - ID of the cart item to remove
- */
-export const validateDeleteBrandOwner = (req: Request, res: Response, next: NextFunction) => {
-    const { id } = req.params;
-
-    if (!id) {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Brand owner ID is required'
-        });
-    }
-
-    next();
-};
-
-
 const expecteSignupData: { brand: Partial<Brand> } & Partial<BrandOwner> = {
     email: "String",
     password: "String",
@@ -96,7 +78,6 @@ const expectedUpdateBrandOwnerData: Partial<BrandOwner> = {
  *   - lastName: String - Last name of the brand owner
  */
 export const validateUpdateBrandOwner = (req: Request, res: Response, next: NextFunction) => {
-    const { id } = req.params;
     const brandOwner = req.body as BrandOwner;
     // Check if the overall structure matches
     if (!validateObjectStructure(brandOwner, expectedUpdateBrandOwnerData, "partially")) {
@@ -104,13 +85,6 @@ export const validateUpdateBrandOwner = (req: Request, res: Response, next: Next
             status: 'error',
             message: 'Request structure doesn\'t match expected format (Any of the fields can be updated)',
             expectedFormat: expectedUpdateBrandOwnerData
-        });
-    }
-
-    if (!id) {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Brand owner ID is required'
         });
     }
 

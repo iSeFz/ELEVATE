@@ -107,3 +107,40 @@ export const deleteBrand = async (req: Request, res: Response) => {
         return res.status(400).json({ status: 'error', message: error.message });
     }
 };
+
+export const getMyBrand = async (req: Request, res: Response) => {
+    try {
+        const brandOwnerId = req.user?.id;
+        if (!brandOwnerId) {
+            return res.status(401).json({ status: 'error', message: 'Unauthorized' });
+        }
+        const brand = await brandService.getBrandByOwnerId(brandOwnerId);
+        if (!brand) {
+            return res.status(404).json({ status: 'error', message: 'Brand not found' });
+        }
+        return res.status(200).json({ status: 'success', data: brand });
+    } catch (error: any) {
+        return res.status(400).json({ status: 'error', message: error.message });
+    }
+};
+
+export const updateMyBrand = async (req: Request, res: Response) => {
+    try {
+        const brandOwnerId = req.user?.id;
+        if (!brandOwnerId) {
+            return res.status(401).json({ status: 'error', message: 'Unauthorized' });
+        }
+        const newBrandData = req.body as Partial<Brand>;
+        const brand = await brandService.getBrandByOwnerId(brandOwnerId);
+        if (!brand) {
+            return res.status(404).json({ status: 'error', message: 'Brand not found' });
+        }
+        if (!brand.id) {
+            return res.status(500).json({ status: 'error', message: 'Brand record is missing an ID' });
+        }
+        await brandService.updateBrand(brand.id, newBrandData);
+        return res.status(200).json({ status: 'success', message: 'Brand updated successfully' });
+    } catch (error: any) {
+        return res.status(400).json({ status: 'error', message: error.message });
+    }
+};

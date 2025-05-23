@@ -276,15 +276,15 @@ components:
         data:
           type: object
           properties:
-            idToken:
+            accessToken:
               type: string
               description: JWT token for authentication
             refreshToken:
               type: string
-              description: Refresh token for obtaining new access tokens afetr idToken expiration
+              description: Refresh token for obtaining new access tokens afetr accessToken expiration
             expiresIn:
               type: string
-              description: Expiration time in seconds for idToken
+              description: Expiration time in seconds for accessToken
             customer:
               $ref: "#/components/schemas/CustomerResponse"
     Timestamp:

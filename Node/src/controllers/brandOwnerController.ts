@@ -24,9 +24,8 @@ export const getAllBrandOwners = async (req: Request, res: Response) => {
  */
 export const getBrandOwner = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
-
-        const brandOwner = await BrandOwnerService.getBrandOwnerById(id);
+        const brandOwnerId = req.user!.id;
+        const brandOwner = await BrandOwnerService.getBrandOwnerById(brandOwnerId);
 
         if (!brandOwner) {
             return res.status(404).json({
@@ -52,8 +51,8 @@ export const getBrandOwner = async (req: Request, res: Response) => {
  */
 export const updateBrandOwner = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
-        const updatedBrandOwner = await BrandOwnerService.updateBrandOwner(id, req.body);
+        const brandOwnerId = req.user!.id;
+        const updatedBrandOwner = await BrandOwnerService.updateBrandOwner(brandOwnerId, req.body);
 
         if (!updatedBrandOwner) {
             return res.status(404).json({
@@ -64,7 +63,7 @@ export const updateBrandOwner = async (req: Request, res: Response) => {
 
         res.status(200).json({
             status: 'success',
-            data: updatedBrandOwner
+            message: updatedBrandOwner ? 'Brand owner updated successfully' : 'Brand owner not found'
         });
     } catch (error: any) {
         res.status(400).json({
@@ -79,10 +78,10 @@ export const updateBrandOwner = async (req: Request, res: Response) => {
  */
 export const deleteBrandOwner = async (req: Request, res: Response) => {
     try {
-        const { id } = req.params;
+        const brandOwnerId = req.user!.id;
 
         // 1. Get the brand owner to find the associated brand
-        const brandOwner = await BrandOwnerService.getBrandOwnerById(id);
+        const brandOwner = await BrandOwnerService.getBrandOwnerById(brandOwnerId);
 
         if (!brandOwner) {
             return res.status(404).json({
@@ -114,7 +113,7 @@ export const deleteBrandOwner = async (req: Request, res: Response) => {
         }
 
         // 5. Delete the brand owner
-        const brandOwnerDeleted = await BrandOwnerService.deleteBrandOwner(id);
+        const brandOwnerDeleted = await BrandOwnerService.deleteBrandOwner(brandOwnerId);
 
         if (!brandOwnerDeleted) {
             return res.status(500).json({

@@ -46,7 +46,6 @@ const expectedUpdateBrandData: Partial<Brand> = {
  *   - type: String
  */
 export const validateUpdateBrand = (req: Request, res: Response, next: NextFunction) => {
-    const { id } = req.params;
     const brand = req.body as Brand;
     // Check if the overall structure matches
     if (!validateObjectStructure(brand, expectedUpdateBrandData, "partially")) {
@@ -57,13 +56,7 @@ export const validateUpdateBrand = (req: Request, res: Response, next: NextFunct
         });
     }
 
-    if (!id) {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Brand ID is required'
-        });
-    }
-
+    // No ID required for /me route
     const isBrandOwnerValid = brandDataValidators(brand);
     if (!isBrandOwnerValid) {
         return res.status(400).json({

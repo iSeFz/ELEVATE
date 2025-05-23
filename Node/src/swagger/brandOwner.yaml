@@ -134,17 +134,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
     
-  /brand-owners/{id}:
+  /brand-owners/me:
     get:
       summary: Get a brand owner by ID
       tags: [Brand Owners]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-          description: Brand Owner ID
       responses:
         200:
           description: Brand owner details
@@ -186,13 +179,6 @@ paths:
     put:
       summary: Update a brand owner
       tags: [Brand Owners]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-          description: Brand Owner ID
       requestBody:
         required: true
         content:
@@ -244,15 +230,8 @@ paths:
                 $ref: '#/components/schemas/ErrorResponse'
     
     delete:
-      summary: Delete a brand owner and their associated brand
+      summary: Delete a brand owner and their associated brand (For admin only)
       tags: [Brand Owners]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-          description: Brand Owner ID
       responses:
         200:
           description: Brand owner and associated brand deleted successfully
