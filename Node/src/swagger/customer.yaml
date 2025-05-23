@@ -276,9 +276,15 @@ components:
         data:
           type: object
           properties:
-            token:
+            idToken:
               type: string
-              description: JWT token
+              description: JWT token for authentication
+            refreshToken:
+              type: string
+              description: Refresh token for obtaining new access tokens afetr idToken expiration
+            expiresIn:
+              type: string
+              description: Expiration time in seconds for idToken
             customer:
               $ref: "#/components/schemas/CustomerResponse"
     Timestamp:
@@ -358,7 +364,20 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/AuthResponse"
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: The auto-generated id of the customer
+                      email:
+                        type: string
+                        description: The user email
         400:
           description: Invalid request data
           content:

@@ -8,7 +8,7 @@ import StaffRoutes from './staffRoutes.js';
 import BrandOwnerRoutes from './brandOwnerRoutes.js';
 import SwaggerRoutes from './swaggerRoutes.js';
 import ScriptsRoutes from './scriptsRoutes.js';
-import { getCurrentUser, sendPasswordResetEmail, confirmPasswordReset } from '../controllers/authControllers.js';
+import { getCurrentUser, sendPasswordResetEmail, confirmPasswordReset, refreshToken } from '../controllers/authControllers.js';
 import { authenticate } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -17,6 +17,7 @@ router.get('/me', authenticate, getCurrentUser);
 
 router.post('/send-password-reset', sendPasswordResetEmail);
 router.post('/confirm-password-reset', confirmPasswordReset);
+router.post('/refresh-token', refreshToken);
 
 // API documentation
 router.use('/docs', SwaggerRoutes);

@@ -1,4 +1,4 @@
-import { admin, CONFIRM_RESET_PASSWORD_URL, SEND_RESET_EMAIL_URL, verifyCredentialsURL } from '../config/firebase.js';
+import { admin, CONFIRM_RESET_PASSWORD_URL, REFRESH_TOKEN_URL, SEND_RESET_EMAIL_URL, verifyCredentialsURL } from '../config/firebase.js';
 import axios from 'axios';
 import { Customer } from '../types/models/customer.js';
 import { Staff } from '../types/models/staff.js';
@@ -139,7 +139,7 @@ export const baseLogin = async (email: string, password: string, userType: 'cust
             returnSecureToken: true
         });
 
-        const { localId: uid, idToken } = response.data;
+        const { localId: uid, idToken, refreshToken, expiresIn } = response.data;
 
         // Get user data from Firestore based on user type
         const userDoc = await firestore.collection(userType).doc(uid).get();
@@ -164,7 +164,9 @@ export const baseLogin = async (email: string, password: string, userType: 'cust
                 collectionName: userType,
                 ...userData
             },
-            token: idToken
+            idToken,
+            refreshToken,
+            expiresIn
         };
     } catch (error) {
         if (error instanceof AuthError) {
@@ -321,6 +323,47 @@ export const confirmPasswordReset = async (oobCode: string, newPassword: string)
             AuthErrorType.SERVER_ERROR,
             error.code ?? 'auth/server-error',
             500
+        );
+    }
+};
+
+export const refreshIdToken = async (refreshToken: string) => {
+    if (!refreshToken) {
+        throw new AuthError(
+            'Refresh token is required',
+            AuthErrorType.MISSING_CREDENTIALS,
+            'auth/missing-refresh-token',
+            400
+        );
+    }
+
+    try {
+        const response = await axios.post(
+            REFRESH_TOKEN_URL,
+            new URLSearchParams({
+                grant_type: 'refresh_token',
+                refresh_token: refreshToken,
+            }),
+            {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+            }
+        );
+
+        const { id_token, refresh_token, expires_in } = response.data;
+
+        return {
+            idToken: id_token,
+            refreshToken: refresh_token,
+            expiresIn: expires_in,
+        };
+    } catch (error: any) {
+        throw new AuthError(
+            'Failed to refresh ID token',
+            AuthErrorType.SERVER_ERROR,
+            error.code ?? 'auth/refresh-failed',
+            401
         );
     }
 };

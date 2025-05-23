@@ -14,6 +14,8 @@ const SEND_RESET_EMAIL_URL = `https://identitytoolkit.googleapis.com/v1/accounts
 
 const CONFIRM_RESET_PASSWORD_URL = `https://identitytoolkit.googleapis.com/v1/accounts:resetPassword?key=${firestoreKey}`;
 
+const REFRESH_TOKEN_URL = `https://securetoken.googleapis.com/v1/token?key=${firestoreKey}`;
+
 const firestoreDocuments = {
   "address": "address",
   "brand": "Brand",
@@ -36,4 +38,4 @@ const firestoreDocuments = {
   "review": "review",
 }
 
-export { admin, verifyCredentialsURL, SEND_RESET_EMAIL_URL, CONFIRM_RESET_PASSWORD_URL };
+export { admin, verifyCredentialsURL, SEND_RESET_EMAIL_URL, CONFIRM_RESET_PASSWORD_URL, REFRESH_TOKEN_URL };

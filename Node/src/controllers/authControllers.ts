@@ -350,3 +350,27 @@ export const confirmPasswordReset = async (req: Request, res: Response) => {
         });
     }
 };
+
+export const refreshToken = async (req: Request, res: Response) => {
+    try {
+        const { refreshToken } = req.body;
+        if (!refreshToken) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Refresh token is required'
+            });
+        }
+
+        const tokenData = await authService.refreshIdToken(refreshToken);
+
+        return res.status(200).json({
+            status: 'success',
+            data: tokenData
+        });
+    } catch (error: any) {
+        return res.status(error.statusCode ?? 400).json({
+            status: 'error',
+            message: error.message
+        });
+    }
+};

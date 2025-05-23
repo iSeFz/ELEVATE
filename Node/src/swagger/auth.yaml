@@ -124,3 +124,67 @@ paths:
                     enum: [error]
                   message:
                     type: string
+
+  /refresh-token:
+    post:
+      summary: Refresh Firebase access token using a refresh token
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - refreshToken
+              properties:
+                refreshToken:
+                  type: string
+                  description: The Firebase refresh token
+      responses:
+        200:
+          description: New access token generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: object
+                    properties:
+                      idToken:
+                        type: string
+                        description: JWT token for authentication
+                      refreshToken:
+                        type: string
+                        description: Refresh token for obtaining new access tokens afetr idToken expiration 
+                      expiresIn:
+                        type: string
+                        description: Expiration time in seconds for idToken
+        400:
+          description: Invalid or missing refresh token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+        401:
+          description: Refresh failed or unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
