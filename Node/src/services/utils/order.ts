@@ -1,7 +1,8 @@
-import { Order, orderDataValidators, OrderStatus } from '../../types/models/order.js';
+import { Order, orderDataValidators, OrderStatus, Shipment } from '../../types/models/order.js';
 import * as productService from '../product.js';
 import { admin } from '../../config/firebase.js';
 import { convertToTimestamp } from './common.js';
+import { Timestamp } from 'firebase-admin/firestore';
 
 export const checkMissingOrderData = (order: any) => {
     const currentOrder = order as Order;
@@ -122,33 +123,6 @@ export const validateOrderStatus = (status: string): boolean => {
 };
 
 /**
- * Validates if a customer has enough loyalty points for redemption
- * @param customerId The ID of the customer
- * @param pointsToRedeem The number of points the customer wants to redeem
- * @returns A boolean indicating if the customer has enough points
- */
-export const validateCustomerPoints = async (customerId: string, pointsToRedeem: number): Promise<boolean> => {
-    if (pointsToRedeem <= 0) return true;
-
-    try {
-        const firestore = admin.firestore();
-        const customerDoc = await firestore.collection('customer').doc(customerId).get();
-
-        if (!customerDoc.exists) {
-            throw new Error(`Customer with ID ${customerId} not found`);
-        }
-
-        const customerData = customerDoc.data();
-        const currentPoints = customerData?.loyaltyPoints ?? 0;
-
-        return currentPoints >= pointsToRedeem;
-    } catch (error) {
-        console.error(`Error validating customer points: ${error}`);
-        throw error;
-    }
-};
-
-/**
  * Calculates loyalty points earned from an order based on the order total
  * @param orderTotal The total price of the order
  * @returns The number of loyalty points earned
@@ -226,4 +200,16 @@ export const generateFullyOrderData = (order: Order): Order => {
     }
 
     return fullyData;
+}
+
+export const getShipmentDetails = (order: Order) => {
+    const shipmentDetails: Shipment = {
+        createdAt: Timestamp.now(),
+        fees: 50,
+        method: "Carrier",
+        trackingNumber: "123456789",
+        carrier: "Bosta",
+        deliveredAt: order.shipment.deliveredAt,
+    }
+    return shipmentDetails;
 }

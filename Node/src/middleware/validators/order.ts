@@ -8,13 +8,9 @@ const expectedCreateOrderData: Partial<Order> = {
             variantId: "String",
             productId: "String",
             quantity: 1,
-            name: "String",
-            size: "String",
             color: "String",
-            price: 0,
-            imageURL: "String",
         }
-    ]
+    ] as Order['products']
 }
 export const validateCreateOrder = (req: Request, res: Response, next: NextFunction) => {
     const order = req.body as Order;

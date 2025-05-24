@@ -5,12 +5,12 @@ export interface CartItem {
     id?: string; // Optional ID for the item, useful for updates
     productId: string;
     variantId: string;
-    quantity: number;
+    quantity: number; // The amount the user wants to add
+    color: string;  // Selected color of the product variant
     // denormalized data to avoid extra queries
     brandName: string; // Brand name for quick display
     productName: string;  // Product name for quick display
     size: string;   // Variant size
-    color: string;  // Selected color
     price: number;  // Price at the time of adding to cart
     imageURL: string; // Product image for quick display
 }

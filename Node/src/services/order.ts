@@ -1,26 +1,62 @@
 import { admin } from '../config/firebase.js';
-import { calculateOrderProductsCost, validateCustomerPoints, calculateLoyaltyPointsEarned, generateFullyOrderData, updatePriceWithRedeemedPoints } from './utils/order.js';
-import { Order, OrderStatus, Shipment } from '../types/models/order.js';
+import { calculateLoyaltyPointsEarned, generateFullyOrderData, updatePriceWithRedeemedPoints, getShipmentDetails } from './utils/order.js';
+import { Order, OrderStatus } from '../types/models/order.js';
 import { Timestamp } from 'firebase-admin/firestore';
+import { Product } from '../types/models/product.js';
+import { Customer } from '../types/models/customer.js';
+import { getCustomer } from './customer.js';
 
 const firestore = admin.firestore();
 const orderCollection = 'order';
 const customerCollection = 'customer';
 
-export const getAllOrders = async () => {
+// Helper to fetch orders with custom query and pagination
+const fetchOrders = async (
+    queryBuilder: (ref: FirebaseFirestore.CollectionReference) => FirebaseFirestore.Query,
+    page: number = 1,
+    limit: number = 10
+) => {
+    const offset = (page - 1) * limit;
     try {
-        const snapshot = await firestore.collection(orderCollection)
-            .orderBy('createdAt', 'desc')
-            .get();
-
+        const ref = firestore.collection(orderCollection);
+        let query = queryBuilder(ref).offset(offset).limit(limit);
+        const snapshot = await query.get();
         const orders: Order[] = [];
         snapshot.forEach((doc) => {
             orders.push({ ...doc.data(), id: doc.id } as Order);
         });
-        return orders;
+        const hasNextPage = orders.length === limit;
+        return {
+            orders,
+            pagination: {
+                page,
+                limit,
+                hasNextPage
+            }
+        };
     } catch (error: any) {
-        throw new Error(`Failed to get all orders: ${error.message}`);
+        throw new Error(error.message);
     }
+};
+
+export const getAllOrders = async (page: number = 1) => {
+    return fetchOrders(
+        ref => ref
+            .orderBy("createdAt", "desc"),
+        page
+    );
+};
+
+export const getCustomerOrders = async (customerID: string, page = 1) => {
+    if (!customerID) {
+        throw new Error('Please provide a customer ID');
+    }
+    return fetchOrders(
+        ref => ref
+            .where("customerId", "==", customerID)
+            .orderBy("createdAt", "desc"),
+        page
+    );
 };
 
 export const getCustomerOrder = async (orderID: string, customerID: string) => {
@@ -46,89 +82,42 @@ export const getCustomerOrder = async (orderID: string, customerID: string) => {
     }
 };
 
-export const getOrdersByProduct = async (productID: string) => {
+export const getOrdersByProduct = async (productID: string, page: number = 1) => {
     if (!productID) {
         throw new Error('Please provide a product ID');
     }
-    try {
-        const snapshot = await firestore.collection(orderCollection)
-            .where("products", "array-contains", {
-                productId: productID
-            })
-            .orderBy('createdAt', 'desc')
-            .get();
-
-        const orders: Order[] = [];
-        snapshot.forEach((doc) => {
-            orders.push({ ...doc.data(), id: doc.id } as Order);
-        });
-        return orders;
-    } catch (error: any) {
-        throw new Error(`Failed to get orders by product: ${error.message}`);
-    }
+    // todo: This cannot be performed in Firestore, try to resolve it
+    return fetchOrders(
+        ref => ref
+            .where("products", "array-contains", { productId: productID }),
+        // .orderBy("createdAt", "desc"),
+        page
+    );
 };
 
-export const getCustomerOrders = async (customerID: string, page = 1) => {
-    if (!customerID) {
-        throw new Error('Please provide a customer ID');
+export const getOrdersByStatus = async (status: OrderStatus, page: number = 1) => {
+    if (!status) {
+        throw new Error('Please provide an order status');
     }
-
-    const limit = 10; // Fixed limit of 10 orders per page
-    const offset = (page - 1) * limit;
-
-    try {
-        // Query the order collection for orders belonging to this customer
-        const orderQuery = firestore.collection(orderCollection)
-            .where('customerId', '==', customerID)
-            .orderBy('createdAt', 'desc')
-            .limit(limit)
-            .offset(offset);
-
-        const snapshot = await orderQuery.get();
-        const orders = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
-        const hasNextPage = orders.length === limit;
-
-        return {
-            orders,
-            pagination: {
-                page,
-                limit,
-                hasNextPage
-            }
-        };
-    } catch (error: any) {
-        throw new Error(error.message);
-    }
-};
-
-export const getOrdersByStatus = async (status: OrderStatus) => {
-    try {
-        const snapshot = await firestore.collection(orderCollection)
+    return fetchOrders(
+        ref => ref
             .where("status", "==", status)
-            .orderBy('createdAt', 'desc')
-            .get();
-
-        const orders: Order[] = [];
-        snapshot.forEach((doc) => {
-            orders.push({ ...doc.data(), id: doc.id } as Order);
-        });
-        return orders;
-    } catch (error: any) {
-        throw new Error(`Failed to get orders by status: ${error.message}`);
-    }
+            .orderBy("createdAt", "desc"),
+        page
+    );
 };
 
 export const addOrder = async (order: Order) => {
     try {
-        const orderData = generateFullyOrderData(order);
+        const addedOrderData = generateFullyOrderData(order);
         const orderDoc = firestore.collection(orderCollection).doc();
         const batch = firestore.batch();
-        // Create the order
-        batch.set(orderDoc, orderData);
 
-        // Update product variant stock levels once the order is created
-        // Rollback if the time from creation to update is too long (10 minutes)
-        for (const item of orderData.products) {
+        let totalPrice = 0;
+
+        for (let i = 0; i < addedOrderData.products.length; i++) {
+            const item = addedOrderData.products[i];
+            // Use productService.getProductVariant if you want, or keep your current fetching logic
             const productRef = firestore.collection('product').doc(item.productId);
             const productDoc = await productRef.get();
 
@@ -136,21 +125,39 @@ export const addOrder = async (order: Order) => {
                 throw new Error(`Product with ID ${item.productId} not found`);
             }
 
-            const productData = productDoc.data();
+            const productData = productDoc.data()! as Product;
             const variants = productData?.variants ?? [];
-            const variantIndex = variants.findIndex((v: any) => v.id === item.variantId);
+            const variant = variants.find((v: any) => v.id === item.variantId);
 
-            if (variantIndex === -1) {
+            if (!variant) {
                 throw new Error(`Variant with ID ${item.variantId} not found in product ${item.productId}`);
             }
 
-            // Check if there's enough stock
-            if (variants[variantIndex].stock < item.quantity) {
+            // Check if the variant has enough stock
+            if (variant.stock < item.quantity) {
                 throw new Error(`Not enough stock for variant ${item.variantId} in product ${item.productId}`);
             }
 
+            // Check if the vraiant has the required color
+            if (!variant.colors.includes(item.color)) {
+                throw new Error(`Color ${item.color} not available for variant ${item.variantId} in product ${productData.name}`);
+            }
+
+            // Fill denormalized fields
+            addedOrderData.products[i] = {
+                ...item, // Item has these fields: variantId, productId, quantity, color
+                name: productData.name,
+                size: variant.size,
+                price: variant.price,
+                imageURL: variant.images[0] ?? productData.variants[0].images[0] ?? "",
+            };
+
+            // Accumulate total price
+            totalPrice += variant.price * item.quantity;
+
             // Update the variant stock
             const updatedVariants = [...variants];
+            const variantIndex = variants.findIndex((v: any) => v.id === item.variantId);
             updatedVariants[variantIndex] = {
                 ...updatedVariants[variantIndex],
                 stock: updatedVariants[variantIndex].stock - item.quantity
@@ -159,13 +166,14 @@ export const addOrder = async (order: Order) => {
             batch.update(productRef, { variants: updatedVariants });
         }
 
-        // Calculate final price
-        const totalPrice = await calculateOrderProductsCost(order);
-        order.price = totalPrice;
-        order.shipment = getShipmentDetails(order);
+        // Set the calculated price
+        addedOrderData.price = totalPrice;
+        addedOrderData.shipment = getShipmentDetails(addedOrderData);
+
+        batch.set(orderDoc, addedOrderData);
 
         await batch.commit();
-        return { ...orderData, id: orderDoc.id };
+        return { ...addedOrderData, id: orderDoc.id };
     } catch (error: any) {
         throw new Error(`Failed to add order: ${error.message}`);
     }
@@ -185,19 +193,24 @@ export const confirmOrder = async (orderID: string, customerId: string, remainin
         }
         const confirmedOrderData = orderDoc.data() as Order;
 
+        // Check if the order customer ID matches
+        if (confirmedOrderData.customerId !== customerId) {
+            throw new Error('Unauthorized access to this order');
+        }
+
         // Check if the order is already confirmed
         if (confirmedOrderData.status !== OrderStatus.PENDING) {
             throw new Error('Order is already confirmed or cannot be modified');
         }
 
-        // Check if confirmation is within 10 minutes of creation
-        const now = Timestamp.now();
+        // Check if confirmation is within [20] minutes of creation
         const createdAt = confirmedOrderData.createdAt as Timestamp;
-        const tenMinutes = 10 * 60; // seconds
-        if ((now.seconds - createdAt.seconds) > tenMinutes) {
+        const orderConfirmationTimeLimit = 20 * 60; // seconds
+        if ((Timestamp.now().seconds - createdAt.seconds) > orderConfirmationTimeLimit) {
             // Rollback the order
-            await orderRestoreProductStocks(confirmedOrderData);
+            await orderRestoreProductStocks(batch, confirmedOrderData.products);
             batch.update(orderRef, { status: OrderStatus.CANCELLED });
+            await batch.commit();
             throw new Error('Order confirmation time expired. Order has been cancelled and stock restored.');
         }
 
@@ -206,16 +219,12 @@ export const confirmOrder = async (orderID: string, customerId: string, remainin
         if (remainingOrderData.pointsRedeemed > 0) {
             const hasEnoughPoints = await validateCustomerPoints(confirmedOrderData.customerId, remainingOrderData.pointsRedeemed);
             if (!hasEnoughPoints) {
-                // Rollback the order
-                await orderRestoreProductStocks(confirmedOrderData);
-                batch.update(orderRef, { status: OrderStatus.CANCELLED });
+                // No rollback the order, as customer can try again with less points
                 throw new Error('Customer does not have enough loyalty points for this redemption');
             }
         }
 
         const pointsEarned = calculateLoyaltyPointsEarned(confirmedOrderData.price);
-        const priceRedeeemed = updatePriceWithRedeemedPoints(confirmedOrderData.price, remainingOrderData.pointsRedeemed);
-        remainingOrderData.pointsRedeemed -= priceRedeeemed.surplusPoints;
         // Update the customer's earned points
         if (customerId) {
             const customerRef = firestore.collection(customerCollection).doc(customerId);
@@ -224,26 +233,38 @@ export const confirmOrder = async (orderID: string, customerId: string, remainin
             });
         }
 
+        const priceRedeeemed = updatePriceWithRedeemedPoints(confirmedOrderData.price, remainingOrderData.pointsRedeemed);
+        remainingOrderData.pointsRedeemed -= priceRedeeemed.surplusPoints;
+
         // Update order details
-        confirmedOrderData.updatedAt = now;
+        confirmedOrderData.updatedAt = Timestamp.now();
         confirmedOrderData.price = priceRedeeemed.updatedPrice;
         confirmedOrderData.status = OrderStatus.PROCESSING;
         confirmedOrderData.address = remainingOrderData.address!;
         confirmedOrderData.phoneNumber = remainingOrderData.phoneNumber!;
         confirmedOrderData.pointsRedeemed = remainingOrderData.pointsRedeemed;
+        confirmedOrderData.pointsEarned = pointsEarned;
         confirmedOrderData.payment = remainingOrderData.payment!;
         batch.update(orderRef, { ...confirmedOrderData });
         await batch.commit();
-        return true;
+        return confirmedOrderData;
     } catch (error: any) {
         throw new Error(`Failed to confirm order: ${error.message}`);
     }
 };
 
-const orderRestoreProductStocks = async (order: Order) => {
-    const batch = firestore.batch();
+const orderRollback = async (batch: admin.firestore.WriteBatch, order: Order) => {
+    await orderRestoreProductStocks(batch, order.products);
+}
+
+/**
+ * Restores product stocks for the products in an order (Don't miss to commit the batch after calling this function)
+ * @param batch  The Firestore batch to perform the updates
+ * @param products  The products in the order to restore stocks for
+ */
+const orderRestoreProductStocks = async (batch: admin.firestore.WriteBatch, products: Order['products']) => {
     // Restore product stock
-    for (const item of order.products) {
+    for (const item of products) {
         const productRef = firestore.collection('product').doc(item.productId);
         const productDoc = await productRef.get();
         if (!productDoc.exists) continue;
@@ -262,20 +283,29 @@ const orderRestoreProductStocks = async (order: Order) => {
 
         batch.update(productRef, { variants: updatedVariants });
     }
-    await batch.commit();
 }
 
-const getShipmentDetails = (order: Order) => {
-    const shipmentDetails: Shipment = {
-        createdAt: Timestamp.now(),
-        fees: 50,
-        method: "Carrier",
-        trackingNumber: "123456789",
-        carrier: "Bosta",
-        deliveredAt: order.shipment.deliveredAt,
+/**
+ * Validates if a customer has enough loyalty points for redemption
+ * @param customerId The ID of the customer
+ * @param pointsToRedeem The number of points the customer wants to redeem
+ * @returns A boolean indicating if the customer has enough points
+ */
+const validateCustomerPoints = async (customerId: string, pointsToRedeem: number): Promise<boolean> => {
+    if (pointsToRedeem <= 0) return true;
+
+    try {
+        const customerData = await getCustomer(customerId);
+        if (!customerData) {
+            throw new Error('Customer not found');
+        }
+        const currentPoints = customerData.loyaltyPoints ?? 0;
+        return currentPoints >= pointsToRedeem;
+    } catch (error) {
+        console.error(`Error validating customer points: ${error}`);
+        throw error;
     }
-    return shipmentDetails;
-}
+};
 
 const updateOrderStatus = async (orderID: string, status: OrderStatus) => {
     if (!orderID) {
@@ -292,15 +322,20 @@ const updateOrderStatus = async (orderID: string, status: OrderStatus) => {
 
 export const cancelOrder = async (orderID: string) => {
     try {
-        await updateOrderStatus(orderID, OrderStatus.CANCELLED);
-        // Rollback the order
+        const batch = firestore.batch();
         const orderRef = firestore.collection(orderCollection).doc(orderID);
         const orderDoc = await orderRef.get();
         if (!orderDoc.exists) {
             throw new Error('Order not found');
         }
         const order = orderDoc.data() as Order;
-        await orderRestoreProductStocks(order);
+        await orderRestoreProductStocks(batch, order.products);
+        batch.update(orderRef, { status: OrderStatus.CANCELLED });
+        const customerRef = firestore.collection(customerCollection).doc(order.customerId);
+        batch.update(customerRef, {
+            loyaltyPoints: admin.firestore.FieldValue.increment(order.pointsRedeemed - order.pointsEarned)
+        });
+        await batch.commit();
         return true;
     } catch (error: any) {
         throw new Error(`Failed to cancel order: ${error.message}`);
@@ -327,14 +362,6 @@ export const deleteOrder = async (orderID: string) => {
         if (!orderDoc.exists) {
             throw new Error('Order not found');
         }
-
-        const order = orderDoc.data() as Order;
-
-        // Check if the order is already confirmed
-        if (order.status !== OrderStatus.PENDING) {
-            throw new Error('Order is already confirmed or cannot be deleted');
-        }
-
         await orderRef.delete();
     } catch (error: any) {
         throw new Error(`Failed to delete order: ${error.message}`);

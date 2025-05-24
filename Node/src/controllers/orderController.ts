@@ -1,13 +1,13 @@
 import { Request, Response } from 'express';
 import * as orderService from '../services/order.js';
 import { validateOrderStatus } from '../services/utils/order.js';
-import { Order, OrderStatus } from '../types/models/order.js';
+import { OrderStatus } from '../types/models/order.js';
 
 export const getAllOrders = async (req: Request, res: Response) => {
     // This route is already protected by the authorize middleware in the router
     try {
         const { status, productId } = req.query;
-        let orders: Order[] = [];
+        const page = parseInt(req.query.page as string) || 1;
 
         if (status && typeof status === 'string') {
             if (!validateOrderStatus(status)) {
@@ -16,16 +16,15 @@ export const getAllOrders = async (req: Request, res: Response) => {
                     message: 'Invalid status value'
                 });
             }
-            orders = await orderService.getOrdersByStatus(status as OrderStatus);
+            const result = await orderService.getOrdersByStatus(status as OrderStatus, page);
+            return res.status(200).json({ status: 'success', data: result.orders, pagination: result.pagination });
         } else if (productId && typeof productId === 'string') {
-            orders = await orderService.getOrdersByProduct(productId);
-        } else {
-            orders = await orderService.getAllOrders();
+            const result = await orderService.getOrdersByProduct(productId, page);
+            return res.status(200).json({ status: 'success', data: result.orders, pagination: result.pagination });
         }
-        return res.status(200).json({
-            status: 'success',
-            data: orders
-        });
+        // If no filters are provided, return all orders
+        const result = await orderService.getAllOrders(page);
+        return res.status(200).json({ status: 'success', data: result.orders, pagination: result.pagination });
     } catch (error: any) {
         return res.status(500).json({ status: 'error', message: error.message });
     }
@@ -71,11 +70,12 @@ export const confirmCustomerOrder = async (req: Request, res: Response) => {
         const customerID = req.user?.id!;
         const orderData = req.body;
 
-        await orderService.confirmOrder(orderID, customerID, orderData);
+        const result = await orderService.confirmOrder(orderID, customerID, orderData);
 
         return res.status(200).json({
             status: 'success',
-            message: 'Order updated successfully'
+            message: 'Order confirmed successfully',
+            data: result,
         });
     } catch (error: any) {
         return res.status(400).json({ status: 'error', message: error.message });
@@ -91,6 +91,10 @@ export const cancelOrder = async (req: Request, res: Response) => {
         const existingOrder = await orderService.getCustomerOrder(orderID, customerID);
         if (!existingOrder) {
             return res.status(404).json({ status: 'error', message: 'Order not found' });
+        }
+
+        if (existingOrder.customerId !== customerID) {
+            throw new Error('Unauthorized access to this order');
         }
 
         await orderService.cancelOrder(orderID);
@@ -113,6 +117,10 @@ export const refundOrder = async (req: Request, res: Response) => {
         const existingOrder = await orderService.getCustomerOrder(orderID, customerID);
         if (!existingOrder) {
             return res.status(404).json({ status: 'error', message: 'Order not found' });
+        }
+
+        if (existingOrder.customerId !== customerID) {
+            throw new Error('Unauthorized access to this order');
         }
 
         await orderService.refundOrder(orderID);

@@ -6,22 +6,9 @@ components:
         id:
           type: string
           description: The auto-generated id of the order
-        customer:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Customer reference ID
-            path:
-              type: string
-              description: Firestore reference path to the customer
         customerId:
           type: string
           description: ID of the customer (denormalized for authorization)
-        dateCreated:
-          type: string
-          format: date-time
-          description: Order creation timestamp
         status:
           type: string
           description: Current status of the order
@@ -34,87 +21,96 @@ components:
         pointsRedeemed:
           type: number
           description: Loyalty points redeemed for this order
+        pointsEarned:
+          type: number
+          description: Loyalty points earned from this order
         price:
           type: number
           description: Total order price
-        productVariant:
-          type: object
-          properties:
-            id:
-              type: string
-              description: Product variant reference ID
-            path:
-              type: string
-              description: Firestore reference path to the product variant
-        quantity:
-          type: number
-          description: Order quantity
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderProduct'
         payment:
           $ref: '#/components/schemas/Payment'
           description: Payment details
         shipment:
           $ref: '#/components/schemas/Shipment'
           description: Shipment details
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    OrderProduct:
+      type: object
+      properties:
+        variantId:
+          type: string
+        productId:
+          type: string
+        quantity:
+          type: number
+        color:
+          type: string
+        name:
+          type: string
+        size:
+          type: string
+        price:
+          type: number
+        imageURL:
+          type: string
 
     OrderRequest:
       type: object
       required:
+        - products
+      properties:
+        products:
+          type: array
+          items:
+            type: object
+            required:
+              - variantId
+              - productId
+              - quantity
+              - color
+            properties:
+              variantId:
+                type: string
+              productId:
+                type: string
+              quantity:
+                type: number
+              color:
+                type: string
+
+    OrderConfirmRequest:
+      type: object
+      required:
         - address
         - phoneNumber
-        - productVariantId
-        - quantity
+        - payment
       properties:
         address:
           $ref: '#/components/schemas/Address'
-          description: Shipping address
         phoneNumber:
           type: string
-          description: Contact phone number
         pointsRedeemed:
           type: number
-          description: Loyalty points to redeem
-        productVariantId:
-          type: string
-          description: ID of the product variant
-        quantity:
-          type: number
-          description: Quantity to order
         payment:
           $ref: '#/components/schemas/PaymentRequest'
-          description: Payment details
-        shipment:
-          $ref: '#/components/schemas/ShipmentRequest'
-          description: Shipment details
-
-    Address:
-      type: object
-      properties:
-        building:
-          type: number
-          description: Building number
-        city:
-          type: string
-          description: City name
-        postalCode:
-          type: number
-          description: Postal code
-        street:
-          type: string
-          description: Street name
 
     Payment:
       type: object
       properties:
-        dateCreated:
-          type: string
-          format: date-time
-          description: Payment date
         method:
           type: string
-          description: Payment method used
-        price:
-          type: number
-          description: Payment amount
+        credentials:
+          type: string
 
     PaymentRequest:
       type: object
@@ -123,25 +119,26 @@ components:
       properties:
         method:
           type: string
-          description: Payment method to use
+        credentials:
+          type: string
 
     Shipment:
       type: object
       properties:
-        dateCreated:
+        createdAt:
           type: string
           format: date-time
-          description: Shipment creation date
-        dateDelivery:
+        deliveredAt:
           type: string
           format: date-time
-          description: Expected or actual delivery date
         fees:
           type: number
-          description: Shipping fees
         method:
           type: string
-          description: Shipping method
+        trackingNumber:
+          type: string
+        carrier:
+          type: string
 
     ShipmentRequest:
       type: object
@@ -150,7 +147,6 @@ components:
       properties:
         method:
           type: string
-          description: Shipping method to use
 
     OrderStatusUpdate:
       type: object
@@ -159,11 +155,9 @@ components:
       properties:
         status:
           type: string
-          description: New status for the order
-        dateDelivery:
+        deliveredAt:
           type: string
           format: date-time
-          description: Updated delivery date (if applicable)
 
     SuccessResponse:
       type: object
@@ -185,11 +179,10 @@ components:
         message:
           type: string
 
-# Defining Paths
 paths:
   /orders:
     get:
-      summary: Retrieve all orders (admin/staff only)
+      summary: Retrieve all orders (admin/staff only) - Searching by productId not implemented yet!
       tags: [Orders]
       parameters:
         - in: query
@@ -198,17 +191,15 @@ paths:
             type: string
             description: Filter orders by status
         - in: query
-          name: startDate
+          name: productId
           schema:
             type: string
-            format: date
-          description: Filter orders created after this date
+            description: Filter orders by productId
         - in: query
-          name: endDate
+          name: page
           schema:
-            type: string
-            format: date
-          description: Filter orders created before this date
+            type: integer
+            description: Page number for pagination
       responses:
         200:
           description: A list of orders
@@ -219,31 +210,75 @@ paths:
                 properties:
                   status:
                     type: string
-                    enum: [success]
+                  count:
+                    type: integer
                   data:
                     type: array
                     items:
                       $ref: '#/components/schemas/OrderResponse'
+                  pagination:
+                    $ref: "#/components/schemas/PaginationInfo"
         401:
           description: Unauthorized - Invalid or missing token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         403:
           description: Forbidden - Insufficient permissions
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         500:
           description: Server error
+
+  /orders/{id}:
+    delete:
+      summary: Delete an order (admin/staff only)
+      tags: [Orders]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Order deleted successfully
+        401:
+          description: Unauthorized - Invalid or missing token
+        403:
+          description: Forbidden - Insufficient permissions
+        404:
+          description: Order not found
+        500:
+          description: Server error
+
+  /customers/me/orders:
+    get:
+      summary: Get orders for the authenticated customer
+      tags: [Orders]
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            description: Page number for pagination
+      responses:
+        200:
+          description: List of customer's orders
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OrderResponse'
+                  pagination:
+                    $ref: "#/components/schemas/PaginationInfo"
+        401:
+          description: Unauthorized - Invalid or missing token
+        500:
+          description: Server error
     post:
-      summary: Create a new order
+      summary: Create a new order for the authenticated customer
       tags: [Orders]
       requestBody:
         required: true
@@ -257,35 +292,17 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    enum: [success]
-                  data:
-                    $ref: '#/components/schemas/OrderResponse'
+                $ref: '#/components/schemas/OrderResponse'
         400:
           description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         401:
           description: Unauthorized - Invalid or missing token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         500:
           description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
 
-  /orders/{id}:
+  /customers/me/orders/{id}:
     get:
-      summary: Get an order by ID
+      summary: Get a specific order for the authenticated customer
       tags: [Orders]
       parameters:
         - in: path
@@ -293,46 +310,25 @@ paths:
           required: true
           schema:
             type: string
-          description: Order ID
       responses:
         200:
           description: Order details
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    enum: [success]
-                  data:
-                    $ref: '#/components/schemas/OrderResponse'
+                $ref: '#/components/schemas/OrderResponse'
         401:
           description: Unauthorized - Invalid or missing token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         403:
           description: Forbidden - Insufficient permissions
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         404:
           description: Order not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         500:
           description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+    
+  /customers/me/orders/{id}/confirm:
     put:
-      summary: Update an order
+      summary: Confirm an order (customer only)
       tags: [Orders]
       parameters:
         - in: path
@@ -340,101 +336,33 @@ paths:
           required: true
           schema:
             type: string
-          description: Order ID
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrderRequest'
+              $ref: '#/components/schemas/OrderConfirmRequest'
       responses:
         200:
-          description: Order updated successfully
+          description: Order confirmed successfully
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    enum: [success]
-                  data:
-                    $ref: '#/components/schemas/OrderResponse'
+                $ref: '#/components/schemas/OrderResponse'
         400:
           description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         401:
           description: Unauthorized - Invalid or missing token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         403:
           description: Forbidden - Insufficient permissions
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         404:
           description: Order not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         500:
           description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    delete:
-      summary: Delete an order (admin only)
-      tags: [Orders]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: string
-          description: Order ID
-      responses:
-        200:
-          description: Order deleted successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SuccessResponse'
-        401:
-          description: Unauthorized - Invalid or missing token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        403:
-          description: Forbidden - Insufficient permissions
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        404:
-          description: Order not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-        500:
-          description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
-
-  /orders/{id}/status:
+  
+  /customers/me/orders/{id}/cancel:
     patch:
-      summary: Update an order's status (admin/staff only)
+      summary: Cancel an order of the authenticated customer
       tags: [Orders]
       parameters:
         - in: path
@@ -442,79 +370,40 @@ paths:
           required: true
           schema:
             type: string
-          description: Order ID
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/OrderStatusUpdate'
       responses:
         200:
-          description: Order status updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/SuccessResponse'
+          description: Order cancelled successfully
         400:
           description: Invalid input
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         401:
           description: Unauthorized - Invalid or missing token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         403:
           description: Forbidden - Insufficient permissions
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         404:
           description: Order not found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
         500:
           description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
 
-  /orders/by-customer:
-    get:
-      summary: Get orders by authenticated customer
+  /customers/me/orders/{id}/refund:
+    patch:
+      summary: Refund an order of the authenticated customer
       tags: [Orders]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
       responses:
         200:
-          description: List of customer's orders
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    enum: [success]
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/OrderResponse'
+          description: Order refunded successfully
+        400:
+          description: Invalid input
         401:
           description: Unauthorized - Invalid or missing token
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+        404:
+          description: Order not found
         500:
           description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorResponse'
