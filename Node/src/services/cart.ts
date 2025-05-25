@@ -71,14 +71,9 @@ export const addToCart = async (customerId: string, item: Partial<CartItem>) => 
             throw new Error('Not enough stock available' + ', product name: ' + product.name + ', available stock: ' + variant.stock + ', requested quantity: ' + (item.quantity ?? 1));
         }
 
-        // Check if the selected color is valid
-        if (item.color && !variant.colors.includes(item.color)) {
-            throw new Error(`Selected color (${item.color}) is not available for this variant, product name: ${product.name}, available colors: ${variant.colors.join(', ')}`);
-        }
-
         // Check if the item is already in the cart
         const existingItemIndex = currentCart.items.findIndex(
-            cartItem => cartItem.productId === item.productId && cartItem.variantId === item.variantId && cartItem.color === (item.color ?? variant.colors[0])
+            cartItem => cartItem.productId === item.productId && cartItem.variantId === item.variantId
         );
 
         const updatedItems = [...currentCart.items];
@@ -98,7 +93,6 @@ export const addToCart = async (customerId: string, item: Partial<CartItem>) => 
             };
         } else {
             // Add new item
-            const selectedColor = item.color ?? variant.colors[0];
             const productImage = variant.images && variant.images.length > 0 ? variant.images[0] : '';
 
             updatedItems.unshift({
@@ -109,7 +103,7 @@ export const addToCart = async (customerId: string, item: Partial<CartItem>) => 
                 brandName: product.brandName,
                 productName: product.name,
                 size: variant.size,
-                color: selectedColor,
+                colors: variant.colors,
                 price: variant.price,
                 imageURL: productImage
             });
@@ -140,7 +134,7 @@ export const addToCart = async (customerId: string, item: Partial<CartItem>) => 
 export const updateCartItem = async (
     customerId: string,
     cartItemId: string,
-    updates: { quantity?: number; color?: string }
+    updates: { quantity: number }
 ) => {
     if (!customerId) {
         throw new Error('Please provide a customer ID');
@@ -152,10 +146,6 @@ export const updateCartItem = async (
 
     if (updates.quantity !== undefined && updates.quantity <= 0) {
         throw new Error('Quantity must be greater than 0');
-    }
-
-    if (updates.quantity === undefined && updates.color === undefined) {
-        throw new Error('At least one of quantity or color must be provided');
     }
 
     try {
@@ -195,47 +185,16 @@ export const updateCartItem = async (
             throw new Error(`Product variant not found, variant ID: ${currentItem.variantId}`);
         }
 
-        // If color is being updated, check if it's valid
-        let newColor = currentItem.color;
-        if (updates.color) {
-            if (!variant.colors.includes(updates.color)) {
-                throw new Error(`Selected color (${updates.color}) is not available for this variant, product name: ${product.name}, available colors: ${variant.colors.join(', ')}`);
-            }
-            newColor = updates.color;
-        }
-
-        // If color is changed, check if another cart item with same product, variant, and color exists
         let updatedItems = [...currentCart.items];
-        let newQuantity = updates.quantity ?? currentItem.quantity;
-
-        if (updates.color && updates.color !== currentItem.color) {
-            const duplicateIndex = updatedItems.findIndex(
-                (item, idx) =>
-                    idx !== itemIndex &&
-                    item.productId === currentItem.productId &&
-                    item.variantId === currentItem.variantId &&
-                    item.color === updates.color
-            );
-            if (duplicateIndex !== -1) {
-                // Merge quantities
-                newQuantity += updatedItems[duplicateIndex].quantity;
-                // Remove the duplicate item
-                updatedItems.splice(duplicateIndex, 1);
-                // Adjust itemIndex if needed
-                if (duplicateIndex < itemIndex) itemIndex--;
-            }
-        }
-
         // Check stock for the new quantity
-        if (variant.stock < newQuantity) {
-            throw new Error('Not enough stock available, product name: ' + product.name + ', available stock: ' + variant.stock + ', requested quantity: ' + newQuantity);
+        if (variant.stock < updates.quantity) {
+            throw new Error('Not enough stock available, product name: ' + product.name + ', available stock: ' + variant.stock + ', requested quantity: ' + updates.quantity);
         }
 
         // Update item
         updatedItems[itemIndex] = {
             ...updatedItems[itemIndex],
-            quantity: newQuantity,
-            color: newColor
+            quantity: updates.quantity,
         };
 
         // Calculate subtotal

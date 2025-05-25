@@ -47,18 +47,6 @@ components:
           items:
             $ref: "#/components/schemas/WishlistItem"
           description: The customer's wishlist items
-        orders:
-          type: object
-          properties:
-            total:
-              type: number
-              description: Total number of orders
-            items:
-              type: array
-              items:
-                type: string
-              description: Array of order IDs
-          description: The customer's orders information
         cart:
           $ref: "#/components/schemas/Cart"
           description: The customer's shopping cart
@@ -187,9 +175,10 @@ components:
         size:
           type: string
           description: Variant size
-        color:
-          type: string
-          description: Selected color
+        colors:
+          type: array
+          items:
+            type: string
         price:
           type: number
           description: Price at the time of adding to cart
@@ -661,7 +650,6 @@ paths:
                 - productId
                 - variantId
                 - quantity
-                - color
               properties:
                 productId:
                   type: string
@@ -673,9 +661,6 @@ paths:
                   type: integer
                   minimum: 1
                   description: Quantity to add
-                color:
-                  type: string
-                  description: Selected color
       responses:
         200:
           description: Item added to cart successfully

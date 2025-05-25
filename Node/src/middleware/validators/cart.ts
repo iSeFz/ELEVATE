@@ -5,14 +5,12 @@ import { CartItem, cartItemDataValidators } from '../../types/models/customer.js
 const expectedAddToCartData: Partial<CartItem> = {
     productId: "String",
     variantId: "String",
-    color: "String",
     quantity: 1
 };
 /**
  * Required data:
  * - productId: String - ID of the product
  * - variantId: String - ID of the specific product variant
- * - color: String - Color of the product
  * - quantity: Number (optional, defaults to 1) - Quantity to add
  */
 export const validateAddToCart = (req: Request, res: Response, next: NextFunction) => {
@@ -44,7 +42,7 @@ export const validateAddToCart = (req: Request, res: Response, next: NextFunctio
  */
 export const validateUpdateCartItem = (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    const { quantity, color } = req.body;
+    const { quantity } = req.body;
 
     if (!id) {
         return res.status(400).json({
@@ -53,10 +51,10 @@ export const validateUpdateCartItem = (req: Request, res: Response, next: NextFu
         });
     }
 
-    if (quantity === undefined && color === undefined) {
+    if (quantity === undefined) {
         return res.status(400).json({
             status: 'error',
-            message: 'At least one of quantity or color is required'
+            message: 'Quantity is required'
         });
     }
 
@@ -64,13 +62,6 @@ export const validateUpdateCartItem = (req: Request, res: Response, next: NextFu
         return res.status(400).json({
             status: 'error',
             message: 'Valid quantity greater than 0 is required'
-        });
-    }
-
-    if (color && typeof color !== 'string') {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Color must be a string'
         });
     }
 

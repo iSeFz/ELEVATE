@@ -7,8 +7,7 @@ const expectedCreateOrderData: Partial<Order> = {
         {
             variantId: "String",
             productId: "String",
-            quantity: 1,
-            color: "String",
+            quantity: 1
         }
     ] as Order['products']
 }

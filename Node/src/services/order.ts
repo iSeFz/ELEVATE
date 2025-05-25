@@ -138,15 +138,12 @@ export const addOrder = async (order: Order) => {
                 throw new Error(`Not enough stock for variant ${item.variantId} in product ${item.productId}`);
             }
 
-            // Check if the vraiant has the required color
-            if (!variant.colors.includes(item.color)) {
-                throw new Error(`Color ${item.color} not available for variant ${item.variantId} in product ${productData.name}`);
-            }
-
             // Fill denormalized fields
             addedOrderData.products[i] = {
-                ...item, // Item has these fields: variantId, productId, quantity, color
-                name: productData.name,
+                ...item, // Item has these fields: variantId, productId, quantity
+                productName: productData.name,
+                brandName: productData.brandName,
+                colors: variant.colors ?? [],
                 size: variant.size,
                 price: variant.price,
                 imageURL: variant.images[0] ?? productData.variants[0].images[0] ?? "",

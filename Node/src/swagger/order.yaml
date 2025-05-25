@@ -53,9 +53,13 @@ components:
           type: string
         quantity:
           type: number
-        color:
+        colors:
+          type: array
+          items:
+            type: string
+        productName:
           type: string
-        name:
+        brandName:
           type: string
         size:
           type: string
@@ -77,7 +81,6 @@ components:
               - variantId
               - productId
               - quantity
-              - color
             properties:
               variantId:
                 type: string
@@ -85,8 +88,6 @@ components:
                 type: string
               quantity:
                 type: number
-              color:
-                type: string
 
     OrderConfirmRequest:
       type: object
@@ -278,7 +279,7 @@ paths:
         500:
           description: Server error
     post:
-      summary: Create a new order for the authenticated customer
+      summary: Create a new order for the authenticated customer (Checkout in the Cart Screen)
       tags: [Orders]
       requestBody:
         required: true
@@ -328,7 +329,7 @@ paths:
     
   /customers/me/orders/{id}/confirm:
     put:
-      summary: Confirm an order (customer only)
+      summary: Confirm an order (Place an order in the Checkout screen) of the authenticated customer
       tags: [Orders]
       parameters:
         - in: path

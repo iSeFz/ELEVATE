@@ -28,12 +28,13 @@ export interface OrderProduct {
     variantId: string; // Selected variant of the product in the order
     productId: string; // ID of the product in the order
     quantity: number;  // Quantity of the product in the order
-    color: string;     // Selected color
     // Denormalized data to avoid extra queries
-    name: string;        // Product name at time of order
+    brandName: string; // Brand name for quick display
+    productName: string;  // Product name for quick display
     size: string;        // Variant size
-    price: number;       // Price at time of order (after discounts)
-    imageURL?: string;   // Product image for order display
+    colors: string[];     // Variant Colors
+    price: number;       // Variant Price at time of order (after discounts)
+    imageURL?: string;   // Variant Product image for order display
 }
 
 export interface Order {
@@ -79,9 +80,10 @@ export const orderProductDataValidators = (value: OrderProduct): boolean => {
         variantId: (v: OrderProduct['variantId']) => typeof v === 'string',
         productId: (v: OrderProduct['productId']) => typeof v === 'string',
         quantity: (v: OrderProduct['quantity']) => typeof v === 'number',
-        name: (v: OrderProduct['name']) => typeof v === 'string' || v === undefined,
+        productName: (v: OrderProduct['productName']) => typeof v === 'string' || v === undefined,
+        brandName: (v: OrderProduct['brandName']) => typeof v === 'string',
         size: (v: OrderProduct['size']) => typeof v === 'string' || v === undefined,
-        color: (v: OrderProduct['color']) => typeof v === 'string' || v === undefined,
+        colors: (v: OrderProduct['colors']) => Array.isArray(v) && v.every(color => typeof color === 'string'),
         price: (v: OrderProduct['price']) => typeof v === 'number' || v === undefined,
         imageURL: (v: OrderProduct['imageURL']) => typeof v === 'string' || v === undefined,
     }

@@ -36,7 +36,6 @@ export const getCart = async (req: Request, res: Response) => {
  * Required data:
  * - productId: String - ID of the product
  * - variantId: String - ID of the specific product variant
- * - color: String - Color of the product
  * - quantity: Number (optional, defaults to 1) - Quantity to add
  */
 export const addToCart = async (req: Request, res: Response) => {
@@ -69,12 +68,12 @@ export const updateCartItem = async (req: Request, res: Response) => {
     try {
         const customerId = req.user!.id;
         const { id } = req.params;
-        const { quantity, color } = req.body;
+        const { quantity } = req.body;
 
         const updatedCart = await cartService.updateCartItem(
             customerId,
             id,
-            { quantity, color }
+            { quantity }
         );
 
         return res.status(200).json({
