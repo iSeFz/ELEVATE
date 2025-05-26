@@ -10,15 +10,33 @@ interface ProductCardProps {
   image: string;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({
-  title,
-  description,
-  image,
-}) => {
+interface ProductData {
+  name: string;
+  description: string;
+  variants: Array<{
+    images: string[];
+  }>;
+  reviewSummary?: {
+    averageRating: number;
+    totalReviews: number;
+  };
+}
+
+interface ProductCardProps {
+  product: ProductData;
+}
+
+const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  if (!product) {
+    return <div>No product data available.</div>;
+  }
+  const { name, description, variants, reviewSummary } = product;
+  const mainImage = variants?.[0]?.images?.[0] || "";
+
   return (
     <Card sx={{ margin: 2, boxShadow: 3, height: 320, width: 345 }}>
       <CardContent>
-        <Box display="flex" gap={4}>
+        <Box display="flex" gap={2}>
           <Box>
             <Typography
               gutterBottom
@@ -26,13 +44,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
               fontWeight="bold"
               component="div"
             >
-              {title}
+              {name}
             </Typography>
             <Typography variant="body2" color="text.secondary">
               {description}
             </Typography>
+            <Typography variant="body2" color="text.secondary" mt={1}>
+              {reviewSummary
+                ? `⭐ ${reviewSummary.averageRating} (${reviewSummary.totalReviews} reviews)`
+                : "No reviews"}
+            </Typography>
             <Box marginTop={2}>
-              <CardMedia component="img" image={image} alt={title} />
+              <CardMedia component="img" image={mainImage} alt={name} />
             </Box>
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>

@@ -4,37 +4,12 @@ import { Container, Grid2 } from "@mui/material";
 import ProductCard from "./productCard";
 import { StyledButton } from "../../../../components/StyledButton";
 import { AddCircleOutline } from "@mui/icons-material";
+import { useProducts } from "./producthook";
 // import ProductCard from '../components/ProductCard';
 
-const products = [
-  {
-    title: "Gray Quarter Zip",
-    description: "Basic gray quarter zip",
-    image: "/images/GrayQuartetZip.png",
-  },
-  {
-    title: "Brown Jacket",
-    description: "Basic brown jacket",
-    image: "/images/BrownJacket.png",
-  },
-  {
-    title: "Olive Regular Fit Tee",
-    description: "Regular fit t-shirt",
-    image: "/images/OliverRegularFit.png",
-  },
-  {
-    title: "Pink Relaxed Fit Tee",
-    description: "Relaxed fit t-shirt",
-    image: "/images/RelaxedFitTee.png",
-  },
-  {
-    title: "Black Sweatpants",
-    description: "Basic black sweatpants",
-    image: "/images/BlackSweatPants.png",
-  },
-];
 
 const Product: React.FC = () => {
+  const { products } = useProducts();
   return (
     <Container padding={2} marginLeft={2}>
       <StyledButton variant="outlined" sx={{ marginBottom: 4, marginLeft: 3 }}>
@@ -44,7 +19,11 @@ const Product: React.FC = () => {
       <Grid2 container spacing={1}>
         {products.map((product, index) => (
           <Grid2 item key={index}>
-            <ProductCard {...product} />
+            <ProductCard
+              title={product.name}
+              image={product.variants[0]?.image || ""}
+              product={product}
+            />
           </Grid2>
         ))}
       </Grid2>

@@ -6,8 +6,11 @@ import {
 import { StyledSmallSvgIcon } from "../../../../../components/StyledSmallSvgIcon";
 import { StyledTypography } from "../../../../../components/StyledTypography";
 import { StyledTextField } from "../../../../../components/StyledTextField";
+import { useUser } from "../../../../../context/userContext";
 
 export const Account = () => {
+  const { userData } = useUser();
+  
   return (
     <Box width="100%">
       <Box display="flex" justifyContent="space-between" marginBottom={4}>
@@ -39,27 +42,23 @@ export const Account = () => {
           <Box display="flex" justifyContent="space-between">
             <Box width={"47%"}>
               <StyledTypography>First Name</StyledTypography>
-              <StyledTextField disabled value="Shawky" fullWidth />
+              <StyledTextField disabled value={userData?.firstName} fullWidth />
             </Box>
 
             <Box width={"47%"}>
               <StyledTypography>Last Name</StyledTypography>
-              <StyledTextField disabled value="Ibrahim" fullWidth />
+              <StyledTextField disabled value={userData?.lastName} fullWidth />
             </Box>
           </Box>
 
           <Box>
             <StyledTypography>Username</StyledTypography>
-            <StyledTextField disabled value="shawkyebrahim.cloud" fullWidth />
+            <StyledTextField disabled value={userData?.username} fullWidth />
           </Box>
 
           <Box>
             <StyledTypography>Email</StyledTypography>
-            <StyledTextField
-              disabled
-              value="shawkyebrahim.cloud@gmail.com"
-              fullWidth
-            />
+            <StyledTextField disabled value={userData?.email} fullWidth />
           </Box>
         </Box>
 

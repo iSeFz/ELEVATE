@@ -7,12 +7,20 @@ import {
   StyledProfileBox,
   StyledTitleBox,
 } from "./headerStyles";
+import { useUser } from "../../context/userContext";
 
 interface PageTitles {
   [key: string]: string;
 }
 
+function formatRole(str: string) {
+  if (str === "brandOwner") return "Brand Owner";
+  if (str === "brandManager") return "Brand Manager";
+  return str;
+}
+
 export const Header: FC = () => {
+  const { userData } = useUser();
   const location = useLocation();
 
   const pageTitles: PageTitles = {
@@ -36,10 +44,10 @@ export const Header: FC = () => {
         <Avatar src="/icons/User.svg" />
         <Box>
           <Typography variant="subtitle2" fontWeight="bold">
-            Shawky
+            {userData?.firstName || "User"}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Brand Owner
+            {formatRole(userData?.role) || "User"}
           </Typography>
         </Box>
       </StyledProfileBox>

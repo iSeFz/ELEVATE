@@ -2,6 +2,12 @@ import { FC } from "react";
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Router from "./features/router/router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { UserProvider } from "./context/userContext";
+import { SnackbarProvider } from "notistack";
+import { BrandProvider } from "./context/BrandContext";
+
+const queryClient = new QueryClient();
 
 const theme = createTheme({
   typography: {
@@ -24,8 +30,19 @@ const theme = createTheme({
 const App: FC = () => {
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Router />
+      <UserProvider>
+        <BrandProvider>
+          <QueryClientProvider client={queryClient}>
+            <SnackbarProvider
+              maxSnack={3}
+              anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+            >
+              <CssBaseline />
+              <Router />
+            </SnackbarProvider>
+          </QueryClientProvider>
+        </BrandProvider>
+      </UserProvider>
     </ThemeProvider>
   );
 };

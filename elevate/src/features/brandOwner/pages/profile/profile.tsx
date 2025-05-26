@@ -6,9 +6,14 @@ import { StyledSmallSvgIcon } from "../../../../components/StyledSmallSvgIcon";
 import { StyledTextField } from "../../../../components/StyledTextField";
 import { StyledTypography } from "../../../../components/StyledTypography";
 import { StlyedChip } from "../../../../components/StyledChip";
+import { useBrand } from "../../../../context/BrandContext";
+import { useUser } from "../../../../context/userContext";
 
 //might need some clean up perhaps seperate into multiple components (do that when doing the edit part)
 const Profile = () => {
+  const { brandData } = useBrand();
+  const { userData } = useUser();
+
   return (
     <Box padding={2} marginLeft={2}>
       <Box display="flex" justifyContent="right" marginRight={8}>
@@ -26,16 +31,12 @@ const Profile = () => {
         <Box display="flex" flexDirection="column" gap={3} width={500}>
           <Box>
             <StyledTypography>Brand Name</StyledTypography>
-            <StyledTextField disabled value="CLOUD" fullWidth />
+            <StyledTextField disabled value={brandData?.brandName} fullWidth />
           </Box>
 
           <Box>
             <StyledTypography>Brand Email</StyledTypography>
-            <StyledTextField
-              disabled
-              value="cloudclothing@gmail.com"
-              fullWidth
-            />
+            <StyledTextField disabled value={userData?.email} fullWidth />
           </Box>
 
           <Box>
@@ -46,46 +47,59 @@ const Profile = () => {
               borderRadius={2}
               height={110}
             >
-              <StlyedChip label="Clothing" />
+              <StlyedChip label={brandData?.industry} />
             </Box>
           </Box>
 
           <Box>
             <StyledTypography>Addresses</StyledTypography>
             <Box display="flex" flexDirection="column" gap={2}>
-              <Box display="flex" alignItems="center" gap={1}>
-                <StyledSvgIcon>
-                  <image
-                    href="/icons/Location.svg"
-                    width="100%"
-                    height="100%"
-                  />
-                </StyledSvgIcon>
-                <Typography>City Centre Almaza, Cairo</Typography>
-              </Box>
-
-              <Box display="flex" alignItems="center" gap={1}>
-                <StyledSvgIcon>
-                  <image
-                    href="/icons/Location.svg"
-                    width="100%"
-                    height="100%"
-                  />
-                </StyledSvgIcon>
-                <Typography>Golf City Mall, Cairo</Typography>
-              </Box>
+              {brandData?.addresses?.map(
+                (
+                  address: {
+                    building: number;
+                    city: string;
+                    postalCode: number;
+                    street: string;
+                    latitiude: number;
+                    longitude: number;
+                  },
+                  index: number
+                ) => (
+                  <Box key={index} display="flex" alignItems="center" gap={1}>
+                    <StyledSvgIcon>
+                      <image
+                        href="/icons/Location.svg"
+                        width="100%"
+                        height="100%"
+                      />
+                    </StyledSvgIcon>
+                    <Typography>
+                      {`${address.building} ${address.street}, ${address.city}, ${address.postalCode}`}
+                    </Typography>
+                  </Box>
+                )
+              )}
             </Box>
           </Box>
 
           <Box>
-            <Typography variant="subtitle1" marginBottom={1} fontWeight="bold">
-              Websites
-            </Typography>
-            <Box display="flex" alignItems="center" gap={1}>
-              <StyledSvgIcon>
-                <image href="/icons/Website.svg" width="100%" height="100%" />
-              </StyledSvgIcon>
-              <Typography>cloud-clothing.co</Typography>
+            <StyledTypography>Websites</StyledTypography>
+            <Box display="flex" flexDirection="column" gap={1}>
+              {brandData?.websites?.map(
+                (website: { type: string; url: string }, index: number) => (
+                  <Box key={index} display="flex" alignItems="center" gap={1}>
+                    <StyledSvgIcon>
+                      <image
+                        href="/icons/Website.svg"
+                        width="100%"
+                        height="100%"
+                      />
+                    </StyledSvgIcon>
+                    <Typography>{website.url}</Typography>
+                  </Box>
+                )
+              )}
             </Box>
           </Box>
         </Box>
@@ -97,9 +111,9 @@ const Profile = () => {
             </Typography>
             <Card padding={2} maxWidth={300}>
               <img
-                src="/images/BrandLogo.png"
+                src={brandData?.imageURL}
                 alt="Brand Logo"
-                style={{ width: "100%", height: "auto" }}
+                style={{ width: "500px", height: "auto" }}
               />
             </Card>
           </Box>
@@ -109,18 +123,16 @@ const Profile = () => {
               Contacts
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <StyledSvgIcon>
-                  <image href="/icons/Contact.svg" width="100%" height="100%" />
-                </StyledSvgIcon>
-                <Typography>01012345678</Typography>
-              </Box>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <StyledSvgIcon>
-                  <image href="/icons/Contact.svg" width="100%" height="100%" />
-                </StyledSvgIcon>
-                <Typography>01087654321</Typography>
-              </Box>
+              {brandData?.phoneNumbers?.map(
+                (contact: string, index: number) => (
+                  <Box key={index} sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                    <StyledSvgIcon>
+                      <image href="/icons/Contact.svg" width="100%" height="100%" />
+                    </StyledSvgIcon>
+                    <Typography>{contact}</Typography>
+                  </Box>
+                )
+              )}
             </Box>
           </Box>
 
@@ -150,7 +162,7 @@ const Profile = () => {
           multiline
           rows={4}
           disabled
-          value="We value the importance of affordability, and that's why we are focusing on creating timeless, high quality basics and wardrobe essentials that will help you embrace your personal style without compromising on quality and fit."
+          value={brandData?.storyDescription || "No story provided."}
         />
       </Box>
     </Box>
