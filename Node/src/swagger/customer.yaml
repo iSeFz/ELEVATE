@@ -712,15 +712,11 @@ paths:
               type: object
               required:
                 - quantity
-                - color
               properties:
                 quantity:
                   type: integer
                   minimum: 1
                   description: New quantity
-                color:
-                  type: string
-                  description: New selected color
       responses:
         200:
           description: Cart item updated successfully

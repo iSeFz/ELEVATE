@@ -4,6 +4,8 @@ import * as ProductValidators from '../middleware/validators/product.js';
 import { authenticate, authorize, authorizeProductAccess, authorizeProductVariantAccess } from '../middleware/auth.js';
 
 const router = express.Router();
+// Public route to get all supported categories
+router.get('/categories', ProductController.getAllCategories);
 
 // Public routes - no authentication required
 router.get('/', ProductController.getAllProducts);

@@ -7,6 +7,8 @@ components:
         - description
         - material
         - category
+        - department
+        - variants
       properties:
         name:
           type: string
@@ -28,7 +30,7 @@ components:
         variants:
           type: array
           items:
-            $ref: '#/components/schemas/ProductVariantRequest'
+            $ref: "#/components/schemas/ProductVariantRequest"
           description: Variants of the product
 
     ProductResponse:
@@ -64,7 +66,7 @@ components:
           type: string
           description: Name of the brand
         subscription:
-          $ref: '#/components/schemas/Subscription'
+          $ref: "#/components/schemas/Subscription"
           description: Brand's subscription details
         brandSubscriptionPlan:
           type: string
@@ -73,10 +75,10 @@ components:
         variants:
           type: array
           items:
-            $ref: '#/components/schemas/ProductVariantEmbedded'
+            $ref: "#/components/schemas/ProductVariantEmbedded"
           description: Variants of the product
         reviewSummary:
-          $ref: '#/components/schemas/ProductReviewSummary'
+          $ref: "#/components/schemas/ProductReviewSummary"
           description: Summary of product reviews
         createdAt:
           $ref: "#/components/schemas/Timestamp"
@@ -162,19 +164,19 @@ components:
         ratingDistribution:
           type: object
           properties:
-            '1':
+            "1":
               type: integer
               description: Number of 1-star ratings
-            '2':
+            "2":
               type: integer
               description: Number of 2-star ratings
-            '3':
+            "3":
               type: integer
               description: Number of 3-star ratings
-            '4':
+            "4":
               type: integer
               description: Number of 4-star ratings
-            '5':
+            "5":
               type: integer
               description: Number of 5-star ratings
 
@@ -236,19 +238,19 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/ProductResponse'
+                      $ref: "#/components/schemas/ProductResponse"
         400:
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
     post:
       summary: Create a new product
       tags: [Products]
@@ -258,7 +260,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProductRequest'
+              $ref: "#/components/schemas/ProductRequest"
       responses:
         201:
           description: Product created successfully
@@ -273,31 +275,31 @@ paths:
                   message:
                     type: string
                   data:
-                    $ref: '#/components/schemas/ProductResponse'
+                    $ref: "#/components/schemas/ProductResponse"
         400:
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         401:
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         403:
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   /products/{id}:
     get:
@@ -322,25 +324,25 @@ paths:
                     type: string
                     enum: [success]
                   data:
-                    $ref: '#/components/schemas/ProductResponse'
+                    $ref: "#/components/schemas/ProductResponse"
         404:
           description: Product not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         400:
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
     put:
       summary: Update a product
@@ -358,7 +360,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProductRequest'
+              $ref: "#/components/schemas/ProductRequest"
       responses:
         200:
           description: Product updated successfully
@@ -372,37 +374,37 @@ paths:
                     enum: [success]
                   message:
                     type: string
-                    
+
         400:
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         401:
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         403:
           description: Forbidden - Insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
           description: Product not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
     delete:
       summary: Delete a product
@@ -420,31 +422,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessResponse'
+                $ref: "#/components/schemas/SuccessResponse"
         401:
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         403:
           description: Forbidden - Insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
           description: Product not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   /products/{productId}/variants:
     post:
@@ -462,7 +464,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProductVariantRequest'
+              $ref: "#/components/schemas/ProductVariantRequest"
       responses:
         201:
           description: Product variant added successfully
@@ -477,37 +479,37 @@ paths:
                   message:
                     type: string
                   data:
-                    $ref: '#/components/schemas/ProductVariantEmbedded'
+                    $ref: "#/components/schemas/ProductVariantEmbedded"
         400:
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         401:
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         403:
           description: Forbidden - Insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
           description: Product not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
 
   /products/{productId}/variants/{variantId}:
     put:
@@ -531,7 +533,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProductVariantRequest'
+              $ref: "#/components/schemas/ProductVariantRequest"
       responses:
         200:
           description: Product variant updated successfully
@@ -546,38 +548,38 @@ paths:
                   message:
                     type: string
                   data:
-                    $ref: '#/components/schemas/ProductVariantEmbedded'
+                    $ref: "#/components/schemas/ProductVariantEmbedded"
         400:
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         401:
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         403:
           description: Forbidden - Insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
           description: Product or variant not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    
+                $ref: "#/components/schemas/ErrorResponse"
+
     delete:
       summary: Delete a specific product variant
       tags: [Products]
@@ -600,34 +602,61 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuccessResponse'
+                $ref: "#/components/schemas/SuccessResponse"
         400:
           description: Bad request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         401:
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         403:
           description: Forbidden - Insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
           description: Product or variant not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /products/categories:
+    get:
+      summary: Get all supported product categories
+      tags: [Products]
+      description: Returns all available product categories supported by the system for use in filters and product creation.
+      responses:
+        200:
+          description: A list of all supported product categories
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      type: string
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"

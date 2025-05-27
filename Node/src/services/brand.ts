@@ -1,6 +1,7 @@
 import { admin } from '../config/firebase.js';
 import { generateFullyBrandData } from './utils/brand.js';
 import { Brand } from '../types/models/brand.js';
+import { updateProductsBrandSubscriptionPlan } from './product.js';
 
 const firestore = admin.firestore();
 const brandCollection = 'brand';
@@ -77,8 +78,7 @@ export const updateBrand = async (brandID: string, newBrandData: Partial<Brand>)
         await brandRef.update(newBrandData);
 
         // If the subscription plan is being updated, update all products for this brand
-        if (newBrandData.subscription?.plan) {
-            const { updateProductsBrandSubscriptionPlan } = await import('./product.js');
+        if (newBrandData.subscription) {
             await updateProductsBrandSubscriptionPlan(brandID, newBrandData.subscription.plan);
         }
         return true;

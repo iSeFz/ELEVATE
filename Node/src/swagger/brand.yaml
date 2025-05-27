@@ -53,49 +53,6 @@ components:
         updatedAt:
           $ref: "#/components/schemas/Timestamp"
 
-    BrandRequest:
-      type: object
-      required:
-        - brandName
-        - storyDescription
-      properties:
-        brandName:
-          type: string
-          description: The unique name of the brand
-        storyDescription:
-          type: string
-          description: Brand description/story
-        imageURL:
-          type: string
-          description: URL to the brand's logo
-        email:
-          type: string
-          description: Brand's contact email
-        phoneNumbers:
-          type: array
-          items:
-            type: string
-          description: Contact phone numbers
-        industry:
-          type: string
-          description: Industry the brand belongs to
-        addresses:
-          type: array
-          items:
-            $ref: "#/components/schemas/Address"
-          description: Brand's physical addresses
-        websites:
-          type: array
-          items:
-            $ref: "#/components/schemas/Website"
-          description: Brand's websites
-        subscription:
-          $ref: "#/components/schemas/Subscription"
-          description: Brand's subscription details
-        brandOwnerId:
-          type: string
-          description: ID of the brand owner (required for admin creation)
-
     Website:
       type: object
       properties:
@@ -142,6 +99,24 @@ components:
           enum: [error]
         message:
           type: string
+
+    SubscriptionPlanDetails:
+      type: object
+      properties:
+        plan:
+          type: integer
+          enum: [1, 2, 3]
+          description: Subscription plan enum value (1=FREE, 2=BASIC, 3=PREMIUM)
+        name:
+          type: string
+        price:
+          type: number
+        features:
+          type: array
+          items:
+            type: string
+        productLimit:
+          type: integer
 
 # Defining Paths
 paths:
@@ -324,3 +299,85 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+
+  /brands/me/upgrade-subscription:
+    post:
+      summary: Upgrade a brand's subscription plan (admin only)
+      tags: [Brands]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - newPlan
+              properties:
+                newPlan:
+                  type: integer
+                  enum: [1, 2, 3]
+                  description: Subscription plan enum value (1=FREE, 2=BASIC, 3=PREMIUM)
+      responses:
+        200:
+          description: Subscription upgraded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        400:
+          description: Invalid input or plan
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Brand not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /brands/subscription-plans:
+    get:
+      summary: Get all available subscription plans
+      tags: [Brands]
+      description: Returns all available subscription plans and their details for brand owners to choose from.
+      responses:
+        200:
+          description: A list of all subscription plans
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SubscriptionPlanDetails'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'

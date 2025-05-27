@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { Brand, brandDataValidators } from '../../types/models/brand.js';
 import { validateObjectStructure } from './common.js';
+import { SUBSCRIPTION_PLANS, SubscriptionPlan } from '../../config/subscriptionPlans.js';
 
 const expectedUpdateBrandData: Partial<Brand> = {
     addresses: [{
@@ -63,6 +64,27 @@ export const validateUpdateBrand = (req: Request, res: Response, next: NextFunct
             status: 'error',
             message: 'Invalid brand data types.',
             expectedFormat: expectedUpdateBrandData
+        });
+    }
+
+    next();
+}
+
+export const validateUgradeSubscription = (req: Request, res: Response, next: NextFunction) => {
+    const { newPlan } = req.body;
+    if (typeof newPlan !== 'number') {
+        return res.status(400).json({
+            status: 'error',
+            message: 'newPlan (enum value) is required in the request body.'
+        });
+    }
+
+    // Validate plan
+    if (!Object.values(SubscriptionPlan).includes(newPlan)) {
+        return res.status(400).json({
+            status: 'error',
+            message: 'Invalid subscription plan.',
+            expectedFormat: SUBSCRIPTION_PLANS
         });
     }
 

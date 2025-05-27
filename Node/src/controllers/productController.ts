@@ -4,6 +4,11 @@ import * as brandOwnerService from '../services/brandOwner.js';
 import * as brandService from '../services/brand.js';
 import { Product, ProductVariant } from '../types/models/product.js';
 import { getSubscriptionPlanDetails } from '../config/subscriptionPlans.js';
+import { getAllCategoriesDetails } from '../config/categories.js';
+
+export const getAllCategories = (req: Request, res: Response) => {
+    res.status(200).json({ status: 'success', data: getAllCategoriesDetails() });
+}
 
 export const getAllProducts = async (req: Request, res: Response) => {
     const category = req.query.category as string;
@@ -55,6 +60,8 @@ export const addProduct = async (req: Request, res: Response) => {
         const productData = req.body as Product;
         const brandOwnerId = req.user?.id as string;
         const brandOwner = await brandOwnerService.getBrandOwnerById(brandOwnerId);
+
+        console.log("Adding product for brand owner:", brandOwnerId);
 
         if (!brandOwner) {
             return res.status(404).json({

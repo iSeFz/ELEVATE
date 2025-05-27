@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import * as brandService from '../services/brand.js';
 import { Brand } from '../types/models/brand.js';
+import { SubscriptionPlan, getSubscriptionPlanDetails } from '../config/subscriptionPlans.js';
+import { Timestamp } from 'firebase-admin/firestore';
 
 export const getAllBrands = async (req: Request, res: Response) => {
     try {
@@ -135,12 +137,72 @@ export const updateMyBrand = async (req: Request, res: Response) => {
         if (!brand) {
             return res.status(404).json({ status: 'error', message: 'Brand not found' });
         }
-        if (!brand.id) {
-            return res.status(500).json({ status: 'error', message: 'Brand record is missing an ID' });
-        }
-        await brandService.updateBrand(brand.id, newBrandData);
+        await brandService.updateBrand(brand.id!, newBrandData);
         return res.status(200).json({ status: 'success', message: 'Brand updated successfully' });
     } catch (error: any) {
         return res.status(400).json({ status: 'error', message: error.message });
     }
+};
+
+export const upgradeSubscription = async (req: Request, res: Response) => {
+    try {
+        const { newPlan } = req.body;
+        const brandOwnerId = req.user?.id;
+        if (!brandOwnerId) {
+            return res.status(401).json({ status: 'error', message: 'Unauthorized' });
+        }
+        const brand = await brandService.getBrandByOwnerId(brandOwnerId);
+        if (!brand) {
+            return res.status(404).json({ status: 'error', message: 'Brand not found' });
+        }
+        if (typeof newPlan !== 'number') {
+            return res.status(400).json({
+                status: 'error',
+                message: 'newPlan (enum value) is required in the request body.'
+            });
+        }
+
+        // Get plan details
+        const planDetails = getSubscriptionPlanDetails(newPlan);
+        const now = Timestamp.now();
+        // Set subscription for 1 month (example)
+        const endDate = Timestamp.fromMillis(now.toMillis() + 30 * 24 * 60 * 60 * 1000);
+        const updatedSubscription = {
+            plan: newPlan,
+            price: planDetails.price,
+            startDate: now,
+            endDate,
+        };
+
+        await brandService.updateBrand(brand.id!, { subscription: updatedSubscription });
+
+        return res.status(200).json({
+            status: 'success',
+            message: `Subscription upgraded to ${planDetails.name} successfully`,
+            data: {
+                brandId: brand.id,
+                brandName: brand.brandName,
+                subscription: updatedSubscription,
+            }
+        });
+    } catch (error: any) {
+        return res.status(500).json({ status: 'error', message: error.message });
+    }
+};
+
+export const getAllSubscriptionPlans = (req: Request, res: Response) => {
+    // Return all available subscription plans and their details
+    const plans = Object.values(SubscriptionPlan)
+        .filter((v) => typeof v === 'number')
+        .map((plan) => {
+            const details = getSubscriptionPlanDetails(plan as SubscriptionPlan);
+            return {
+                plan: plan,
+                ...details
+            };
+        });
+    return res.status(200).json({
+        status: 'success',
+        data: plans
+    });
 };
