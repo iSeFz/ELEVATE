@@ -4,7 +4,7 @@ export const CATEGORIES: string[] = [
     "Bottoms - Jeans", "Bottoms - Pants / Trousers", "Bottoms - Leggings", "Bottoms - Shorts", "Bottoms - Skirts",
     "Dresses & One-Pieces - Dresses", "Dresses & One-Pieces - Jumpsuits", "Dresses & One-Pieces - Abayas / Kaftans",
     "Sets",
-    "Activewear & Loungewear - Gym Tops", "Activewear & Loungewear - Gym Leggings", "Activewear & Loungewear - Tracksuits"
+    "Activewear - Gym Tops", "Activewear - Gym Leggings", "Activewear - Tracksuits"
 ];
 
 // Helper to get all categories (future-proof for adding metadata)

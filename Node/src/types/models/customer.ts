@@ -9,6 +9,7 @@ export interface CartItem {
     // denormalized data to avoid extra queries
     brandName: string; // Brand name for quick display
     productName: string;  // Product name for quick display
+    productStock: number; // Stock for the product variant
     size: string;   // Variant size
     colors: string[];  // variant colors
     price: number;  // Price at the time of adding to cart
@@ -58,6 +59,7 @@ export const cartItemDataValidators = (value: CartItem): boolean => {
         quantity: (v: CartItem['quantity']) => typeof v === 'number' && v > 0,
         brandName: (v: CartItem['brandName']) => typeof v === 'string',
         productName: (v: CartItem['productName']) => typeof v === 'string',
+        productStock: (v: CartItem['productStock']) => typeof v === 'number' && v >= 0,
         size: (v: CartItem['size']) => typeof v === 'string',
         colors: (v: CartItem['colors']) => Array.isArray(v) && v.every(color => typeof color === 'string'),
         price: (v: CartItem['price']) => typeof v === 'number',
