@@ -172,9 +172,6 @@ components:
         productName:
           type: string
           description: Product name for quick display
-        productStock:
-          type: number
-          description: Stock available for the product variant
         size:
           type: string
           description: Variant size

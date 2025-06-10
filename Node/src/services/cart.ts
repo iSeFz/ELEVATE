@@ -102,7 +102,6 @@ export const addToCart = async (customerId: string, item: Partial<CartItem>) => 
                 quantity: item.quantity ?? 1,
                 brandName: product.brandName,
                 productName: product.name,
-                productStock: variant.stock,
                 size: variant.size,
                 colors: variant.colors,
                 price: variant.price,

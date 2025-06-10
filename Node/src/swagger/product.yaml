@@ -512,6 +512,53 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
 
   /products/{productId}/variants/{variantId}:
+    get:
+      summary: Get a specific product variant
+      tags: [Products]
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: string
+          description: Product ID
+        - in: path
+          name: variantId
+          required: true
+          schema:
+            type: string
+          description: Variant ID
+      responses:
+        200:
+          description: A product variant object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: "#/components/schemas/ProductVariantEmbedded"
+        404:
+          description: Product or variant not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
     put:
       summary: Update a specific product variant
       tags: [Products]

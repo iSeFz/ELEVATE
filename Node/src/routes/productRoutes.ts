@@ -17,6 +17,8 @@ router.post('/:productId/variants',
     authorizeProductVariantAccess,
     ProductValidators.validateAddProductVariant,
     ProductController.addProductVariant);
+router.get('/:productId/variants/:variantId',
+    ProductController.getProductVariant);
 router.put('/:productId/variants/:variantId',
     authenticate,
     authorizeProductVariantAccess,
