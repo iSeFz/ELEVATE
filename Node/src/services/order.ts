@@ -3,7 +3,6 @@ import { calculateLoyaltyPointsEarned, generateFullyOrderData, updatePriceWithRe
 import { Order, OrderStatus } from '../types/models/order.js';
 import { Timestamp } from 'firebase-admin/firestore';
 import { Product } from '../types/models/product.js';
-import { Customer } from '../types/models/customer.js';
 import { getCustomer } from './customer.js';
 
 const firestore = admin.firestore();

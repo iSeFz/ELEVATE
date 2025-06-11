@@ -3,14 +3,12 @@ import { validateObjectStructure } from './common.js';
 import { Review, reviewDataValidators } from '../../types/models/review.js';
 
 const expectedAddReviewData: Partial<Review> = {
-    productId: "String",
     title: "String",
     content: "String",
     rating: 1,
 };
 /**
  * Required data:
- * - productId: String - ID of the product being reviewed
  * - title: String - Title of the review
  * - content: String - Content of the review
  * - rating: Number - Rating given by the customer (1-5)

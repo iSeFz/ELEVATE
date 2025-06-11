@@ -22,20 +22,20 @@ export const getAllProducts = async (req: Request, res: Response) => {
 
     try {
         if (category) {
-            const products = await productService.getProductsByCategory(category, page);
-            return res.status(200).json({ status: 'success', data: products });
+            const results = await productService.getProductsByCategory(category, page);
+            return res.status(200).json({ status: 'success', data: results.products, pagination: results.pagination });
         }
         if (brand) {
-            const products = await productService.getProductsByBrand(brand, page);
-            return res.status(200).json({ status: 'success', data: products });
+            const results = await productService.getProductsByBrand(brand, page);
+            return res.status(200).json({ status: 'success', data: results.products, pagination: results.pagination });
         }
         if (department) {
-            const products = await productService.getProductsByDepartment(department, page);
-            return res.status(200).json({ status: 'success', data: products });
+            const results = await productService.getProductsByDepartment(department, page);
+            return res.status(200).json({ status: 'success', data: results.products, pagination: results.pagination });
         }
         // If no filters are provided, return all products
-        const products = await productService.getAllProducts(page);
-        return res.status(200).json({ status: 'success', data: products });
+        const results = await productService.getAllProducts(page);
+        return res.status(200).json({ status: 'success', data: results.products, pagination: results.pagination });
     } catch (error: any) {
         return res.status(500).json({ status: 'error', message: error.message });
     }

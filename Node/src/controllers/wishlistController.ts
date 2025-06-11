@@ -24,12 +24,12 @@ export const getWishlist = async (req: Request, res: Response) => {
             });
         }
 
-        const result = await wishlistService.getWishlist(customerId, page);
+        const results = await wishlistService.getWishlist(customerId, page);
 
         return res.status(200).json({
             status: 'success',
-            data: result.items,
-            pagination: result.pagination
+            data: results.items,
+            pagination: results.pagination
         });
     } catch (error: any) {
         return res.status(400).json({

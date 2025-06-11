@@ -34,7 +34,7 @@ router.delete('/me',
 // Product routes for brand owners
 router.get('/me/products',
     authenticate,
-    BrandOwnerController.getMyProducts);
+    ProductController.getAllProducts);
 router.post('/me/products',
     authenticate,
     authorize(['admin', 'staff', 'brandOwner']),

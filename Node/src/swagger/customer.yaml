@@ -812,17 +812,7 @@ paths:
                     items:
                       $ref: "#/components/schemas/WishlistItem"
                   pagination:
-                    type: object
-                    properties:
-                      page:
-                        type: integer
-                        description: Current page number
-                      limit:
-                        type: integer
-                        description: Number of items per page
-                      hasNextPage:
-                        type: boolean
-                        description: Whether there are more pages available
+                    $ref: "#/components/schemas/PaginationInfo"
         400:
           description: Invalid request parameters
           content:

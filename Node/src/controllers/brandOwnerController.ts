@@ -58,8 +58,8 @@ export const getMyProducts = async (req: Request, res: Response) => {
         if (!brandOwner) {
             return res.status(404).json({ status: 'error', message: 'Brand owner not found' });
         }
-        const products = await productService.getProductsByBrand(brandOwner.brandId, page);
-        return res.status(200).json({ status: 'success', data: products });
+        const results = await productService.getProductsByBrand(brandOwner.brandId, page);
+        return res.status(200).json({ status: 'success', data: results.products, pagination: results.pagination });
     } catch (error: any) {
         return res.status(400).json({ status: 'error', message: error.message });
     }

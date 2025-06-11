@@ -239,6 +239,8 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/ProductResponse"
+                  pagination:
+                    $ref: "#/components/schemas/PaginationInfo"
         400:
           description: Bad request
           content:
@@ -253,6 +255,55 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
 
   /brand-owners/me/products:
+    get:
+      summary: Retrieve all products
+      tags: [Brand Owners]
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Page number for pagination, default is 1, page size is 10
+        - in: query
+          name: category
+          schema:
+            type: string
+          description: Filter by product category
+        - in: query
+          name: department
+          schema:
+            type: string
+          description: Filter by department value (products where department array contains this value)
+      responses:
+        200:
+          description: A list of products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ProductResponse"
+                  pagination:
+                    $ref: "#/components/schemas/PaginationInfo"
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
     post:
       summary: Create a new product
       tags: [Brand Owners]
@@ -347,6 +398,47 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
 
   /brand-owners/me/products/{id}:
+    get:
+      summary: Get a product by ID
+      tags: [Brand Owners]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Product ID
+      responses:
+        200:
+          description: A product object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: "#/components/schemas/ProductResponse"
+        404:
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
     put:
       summary: Update a product
       tags: [Brand Owners]
@@ -408,7 +500,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-
     delete:
       summary: Delete a product
       tags: [Brand Owners]
