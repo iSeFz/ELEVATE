@@ -251,9 +251,11 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+
+  /brand-owners/me/products:
     post:
       summary: Create a new product
-      tags: [Products]
+      tags: [Brand Owners]
       requestBody:
         description: You can only subbmit (name, category, description, material)
         required: true
@@ -344,9 +346,10 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /brand-owners/me/products/{id}:
     put:
       summary: Update a product
-      tags: [Products]
+      tags: [Brand Owners]
       parameters:
         - in: path
           name: id
@@ -408,7 +411,7 @@ paths:
 
     delete:
       summary: Delete a product
-      tags: [Products]
+      tags: [Brand Owners]
       parameters:
         - in: path
           name: id
@@ -448,10 +451,10 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
-  /products/{productId}/variants:
+  /brand-owners/me/products/{productId}/variants:
     post:
       summary: Add a variant to a product
-      tags: [Products]
+      tags: [Brand Owners]
       parameters:
         - in: path
           name: productId
@@ -559,9 +562,58 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+
+  /brand-owners/me/products/{productId}/variants/{variantId}:
+    get:
+      summary: Get a specific product variant
+      tags: [Brand Owners]
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          schema:
+            type: string
+          description: Product ID
+        - in: path
+          name: variantId
+          required: true
+          schema:
+            type: string
+          description: Variant ID
+      responses:
+        200:
+          description: A product variant object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: "#/components/schemas/ProductVariantEmbedded"
+        404:
+          description: Product or variant not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        400:
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
     put:
       summary: Update a specific product variant
-      tags: [Products]
+      tags: [Brand Owners]
       parameters:
         - in: path
           name: productId
@@ -626,10 +678,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
-
     delete:
       summary: Delete a specific product variant
-      tags: [Products]
+      tags: [Brand Owners]
       parameters:
         - in: path
           name: productId

@@ -29,7 +29,7 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
     ],
     tags: [
       { name: 'Customers', description: 'All APIs related to customers' },
-      { name: 'Products', description: 'All APIs related to products' },
+      { name: 'Products', description: 'All APIs related to public product access' },
     ],
     components: {
       securitySchemes: {

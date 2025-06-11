@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import * as BrandOwnerService from '../services/brandOwner.js';
+import * as productService from '../services/product.js';
 
 /**
  * Get all brand owners (admin only)
@@ -45,6 +46,24 @@ export const getBrandOwner = async (req: Request, res: Response) => {
         });
     }
 };
+
+export const getMyProducts = async (req: Request, res: Response) => {
+    try {
+        const brandOwnerId = req.user?.id;
+        const page = parseInt(req.query.page as string) || 1;
+        if (!brandOwnerId) {
+            return res.status(401).json({ status: 'error', message: 'Unauthorized' });
+        }
+        const brandOwner = await BrandOwnerService.getBrandOwnerById(brandOwnerId);
+        if (!brandOwner) {
+            return res.status(404).json({ status: 'error', message: 'Brand owner not found' });
+        }
+        const products = await productService.getProductsByBrand(brandOwner.brandId, page);
+        return res.status(200).json({ status: 'success', data: products });
+    } catch (error: any) {
+        return res.status(400).json({ status: 'error', message: error.message });
+    }
+}
 
 /**
  * Update a brand owner
