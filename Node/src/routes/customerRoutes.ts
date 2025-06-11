@@ -40,6 +40,10 @@ router.post('/me/orders',
 router.get('/me/orders/:id',
     authenticate,
     OrderController.getCustomerOrder);
+router.put('/me/orders/:id/calculate-shipment-fees',
+    authenticate,
+    OrderValidators.validateCalculateShipmentFees,
+    OrderController.calculateShipmentFees);
 router.put('/me/orders/:id/confirm',
     authenticate,
     OrderValidators.validateConfirmOrder,

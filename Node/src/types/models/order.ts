@@ -6,10 +6,20 @@ export interface Payment {
     credentials: string;
 }
 
+export interface BreakDownFee {
+    brandId: string;
+    brandName: string;
+    distance: number;
+    nearestBranch: Address;
+    fee: number;
+}
+
 export interface Shipment {
     createdAt: TimestampUnion;
-    deliveredAt: TimestampUnion;
-    fees: number;
+    deliveredAt?: TimestampUnion;
+    totalFees: number;
+    breakdown: BreakDownFee[];
+    estimatedDeliveryDays: number;
     method: string;
     trackingNumber: string;
     carrier: string;
@@ -63,11 +73,27 @@ export const paymentDataValidators = (value: Payment): boolean => {
     return commonDataValidators<Payment>(value, validators);
 }
 
+export const breakDownFeesDataValidators = (value: BreakDownFee): boolean => {
+    if (!value || typeof value !== 'object') {
+        return false; // Ensure value is an object
+    }
+    const validators: Record<keyof BreakDownFee, (value: any) => boolean> = {
+        brandId: (v: BreakDownFee['brandId']) => typeof v === 'string',
+        brandName: (v: BreakDownFee['brandName']) => typeof v === 'string',
+        distance: (v: BreakDownFee['distance']) => typeof v === 'number',
+        nearestBranch: (v: BreakDownFee['nearestBranch']) => addressDataValidators(v),
+        fee: (v: BreakDownFee['fee']) => typeof v === 'number',
+    }
+    return commonDataValidators<BreakDownFee>(value, validators);
+}
+
 export const shipmentDataValidators = (value: Shipment): boolean => {
     const validators: Record<keyof Shipment, (value: any) => boolean> = {
         createdAt: (v: Shipment['createdAt']) => v instanceof Timestamp,
         deliveredAt: (v: Shipment['deliveredAt']) => v instanceof Timestamp || v === undefined,
-        fees: (v: Shipment['fees']) => typeof v === 'number',
+        totalFees: (v: Shipment['totalFees']) => typeof v === 'number',
+        breakdown: (v: Shipment['breakdown']) => Array.isArray(v) && v.every(fee => breakDownFeesDataValidators(fee)),
+        estimatedDeliveryDays: (v: Shipment['estimatedDeliveryDays']) => typeof v === 'number',
         method: (v: Shipment['method']) => typeof v === 'string',
         trackingNumber: (v: Shipment['trackingNumber']) => typeof v === 'string' || v === undefined,
         carrier: (v: Shipment['carrier']) => typeof v === 'string' || v === undefined,

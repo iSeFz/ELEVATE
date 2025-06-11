@@ -3,6 +3,8 @@ import * as productService from '../product.js';
 import { admin } from '../../config/firebase.js';
 import { convertToTimestamp } from './common.js';
 import { Timestamp } from 'firebase-admin/firestore';
+import { getDistance } from 'geolib';
+import { Address } from '../../types/models/common.js';
 
 export const checkMissingOrderData = (order: any) => {
     const currentOrder = order as Order;
@@ -147,7 +149,9 @@ const emptyOrder: Order = {
     price: 0,
     products: [],
     shipment: {
-        fees: 0,
+        totalFees: 0,
+        breakdown: [],
+        estimatedDeliveryDays: 0,
         method: "standard",
         trackingNumber: "",
         createdAt: "",
@@ -173,7 +177,9 @@ export const generateFullyOrderData = (order: Order): Order => {
         price: order.price ?? emptyOrder.price,
         products: order.products ?? emptyOrder.products,
         shipment: {
-            fees: order.shipment?.fees ?? emptyOrder.shipment.fees,
+            totalFees: order.shipment?.totalFees ?? emptyOrder.shipment.totalFees,
+            breakdown: order.shipment?.breakdown ?? emptyOrder.shipment.breakdown,
+            estimatedDeliveryDays: order.shipment?.estimatedDeliveryDays ?? emptyOrder.shipment.estimatedDeliveryDays,
             method: order.shipment?.method ?? emptyOrder.shipment.method,
             trackingNumber: order.shipment?.trackingNumber ?? emptyOrder.shipment.trackingNumber,
             carrier: order.shipment?.carrier ?? emptyOrder.shipment.carrier,
@@ -202,14 +208,95 @@ export const generateFullyOrderData = (order: Order): Order => {
     return fullyData;
 }
 
-export const getShipmentDetails = (order: Order) => {
-    const shipmentDetails: Shipment = {
-        createdAt: Timestamp.now(),
-        fees: 50,
-        method: "Carrier",
-        trackingNumber: "123456789",
-        carrier: "Bosta",
-        deliveredAt: order.shipment.deliveredAt,
+// Helper function for distance calculation
+export const findNearestBranch = (customerAddr: Address, brandAddresses: Address[]): { distance: number; nearestBranch: Address } => {
+    let minDistance = Infinity;
+    let nearestBranch = brandAddresses[0]; // Initialize with first branch
+
+    for (const branchAddr of brandAddresses) {
+        const distance = calculateDistance(customerAddr, branchAddr);
+        if (distance < minDistance) {
+            minDistance = distance;
+            nearestBranch = branchAddr;
+        }
     }
-    return shipmentDetails;
-}
+
+    return {
+        distance: minDistance,
+        nearestBranch
+    };
+};
+
+export const calculateDistance = (addr1: Address, addr2: Address): number => {
+    const distanceInMeters = getDistance(
+        { latitude: addr1.latitude, longitude: addr1.longitude },
+        { latitude: addr2.latitude, longitude: addr2.longitude }
+    );
+    return distanceInMeters / 1000; // Convert to kilometers
+};
+
+/**
+ * Extracts unique brand IDs from a list of product items
+ * @param productItems Array of product items with productId and quantity
+ * @returns Array of unique brand IDs
+ */
+export const getUniqueBrandsFromProducts = async (productItems: { productId: string, quantity: number }[]): Promise<string[]> => {
+    const brandIds = new Set<string>();
+
+    for (const item of productItems) {
+        try {
+            const product = await productService.getProduct(item.productId);
+            if (!product) continue;
+            brandIds.add(product.brandId);
+        } catch (error) {
+            console.error(`Error fetching product ${item.productId}:`, error);
+            // Continue processing other products even if one fails
+            continue;
+        }
+    }
+
+    return Array.from(brandIds);
+};
+
+/**
+ * Calculates estimated delivery days based on distance and brand breakdown
+ * @param feeBreakdown Array of fee breakdown objects with distance information
+ * @param shipmentType Type of shipment ("standard" or "express")
+ * @returns Estimated delivery days
+ */
+export const calculateEstimatedDelivery = (
+    feeBreakdown: Array<{
+        brandId: string;
+        brandName: string;
+        distance: number;
+        fee: number;
+    }>,
+    shipmentType: string = 'standard'
+): number => {
+    if (feeBreakdown.length === 0) return shipmentType === 'express' ? 1 : 3;
+
+    // Base delivery time constants
+    const BASE_DELIVERY_DAYS = shipmentType === 'express' ? 1 : 2;
+    const EXTRA_DAY_PER_50KM = shipmentType === 'express' ? 0.5 : 1;
+    const MULTI_BRAND_PENALTY = shipmentType === 'express' ? 0.5 : 1;
+
+    // Find the maximum distance among all brands (bottleneck)
+    const maxDistance = Math.max(...feeBreakdown.map(item => item.distance));
+
+    // Calculate base delivery time based on distance
+    let estimatedDays = BASE_DELIVERY_DAYS;
+
+    // Add extra days based on distance
+    if (maxDistance > 50) {
+        estimatedDays += Math.floor(maxDistance / 50) * EXTRA_DAY_PER_50KM;
+    }
+
+    // Add penalty for multiple brands (coordination complexity)
+    if (feeBreakdown.length > 1) {
+        estimatedDays += MULTI_BRAND_PENALTY;
+    }
+
+    // Different caps for different service levels
+    const maxDays = shipmentType === 'express' ? 3 : 7;
+    return Math.min(Math.ceil(estimatedDays), maxDays);
+};

@@ -1,9 +1,12 @@
 import { admin } from '../config/firebase.js';
-import { calculateLoyaltyPointsEarned, generateFullyOrderData, updatePriceWithRedeemedPoints, getShipmentDetails } from './utils/order.js';
+import * as OrderUtils from './utils/order.js';
 import { Order, OrderStatus } from '../types/models/order.js';
 import { Timestamp } from 'firebase-admin/firestore';
 import { Product } from '../types/models/product.js';
 import { getCustomer } from './customer.js';
+import { Address } from '../types/models/common.js';
+import { getBrand } from './brand.js';
+import { v4 as uuidv4 } from 'uuid';
 
 const firestore = admin.firestore();
 const orderCollection = 'order';
@@ -108,7 +111,7 @@ export const getOrdersByStatus = async (status: OrderStatus, page: number = 1) =
 
 export const addOrder = async (order: Order) => {
     try {
-        const addedOrderData = generateFullyOrderData(order);
+        const addedOrderData = OrderUtils.generateFullyOrderData(order);
         const orderDoc = firestore.collection(orderCollection).doc();
         const batch = firestore.batch();
 
@@ -164,7 +167,9 @@ export const addOrder = async (order: Order) => {
 
         // Set the calculated price
         addedOrderData.price = totalPrice;
-        addedOrderData.shipment = getShipmentDetails(addedOrderData);
+        addedOrderData.shipment = {} as Order['shipment']; // Initialize shipment as empty
+        addedOrderData.payment = {} as Order['payment']; // Initialize payment as empty
+        addedOrderData.status = OrderStatus.PENDING; // Set initial status
 
         batch.set(orderDoc, addedOrderData);
 
@@ -174,6 +179,80 @@ export const addOrder = async (order: Order) => {
         throw new Error(`Failed to add order: ${error.message}`);
     }
 };
+
+export const calculateShipmentFees = async (
+    customerAddress: Address,
+    shipmentType: string, // e.g., "standard", "express"
+    productItems: { productId: string, quantity: number }[]
+) => {
+    const PRICE_PER_KM = 5; // EGP per KM
+    const BASE_FEE = 30; // Minimum fee per brand
+
+    // 1. Get unique brands from products
+    const uniqueBrandIds = await OrderUtils.getUniqueBrandsFromProducts(productItems);
+
+    let totalFees = 0;
+    const feeBreakdown = [];
+
+    // 2. Calculate fee for each brand
+    for (const brandId of uniqueBrandIds) {
+        const brand = await getBrand(brandId);
+        if (!brand?.addresses?.length) continue;
+
+        // 3. Find nearest branch
+        const { distance: nearestDistance, nearestBranch } = OrderUtils.findNearestBranch(customerAddress, brand.addresses);
+
+        // 4. Calculate fee for this brand
+        const brandFee = Math.max(BASE_FEE, nearestDistance * PRICE_PER_KM);
+        totalFees += brandFee;
+
+        feeBreakdown.push({
+            brandId,
+            brandName: brand.brandName,
+            distance: nearestDistance,
+            nearestBranch,
+            fee: brandFee
+        });
+    }
+
+    const orderShipment: Order['shipment'] = {
+        totalFees: totalFees * (shipmentType === 'express' ? 2 : 1), // Double for express shipment
+        breakdown: feeBreakdown,
+        estimatedDeliveryDays: OrderUtils.calculateEstimatedDelivery(feeBreakdown),
+        method: shipmentType,
+        createdAt: Timestamp.now(),
+        trackingNumber: '', // This can be set later when shipment is confirmed
+        carrier: 'Bosta', // Assuming Bosta is the carrier
+    };
+
+    // Update the order collection with the shipment details
+    const orderShipmentDoc = firestore.collection(orderCollection).doc();
+    const batch = firestore.batch();
+    batch.update(orderShipmentDoc, {
+        shipment: orderShipment,
+        updatedAt: Timestamp.now()
+    });
+
+    return orderShipment;
+};
+
+export const updateOrderAfterShipment = async (orderID: string, shipmentData: Partial<Order['shipment']>, customerAddress: Address) => {
+    if (!orderID) {
+        throw new Error('Please provide an order ID');
+    }
+
+    try {
+        const orderRef = firestore.collection(orderCollection).doc(orderID);
+        await orderRef.update({
+            shipment: shipmentData,
+            address: customerAddress,
+            updatedAt: Timestamp.now()
+        });
+        return true;
+    } catch (error: any) {
+        throw new Error(`Failed to update order shipment: ${error.message}`);
+    }
+}
 
 export const confirmOrder = async (orderID: string, customerId: string, remainingOrderData: Partial<Order>) => {
     if (!orderID) {
@@ -220,7 +299,7 @@ export const confirmOrder = async (orderID: string, customerId: string, remainin
             }
         }
 
-        const pointsEarned = calculateLoyaltyPointsEarned(confirmedOrderData.price);
+        const pointsEarned = OrderUtils.calculateLoyaltyPointsEarned(confirmedOrderData.price);
         // Update the customer's earned points
         if (customerId) {
             const customerRef = firestore.collection(customerCollection).doc(customerId);
@@ -229,18 +308,18 @@ export const confirmOrder = async (orderID: string, customerId: string, remainin
             });
         }
 
-        const priceRedeeemed = updatePriceWithRedeemedPoints(confirmedOrderData.price, remainingOrderData.pointsRedeemed);
+        const priceRedeeemed = OrderUtils.updatePriceWithRedeemedPoints(confirmedOrderData.price, remainingOrderData.pointsRedeemed);
         remainingOrderData.pointsRedeemed -= priceRedeeemed.surplusPoints;
 
         // Update order details
         confirmedOrderData.updatedAt = Timestamp.now();
         confirmedOrderData.price = priceRedeeemed.updatedPrice;
         confirmedOrderData.status = OrderStatus.PROCESSING;
-        confirmedOrderData.address = remainingOrderData.address!;
         confirmedOrderData.phoneNumber = remainingOrderData.phoneNumber!;
         confirmedOrderData.pointsRedeemed = remainingOrderData.pointsRedeemed;
         confirmedOrderData.pointsEarned = pointsEarned;
         confirmedOrderData.payment = remainingOrderData.payment!;
+        confirmedOrderData.shipment.trackingNumber = uuidv4(); // Generate a tracking number
         batch.update(orderRef, { ...confirmedOrderData });
         await batch.commit();
         return confirmedOrderData;

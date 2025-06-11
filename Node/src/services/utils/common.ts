@@ -1,7 +1,7 @@
 import { Timestamp } from "firebase-admin/firestore";
 import { TimestampUnion } from "../../types/models/common.js";
 
-export const convertToTimestamp = (date: TimestampUnion): Timestamp => {
+export const convertToTimestamp = (date: TimestampUnion | undefined): Timestamp => {
     try {
         if (typeof date === 'string') {
             return Timestamp.fromDate(new Date(date));

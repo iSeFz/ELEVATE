@@ -82,6 +82,41 @@ export const confirmCustomerOrder = async (req: Request, res: Response) => {
     }
 };
 
+export const calculateShipmentFees = async (req: Request, res: Response) => {
+    try {
+        const { address, shipmentType } = req.body; // Express cost*2 (1-2 days), or Standarded (3-5 days)
+        const orderID = req.params.id;
+        const customerID = req.user?.id!;
+
+        if (!address || !shipmentType) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Invalid request data. Please provide address and products.'
+            });
+        }
+
+        const customerOrder = await orderService.getCustomerOrder(orderID, customerID);
+
+        if (customerOrder.status !== OrderStatus.PENDING) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Shipment fees can only be calculated for pending orders.'
+            });
+        }
+
+        const shipmentData = await orderService.calculateShipmentFees(address, shipmentType, customerOrder.products);
+        await orderService.updateOrderAfterShipment(orderID, shipmentData, address);
+
+        return res.status(200).json({
+            status: 'success',
+            message: 'Shipment fees calculated successfully',
+            data: shipmentData
+        });
+    } catch (error: any) {
+        return res.status(400).json({ status: 'error', message: error.message });
+    }
+}
+
 export const cancelOrder = async (req: Request, res: Response) => {
     try {
         const orderID = req.params.id;
