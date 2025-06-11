@@ -8,11 +8,7 @@ export const Settingslayout: React.FC = () => {
 
   const tabConfig = [
     { label: "Account", value: "account" },
-    { label: "Display", value: "display" },
-    { label: "Security", value: "security" },
-    { label: "Data", value: "data" },
     { label: "Subscriptions", value: "subscriptions" },
-    { label: "Notifications", value: "notifications" },
   ];
 
   const currentTab = location.pathname.split("/").pop() || "account";

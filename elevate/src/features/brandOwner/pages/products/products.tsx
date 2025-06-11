@@ -5,14 +5,17 @@ import ProductCard from "./productCard";
 import { StyledButton } from "../../../../components/StyledButton";
 import { AddCircleOutline } from "@mui/icons-material";
 import { useProducts } from "./producthook";
+import { useNavigate } from "react-router";
 // import ProductCard from '../components/ProductCard';
 
 
 const Product: React.FC = () => {
   const { products } = useProducts();
+  const navigate = useNavigate();
+
   return (
     <Container padding={2} marginLeft={2}>
-      <StyledButton variant="outlined" sx={{ marginBottom: 4, marginLeft: 3 }}>
+      <StyledButton variant="outlined" sx={{ marginBottom: 4, marginLeft: 3 }} onClick={() => navigate("/products/add")}>
         <AddCircleOutline sx={{ fontSize: 16 }} />
         &nbsp;Add New Product
       </StyledButton>
@@ -20,9 +23,7 @@ const Product: React.FC = () => {
         {products.map((product, index) => (
           <Grid2 item key={index}>
             <ProductCard
-              title={product.name}
-              image={product.variants[0]?.image || ""}
-              product={product}
+              product={product} 
             />
           </Grid2>
         ))}

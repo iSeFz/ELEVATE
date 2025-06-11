@@ -7,7 +7,13 @@ import { UserProvider } from "./context/userContext";
 import { SnackbarProvider } from "notistack";
 import { BrandProvider } from "./context/BrandContext";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 15,
+    },
+  },
+});
 
 const theme = createTheme({
   typography: {

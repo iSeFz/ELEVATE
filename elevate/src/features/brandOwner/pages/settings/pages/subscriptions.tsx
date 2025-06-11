@@ -6,8 +6,11 @@ import {
 import { StyledSmallSvgIcon } from "../../../../../components/StyledSmallSvgIcon";
 import { StyledTextField } from "../../../../../components/StyledTextField";
 import { StyledTypography } from "../../../../../components/StyledTypography";
+import { useUser } from "../../../../../context/userContext";
 
 export const Subscriptions = () => {
+  const { userData } = useUser();
+  
   return (
     <Box width="100%">
       <Box display="flex" justifyContent='space-between' marginBottom={4}>

@@ -3,16 +3,11 @@ import React from "react";
 import { Card, CardContent, CardMedia, Typography, Box } from "@mui/material";
 import { StyledButton } from "../../../../components/StyledButton";
 import { StyledSmallSvgIcon } from "../../../../components/StyledSmallSvgIcon";
-
-interface ProductCardProps {
-  title: string;
-  description: string;
-  image: string;
-}
+import { useNavigate } from "react-router";
 
 interface ProductData {
+  id: string;
   name: string;
-  description: string;
   variants: Array<{
     images: string[];
   }>;
@@ -30,8 +25,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   if (!product) {
     return <div>No product data available.</div>;
   }
-  const { name, description, variants, reviewSummary } = product;
+  const { id, name, variants, reviewSummary } = product;
   const mainImage = variants?.[0]?.images?.[0] || "";
+  const navigate = useNavigate();
 
   return (
     <Card sx={{ margin: 2, boxShadow: 3, height: 320, width: 345 }}>
@@ -46,9 +42,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             >
               {name}
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {description}
-            </Typography>
             <Typography variant="body2" color="text.secondary" mt={1}>
               {reviewSummary
                 ? `⭐ ${reviewSummary.averageRating} (${reviewSummary.totalReviews} reviews)`
@@ -59,7 +52,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             </Box>
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <StyledButton variant="outlined">
+            <StyledButton variant="outlined" onClick={() => navigate("/products/edit/" + id)}>
               <StyledSmallSvgIcon>
                 <image href="/icons/Edit.svg" width="100%" height="100%" />
               </StyledSmallSvgIcon>

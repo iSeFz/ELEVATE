@@ -34,7 +34,7 @@ const Sidebar: FC = () => {
     selectedItem === itemKey ? "white" : "inherit";
 
   return (
-    <CustomBox minHeight='100vh'>
+    <CustomBox minHeight="100vh">
       <TitleText variant="h4">ELEVATE</TitleText>
 
       <List>
@@ -79,7 +79,11 @@ const Sidebar: FC = () => {
         />
 
         <SidebarItem
-          handleItemClick={handleItemClick}
+          handleItemClick={() => {
+            localStorage.removeItem("refreshToken");
+            localStorage.removeItem("accessToken");
+            navigate("/login");
+          }}
           getListItemStyles={getListItemStyles}
           getIconColor={getIconColor}
           selectedItem={selectedItem}

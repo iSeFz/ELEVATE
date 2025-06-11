@@ -14,6 +14,8 @@ import { Account } from "../brandOwner/pages/settings/pages/account";
 import { Subscriptions } from "../brandOwner/pages/settings/pages/subscriptions";
 import { Settingslayout } from "../brandOwner/pages/settings/components/settingsLayout";
 import LoginPage from "../authentication/pages/login";
+import AddProductPage from "../brandOwner/pages/products/addProductPage";
+import EditProductPage from "../brandOwner/pages/products/editProductPage";
 
 const ProtectedRoute = () => {
   const isAuthenticated = localStorage.getItem("refreshToken") !== null;
@@ -43,6 +45,14 @@ const router = createBrowserRouter([
             element: <Product />,
           },
           {
+            path: "/products/add",
+            element: <AddProductPage />,
+          },
+          {
+            path: "/products/edit/:id",
+            element: <EditProductPage />,
+          },
+          {
             path: "settings",
             element: <Settingslayout />,
             children: [
@@ -51,24 +61,8 @@ const router = createBrowserRouter([
                 element: <Account />,
               },
               {
-                path: "display",
-                element: <Account />,
-              },
-              {
-                path: "security",
-                element: <Account />,
-              },
-              {
-                path: "data",
-                element: <Account />,
-              },
-              {
                 path: "subscriptions",
                 element: <Subscriptions />,
-              },
-              {
-                path: "notifications",
-                element: <Account />,
               },
             ],
           },

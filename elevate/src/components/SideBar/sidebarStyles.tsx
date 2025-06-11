@@ -10,7 +10,6 @@ import React from "react";
 
 const CustomBox = styled(Box)(({ theme }) => ({
   background: theme.palette.primary.main,
-  // width: 313,
 }));
 
 const TitleText = styled(Typography)(({ theme }) => ({
@@ -22,6 +21,7 @@ const TitleText = styled(Typography)(({ theme }) => ({
 const StyledListItemText = styled(ListItemText)({
   "& .MuiListItemText-primary": {
     fontWeight: "bold",
+    transition: "color 0.2s ease",
   },
   color: "#737791",
 });
@@ -30,6 +30,10 @@ const StyledListItemStyle = styled(ListItem)({
   borderRadius: "12px",
   margin: "16px",
   width: 250,
+  cursor: "pointer",
+  "&:hover": {
+    backgroundColor: "#e1e1e1",
+  },
 });
 
 interface SidebarItemProps {
@@ -52,22 +56,35 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   name,
 }) => {
   const pathStyle = path.split("/")[1];
+  const isSelected = selectedItem === pathStyle;
+
   return (
     <StyledListItemStyle
       button
-      onClick={() => handleItemClick(path, path)}
-      sx={getListItemStyles(pathStyle)}
+      onClick={() => handleItemClick(path, pathStyle)} // Fixed: using pathStyle as second parameter
+      sx={{
+        ...getListItemStyles(pathStyle),
+        "&:hover .MuiListItemText-primary": {
+          color: isSelected ? "black" : "inherit",
+        },
+        "&:hover .MuiListItemIcon-root": {
+          color: isSelected ? "black" : "inherit",
+        },
+      }}
     >
-      <ListItemIcon>
-        {React.cloneElement(icon, {
-          htmlColor: getIconColor(pathStyle),
-        })}
+      <ListItemIcon
+        sx={{
+          color: getIconColor(pathStyle),
+          transition: "color 0.2s ease",
+        }}
+      >
+        {icon}
       </ListItemIcon>
       <StyledListItemText
         primary={name}
-        slotProps={{
-          primary: {
-            color: selectedItem === pathStyle ? "white" : "inherit",
+        primaryTypographyProps={{
+          sx: {
+            color: isSelected ? "white" : "inherit",
           },
         }}
       />
