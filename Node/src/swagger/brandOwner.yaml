@@ -8,7 +8,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BrandOwnerSignupRequest'
+              $ref: "#/components/schemas/BrandOwnerSignupRequest"
       responses:
         201:
           description: The brand owner and brand were successfully registered
@@ -28,9 +28,9 @@ paths:
                     type: object
                     properties:
                       brandOwner:
-                        $ref: '#/components/schemas/BrandOwnerResponse'
+                        $ref: "#/components/schemas/BrandOwnerResponse"
                       brand:
-                        $ref: '#/components/schemas/BrandResponse'
+                        $ref: "#/components/schemas/BrandResponse"
         400:
           description: Registration failed
           content:
@@ -79,7 +79,7 @@ paths:
                     type: object
                     properties:
                       user:
-                        $ref: '#/components/schemas/BrandOwnerResponse'
+                        $ref: "#/components/schemas/BrandOwnerResponse"
                       token:
                         type: string
                         description: JWT token for authentication
@@ -114,26 +114,26 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/BrandOwnerResponse'
+                      $ref: "#/components/schemas/BrandOwnerResponse"
         401:
           description: Unauthorized - Invalid or missing token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         403:
           description: Forbidden - Insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    
+                $ref: "#/components/schemas/ErrorResponse"
+
   /brand-owners/me:
     get:
       summary: Get a brand owner by ID
@@ -150,32 +150,32 @@ paths:
                     type: string
                     enum: [success]
                   data:
-                    $ref: '#/components/schemas/BrandOwnerResponse'
+                    $ref: "#/components/schemas/BrandOwnerResponse"
         401:
           description: Unauthorized - Invalid or missing token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         403:
           description: Forbidden - Insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
           description: Brand owner not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    
+                $ref: "#/components/schemas/ErrorResponse"
+
     put:
       summary: Update a brand owner
       tags: [Brand Owners]
@@ -184,7 +184,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BrandOwnerUpdateRequest'
+              $ref: "#/components/schemas/BrandOwnerUpdateRequest"
       responses:
         200:
           description: Brand owner updated successfully
@@ -197,38 +197,38 @@ paths:
                     type: string
                     enum: [success]
                   data:
-                    $ref: '#/components/schemas/BrandOwnerResponse'
+                    $ref: "#/components/schemas/BrandOwnerResponse"
         400:
           description: Invalid request data
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         401:
           description: Unauthorized - Invalid or missing token
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         403:
           description: Forbidden - Insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
           description: Brand owner not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
-    
+                $ref: "#/components/schemas/ErrorResponse"
+
     delete:
       summary: Delete a brand owner and their associated brand (For admin only)
       tags: [Brand Owners]
@@ -251,25 +251,171 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         403:
           description: Forbidden - Insufficient permissions
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         404:
           description: Brand owner not found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
         500:
           description: Server error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /brand-owners/me/dashboard/current-month-stats:
+    get:
+      summary: Get current month stats for the brand owner
+      tags: [Brand Owners Dashboard]
+      responses:
+        200:
+          description: Current month stats retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: object
+                    properties:
+                      totalProductsSold:
+                        type: integer
+                        description: Total number of products sold in the current month
+                      totalSales:
+                        type: number
+                        format: float
+                        description: Total sales amount in the current month
+                      topProduct:
+                        type: object
+                        properties:
+                          productId:
+                            type: string
+                            description: ID of the top-selling product
+                          productName:
+                            type: string
+                            description: Name of the top-selling product
+                          quantitySold:
+                            type: integer
+                            description: Quantity sold of the top-selling product
+                          totalSales:
+                            type: number
+                            format: float
+                            description: Total sales amount of the top-selling product
+                      topProductsSales:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            productId:
+                              type: string
+                              description: ID of the product
+                            productName:
+                              type: string
+                              description: Name of the product
+                            quantitySold:
+                              type: integer
+                              description: Quantity sold of the product
+                            totalSales:
+                              type: number
+                              format: float
+                              description: Total sales amount of the product
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /brand-owners/me/dashboard/reviews-summary:
+    get:
+      summary: Get reviews summary for the brand owner
+      tags: [Brand Owners Dashboard]
+      responses:
+        200:
+          description: Reviews summary retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: object
+                    properties:
+                      totalReviews:
+                        type: integer
+                        description: Total number of reviews received
+                      averageRating:
+                        type: number
+                        format: float
+                        description: Average rating across all reviews
+                      ratingDistribution:
+                        $ref: "#/components/schemas/RatingDistribution"
+                        description: Distribution of ratings across 1 to 5 stars
+                      productReviews:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            productId:
+                              type: string
+                              description: ID of the product
+                            productName:
+                              type: string
+                              description: Name of the product
+                            totalReviews:
+                              type: integer
+                              description: Total number of reviews for the product
+                            averageRating:
+                              type: number
+                              format: float
+                              description: Average rating for the product
+                            ratingDistribution:
+                              $ref: "#/components/schemas/RatingDistribution"
+                              description: Distribution of ratings across 1 to 5 stars
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
 
 components:
   schemas:
@@ -332,12 +478,12 @@ components:
             addresses:
               type: array
               items:
-                $ref: '#/components/schemas/Address'
+                $ref: "#/components/schemas/Address"
               description: Brand's physical addresses
             websites:
               type: array
               items:
-                $ref: '#/components/schemas/Website'
+                $ref: "#/components/schemas/Website"
               description: Brand's websites
 
     BrandOwnerRequest:
@@ -446,7 +592,7 @@ components:
           description: Website URL
 
     BrandResponse:
-      $ref: '../brand.yaml#/components/schemas/BrandResponse'
+      $ref: "../brand.yaml#/components/schemas/BrandResponse"
 
     ErrorResponse:
       type: object
@@ -456,7 +602,7 @@ components:
           enum: [error]
         message:
           type: string
-    
+
     AuthResponse:
       type: object
       properties:
@@ -470,4 +616,4 @@ components:
               type: string
               description: JWT token for authentication
             user:
-              $ref: '#/components/schemas/BrandOwnerResponse'
+              $ref: "#/components/schemas/BrandOwnerResponse"

@@ -10,25 +10,25 @@ import * as ProductValidators from '../middleware/validators/product.js';
 const router = express.Router();
 
 // Auth routes for brand owners
-router.post('/login', 
+router.post('/login',
     AuthValidators.validateLogin, brandOwnerLogin);
-router.post('/signup', 
+router.post('/signup',
     BrandOwnerValidators.validateSignupBrandOwner, brandOwnerSignup);
 
 // Brand owner management routes
-router.get('/', 
-    authenticate, 
-    authorize(['admin']), 
+router.get('/',
+    authenticate,
+    authorize(['admin']),
     BrandOwnerController.getAllBrandOwners);
-router.get('/me', 
-    authenticate, 
+router.get('/me',
+    authenticate,
     BrandOwnerController.getBrandOwner);
-router.put('/me', 
-    authenticate, 
-    BrandOwnerValidators.validateUpdateBrandOwner, 
+router.put('/me',
+    authenticate,
+    BrandOwnerValidators.validateUpdateBrandOwner,
     BrandOwnerController.updateBrandOwner);
-router.delete('/me', 
-    authenticate, authorize(['admin']), 
+router.delete('/me',
+    authenticate, authorize(['admin']),
     BrandOwnerController.deleteBrandOwner);
 
 // Product routes for brand owners
@@ -71,5 +71,15 @@ router.delete('/me/products/:productId/variants/:variantId',
     authorizeProductVariantAccess,
     ProductValidators.validateDeleteProductVariant,
     ProductController.deleteProductVariant);
+
+// Dashborad routes for brand owners
+router.get('/me/dashboard/current-month-stats',
+    authenticate,
+    authorize(['admin', 'brandOwner']),
+    BrandOwnerController.getCurrentMonthStats);
+router.get('/me/dashboard/reviews-summary',
+    authenticate,
+    authorize(['admin', 'brandOwner']),
+    BrandOwnerController.getBrandReviewsSummary);
 
 export default router;

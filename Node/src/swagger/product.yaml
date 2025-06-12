@@ -151,6 +151,25 @@ components:
           type: integer
           description: Quantity in stock for this variant
 
+    RatingDistribution:
+      type: object
+      properties:
+        "1":
+          type: integer
+          description: Number of 1-star ratings
+        "2":
+          type: integer
+          description: Number of 2-star ratings
+        "3":
+          type: integer
+          description: Number of 3-star ratings
+        "4":
+          type: integer
+          description: Number of 4-star ratings
+        "5":
+          type: integer
+          description: Number of 5-star ratings
+
     ProductReviewSummary:
       type: object
       properties:
@@ -162,23 +181,8 @@ components:
           type: integer
           description: Total number of reviews for the product
         ratingDistribution:
-          type: object
-          properties:
-            "1":
-              type: integer
-              description: Number of 1-star ratings
-            "2":
-              type: integer
-              description: Number of 2-star ratings
-            "3":
-              type: integer
-              description: Number of 3-star ratings
-            "4":
-              type: integer
-              description: Number of 4-star ratings
-            "5":
-              type: integer
-              description: Number of 5-star ratings
+          $ref: "#/components/schemas/RatingDistribution"
+          description: Distribution of ratings across 1 to 5 stars
 
     SuccessResponse:
       type: object
@@ -257,7 +261,7 @@ paths:
   /brand-owners/me/products:
     get:
       summary: Retrieve all products for the authenticated brand owner
-      tags: [Brand Owners]
+      tags: [Brand Owners Products]
       parameters:
         - in: query
           name: page
@@ -296,7 +300,7 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
     post:
       summary: Create a new product
-      tags: [Brand Owners]
+      tags: [Brand Owners Products]
       requestBody:
         description: You can only subbmit (name, category, description, material)
         required: true
@@ -390,7 +394,7 @@ paths:
   /brand-owners/me/products/{id}:
     get:
       summary: Get a product by ID
-      tags: [Brand Owners]
+      tags: [Brand Owners Products]
       parameters:
         - in: path
           name: id
@@ -431,7 +435,7 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
     put:
       summary: Update a product
-      tags: [Brand Owners]
+      tags: [Brand Owners Products]
       parameters:
         - in: path
           name: id
@@ -492,7 +496,7 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
     delete:
       summary: Delete a product
-      tags: [Brand Owners]
+      tags: [Brand Owners Products]
       parameters:
         - in: path
           name: id
@@ -535,7 +539,7 @@ paths:
   /brand-owners/me/products/{productId}/variants:
     post:
       summary: Add a variant to a product
-      tags: [Brand Owners]
+      tags: [Brand Owners Products]
       parameters:
         - in: path
           name: productId
@@ -647,7 +651,7 @@ paths:
   /brand-owners/me/products/{productId}/variants/{variantId}:
     get:
       summary: Get a specific product variant
-      tags: [Brand Owners]
+      tags: [Brand Owners Products]
       parameters:
         - in: path
           name: productId
@@ -694,7 +698,7 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
     put:
       summary: Update a specific product variant
-      tags: [Brand Owners]
+      tags: [Brand Owners Products]
       parameters:
         - in: path
           name: productId
@@ -761,7 +765,7 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
     delete:
       summary: Delete a specific product variant
-      tags: [Brand Owners]
+      tags: [Brand Owners Products]
       parameters:
         - in: path
           name: productId

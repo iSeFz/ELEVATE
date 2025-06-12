@@ -39,6 +39,7 @@ export interface OrderProduct {
     productId: string; // ID of the product in the order
     quantity: number;  // Quantity of the product in the order
     // Denormalized data to avoid extra queries
+    brandId: string; // Brand ID for quick access
     brandName: string; // Brand name for quick display
     productName: string;  // Product name for quick display
     size: string;        // Variant size
@@ -60,6 +61,7 @@ export interface Order {
     status: OrderStatus;
     shipment: Shipment;
     products: OrderProduct[];
+    brandIds: string[]; // List of brand IDs associated with the order
 
     createdAt: TimestampUnion;
     updatedAt: TimestampUnion;
@@ -106,6 +108,7 @@ export const orderProductDataValidators = (value: OrderProduct): boolean => {
         variantId: (v: OrderProduct['variantId']) => typeof v === 'string',
         productId: (v: OrderProduct['productId']) => typeof v === 'string',
         quantity: (v: OrderProduct['quantity']) => typeof v === 'number',
+        brandId: (v: OrderProduct['brandId']) => typeof v === 'string',
         productName: (v: OrderProduct['productName']) => typeof v === 'string' || v === undefined,
         brandName: (v: OrderProduct['brandName']) => typeof v === 'string',
         size: (v: OrderProduct['size']) => typeof v === 'string' || v === undefined,
@@ -131,6 +134,7 @@ export const orderDataValidators = (value: Order): boolean => {
         createdAt: (v: Order['createdAt']) => v instanceof Timestamp,
         updatedAt: (v: Order['updatedAt']) => v instanceof Timestamp,
         products: (v: Order['products']) => Array.isArray(v) && v.every(product => orderProductDataValidators(product)),
+        brandIds: (v: Order['brandIds']) => Array.isArray(v) && v.every(id => typeof id === 'string'),
     }
     return commonDataValidators<Order>(value, validators);
 }

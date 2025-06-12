@@ -165,6 +165,7 @@ const emptyOrder: Order = {
     status: OrderStatus.PENDING,
     pointsRedeemed: 0,
     pointsEarned: 0,
+    brandIds: [],
     createdAt: "",
     updatedAt: "",
 };
@@ -193,6 +194,7 @@ export const generateFullyOrderData = (order: Order): Order => {
         status: order.status ?? OrderStatus.PENDING,
         pointsRedeemed: order.pointsRedeemed ?? emptyOrder.pointsRedeemed,
         pointsEarned: order.pointsEarned ?? emptyOrder.pointsEarned,
+        brandIds: order.brandIds ?? [],
 
         createdAt: convertToTimestamp(order.createdAt),
         updatedAt: convertToTimestamp(order.updatedAt),

@@ -156,3 +156,53 @@ export const deleteBrandOwner = async (req: Request, res: Response) => {
         });
     }
 };
+
+export const getCurrentMonthStats = async (req: Request, res: Response) => {
+    try {
+        const brandOwnerId = req.user!.id;
+        const brandOwner = await BrandOwnerService.getBrandOwnerById(brandOwnerId);
+
+        if (!brandOwner) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'Brand owner not found'
+            });
+        }
+
+        const stats = await BrandOwnerService.getCurrentMonthStats(brandOwner.brandId);
+        res.status(200).json({
+            status: 'success',
+            data: stats
+        });
+    } catch (error: any) {
+        res.status(500).json({
+            status: 'error',
+            message: error.message
+        });
+    }
+}
+
+export const getBrandReviewsSummary = async (req: Request, res: Response) => {
+    try {
+        const brandOwnerId = req.user!.id;
+        const brandOwner = await BrandOwnerService.getBrandOwnerById(brandOwnerId);
+
+        if (!brandOwner) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'Brand owner not found'
+            });
+        }
+
+        const reviewsSummary = await BrandOwnerService.getBrandReviewsSummary(brandOwner.brandId);
+        res.status(200).json({
+            status: 'success',
+            data: reviewsSummary
+        });
+    } catch (error: any) {
+        res.status(500).json({
+            status: 'error',
+            message: error.message
+        });
+    }
+}

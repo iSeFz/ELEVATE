@@ -116,6 +116,7 @@ export const addOrder = async (order: Order) => {
         const batch = firestore.batch();
 
         let totalPrice = 0;
+        let brandIds = new Set<string>();
 
         for (let i = 0; i < addedOrderData.products.length; i++) {
             const item = addedOrderData.products[i];
@@ -144,12 +145,16 @@ export const addOrder = async (order: Order) => {
             addedOrderData.products[i] = {
                 ...item, // Item has these fields: variantId, productId, quantity
                 productName: productData.name,
+                brandId: productData.brandId,
                 brandName: productData.brandName,
                 colors: variant.colors ?? [],
                 size: variant.size,
                 price: variant.price,
                 imageURL: variant.images[0] ?? productData.variants[0].images[0] ?? "",
             };
+
+            // Add brand ID to the set
+            brandIds.add(productData.brandId);
 
             // Accumulate total price
             totalPrice += variant.price * item.quantity;
@@ -170,6 +175,7 @@ export const addOrder = async (order: Order) => {
         addedOrderData.shipment = {} as Order['shipment']; // Initialize shipment as empty
         addedOrderData.payment = {} as Order['payment']; // Initialize payment as empty
         addedOrderData.status = OrderStatus.PENDING; // Set initial status
+        addedOrderData.brandIds = Array.from(brandIds); // Convert Set to Array
 
         batch.set(orderDoc, addedOrderData);
 
