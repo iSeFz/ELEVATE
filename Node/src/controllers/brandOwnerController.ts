@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import * as BrandOwnerService from '../services/brandOwner.js';
 import * as productService from '../services/product.js';
+import { roles } from '../config/roles.js';
 
 /**
  * Get all brand owners (admin only)
@@ -37,7 +38,10 @@ export const getBrandOwner = async (req: Request, res: Response) => {
 
         res.status(200).json({
             status: 'success',
-            data: brandOwner
+            data: {
+                ...brandOwner,
+                role: roles['brandOwner'] // Include the role from the request user
+            }
         });
     } catch (error: any) {
         res.status(500).json({

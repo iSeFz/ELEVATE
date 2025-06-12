@@ -61,7 +61,6 @@ export const validateSignupBrandOwner = (req: Request, res: Response, next: Next
 
 
 const expectedUpdateBrandOwnerData: Partial<BrandOwner> = {
-    brandId: "String",
     firstName: "String",
     lastName: "String",
     imageURL: "String",

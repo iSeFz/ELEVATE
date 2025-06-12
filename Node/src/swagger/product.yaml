@@ -256,7 +256,7 @@ paths:
 
   /brand-owners/me/products:
     get:
-      summary: Retrieve all products
+      summary: Retrieve all products for the authenticated brand owner
       tags: [Brand Owners]
       parameters:
         - in: query
@@ -265,19 +265,9 @@ paths:
             type: integer
             default: 1
           description: Page number for pagination, default is 1, page size is 10
-        - in: query
-          name: category
-          schema:
-            type: string
-          description: Filter by product category
-        - in: query
-          name: department
-          schema:
-            type: string
-          description: Filter by department value (products where department array contains this value)
       responses:
         200:
-          description: A list of products
+          description: A list of products for the authenticated brand owner
           content:
             application/json:
               schema:

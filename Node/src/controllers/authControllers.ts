@@ -182,10 +182,10 @@ export const brandOwnerSignup = async (req: Request, res: Response) => {
     }
 };
 
-export const staffLogin = async (req: Request, res: Response) => {
+export const brandManagerLogin = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
-        const userData = await authService.staffLogin(email, password);
+        const userData = await authService.brandManagerLogin(email, password);
 
         return res.status(200).json({
             status: 'success',

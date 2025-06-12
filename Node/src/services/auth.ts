@@ -130,7 +130,7 @@ export const brandOwnerSignup = async (brandOwner: BrandOwner) => {
 };
 
 // Enhanced base login function that handles common functionality
-export const baseLogin = async (email: string, password: string, userType: 'customer' | 'brandOwner' | 'staff') => {
+export const baseLogin = async (email: string, password: string, userType: 'customer' | 'brandOwner' | 'brandManager') => {
     try {
         // Authenticate with Firebase
         const response = await axios.post(verifyCredentialsURL, {
@@ -191,8 +191,8 @@ export const brandOwnerLogin = async (email: string, password: string) => {
 };
 
 // Simplified staff login function
-export const staffLogin = async (email: string, password: string) => {
-    return baseLogin(email, password, 'staff');
+export const brandManagerLogin = async (email: string, password: string) => {
+    return baseLogin(email, password, 'brandManager');
 };
 
 export const deleteCredentialsUsingEmailAndPassword = async (email: string, password: string) => {

@@ -1,6 +1,6 @@
 import express from 'express';
 import { authenticate, authorize } from '../middleware/auth.js';
-import { staffLogin, staffSignup } from '../controllers/authControllers.js';
+import { brandManagerLogin, staffSignup } from '../controllers/authControllers.js';
 import * as StaffController from '../controllers/staffController.js';
 import * as AuthValidators from '../middleware/validators/auth.js';
 import * as StaffValidators from '../middleware/validators/staff.js';
@@ -8,7 +8,7 @@ import * as StaffValidators from '../middleware/validators/staff.js';
 const router = express.Router();
 
 // Auth routes for staff
-router.post('/login', AuthValidators.validateLogin, staffLogin);
+router.post('/login', AuthValidators.validateLogin, brandManagerLogin);
 router.post('/signup', StaffValidators.validateSignupStaff, staffSignup);
 
 // Staff management routes (admin only)
