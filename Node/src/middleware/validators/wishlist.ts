@@ -1,16 +1,18 @@
 import { Request, Response, NextFunction } from 'express';
+import { createSchemaBuilder, validateObjectStrict } from './builder.js';
 
-/**
- * Required data:
- * - productId: String - ID of the product
- */
+
+const expectedAddToWishlistData = createSchemaBuilder<{ productId: string }>()
+    .field('productId', { type: 'string', required: true, minLength: 1, maxLength: 30 })
+    .build();
 export const validateAddToWishlist = (req: Request, res: Response, next: NextFunction) => {
-    const { productId } = req.body;
+    const data = req.body;
 
-    if (!productId || typeof productId !== 'string') {
+    const result = validateObjectStrict(data, expectedAddToWishlistData);
+    if (result.isValid === false) {
         return res.status(400).json({
             status: 'error',
-            message: 'Product ID is required'
+            ...result
         });
     }
 

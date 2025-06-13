@@ -1,43 +1,36 @@
 import { Request, Response, NextFunction } from 'express';
+import { createSchemaBuilder, validateObjectStrict } from './builder.js';
 
-
+const signupSchema = createSchemaBuilder()
+    .field('email', { type: 'string', required: true, minLength: 5, maxLength: 50, value: 'name@elevate.com' })
+    .field('uid', { type: 'string', required: true })
+    .build();
 export const validateThirdPartySignup = (req: Request, res: Response, next: NextFunction) => {
-    const { email, uid } = req.body;
-    if (!email || !uid) {
+    const data = req.body;
+
+    const result = validateObjectStrict(data, signupSchema);
+    if (result.isValid === false) {
         return res.status(400).json({
             status: 'error',
-            message: 'Email and UID are required'
+            ...result
         });
     }
 
-    if (typeof email !== 'string' || typeof uid !== 'string') {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Email and UID must be strings'
-        });
-    }
     next();
 }
 
-/**
- * Required data:
- * - email: String - User's email address
- * - password: String - User's password
- */
+const loginSchema = createSchemaBuilder()
+    .field('email', { type: 'string', required: true, value: 'name@elevate.com' })
+    .field('password', { type: 'string', required: true, minLength: 6, maxLength: 30, value: 'password123' })
+    .build();
 export const validateLogin = (req: Request, res: Response, next: NextFunction) => {
-    const { email, password } = req.body;
+    const data = req.body;
 
-    if (!email || !password) {
+    const result = validateObjectStrict(data, loginSchema);
+    if (result.isValid === false) {
         return res.status(400).json({
             status: 'error',
-            message: 'Email and password are required'
-        });
-    }
-
-    if (typeof email !== 'string' || typeof password !== 'string') {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Email and password must be strings'
+            ...result
         });
     }
 

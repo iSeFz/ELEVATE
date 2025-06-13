@@ -1,106 +1,75 @@
-import { Request, Response, NextFunction } from 'express';
-import { validateObjectStructure } from './common.js';
-import { Product, productDataValidators, ProductVariant, productVariantDataValidators } from '../../types/models/product.js';
-import { CATEGORIES } from '../../config/categories.js';
+import e, { Request, Response, NextFunction } from 'express';
+import { createSchemaBuilder, Schema, validateObjectStrict } from './builder.js';
+import { Product, ProductVariant } from '../../types/models/product.js';
+import { getAllCategoriesDetails } from '../../config/categories.js';
+import { productVariantSchema } from './common.js';
 
-const expectedProductData: Partial<Product> = {
-    name: "String",
-    category: "String",
-    description: "String",
-    material: "String",
-    department: ["String"],
-    variants: [{
-        colors: ["String"],
-        discount: 0,
-        images: ["String"],
-        price: 0,
-        size: "String",
-        stock: 0,
-    }],
-};
+const expectedProductData = createSchemaBuilder<Product>()
+    .field('name', { type: 'string', required: true, minLength: 1, maxLength: 100, value: 'Sample Product' })
+    .field('category', { type: 'string', required: true, value: getAllCategoriesDetails().join(' / '), })
+    .field('description', { type: 'string', required: true, minLength: 1, maxLength: 500, value: 'This is a sample product description.' })
+    .field('material', { type: 'string', required: true, minLength: 1, maxLength: 50, value: 'Cotton' })
+    .field('department', {
+        type: 'array',
+        required: true,
+        items: { type: 'string', minLength: 1, maxLength: 30, value: "Men - Women - Unisex - Kids" }
+    })
+    .field('variants', { type: 'array', required: true, minLength: 1, items: { type: 'object', fields: productVariantSchema } })
+    .build();
 export const validateAddProduct = (req: Request, res: Response, next: NextFunction) => {
-    // Check if the overall structure matches
-    if (!validateObjectStructure(req.body, expectedProductData)) {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Request structure doesn\'t match expected format',
-            expectedFormat: expectedProductData
-        });
-    }
+    const data = req.body as Product;
+    const result = validateObjectStrict(data, expectedProductData);
 
-    if (!CATEGORIES.includes(req.body.category)) {
+    if (result.isValid === false) {
         return res.status(400).json({
             status: 'error',
-            message: `Invalid category. Must be one of: ${CATEGORIES.join(', ')}`,
-            expectedFormat: expectedProductData
-        });
-    }
-
-    // Ensure that the variants array has at least one variant
-    if (!req.body.variants || req.body.variants.length === 0) {
-        return res.status(400).json({
-            status: 'error',
-            message: 'At least one variant is required'
+            ...result
         });
     }
 
     next();
 };
 
+const expectedUpdateProductData: Schema = {}
+for (const key in expectedProductData) {
+    expectedUpdateProductData[key] = { ...expectedProductData[key] };
+    expectedUpdateProductData[key].required = false; // Make all fields optional for update
+    if (key === 'variants') {
+        expectedUpdateProductData[key].minLength = 0; // Allow empty variants array for update
+        if (
+            expectedUpdateProductData[key].items &&
+            expectedUpdateProductData[key].items.fields
+        ) {
+            // If you need to iterate over the fields object, use Object.entries or Object.keys
+            for (const variant in (expectedUpdateProductData[key].items.fields)) {
+                expectedUpdateProductData[key].items.fields[variant].required = false;
+            }
+        }
+    }
+}
 export const validateUpdateProduct = (req: Request, res: Response, next: NextFunction) => {
-    // Check if the overall structure matches
-    if (!validateObjectStructure(req.body, expectedProductData, "partially")) {
+    const product = req.body as Product;
+    const result = validateObjectStrict(product, expectedUpdateProductData);
+
+    if (result.isValid === false) {
         return res.status(400).json({
             status: 'error',
-            message: 'Request structure doesn\'t match expected format (Any of the fields can be updated)',
-            expectedFormat: expectedProductData
-        });
-    }
-    const isProductValid = productDataValidators(req.body as Product);
-    if (!isProductValid) {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Invalid product data types.',
-            expectedFormat: expectedProductData
+            ...result
         });
     }
 
     next();
 };
 
-
-const expectedProductvariantData: ProductVariant = {
-    colors: ["String"],
-    discount: 0,
-    images: ["String"],
-    price: 0,
-    size: "String",
-    stock: 0,
-}
-/**
- * Required data:
- * - colors: Array - Colors of the variant
- * - discount: Number - Discount of the variant
- * - images: Array - Images of the variant
- * - price: Number - Price of the variant
- * - size: String - Size of the variant
- * - stock: Number - Stock of the variant
- */
+const expectedProductvariantData = productVariantSchema;
 export const validateAddProductVariant = (req: Request, res: Response, next: NextFunction) => {
-    // Check if the overall structure matches
-    if (!validateObjectStructure(req.body, expectedProductvariantData)) {
+    const data = req.body;
+    const result = validateObjectStrict(data, expectedProductvariantData);
+
+    if (result.isValid === false) {
         return res.status(400).json({
             status: 'error',
-            message: 'Request structure doesn\'t match expected format',
-            expectedFormat: expectedProductvariantData
-        });
-    }
-    const isProductVariantValid = productVariantDataValidators(req.body as ProductVariant);
-    if (!isProductVariantValid) {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Invalid product variant data types.',
-            expectedFormat: expectedProductvariantData
+            ...result
         });
     }
 
@@ -108,39 +77,28 @@ export const validateAddProductVariant = (req: Request, res: Response, next: Nex
 }
 
 
-/**
- * Data that can be updated:
- * - colors: Array - Colors of the variant
- * - discount: Number - Discount of the variant
- * - images: Array - Images of the variant
- * - price: Number - Price of the variant
- * - size: String - Size of the variant
- * - stock: Number - Stock of the variant
- */
+const expectedUpdateProductVariantData = {} as Schema;
+for (const key in expectedProductvariantData) {
+    expectedUpdateProductVariantData[key] = { ...expectedProductvariantData[key] };
+    expectedUpdateProductVariantData[key].required = false; // Make all fields optional for update
+    if (key === 'variants') {
+        expectedUpdateProductVariantData[key].minLength = 0; // Allow empty variants array for update
+    }
+}
+for (const key in expectedUpdateProductVariantData) {
+    expectedUpdateProductVariantData[key].required = false; // Make all fields optional for update
+    if (key === 'images') {
+        expectedUpdateProductVariantData[key].minLength = 0; // Allow empty images array for update
+    }
+}
 export const validateUpdateProductVariant = (req: Request, res: Response, next: NextFunction) => {
-    if (!validateObjectStructure(req.body, expectedProductvariantData, "partially")) {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Request structure doesn\'t match expected format (Any of the fields can be updated)',
-            expectedFormat: expectedProductvariantData
-        });
-    }
+    const data = req.body as ProductVariant;
+    const result = validateObjectStrict(data, expectedUpdateProductVariantData);
 
-    const productID = req.params.productId;
-    const variantID = req.params.variantId;
-    const isProductVariantValid = productVariantDataValidators(req.body as ProductVariant);
-
-    if (!productID || !variantID) {
+    if (result.isValid === false) {
         return res.status(400).json({
             status: 'error',
-            message: 'Product ID and variant ID are required'
-        });
-    }
-    if (!isProductVariantValid) {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Invalid product variant data types.',
-            expectedFormat: expectedProductvariantData
+            ...result
         });
     }
 

@@ -1,86 +1,54 @@
 import { Request, Response, NextFunction } from 'express';
-import { Brand, brandDataValidators } from '../../types/models/brand.js';
-import { validateObjectStructure } from './common.js';
+import { Brand } from '../../types/models/brand.js';
+import { createSchemaBuilder, validateObjectStrict } from './builder.js';
 import { SUBSCRIPTION_PLANS, SubscriptionPlan } from '../../config/subscriptionPlans.js';
+import { addressSchema, websiteSchema } from './common.js';
 
-const expectedUpdateBrandData: Partial<Brand> = {
-    addresses: [{
-        postalCode: 123456,
-        building: 123,
-        city: "String",
-        street: "String",
-        latitude: 30.0313294,
-        longitude: 31.2081442,
-    }],
-    brandName: "String",
-    email: "String",
-    imageURL: "String",
-    industry: "String",
-    phoneNumbers: ["String"],
-    rating: 0,
-    storyDescription: "String",
-    websites: [{
-        url: "String",
-        type: "String",
-    }],
-}
-/**
- * Required Parameters:
- * - id: String - ID of the brand owner to update
- * 
- * Data to update:
- * - addresses: Array of Address objects
- *   - postalCode: Number
- *   - building: Number
- *   - city: String
- *   - street: String
- * - brandName: String
- * - email: String
- * - imageURL: String
- * - industry: String
- * - phoneNumbers: Array of Strings
- * - rating: Number
- * - storyDescription: String
- * - subscription: Subscription object
- * - websites: Array of Website objects
- *   - url: String
- *   - type: String
- */
+const expectedUpdateBrandData = createSchemaBuilder<Brand>()
+    .field('addresses', { type: 'array', required: false, items: { type: 'object', fields: addressSchema } })
+    .field('brandName', { type: 'string', required: false, minLength: 1, maxLength: 30 })
+    .field('email', { type: 'string', required: false, value: 'name@elevate.com' })
+    .field('imageURL', { type: 'string', required: false })
+    .field('industry', { type: 'string', required: false, minLength: 1, maxLength: 30, value: 'Retail' })
+    .field('phoneNumbers', {
+        type: 'array',
+        required: false,
+        items: { type: 'string', minLength: 11, maxLength: 11, value: '01234567890' }
+    })
+    .field('rating', { type: 'number', required: false })
+    .field('storyDescription', { type: 'string', required: false, minLength: 0, maxLength: 500 })
+    .field('websites', { type: 'array', required: false, items: { type: 'object', fields: websiteSchema } })
+    .build();
 export const validateUpdateBrand = (req: Request, res: Response, next: NextFunction) => {
     const brand = req.body as Brand;
-    // Check if the overall structure matches
-    if (!validateObjectStructure(brand, expectedUpdateBrandData, "partially")) {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Request structure doesn\'t match expected format (Any of the fields can be updated)',
-            expectedFormat: expectedUpdateBrandData
-        });
-    }
 
-    // No ID required for /me route
-    const isBrandOwnerValid = brandDataValidators(brand);
-    if (!isBrandOwnerValid) {
+    const result = validateObjectStrict(brand, expectedUpdateBrandData);
+    if (result.isValid === false) {
         return res.status(400).json({
             status: 'error',
-            message: 'Invalid brand data types.',
-            expectedFormat: expectedUpdateBrandData
+            ...result
         });
     }
 
     next();
 }
 
+const validateBrandDataSchema = createSchemaBuilder()
+    .field('newPlan', { type: 'number', required: true, value: SubscriptionPlan.FREE })
+    .build();
 export const validateUgradeSubscription = (req: Request, res: Response, next: NextFunction) => {
-    const { newPlan } = req.body;
-    if (typeof newPlan !== 'number') {
+    const data = req.body;
+
+
+    const result = validateObjectStrict(data, validateBrandDataSchema);
+    if (result.isValid === false) {
         return res.status(400).json({
             status: 'error',
-            message: 'newPlan (enum value) is required in the request body.'
+            ...result,
         });
     }
 
-    // Validate plan
-    if (!Object.values(SubscriptionPlan).includes(newPlan)) {
+    if (!Object.values(SubscriptionPlan).includes(data.newPlan)) {
         return res.status(400).json({
             status: 'error',
             message: 'Invalid subscription plan.',

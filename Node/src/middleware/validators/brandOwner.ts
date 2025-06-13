@@ -1,99 +1,60 @@
 import { Request, Response, NextFunction } from 'express';
-import { BrandOwner, brandOwnerDataValidators } from '../../types/models/brandOwner.js';
-import { Brand, brandDataValidators } from '../../types/models/brand.js';
-import { validateObjectStructure } from './common.js';
+import { BrandOwner } from '../../types/models/brandOwner.js';
+import { Brand } from '../../types/models/brand.js';
+import { createSchemaBuilder, validateObjectStrict } from './builder.js';
+import { addressSchema, websiteSchema } from './common.js';
 
-const expecteSignupData: { brand: Partial<Brand> } & Partial<BrandOwner> = {
-    email: "String",
-    password: "String",
-    firstName: "String",
-    lastName: "String",
-    brand: {
-        brandName: "String",
-        industry: "String",
-        storyDescription: "String",
-        email: "String"
-    }
-};
-/**
- * Required Parameters:
- * - brandOwner: BrandOwner - Brand owner data
- *   - brandName: String - Name of the brand
- *   - email: String - Email of the brand
- *   - industry: String - Industry of the brand
- *   - storyDescription: String - Story description of the brand
- *  
- * - email: String - Email of the brand owner
- * - password: String - Password of the brand owner
- * - firstName: String - First name of the brand owner
- * - lastName: String - Last name of the brand owner
- */
+const expectedBrandData = createSchemaBuilder<Brand>()
+    .field('brandName', { type: 'string', required: true, minLength: 1, maxLength: 30, value: 'Elevate' })
+    .field('email', { type: 'string', required: true, value: 'name@elevate.com' })
+    .field('industry', { type: 'string', required: true, minLength: 1, maxLength: 30, value: 'Retail' })
+    .field('storyDescription', { type: 'string', required: true, minLength: 0, maxLength: 500, value: 'Elevate is a brand that...' })
+    .field('imageURL', { type: 'string', required: false })
+    .field('phoneNumbers', {
+        type: 'array',
+        required: false,
+        items: { type: 'string', minLength: 11, maxLength: 11, value: '01234567890' }
+    })
+    .field('addresses', { type: 'array', required: false, items: { type: 'object', fields: addressSchema } })
+    .field('websites', { type: 'array', required: false, items: { type: 'object', fields: websiteSchema } })
+    .build();
+const expecteSignupData = createSchemaBuilder<{ brand: Brand } & BrandOwner>()
+    .field('email', { type: 'string', required: true, value: 'name@elevate.com' })
+    .field('password', { type: 'string', required: true, minLength: 6, maxLength: 30, value: 'password123' })
+    .field('firstName', { type: 'string', required: true, minLength: 2, maxLength: 15, value: 'John' })
+    .field('lastName', { type: 'string', required: true, minLength: 2, maxLength: 15, value: 'Doe' })
+    .field('brand', { type: 'object', required: true, fields: expectedBrandData })
+    .field('username', { type: 'string', required: false, minLength: 3, maxLength: 15, value: 'elevateUser' })
+    .field('imageURL', { type: 'string', required: false })
+    .build();
 export const validateSignupBrandOwner = (req: Request, res: Response, next: NextFunction) => {
-    // Check if the overall structure matches
-    if (!validateObjectStructure(req.body, expecteSignupData)) {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Request structure doesn\'t match expected format',
-            expectedFormat: expecteSignupData
-        });
-    }
-    let { brand, ...brandOwner }: { brand: Brand } & BrandOwner = req.body;
+    const data = req.body as { brand: Brand } & BrandOwner;
 
-    const isBrandValid = brandDataValidators(brand);
-    const isBrandOwnerValid = brandOwnerDataValidators(brandOwner);
-    if (!isBrandValid) {
+    const result = validateObjectStrict(data, expecteSignupData);
+    if (result.isValid === false) {
         return res.status(400).json({
             status: 'error',
-            message: 'Invalid brand data types.',
-            expectedFormat: expecteSignupData,
-        });
-    }
-    if (!isBrandOwnerValid) {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Invalid brand owner data types.',
-            expectedFormat: expecteSignupData,
+            ...result
         });
     }
 
     next();
 }
 
-
-const expectedUpdateBrandOwnerData: Partial<BrandOwner> = {
-    firstName: "String",
-    lastName: "String",
-    imageURL: "String",
-    username: "String",
-}
-/**
- * Required Parameters:
- * - id: String - ID of the brand owner to update
- * 
- * Data to update:
- *   - username: String - Email of the brand owner
- *   - imageURL: String - Password of the brand owner
- *   - firstName: String - First name of the brand owner
- *   - lastName: String - Last name of the brand owner
- */
+const expectedUpdateBrandOwnerData = createSchemaBuilder<BrandOwner>()
+    .field('username', { type: 'string', required: false, minLength: 3, maxLength: 15, value: 'elevateUser' })
+    .field('imageURL', { type: 'string', required: false })
+    .field('firstName', { type: 'string', required: false, minLength: 2, maxLength: 15 })
+    .field('lastName', { type: 'string', required: false, minLength: 2, maxLength: 15 })
+    .build();
 export const validateUpdateBrandOwner = (req: Request, res: Response, next: NextFunction) => {
     const brandOwner = req.body as BrandOwner;
-    // Check if the overall structure matches
-    if (!validateObjectStructure(brandOwner, expectedUpdateBrandOwnerData, "partially")) {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Request structure doesn\'t match expected format (Any of the fields can be updated)',
-            expectedFormat: expectedUpdateBrandOwnerData
-        });
-    }
 
-    // Check if the brand owner data is valid
-    const isBrandOwnerValid = brandOwnerDataValidators(brandOwner);
-    if (!isBrandOwnerValid) {
+    const result = validateObjectStrict(brandOwner, expectedUpdateBrandOwnerData);
+    if (result.isValid === false) {
         return res.status(400).json({
             status: 'error',
-            message: 'Invalid brand owner data types.',
-            expectedFormat: expectedUpdateBrandOwnerData
+            ...result
         });
     }
 

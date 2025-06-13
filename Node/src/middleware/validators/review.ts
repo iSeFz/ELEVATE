@@ -1,63 +1,39 @@
 import { Request, Response, NextFunction } from 'express';
-import { validateObjectStructure } from './common.js';
-import { Review, reviewDataValidators } from '../../types/models/review.js';
+import { createSchemaBuilder, validateObjectStrict } from './builder.js';
+import { Review } from '../../types/models/review.js';
 
-const expectedAddReviewData: Partial<Review> = {
-    title: "String",
-    content: "String",
-    rating: 1,
-};
-/**
- * Required data:
- * - title: String - Title of the review
- * - content: String - Content of the review
- * - rating: Number - Rating given by the customer (1-5)
- */
+const expectedAddReviewData = createSchemaBuilder<Review>()
+    .field('title', { type: 'string', required: true, minLength: 1, maxLength: 100 })
+    .field('content', { type: 'string', required: true, minLength: 1, maxLength: 500 })
+    .field('rating', { type: 'number', required: true, minValue: 1, maxValue: 5, value: 5 })
+    .build();
 export const validateAddReview = (req: Request, res: Response, next: NextFunction) => {
-    if (!validateObjectStructure(req.body, expectedAddReviewData)) {
+    const data = req.body;
+    const result = validateObjectStrict(data, expectedAddReviewData);
+
+    if (result.isValid === false) {
         return res.status(400).json({
             status: 'error',
-            message: 'Request structure doesn\'t match expected format',
-            expectedFormat: expectedAddReviewData
-        });
-    }
-    const isReviewValid = reviewDataValidators(req.body as Review);
-    if (!isReviewValid) {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Invalid review types.',
-            expectedFormat: expectedAddReviewData
+            ...result
         });
     }
 
     next();
 };
 
-const expectedUpdateReviewData: Partial<Review> = {
-    title: "String",
-    content: "String",
-    rating: 0,
-};
-/**
- * Data that can be updated:
- * - title: String - Title of the review
- * - content: String - Content of the review
- * - rating: Number - Rating given by the customer (1-5)
- */
+const expectedUpdateReviewData = createSchemaBuilder<Review>()
+    .field('title', { type: 'string', required: false, minLength: 1, maxLength: 100 })
+    .field('content', { type: 'string', required: false, minLength: 1, maxLength: 500 })
+    .field('rating', { type: 'number', required: false, minValue: 1, maxValue: 5, value: 5 })
+    .build();
 export const validateUpdateReview = (req: Request, res: Response, next: NextFunction) => {
-    if (!validateObjectStructure(req.body, expectedAddReviewData, "partially")) {
+    const data = req.body;
+    const result = validateObjectStrict(data, expectedAddReviewData);
+
+    if (result.isValid === false) {
         return res.status(400).json({
             status: 'error',
-            message: 'Request structure doesn\'t match expected format (Any of the fields can be updated)',
-            expectedFormat: expectedAddReviewData
-        });
-    }
-    const isReviewValid = reviewDataValidators(req.body as Review);
-    if (!isReviewValid) {
-        return res.status(400).json({
-            status: 'error',
-            message: 'Invalid review types.',
-            expectedFormat: expectedAddReviewData
+            ...result
         });
     }
 

@@ -259,9 +259,6 @@ paths:
                   items:
                     $ref: "#/components/schemas/Website"
                   description: Brand's websites
-                subscription:
-                  $ref: "#/components/schemas/Subscription"
-                  description: Brand's subscription details
       responses:
         200:
           description: The brand was successfully updated
