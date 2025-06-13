@@ -1,10 +1,11 @@
-import { Order, orderDataValidators, OrderStatus, Shipment } from '../../types/models/order.js';
+import { Order, orderDataValidators, OrderStatus, Shipment, WeightSurcharge } from '../../types/models/order.js';
 import * as productService from '../product.js';
-import { admin } from '../../config/firebase.js';
 import { convertToTimestamp } from './common.js';
-import { Timestamp } from 'firebase-admin/firestore';
 import { getDistance } from 'geolib';
 import { Address } from '../../types/models/common.js';
+import { DistanceRange, ShippingRate } from '../../types/models/order.js';
+import { shipmentType as SHIPMMENT_TYPES } from '../../config/order.js';
+
 
 export const checkMissingOrderData = (order: any) => {
     const currentOrder = order as Order;
@@ -260,6 +261,15 @@ export const getUniqueBrandsFromProducts = async (productItems: { productId: str
     return Array.from(brandIds);
 };
 
+// Define shipping rates based on distance ranges
+const SHIPPING_RATES: ShippingRate[] = [
+    { minDistance: 0, maxDistance: 5, fee: 25 }, // Same city/nearby - 25 EGP
+    { minDistance: 5, maxDistance: 15, fee: 35 }, // Within metro area - 35 EGP
+    { minDistance: 15, maxDistance: 50, fee: 50 }, // Suburban/nearby governorates - 50 EGP
+    { minDistance: 50, maxDistance: 150, fee: 75 }, // Different governorates - 75 EGP
+    { minDistance: 150, maxDistance: Infinity, fee: 100 } // Far governorates - 100 EGP
+];
+
 /**
  * Calculates estimated delivery days based on distance and brand breakdown
  * @param feeBreakdown Array of fee breakdown objects with distance information
@@ -267,38 +277,66 @@ export const getUniqueBrandsFromProducts = async (productItems: { productId: str
  * @returns Estimated delivery days
  */
 export const calculateEstimatedDelivery = (
-    feeBreakdown: Array<{
-        brandId: string;
-        brandName: string;
-        distance: number;
-        fee: number;
-    }>,
-    shipmentType: string = 'standard'
-): number => {
-    if (feeBreakdown.length === 0) return shipmentType === 'express' ? 1 : 3;
-
+    distance: number,
+    shipmentType: string = SHIPMMENT_TYPES['standard']
+) => {
     // Base delivery time constants
-    const BASE_DELIVERY_DAYS = shipmentType === 'express' ? 1 : 2;
-    const EXTRA_DAY_PER_50KM = shipmentType === 'express' ? 0.5 : 1;
-    const MULTI_BRAND_PENALTY = shipmentType === 'express' ? 0.5 : 1;
-
-    // Find the maximum distance among all brands (bottleneck)
-    const maxDistance = Math.max(...feeBreakdown.map(item => item.distance));
+    const BASE_DELIVERY_DAYS = shipmentType === SHIPMMENT_TYPES['express'] ? 1 : 3;
+    const EXTRA_DAY_PER_50KM = shipmentType === SHIPMMENT_TYPES['express'] ? 0.5 : 1;
 
     // Calculate base delivery time based on distance
     let estimatedDays = BASE_DELIVERY_DAYS;
 
-    // Add extra days based on distance
-    if (maxDistance > 50) {
-        estimatedDays += Math.floor(maxDistance / 50) * EXTRA_DAY_PER_50KM;
-    }
+    // Find the appropriate shipping rate based on distance
+    let shippingRate = SHIPPING_RATES.find(rate =>
+        distance >= rate.minDistance && distance < rate.maxDistance
+    )?.fee ?? SHIPPING_RATES[SHIPPING_RATES.length - 1].fee; // Fallback to highest rate
 
-    // Add penalty for multiple brands (coordination complexity)
-    if (feeBreakdown.length > 1) {
-        estimatedDays += MULTI_BRAND_PENALTY;
-    }
+    // Add extra days based on distance (for every 50km)
+    estimatedDays += Math.floor(shippingRate / 50) * EXTRA_DAY_PER_50KM;
 
     // Different caps for different service levels
     const maxDays = shipmentType === 'express' ? 3 : 7;
-    return Math.min(Math.ceil(estimatedDays), maxDays);
+    return {
+        days: Math.min(Math.ceil(estimatedDays), maxDays),
+        fee: shippingRate
+    }
+};
+
+// Weight-based surcharges (in EGP)
+const WEIGHT_SURCHARGES: WeightSurcharge[] = [
+    { minWeight: 0, maxWeight: 2, surcharge: 0 },     // Base weight - no extra fee
+    { minWeight: 2, maxWeight: 5, surcharge: 10 },    // Light packages
+    { minWeight: 5, maxWeight: 10, surcharge: 20 },   // Medium packages  
+    { minWeight: 10, maxWeight: 20, surcharge: 35 },  // Heavy packages
+    { minWeight: 20, maxWeight: Infinity, surcharge: 50 } // Very heavy/freight
+];
+
+/**
+ * Calculate weight surcharge based on total order weight
+ * @param totalWeightKg - Total weight of all items in kg
+ * @returns Weight surcharge fee in EGP
+ */
+export const calculateWeightSurcharge = (totalWeightKg: number): number => {
+    if (totalWeightKg < 0) {
+        throw new Error('Weight cannot be negative');
+    }
+
+    const weightTier = WEIGHT_SURCHARGES.find(tier =>
+        totalWeightKg >= tier.minWeight && totalWeightKg < tier.maxWeight
+    );
+
+    return weightTier ? weightTier.surcharge : WEIGHT_SURCHARGES[WEIGHT_SURCHARGES.length - 1].surcharge;
+};
+
+
+/**
+ * Calculate total order weight from items
+ * @param quantities - Array of quantities for each product item
+ * @returns Total weight in kg
+ */
+export const calculateOrderWeight = (quantities: number[]): number => {
+    return quantities.reduce((totalWeight, quantity) => {
+        return totalWeight + quantity * 0.2; // Assuming each item weighs 200g (0.2kg)
+    }, 0);
 };

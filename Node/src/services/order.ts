@@ -1,4 +1,4 @@
-import { admin } from '../config/firebase.js';
+import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
 import * as OrderUtils from './utils/order.js';
 import { Order, OrderStatus } from '../types/models/order.js';
 import { Timestamp } from 'firebase-admin/firestore';
@@ -7,10 +7,11 @@ import { getCustomer } from './customer.js';
 import { Address } from '../types/models/common.js';
 import { getBrand } from './brand.js';
 import { v4 as uuidv4 } from 'uuid';
+import { shipmentType as SHIPMMENT_TYPES } from '../config/order.js';
 
 const firestore = admin.firestore();
-const orderCollection = 'order';
-const customerCollection = 'customer';
+const orderCollection = FIREBASE_COLLECTIONS['order'];
+const customerCollection = FIREBASE_COLLECTIONS['customer'];
 
 // Helper to fetch orders with custom query and pagination
 const fetchOrders = async (
@@ -121,7 +122,7 @@ export const addOrder = async (order: Order) => {
         for (let i = 0; i < addedOrderData.products.length; i++) {
             const item = addedOrderData.products[i];
             // Use productService.getProductVariant if you want, or keep your current fetching logic
-            const productRef = firestore.collection('product').doc(item.productId);
+            const productRef = firestore.collection(FIREBASE_COLLECTIONS['product']).doc(item.productId);
             const productDoc = await productRef.get();
 
             if (!productDoc.exists) {
@@ -188,17 +189,19 @@ export const addOrder = async (order: Order) => {
 
 export const calculateShipmentFees = async (
     customerAddress: Address,
-    shipmentType: string, // e.g., "standard", "express"
+    shipmentType: typeof SHIPMMENT_TYPES[keyof typeof SHIPMMENT_TYPES],
     productItems: { productId: string, quantity: number }[]
 ) => {
-    const PRICE_PER_KM = 5; // EGP per KM
-    const BASE_FEE = 30; // Minimum fee per brand
+    if (shipmentType === SHIPMMENT_TYPES["pickup"]) {
+        return {};
+    }
 
     // 1. Get unique brands from products
     const uniqueBrandIds = await OrderUtils.getUniqueBrandsFromProducts(productItems);
 
     let totalFees = 0;
     const feeBreakdown = [];
+    let estimatedDeliveryDays = 0;
 
     // 2. Calculate fee for each brand
     for (const brandId of uniqueBrandIds) {
@@ -209,35 +212,33 @@ export const calculateShipmentFees = async (
         const { distance: nearestDistance, nearestBranch } = OrderUtils.findNearestBranch(customerAddress, brand.addresses);
 
         // 4. Calculate fee for this brand
-        const brandFee = Math.max(BASE_FEE, nearestDistance * PRICE_PER_KM);
-        totalFees += brandFee;
+        // const brandFee = Math.max(BASE_FEE, nearestDistance * PRICE_PER_KM);
+        const brandDelivery = OrderUtils.calculateEstimatedDelivery(nearestDistance, shipmentType)
+        totalFees += brandDelivery.fee;
+        estimatedDeliveryDays = Math.max(estimatedDeliveryDays, brandDelivery.days);
 
         feeBreakdown.push({
             brandId,
             brandName: brand.brandName,
             distance: nearestDistance,
             nearestBranch,
-            fee: brandFee
+            fee: brandDelivery.fee
         });
     }
 
+    // 5. Calculate weight surcharge
+    const orderWeight = OrderUtils.calculateOrderWeight(productItems.map(item => item.quantity));
+    const weightSurcharge = OrderUtils.calculateWeightSurcharge(orderWeight);
+
     const orderShipment: Order['shipment'] = {
-        totalFees: totalFees * (shipmentType === 'express' ? 2 : 1), // Double for express shipment
+        totalFees: totalFees * (shipmentType === SHIPMMENT_TYPES["express"] ? 2 : 1) + weightSurcharge, // Double for express shipment
         breakdown: feeBreakdown,
-        estimatedDeliveryDays: OrderUtils.calculateEstimatedDelivery(feeBreakdown),
+        estimatedDeliveryDays,
         method: shipmentType,
         createdAt: Timestamp.now(),
         trackingNumber: '', // This can be set later when shipment is confirmed
         carrier: 'Bosta', // Assuming Bosta is the carrier
     };
-
-    // Update the order collection with the shipment details
-    const orderShipmentDoc = firestore.collection(orderCollection).doc();
-    const batch = firestore.batch();
-    batch.update(orderShipmentDoc, {
-        shipment: orderShipment,
-        updatedAt: Timestamp.now()
-    });
 
     return orderShipment;
 };
@@ -346,7 +347,7 @@ const orderRollback = async (batch: admin.firestore.WriteBatch, order: Order) =>
 const orderRestoreProductStocks = async (batch: admin.firestore.WriteBatch, products: Order['products']) => {
     // Restore product stock
     for (const item of products) {
-        const productRef = firestore.collection('product').doc(item.productId);
+        const productRef = firestore.collection(FIREBASE_COLLECTIONS['product']).doc(item.productId);
         const productDoc = await productRef.get();
         if (!productDoc.exists) continue;
 

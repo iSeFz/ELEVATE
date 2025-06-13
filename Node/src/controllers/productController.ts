@@ -4,7 +4,7 @@ import * as brandOwnerService from '../services/brandOwner.js';
 import * as brandService from '../services/brand.js';
 import { Product, ProductVariant } from '../types/models/product.js';
 import { getSubscriptionPlanDetails } from '../config/subscriptionPlans.js';
-import { getAllCategoriesDetails } from '../config/categories.js';
+import { getAllCategoriesDetails } from '../config/product.js';
 
 export const getAllCategories = (req: Request, res: Response) => {
     res.status(200).json({ status: 'success', data: getAllCategoriesDetails() });

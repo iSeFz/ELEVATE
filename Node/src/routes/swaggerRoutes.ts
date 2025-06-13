@@ -28,8 +28,17 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
       },
     ],
     tags: [
+      { name: 'Authentication' },
       { name: 'Customers', description: 'All APIs related to customers' },
+      { name: 'Wishlist' },
+      { name: 'Cart' },
+      { name: 'Orders' },
       { name: 'Products', description: 'All APIs related to public product access' },
+      { name: 'Reviews' },
+      { name: 'Brands' },
+      { name: 'Brand Owners' },
+      { name: 'Brand Owners Products' },
+      { name: 'Brand Owners Dashboard' },
     ],
     components: {
       securitySchemes: {

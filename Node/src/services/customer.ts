@@ -1,9 +1,9 @@
-import { admin } from '../config/firebase.js';
+import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
 import { Customer } from '../types/models/customer.js';
 import { deleteCredentialsUsingUID } from './auth.js';
 
 const firestore = admin.firestore();
-const customerCollection = 'customer';
+const customerCollection = FIREBASE_COLLECTIONS['customer'];
 
 export const getAllCustomers = async (page = 1) => {
     const limit = 10; // Fixed limit of 10 customers per page

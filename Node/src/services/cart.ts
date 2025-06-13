@@ -1,9 +1,10 @@
-import { admin } from '../config/firebase.js';
+import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
 import { CartItem, Customer } from '../types/models/customer.js';
 import { Product } from '../types/models/product.js';
+import { getProduct } from './product.js';
 
 const firestore = admin.firestore();
-const customerCollection = 'customer';
+const customerCollection = FIREBASE_COLLECTIONS['customer'];
 
 // Cart-related functions
 export const getCart = async (customerId: string) => {
@@ -50,15 +51,11 @@ export const addToCart = async (customerId: string, item: Partial<CartItem>) => 
         const customerData = customerDoc.data() as Customer;
         const currentCart = customerData.cart || { items: [], subtotal: 0, updatedAt: admin.firestore.Timestamp.now() };
 
-        // Fetch product details to ensure it exists and to get current price
-        const productRef = firestore.collection('product').doc(item.productId);
-        const productDoc = await productRef.get();
-
-        if (!productDoc.exists) {
+        // // Fetch product details to ensure it exists and to get current price
+        const product = await getProduct(item.productId);
+        if (!product) {
             throw new Error('Product not found, product ID: ' + item.productId);
         }
-
-        const product = productDoc.data() as Product;
 
         // Find the variant
         const variant = product.variants.find((v: any) => v.id === item.variantId);
@@ -170,14 +167,10 @@ export const updateCartItem = async (
         const currentItem = currentCart.items[itemIndex];
 
         // Verify product and variant exist and check stock
-        const productRef = firestore.collection('product').doc(currentItem.productId);
-        const productDoc = await productRef.get();
-
-        if (!productDoc.exists) {
-            throw new Error(`Product of this cart item not found, product name: ${currentItem.productName}, product ID: ${currentItem.productId}`);
+        const product = await getProduct(currentItem.productId);
+        if (!product) {
+            throw new Error(`Product not found, product ID: ${currentItem.productId}`);
         }
-
-        const product = productDoc.data() as Product;
 
         // Find the variant
         const variant = product.variants.find((v: any) => v.id === currentItem.variantId);

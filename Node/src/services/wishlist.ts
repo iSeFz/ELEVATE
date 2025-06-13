@@ -1,9 +1,10 @@
-import { admin } from '../config/firebase.js';
+import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
 import { Customer, WishlistItem } from '../types/models/customer.js';
 import { Product } from '../types/models/product.js';
+import { getProduct } from './product.js';
 
 const firestore = admin.firestore();
-const customerCollection = 'customer';
+const customerCollection = FIREBASE_COLLECTIONS['customer'];
 
 export const getWishlist = async (customerId: string, page = 1) => {
     if (!customerId) {
@@ -74,14 +75,10 @@ export const addToWishlist = async (customerId: string, productId: string) => {
         }
 
         // Fetch product details to ensure it exists and to get current data
-        const productRef = firestore.collection('product').doc(productId);
-        const productDoc = await productRef.get();
-
-        if (!productDoc.exists) {
+        const product = await getProduct(productId);
+        if (!product) {
             throw new Error(`Product not found, product ID: ${productId}`);
         }
-
-        const product = productDoc.data() as Product;
 
         // Create new wishlist item
         const newWishlistItem: WishlistItem = {

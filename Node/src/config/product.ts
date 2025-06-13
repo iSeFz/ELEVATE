@@ -7,7 +7,12 @@ export const CATEGORIES: string[] = [
     "Activewear - Gym Tops", "Activewear - Gym Leggings", "Activewear - Tracksuits"
 ];
 
+export const DEPARTMENTS: string[] = [
+    "men", "women", "kids", "unisex"
+]
+
 // Helper to get all categories (future-proof for adding metadata)
 export function getAllCategoriesDetails(): string[] {
     return CATEGORIES;
 }
+

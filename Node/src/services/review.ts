@@ -1,11 +1,11 @@
-import { admin } from '../config/firebase.js';
+import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
 import { generateFullyReviewData } from './utils/review.js';
 import { Review } from '../types/models/review.js';
 import { Timestamp } from 'firebase-admin/firestore';
 import * as productService from './product.js';
 
 const firestore = admin.firestore();
-const reviewCollection = 'review';
+const reviewCollection = FIREBASE_COLLECTIONS['review'];
 
 export const getAllReviewsOfProduct = async (productId: string, page = 1) => {
     const limit = 10;

@@ -16,26 +16,14 @@ const CONFIRM_RESET_PASSWORD_URL = `https://identitytoolkit.googleapis.com/v1/ac
 
 const REFRESH_TOKEN_URL = `https://securetoken.googleapis.com/v1/token?key=${firestoreKey}`;
 
-const firestoreDocuments = {
-  "address": "address",
-  "brand": "Brand",
-  "brandOwner": "BrandOwner",
-  "color": "Color",
-  "image": "Image",
-  "inventory": "Inventory",
-  "order": "Order",
-  "orderItem": "OrderItem",
-  "payment": "Payment",
-  "phoneNumbers": "PhoneNumbers",
-  "plan": "Plan",
-  "shipment": "Shipment",
-  "staff": "Staff",
-  "subscription": "Subscription",
-  "cart": "cart",
+export const FIREBASE_COLLECTIONS = {
+  "brand": "brand",
+  "brandOwner": "brandOwner",
+  "order": "order",
   "customer": "customer",
   "product": "product",
-  "productVariant": "productVariant",
   "review": "review",
+  "staff": "staff",
 }
 
 export { admin, verifyCredentialsURL, SEND_RESET_EMAIL_URL, CONFIRM_RESET_PASSWORD_URL, REFRESH_TOKEN_URL };

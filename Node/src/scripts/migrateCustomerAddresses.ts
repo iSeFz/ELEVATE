@@ -2,10 +2,10 @@
 // Moves 'address' field to 'addresses' array and removes the old 'address' field
 // Usage: Import and call runCustomerAddressMigration()
 
-import { admin } from '../config/firebase.js';
+import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
 
 const firestore = admin.firestore();
-const customerCollection = 'customer';
+const customerCollection = FIREBASE_COLLECTIONS['customer'];
 
 export const runCustomerAddressMigration = async () => {
     const batchSize = 100;

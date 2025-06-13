@@ -16,8 +16,9 @@ export interface SchemaField {
     maxLength?: number; // For arrays and strings
     minValue?: number; // For numbers
     maxValue?: number; // For numbers
-    patternRgx?: string; // For string patterns (regex)
+    patternRgx?: RegExp; // For string patterns (regex)
     patternHint?: string; // Hint for regex pattern
+    in?: string[]; // For enum-like validation (allowed values)
 }
 
 /**
@@ -55,6 +56,7 @@ function isValidType(value: any, fieldSchema: SchemaField): boolean {
             if (minLength !== undefined && value.length < minLength) return false;
             if (maxLength !== undefined && value.length > maxLength) return false;
             if (fieldSchema.patternRgx && !new RegExp(fieldSchema.patternRgx).test(value)) return false;
+            if (fieldSchema.in && !fieldSchema.in.includes(value)) return false;
             return true;
 
         case 'number':
@@ -167,6 +169,9 @@ const checkSchemaConstraints = (schema: SchemaField, value: any, path: string) =
         }
         if (schema.patternRgx && !new RegExp(schema.patternRgx).test(value)) {
             return (`Field '${path}' must match the pattern: ${schema.patternHint ?? schema.patternRgx}`);
+        }
+        if (schema.in && !schema.in.includes(value)) {
+            return (`Field '${path}' must be one of: ${schema.in.join(', ')}`);
         }
     } else if (schema.type === 'number' && typeof value === 'number') {
         if (schema.minValue !== undefined && value < schema.minValue) {
@@ -430,6 +435,7 @@ export function createSchema<T extends Record<string, any>>(
             maxValue: field.maxValue,
             patternRgx: field.patternRgx, // Regex pattern for string validation
             patternHint: field.patternHint, // Hint for regex pattern
+            in: field.in, // For enum-like validation
         };
     }
 
@@ -453,6 +459,10 @@ export class SchemaBuilder<T extends Record<string, any>> {
         return this;
     }
 
+    constructor(schemaBuilder: SchemaBuilder<T>) {
+        this.schemaDefinition = { ...schemaBuilder.schemaDefinition };
+    }
+
     /**
      * Build the final schema
      */
@@ -465,5 +475,5 @@ export class SchemaBuilder<T extends Record<string, any>> {
  * Factory function to create type-safe schema builder
  */
 export function createSchemaBuilder<T extends Record<string, any>>(): SchemaBuilder<T> {
-    return new SchemaBuilder<T>();
+    return new SchemaBuilder<T>({} as SchemaBuilder<T>);
 }

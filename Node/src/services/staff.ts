@@ -1,9 +1,9 @@
-import { admin } from '../config/firebase.js';
+import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
 import { checkMissingStaffUpdateData } from './utils/staff.js';
 import { Staff } from '../types/models/staff.js';
 
 const firestore = admin.firestore();
-const staffCollection = 'staff';
+const staffCollection = FIREBASE_COLLECTIONS['staff'];
 
 export const getAllStaff = async () => {
     try {

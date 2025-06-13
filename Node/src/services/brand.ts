@@ -1,10 +1,10 @@
-import { admin } from '../config/firebase.js';
+import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
 import { generateFullyBrandData } from './utils/brand.js';
 import { Brand } from '../types/models/brand.js';
 import { updateProductsBrandSubscriptionPlan } from './product.js';
 
 const firestore = admin.firestore();
-const brandCollection = 'brand';
+const brandCollection = FIREBASE_COLLECTIONS['brand'];
 
 export const getAllBrands = async (page = 1) => {
     const offset = (page - 1) * 10; // Calculate the offset for pagination

@@ -107,6 +107,7 @@ components:
       properties:
         method:
           type: string
+          enum: [Cash on delivery, Card payment]
         credentials:
           type: string
 
@@ -187,7 +188,7 @@ components:
           $ref: "#/components/schemas/Address"
         shipmentType:
           type: string
-          enum: [Standard, Express]
+          enum: [Standard, Express, Pickup]
           description: Type of shipment
 
     ShipmentCalculationResponse:

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { Customer } from '../../types/models/customer.js';
-import { createSchemaBuilder, validateObjectStrict } from './builder.js';
-import { addressSchema } from './common.js';
+import { createSchemaBuilder, SchemaBuilder, validateObjectStrict } from './builder.js';
+import { addressSchema, emailPattern, passwordPattern, phonePattern, usernamePattern, websitePattern } from './common.js';
 
 export const validateGetAllCustomers = (req: Request, res: Response, next: NextFunction) => {
     const page = req.query.page ? parseInt(req.query.page as string) : 1;
@@ -18,15 +18,33 @@ export const validateGetAllCustomers = (req: Request, res: Response, next: NextF
 const customerSchemaBuilder = createSchemaBuilder<Customer>()
     .field('firstName', { type: 'string', required: false, minLength: 2, maxLength: 15 })
     .field('lastName', { type: 'string', required: false, minLength: 2, maxLength: 15 })
-    .field('username', { type: 'string', required: false, minLength: 3, maxLength: 15, value: 'elevateUser' })
-    .field('email', { type: 'string', required: false, value: 'name@elevate.com' })
-    .field('phoneNumber', { type: 'string', required: false, minLength: 11, maxLength: 11, value: '01234567890' })
+    .field('username', {
+        type: 'string', required: false, minLength: 3, maxLength: 15,
+        value: 'elevateUser', patternRgx: usernamePattern.regex, patternHint: usernamePattern.Hint
+    })
+    .field('email', {
+        type: 'string', required: false,
+        value: 'name@elevate.com', patternRgx: emailPattern.regex, patternHint: emailPattern.Hint
+    })
+    .field('phoneNumber', {
+        type: 'string', required: false, minLength: 11, maxLength: 11,
+        value: '01234567890', patternRgx: phonePattern.regex, patternHint: phonePattern.Hint
+    })
     .field('addresses', { type: 'array', required: false, items: { type: 'object', fields: addressSchema } })
-    .field('imageURL', { type: 'string', required: false });
+    .field('imageURL', {
+        type: 'string', required: false,
+        patternRgx: websitePattern.regex, patternHint: websitePattern.Hint
+    });
 
-const signupCustomerSchema = customerSchemaBuilder
-    .field('email', { type: 'string', required: true })
-    .field('password', { type: 'string', required: true, minLength: 6, maxLength: 30 })
+const signupCustomerSchema = new SchemaBuilder(customerSchemaBuilder)
+    .field('email', {
+        type: 'string', required: true,
+        value: 'name@elevate.com', patternRgx: emailPattern.regex, patternHint: emailPattern.Hint
+    })
+    .field('password', {
+        type: 'string', required: true, minLength: 6, maxLength: 30,
+        value: 'password123', patternRgx: passwordPattern.regex, patternHint: passwordPattern.Hint
+    })
     .build();
 export const validateSignupCustomer = (req: Request, res: Response, next: NextFunction) => {
     const customer: Customer = req.body;

@@ -2,12 +2,15 @@ import { Request, Response, NextFunction } from 'express';
 import { Brand } from '../../types/models/brand.js';
 import { createSchemaBuilder, validateObjectStrict } from './builder.js';
 import { SUBSCRIPTION_PLANS, SubscriptionPlan } from '../../config/subscriptionPlans.js';
-import { addressSchema, websiteSchema } from './common.js';
+import { addressSchema, emailPattern, websiteSchema } from './common.js';
 
 const expectedUpdateBrandData = createSchemaBuilder<Brand>()
     .field('addresses', { type: 'array', required: false, items: { type: 'object', fields: addressSchema } })
     .field('brandName', { type: 'string', required: false, minLength: 1, maxLength: 30 })
-    .field('email', { type: 'string', required: false, value: 'name@elevate.com' })
+    .field('email', {
+        type: 'string', required: false,
+        value: 'name@elevate.com', patternRgx: emailPattern.regex, patternHint: emailPattern.Hint
+    })
     .field('imageURL', { type: 'string', required: false })
     .field('industry', { type: 'string', required: false, minLength: 1, maxLength: 30, value: 'Retail' })
     .field('phoneNumbers', {

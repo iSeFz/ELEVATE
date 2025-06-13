@@ -67,6 +67,31 @@ export interface Order {
     updatedAt: TimestampUnion;
 }
 
+export interface ShippingRate {
+    minDistance: number;
+    maxDistance: number;
+    fee: number;
+}
+
+export interface WeightSurcharge {
+    minWeight: number;
+    maxWeight: number;
+    surcharge: number;
+}
+
+export interface DistanceRange {
+    range: string;
+    fee: number;
+}
+
+export interface OrderCostBreakdown {
+    subtotal: number;
+    shippingFee: number;
+    total: number;
+    distanceRange: string;
+}
+
+
 export const paymentDataValidators = (value: Payment): boolean => {
     const validators: Record<keyof Payment, (value: any) => boolean> = {
         method: (v: Payment['method']) => typeof v === 'string',

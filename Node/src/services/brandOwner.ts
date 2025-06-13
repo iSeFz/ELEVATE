@@ -1,10 +1,10 @@
-import { admin } from '../config/firebase.js';
+import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
 import { BrandOwner } from '../types/models/brandOwner.js';
 import { Order, OrderStatus } from '../types/models/order.js';
 import { deleteCredentialsUsingUID } from './auth.js';
 
 const firestore = admin.firestore();
-const brandOwnerCollection = firestore.collection('brandOwner');
+const brandOwnerCollection = firestore.collection(FIREBASE_COLLECTIONS['brandOwner']);
 
 /**
  * Get all brand owners
@@ -146,7 +146,7 @@ export const getCurrentMonthStats = async (
         const validStatuses = [OrderStatus.PROCESSING, OrderStatus.SHIPPED, OrderStatus.DELIVERED];
 
         // Optimized query using composite index: brandIds + status + createdAt
-        const ordersSnapshot = await firestore.collection('order')
+        const ordersSnapshot = await firestore.collection(FIREBASE_COLLECTIONS['order'])
             .where('brandIds', 'array-contains', brandId)
             .where('status', 'in', validStatuses)
             .where('createdAt', '>=', startTimestamp)
@@ -252,7 +252,7 @@ interface BrandReviewsSummary {
 export const getBrandReviewsSummary = async (brandId: string): Promise<BrandReviewsSummary> => {
     try {
         // Get all products for the brand
-        const productsSnapshot = await firestore.collection('product')
+        const productsSnapshot = await firestore.collection(FIREBASE_COLLECTIONS['product'])
             .where('brandId', '==', brandId)
             .get();
 

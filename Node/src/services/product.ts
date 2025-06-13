@@ -1,12 +1,12 @@
-import { admin } from '../config/firebase.js';
+import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
 import { generateFullyProductData } from './utils/product.js';
 import { Product, ProductVariant } from '../types/models/product.js';
 import { Timestamp } from 'firebase-admin/firestore';
 import { SubscriptionPlan } from '../config/subscriptionPlans.js';
 
 const firestore = admin.firestore();
-const productCollection = 'product';
-const brandCollection = 'brand';
+const productCollection = FIREBASE_COLLECTIONS['product'];
+const brandCollection = FIREBASE_COLLECTIONS['brand'];
 
 // Helper function to generate unique IDs for product variants
 const generateVariantId = (): string => {
@@ -170,13 +170,13 @@ export const deleteProduct = async (productID: string) => {
         }
 
         // Query and delete all reviews associated with this product
-        const reviewSnapshot = await firestore.collection('review')
+        const reviewSnapshot = await firestore.collection(FIREBASE_COLLECTIONS['review'])
             .where('productId', '==', productID)
             .get();
 
         const reviewDeletePromises: Promise<FirebaseFirestore.WriteResult>[] = [];
         reviewSnapshot.forEach((doc) => {
-            reviewDeletePromises.push(firestore.collection('review').doc(doc.id).delete());
+            reviewDeletePromises.push(firestore.collection(FIREBASE_COLLECTIONS['review']).doc(doc.id).delete());
         });
 
         if (reviewDeletePromises.length > 0) {

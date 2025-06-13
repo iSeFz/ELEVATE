@@ -1,8 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import { createSchemaBuilder, validateObjectStrict } from './builder.js';
+import { emailPattern, passwordPattern } from './common.js';
 
 const signupSchema = createSchemaBuilder()
-    .field('email', { type: 'string', required: true, minLength: 5, maxLength: 50, value: 'name@elevate.com' })
+    .field('email', {
+        type: 'string', required: true,
+        value: 'name@elevate.com', patternRgx: emailPattern.regex, patternHint: emailPattern.Hint
+    })
     .field('uid', { type: 'string', required: true })
     .build();
 export const validateThirdPartySignup = (req: Request, res: Response, next: NextFunction) => {
@@ -20,8 +24,14 @@ export const validateThirdPartySignup = (req: Request, res: Response, next: Next
 }
 
 const loginSchema = createSchemaBuilder()
-    .field('email', { type: 'string', required: true, value: 'name@elevate.com' })
-    .field('password', { type: 'string', required: true, minLength: 6, maxLength: 30, value: 'password123' })
+    .field('email', {
+        type: 'string', required: true,
+        value: 'name@elevate.com', patternRgx: emailPattern.regex, patternHint: emailPattern.Hint
+    })
+    .field('password', {
+        type: 'string', required: true, minLength: 6, maxLength: 30,
+        value: 'password123', patternRgx: passwordPattern.regex, patternHint: passwordPattern.Hint
+    })
     .build();
 export const validateLogin = (req: Request, res: Response, next: NextFunction) => {
     const data = req.body;
