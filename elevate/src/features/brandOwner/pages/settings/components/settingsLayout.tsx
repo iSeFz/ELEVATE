@@ -11,12 +11,24 @@ export const Settingslayout: React.FC = () => {
     { label: "Subscriptions", value: "subscriptions" },
   ];
 
-  const currentTab = location.pathname.split("/").pop() || "account";
+  const getActiveTab = () => {
+    const pathSegments = location.pathname.split("/");
+    const settingsIndex = pathSegments.indexOf("settings");
+
+    if (settingsIndex !== -1 && pathSegments[settingsIndex + 1]) {
+      const tabValue = pathSegments[settingsIndex + 1];
+      if (tabConfig.some((tab) => tab.value === tabValue)) {
+        return tabValue;
+      }
+    }
+
+    return "account";
+  };
+
+  const currentTab = getActiveTab();
 
   return (
-    <Box
-      marginBottom={8}
-    >
+    <Box marginBottom={8}>
       <Box
         backgroundColor="white"
         width="95%"
@@ -26,7 +38,7 @@ export const Settingslayout: React.FC = () => {
       >
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
-            value={currentTab || "account"}
+            value={currentTab}
             variant="fullWidth"
             textColor="secondary"
             indicatorColor="secondary"
@@ -43,12 +55,7 @@ export const Settingslayout: React.FC = () => {
             ))}
           </Tabs>
         </Box>
-        <Box
-          display="flex"
-          alignItems="center"
-          // justifyContent="center"
-          padding={3}
-        >
+        <Box display="flex" alignItems="center" padding={3}>
           <Outlet />
         </Box>
       </Box>

@@ -1,8 +1,9 @@
 import { CardContent, Typography, Box, Rating, styled } from "@mui/material";
 import { FC, memo, useState, useEffect, useRef } from "react";
 import { StyledCard } from "./styledCard";
+import { useQuery } from "@tanstack/react-query";
+import { getBrandRatings } from "../../../../../api/endpoints";
 
-// Styled components outside component to prevent recreation
 const ProgressContainer = styled(Box)({
   width: "100%",
   height: 10,
@@ -23,13 +24,11 @@ const ProgressFill = styled(Box)<ProgressFillProps>(({ progress }) => ({
   transition: "width 1s ease-in-out",
 }));
 
-// Memoized ProgressBar
 const ProgressBar: FC<{ percentage: number; delay: number }> = memo(
   ({ percentage, delay }) => {
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
-      // Add delay for staggered animation effect
       const timer = setTimeout(() => {
         setProgress(percentage);
       }, delay);
@@ -45,20 +44,33 @@ const ProgressBar: FC<{ percentage: number; delay: number }> = memo(
   }
 );
 
-// Pre-define rating data
-const RATING_DATA = [
-  { stars: 5, percentage: 50 },
-  { stars: 4, percentage: 40 },
-  { stars: 3, percentage: 30 },
-  { stars: 2, percentage: 20 },
-  { stars: 1, percentage: 10 },
-];
+
+export interface ReviewData {
+  totalReviews: number;
+  averageRating: number;
+  ratingDistribution: {
+    1: number;
+    2: number;
+    3: number;
+    4: number;
+    5: number;
+  };
+}
 
 export const RatingTable = memo(() => {
   const [isVisible, setIsVisible] = useState(false);
   const componentRef = useRef<HTMLDivElement>(null);
 
-  // Trigger animation when component is in viewport
+  const {
+    data: reviews,
+    isLoading,
+    error,
+    
+  } = useQuery({
+    queryKey: ["ratings"],
+    queryFn: () => getBrandRatings(),
+  });
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -86,34 +98,40 @@ export const RatingTable = memo(() => {
 
         <Box display="flex" gap={3}>
           <Box width="100%">
-            {RATING_DATA.map(({ stars, percentage }, index) => (
-              <Box display="flex" gap={3} key={stars} marginBottom={1}>
-                <Typography variant="subtitle2" color="text.secondary">
-                  {stars}
-                </Typography>
-                <Box flex={1} marginTop="6px">
-                  <ProgressBar
-                    percentage={isVisible ? percentage : 0}
-                    delay={index * 100} // Staggered animation
-                  />
-                </Box>
-              </Box>
-            ))}
+            {reviews &&
+              Object.entries(reviews.ratingDistribution)
+                .map(([stars, count], index) => {
+                  const total = reviews.totalReviews 
+                  const percentage = total > 0 ? (count / total) * 100 : 0;
+                  return (
+                    <Box display="flex" gap={3} key={stars} marginBottom={1}>
+                      <Typography variant="subtitle2" color="text.secondary">
+                        {stars}
+                      </Typography>
+                      <Box flex={1} marginTop="6px">
+                        <ProgressBar
+                          percentage={isVisible ? percentage : 0}
+                          delay={index * 100}
+                        />
+                      </Box>
+                    </Box>
+                  );
+                })}
           </Box>
 
           <Box>
             <Typography variant="h3" fontWeight="bold">
-              2.34
+              {reviews?.averageRating}
             </Typography>
             <Rating
               name="half-rating-read"
-              value={2.34}
+              value={reviews?.averageRating}
               precision={0.01}
               readOnly
               size="small"
             />
             <Typography variant="subtitle2" color="text.secondary">
-              600 reviews
+              {reviews?.totalReviews} reviews
             </Typography>
           </Box>
         </Box>

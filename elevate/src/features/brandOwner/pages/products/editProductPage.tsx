@@ -1,73 +1,36 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Box, CircularProgress, Alert } from "@mui/material";
 import ProductForm from "./productsForm";
+import { editProduct, getProduct } from "../../../../api/endpoints";
 
 const EditProductPage = () => {
   const { id: productId } = useParams();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
-  // React Query for fetching product data
   const {
     data: productData,
     isLoading,
     error,
   } = useQuery({
     queryKey: ["product", productId],
-    queryFn: async () => {
-      // TODO: Replace with actual API call
-      console.log("Fetching product:", productId);
-
-      // Simulate API delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Simulate product data - replace with actual API response
-      return {
-        id: productId,
-        name: "Sample Product",
-        description: "This is a sample product description",
-        material: "Cotton",
-        category: "Hoodies",
-        department: ["Men", "Women"],
-        variants: [
-          {
-            size: "M",
-            colors: ["Black", "White"],
-            price: 599,
-            stock: 50,
-            discount: 10,
-            images: [],
-          },
-          {
-            size: "L",
-            colors: ["Black"],
-            price: 599,
-            stock: 30,
-            discount: 10,
-            images: [],
-          },
-        ],
-      };
-    },
+    queryFn: () => getProduct(productId!),
     enabled: !!productId,
   });
 
-  // React Query mutation for updating product
-  const updateProductMutation = useMutation({
-    mutationFn: async (updatedData) => {
-      // TODO: Replace with actual API call
-      console.log("Updating product:", productId, updatedData);
-
-      // Simulate API delay
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      // Simulate successful update
-      return { id: productId, ...updatedData };
+  const editProductMutation = useMutation({
+    mutationFn: async (productData) => {
+      // Include the product ID in the update
+      return editProduct(productId!, productData);
     },
     onSuccess: (data) => {
       console.log("Product updated successfully:", data);
-      navigate("/admin/products");
+      // Invalidate queries to refresh data
+      queryClient.invalidateQueries({ queryKey: ["products"] });
+      queryClient.invalidateQueries({ queryKey: ["product", productId] });
+      navigate("/products"); // or "/admin/products" - be consistent
     },
     onError: (error) => {
       console.error("Error updating product:", error);
@@ -78,10 +41,6 @@ const EditProductPage = () => {
     navigate("/products");
   };
 
-  const handleSuccess = () => {
-    navigate("/products");
-    // Additional success logic if needed
-  };
 
   // Loading state
   if (isLoading) {
@@ -121,9 +80,8 @@ const EditProductPage = () => {
     <ProductForm
       mode="edit"
       productData={productData}
-      mutationFn={updateProductMutation.mutateAsync}
-      isSubmitting={updateProductMutation.isLoading}
-      onSuccess={handleSuccess}
+      mutationFn={editProductMutation.mutateAsync}
+      isSubmitting={editProductMutation.isPending}
       onCancel={handleCancel}
     />
   );

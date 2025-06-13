@@ -8,7 +8,6 @@ import { RatingTable } from "./components/ratingTable";
 import { SalesChart } from "./components/salesChart";
 import { OrdersTable } from "./components/ordersTable";
 
-//might want to place components in a sperate file or seperate files
 const Dashboard = () => {
   return (
     <Box padding={2}>

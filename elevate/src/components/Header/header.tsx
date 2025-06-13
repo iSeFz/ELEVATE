@@ -7,7 +7,7 @@ import {
   StyledProfileBox,
   StyledTitleBox,
 } from "./headerStyles";
-import { useUser } from "../../context/userContext";
+import { useUser } from "../../hooks/userHook";
 
 interface PageTitles {
   [key: string]: string;
@@ -25,10 +25,10 @@ export const Header: FC = () => {
 
   const pageTitles: PageTitles = {
     "": "Dashboard",
-    "profile": "Brand Profile",
-    "products": "Manage Products",
-    "settings": "Settings",
-    "logout": "Sign Out",
+    profile: "Brand Profile",
+    products: "Manage Products",
+    settings: "Settings",
+    logout: "Sign Out",
   };
 
   const pageTitle = pageTitles[location.pathname.split("/")[1]] || "Page";
@@ -41,7 +41,10 @@ export const Header: FC = () => {
         </Typography>
       </StyledTitleBox>
       <StyledProfileBox>
-        <Avatar src="/icons/User.svg" />
+        <Avatar src={userData?.imageURL}>
+          {userData?.firstName?.[0]?.toUpperCase()}
+          {userData?.lastName?.[0]?.toUpperCase()}
+        </Avatar>
         <Box>
           <Typography variant="subtitle2" fontWeight="bold">
             {userData?.firstName || "User"}

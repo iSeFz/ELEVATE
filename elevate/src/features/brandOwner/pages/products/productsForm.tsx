@@ -37,7 +37,9 @@ import { useFormik } from "formik";
 import { StyledTypography } from "../../../../components/StyledTypography";
 import { StyledTextField } from "../../../../components/StyledTextField";
 import { BlackStyledButton, StyledButton } from "../../../../components/StyledButton";
-import { StlyedChip } from "../../../../components/StyledChip";
+import { StlyedChip } from "../../../../components/StyledChip";// Adjust this path
+import { uploadImageAndGetURL } from "../../../../services/imageUpload";
+import { useQueryClient } from "@tanstack/react-query";
 
 const VisuallyHiddenInput = styled("input")({
   clip: "rect(0 0 0 0)",
@@ -79,16 +81,27 @@ const productSchema = yup.object({
   variants: yup.array().min(1, "At least one variant is required"),
 });
 
-const ProductForm = ({ 
-  mode = "add", 
+// Helper to check if a string is a valid URL
+const isValidUrl = (string) => {
+  try {
+    new URL(string);
+    return true;
+  } catch (_) {
+    return false;
+  }
+};
+
+const ProductForm = ({
+  mode = "add",
   productData = null,
   mutationFn,
   isSubmitting = false,
-  onSuccess,
-  onCancel 
+  onCancel,
 }) => {
   const [variantDialog, setVariantDialog] = useState(false);
   const [editingVariantIndex, setEditingVariantIndex] = useState(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const queryClient = useQueryClient();
 
   // Snackbar state
   const [snackbar, setSnackbar] = useState({
@@ -109,19 +122,53 @@ const ProductForm = ({
     },
     validationSchema: productSchema,
     onSubmit: async (values) => {
+      setIsUploading(true);
       try {
-        await mutationFn(values);
+        // Process variants and upload images
+        const processedVariants = await Promise.all(
+          values.variants.map(async (variant) => {
+            const uploadedImages = await Promise.all(
+              variant.images.map(async (image) => {
+                // If it's already a URL (existing image), keep it
+                if (typeof image === "string" && isValidUrl(image)) {
+                  return image;
+                }
+                // If it's a File object, upload it
+                if (image instanceof File) {
+                  const timestamp = Date.now();
+                  const fileName = `products/${values.name}-${variant.size}-${timestamp}-${image.name}`;
+                  return await uploadImageAndGetURL(image, fileName);
+                }
+                return image;
+              })
+            );
+
+            return {
+              ...variant,
+              images: uploadedImages,
+            };
+          })
+        );
+
+        // Submit with processed data
+        const finalData = {
+          ...values,
+          variants: processedVariants,
+        };
+
+        await mutationFn(finalData);
         showSnackbar(
-          mode === "add" 
-            ? "Product created successfully" 
-            : "Product updated successfully", 
+          mode === "add"
+            ? "Product created successfully"
+            : "Product updated successfully",
           "success"
         );
-        if (onSuccess) {
-          onSuccess();
-        }
+        queryClient.invalidateQueries({ queryKey: ["products"] });
       } catch (error) {
+        console.error("Error processing product:", error);
         showSnackbar("Failed to save product. Please try again.", "error");
+      } finally {
+        setIsUploading(false);
       }
     },
   });
@@ -135,16 +182,20 @@ const ProductForm = ({
       stock: "",
       discount: 0,
       images: [],
+      imagePreviews: [], // For displaying previews
     },
     validationSchema: variantSchema,
     onSubmit: (values) => {
       const updatedVariants = [...formik.values.variants];
 
+      // Remove imagePreviews from the data we save
+      const { imagePreviews, ...variantData } = values;
+
       if (editingVariantIndex !== null) {
-        updatedVariants[editingVariantIndex] = values;
+        updatedVariants[editingVariantIndex] = variantData;
         showSnackbar("Variant updated successfully", "success");
       } else {
-        updatedVariants.push(values);
+        updatedVariants.push(variantData);
         showSnackbar("Variant added successfully", "success");
       }
 
@@ -168,7 +219,30 @@ const ProductForm = ({
   }, [mode, productData]);
 
   const departments = ["Men", "Women", "Kids", "Unisex"];
-  const categories = ["Hoodies", "T-Shirts", "Jackets", "Pants", "Accessories"];
+  const categories = [
+    "Tops - T-Shirts",
+    "Tops - Shirts",
+    "Tops - Blouses",
+    "Tops - Crop Tops",
+    "Tops - Tank Tops",
+    "Tops - Sweaters",
+    "Tops - Hoodies",
+    "Tops - Sweatshirts",
+    "Tops - Jackets",
+    "Tops - Coats",
+    "Bottoms - Jeans",
+    "Bottoms - Pants / Trousers",
+    "Bottoms - Leggings",
+    "Bottoms - Shorts",
+    "Bottoms - Skirts",
+    "Dresses & One-Pieces - Dresses",
+    "Dresses & One-Pieces - Jumpsuits",
+    "Dresses & One-Pieces - Abayas / Kaftans",
+    "Sets",
+    "Activewear - Gym Tops",
+    "Activewear - Gym Leggings",
+    "Activewear - Tracksuits",
+  ];
   const availableColors = [
     "Black",
     "White",
@@ -195,7 +269,11 @@ const ProductForm = ({
 
   const openVariantDialog = (variant = null, index = null) => {
     if (variant) {
-      variantFormik.setValues(variant);
+      // For existing variants, set both images and previews
+      variantFormik.setValues({
+        ...variant,
+        imagePreviews: variant.images || [],
+      });
       setEditingVariantIndex(index);
     } else {
       variantFormik.resetForm();
@@ -221,21 +299,62 @@ const ProductForm = ({
   const handleVariantImageUpload = (event) => {
     const files = Array.from(event.target.files);
 
-    // Convert files to base64 or object URLs for preview
-    const newImages = files.map((file) => URL.createObjectURL(file));
+    // Validate file types and sizes
+    const validTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+    const maxSize = 5 * 1024 * 1024; // 5MB
 
-    variantFormik.setFieldValue("images", [
-      ...variantFormik.values.images,
-      ...newImages,
+    const validFiles = files.filter((file) => {
+      if (!validTypes.includes(file.type)) {
+        showSnackbar(`${file.name} is not a valid image type`, "error");
+        return false;
+      }
+      if (file.size > maxSize) {
+        showSnackbar(`${file.name} exceeds 5MB size limit`, "error");
+        return false;
+      }
+      return true;
+    });
+
+    if (validFiles.length === 0) return;
+
+    // Create previews for display
+    const newPreviews = [];
+    const newImages = [...variantFormik.values.images];
+
+    validFiles.forEach((file) => {
+      // Store the actual File object
+      newImages.push(file);
+
+      // Create preview URL
+      const previewUrl = URL.createObjectURL(file);
+      newPreviews.push(previewUrl);
+    });
+
+    variantFormik.setFieldValue("images", newImages);
+    variantFormik.setFieldValue("imagePreviews", [
+      ...variantFormik.values.imagePreviews,
+      ...newPreviews,
     ]);
-    showSnackbar(`${files.length} image(s) added`, "success");
+
+    showSnackbar(`${validFiles.length} image(s) added`, "success");
   };
 
   const removeVariantImage = (index) => {
     const updatedImages = variantFormik.values.images.filter(
       (_, i) => i !== index
     );
+    const updatedPreviews = variantFormik.values.imagePreviews.filter(
+      (_, i) => i !== index
+    );
+
+    // Clean up object URL if it's a preview
+    const preview = variantFormik.values.imagePreviews[index];
+    if (preview && preview.startsWith("blob:")) {
+      URL.revokeObjectURL(preview);
+    }
+
     variantFormik.setFieldValue("images", updatedImages);
+    variantFormik.setFieldValue("imagePreviews", updatedPreviews);
     showSnackbar("Image removed", "info");
   };
 
@@ -477,22 +596,22 @@ const ProductForm = ({
             variant="outlined"
             onClick={handleCancel}
             sx={{ minWidth: 120 }}
-            disabled={isSubmitting}
+            disabled={isSubmitting || isUploading}
             type="button"
           >
-            CANCEL
+            Cancel
           </StyledButton>
           <BlackStyledButton
             type="submit"
             variant="contained"
-            disabled={isSubmitting}
+            disabled={isSubmitting || isUploading}
           >
-            {isSubmitting ? (
+            {isSubmitting || isUploading ? (
               <CircularProgress size={24} color="inherit" />
             ) : mode === "add" ? (
-              "ADD PRODUCT"
+              "Add Product"
             ) : (
-              "UPDATE PRODUCT"
+              "Update Product"
             )}
           </BlackStyledButton>
         </Box>
@@ -634,38 +753,43 @@ const ProductForm = ({
                   Variant Images
                 </StyledTypography>
 
-                {variantFormik.values.images.length > 0 && (
+                {variantFormik.values.imagePreviews.length > 0 && (
                   <Grid container spacing={2} sx={{ mb: 2 }}>
-                    {variantFormik.values.images.map((image, index) => (
-                      <Grid item xs={3} key={index}>
-                        <Box sx={{ position: "relative" }}>
-                          <img
-                            src={image}
-                            alt={`Variant ${index + 1}`}
-                            style={{
-                              width: "100%",
-                              height: 100,
-                              objectFit: "cover",
-                              borderRadius: 4,
-                            }}
-                          />
-                          <IconButton
-                            size="small"
-                            sx={{
-                              position: "absolute",
-                              top: -8,
-                              right: -8,
-                              bgcolor: "white",
-                              boxShadow: 1,
-                              "&:hover": { bgcolor: "grey.100" },
-                            }}
-                            onClick={() => removeVariantImage(index)}
-                          >
-                            <DeleteIcon fontSize="small" />
-                          </IconButton>
-                        </Box>
-                      </Grid>
-                    ))}
+                    {variantFormik.values.imagePreviews.map(
+                      (preview, index) => (
+                        <Grid item xs={3} key={index}>
+                          <Box sx={{ position: "relative" }}>
+                            <img
+                              src={preview}
+                              alt={`Variant ${index + 1}`}
+                              style={{
+                                width: "100%",
+                                height: 100,
+                                objectFit: "cover",
+                                borderRadius: 4,
+                              }}
+                              onError={(e) => {
+                                e.currentTarget.src = "/images/placeholder.jpg";
+                              }}
+                            />
+                            <IconButton
+                              size="small"
+                              sx={{
+                                position: "absolute",
+                                top: -8,
+                                right: -8,
+                                bgcolor: "white",
+                                boxShadow: 1,
+                                "&:hover": { bgcolor: "grey.100" },
+                              }}
+                              onClick={() => removeVariantImage(index)}
+                            >
+                              <DeleteIcon fontSize="small" />
+                            </IconButton>
+                          </Box>
+                        </Grid>
+                      )
+                    )}
                   </Grid>
                 )}
 
@@ -688,9 +812,26 @@ const ProductForm = ({
                   color="text.secondary"
                   sx={{ mt: 1, display: "block" }}
                 >
-                  Accepted formats: JPG, JPEG, PNG, WEBP • Multiple images
-                  allowed • Show all angles for better conversions
+                  Accepted formats: JPG, JPEG, PNG, WEBP • Maximum 5MB per image
+                  • Multiple images allowed • Show all angles for better
+                  conversions
                 </StyledTypography>
+                {variantFormik.values.images.some(
+                  (img) => img instanceof File
+                ) && (
+                  <StyledTypography
+                    variant="caption"
+                    color="primary"
+                    sx={{ mt: 1, display: "block" }}
+                  >
+                    {
+                      variantFormik.values.images.filter(
+                        (img) => img instanceof File
+                      ).length
+                    }{" "}
+                    new image(s) will be uploaded when you save
+                  </StyledTypography>
+                )}
               </Box>
             </Stack>
           </DialogContent>
@@ -712,9 +853,7 @@ const ProductForm = ({
       {/* Snackbar for notifications */}
       <Snackbar
         open={snackbar.open}
-        autoHideDuration={6000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
       >
         <Alert
           onClose={handleCloseSnackbar}

@@ -14,32 +14,24 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import AuthTextInput from "../components/AuthTextInput";
 import { useSnackbar } from "notistack";
 import { useMutation } from "@tanstack/react-query";
-import { loginRequest, getBrandData } from "../../../api/endpoints";
+import { loginRequest } from "../../../api/endpoints";
 import { useNavigate } from "react-router";
-import { useUser } from "../../../context/userContext";
-import { useBrand } from "../../../context/BrandContext";
 
 interface LoginFormInputs {
   email: string;
   password: string;
 }
 
-interface UserData {
+interface Tokens {
   accessToken: string;
   refreshToken: string;
-  user: {
-    email: string;
-    role: string;
-    brandName: string;
-    firstName: string;
-    lastName: string;
-    userName: string;
-    brandImageURL: string;
-  };
 }
 
 const schema = yup.object({
-  email: yup.string().email("Email format is incorrect").required("Email is required"),
+  email: yup
+    .string()
+    .email("Email format is incorrect")
+    .required("Email is required"),
   password: yup
     .string()
     .min(6, "Password must be at least 6 characters")
@@ -50,8 +42,6 @@ const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const { setUserData } = useUser();
-  const { setBrandData } = useBrand();
 
   const {
     control,
@@ -59,24 +49,15 @@ const LoginPage: React.FC = () => {
     formState: { errors },
   } = useForm<LoginFormInputs>({
     resolver: yupResolver(schema),
-    mode: "onChange"
+    mode: "onChange",
   });
 
   const mutation = useMutation({
     mutationFn: loginRequest,
-    onSuccess: (data: UserData) => {
+    onSuccess: (data: Tokens) => {
       console.log(data);
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
-      setUserData(data.user);
-      getBrandData()
-        .then((brandData) => {
-          setBrandData(brandData);
-        })
-        .catch((err) => {
-          console.error("Failed to fetch brand data:", err);
-          enqueueSnackbar("Failed to fetch brand data.", { variant: "error" });
-        });
 
       try {
         navigate("/");
@@ -229,4 +210,3 @@ const LoginPage: React.FC = () => {
 };
 
 export default LoginPage;
-

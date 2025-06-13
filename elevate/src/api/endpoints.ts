@@ -82,18 +82,18 @@ interface LoginData {
   password: string;
 }
 
-interface UserData {
+interface Tokens {
   accessToken: string;
   refreshToken: string;
-  user: {
-    email: string;
-    role: string;
-    brandName: string;
-    firstName: string;
-    lastName: string;
-    username: string;
-    brandImageURL: string;
-  };
+}
+
+interface UserData {
+  email?: string;
+  role?: string;
+  firstName: string;
+  lastName: string;
+  username: string;
+  imageURL: string;
 }
 
 interface BrandData {
@@ -152,9 +152,6 @@ export interface ReviewSummary {
 }
 
 export interface ProductData {
-  brandId: string;
-  brandOwnerId: string;
-  brandName: string;
   category: string;
   department: string[];
   description: string;
@@ -162,10 +159,41 @@ export interface ProductData {
   name: string;
   reviewSummary: ReviewSummary;
   variants: ProductVariant[];
-  id: string;
+  id?: string;
 }
 
-const loginRequest = async (data: LoginData): Promise<UserData> => {
+export interface ReviewData {
+  totalReviews: number;
+  averageRating: number;
+  ratingDistribution: {
+    1: number;
+    2: number;
+    3: number;
+    4: number;
+    5: number;
+  };
+}
+
+export interface StatsData {
+  totalProductsSold: number;
+  totalSales: number;
+  topProduct: {
+    productId: string;
+    productName: string;
+    quantitySold: number;
+    totalSales: number;
+  };
+  topProductsSales: [
+    {
+      productId: string;
+      productName: string;
+      quantitySold: number;
+      totalSales: number;
+    },
+  ];
+}
+
+const loginRequest = async (data: LoginData): Promise<Tokens> => {
   const response = await axios.post("/brand-owners/login", data, {
     skipAuth: true,
   });
@@ -177,9 +205,72 @@ const getBrandData = async (): Promise<BrandData> => {
   return response.data.data;
 };
 
-const getProductsData = async (): Promise<ProductData[]> => {
-  const response = await axios.get(`/products`);
-  return response.data.data.products;
+const getBrandOwnerData = async (): Promise<UserData> => {
+  const response = await axios.get("/brand-owners/me");
+  return response.data.data;
 };
 
-export { loginRequest, getBrandData, getProductsData };
+const updateBrandOwnerData = async (data: UserData): Promise<void> => {
+  const response = await axios.put("/brand-owners/me", data);
+  if (response.status !== 200) {
+    throw new Error("Failed to update brand owner data");
+  }
+};
+
+const getProductsData = async (): Promise<ProductData[]> => {
+  const response = await axios.get(`/brand-owners/me/products`);
+  return response.data.data;
+};
+
+const addProduct = async (data: ProductData): Promise<void> => {
+  const response = await axios.post(`/brand-owners/me/products`, data);
+  if (response.status !== 201) {
+    throw new Error("Failed to add product");
+  }
+};
+
+const editProduct = async (data: ProductData): Promise<void> => {
+  const response = await axios.put(`/brand-owners/me/products/` + data.id, data);
+  if (response.status !== 201) {
+    throw new Error("Failed to add product");
+  }
+};
+
+const getProduct = async (id: string): Promise<ProductData> => {
+  const response = await axios.get(`/products/` + id);
+  return response.data.data;
+};
+
+const deleteProduct = async (id: string): Promise<ProductData> => {
+  const response = await axios.delete(`/brand-owners/me/products/` + id);
+  return response.data.data;
+};
+
+const getBrandRatings = async (): Promise<ReviewData> => {
+  const response = await axios.get(
+    `/brand-owners/me/dashboard/reviews-summary`
+  );
+  return response.data.data;
+};
+
+const getBrandStats = async (): Promise<StatsData> => {
+  const response = await axios.get(
+    `/brand-owners/me/dashboard/current-month-stats`
+  );
+  return response.data.data;
+};
+
+
+export {
+  loginRequest,
+  getBrandData,
+  getProductsData,
+  getBrandOwnerData,
+  updateBrandOwnerData,
+  addProduct,
+  editProduct,
+  getProduct,
+  deleteProduct,
+  getBrandRatings,
+  getBrandStats,
+};

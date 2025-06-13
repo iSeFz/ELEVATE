@@ -10,12 +10,14 @@ import {
 import { useNavigate, useLocation } from "react-router";
 
 import { CustomBox, TitleText, SidebarItem } from "./sidebarStyles";
+import { useQueryClient } from "@tanstack/react-query";
 
 //might need some clean up also do a hover effect
 const Sidebar: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedItem, setSelectedItem] = useState("");
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     setSelectedItem(location.pathname.split("/")[1] || "");
@@ -82,6 +84,7 @@ const Sidebar: FC = () => {
           handleItemClick={() => {
             localStorage.removeItem("refreshToken");
             localStorage.removeItem("accessToken");
+            queryClient.invalidateQueries();
             navigate("/login");
           }}
           getListItemStyles={getListItemStyles}

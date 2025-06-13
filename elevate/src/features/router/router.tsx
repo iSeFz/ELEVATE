@@ -16,6 +16,7 @@ import { Settingslayout } from "../brandOwner/pages/settings/components/settings
 import LoginPage from "../authentication/pages/login";
 import AddProductPage from "../brandOwner/pages/products/addProductPage";
 import EditProductPage from "../brandOwner/pages/products/editProductPage";
+import { EditAccount } from "../brandOwner/pages/settings/pages/editAccount";
 
 const ProtectedRoute = () => {
   const isAuthenticated = localStorage.getItem("refreshToken") !== null;
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
               {
                 path: "account",
                 element: <Account />,
+              },
+              {
+                path: "account/edit",
+                element: <EditAccount />,
               },
               {
                 path: "subscriptions",

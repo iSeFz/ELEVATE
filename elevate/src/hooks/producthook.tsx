@@ -1,4 +1,4 @@
-import { getProductsData } from "../../../../api/endpoints";
+import { getProductsData } from "../api/endpoints";
 import { useQuery } from "@tanstack/react-query";
 
 export interface ProductVariant {
@@ -24,9 +24,6 @@ export interface ReviewSummary {
 }
 
 export interface ProductData {
-  brandId: string;
-  brandOwnerId: string;
-  brandName: string;
   category: string;
   department: string[];
   description: string;
@@ -34,7 +31,7 @@ export interface ProductData {
   name: string;
   reviewSummary: ReviewSummary;
   variants: ProductVariant[];
-  id: string;
+  id?: string;
 }
 
 interface UseProductsResult {
@@ -46,7 +43,7 @@ interface UseProductsResult {
 export function useProducts(): UseProductsResult {
   const { data, isLoading, error } = useQuery<ProductData[]>({
     queryKey: ["products"],
-    queryFn: getProductsData
+    queryFn: getProductsData,
   });
 
   return {
