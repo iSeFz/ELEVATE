@@ -1,0 +1,180 @@
+[
+  {
+    "name": "Ninit White Embroidered Tshirt",
+    "category": "Tops - T-Shirts",
+    "description": "Embroidered high quality applique. Oversized fit.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0651/6211/7274/files/DSC_0891.jpg?v=1745078778",
+          "https://cdn.shopify.com/s/files/1/0651/6211/7274/files/DSC_0803.jpg?v=1745078756"
+        ],
+        "price": 600.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Ninit Charcoal Embroidered Tshirt",
+    "category": "Tops - T-Shirts",
+    "description": "Embroidered high quality applique. Oversized fit.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Charcoal"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0651/6211/7274/files/DSC_0868_c6eee105-e39b-4d44-a310-e522f1067370.jpg?v=1745078828",
+          "https://cdn.shopify.com/s/files/1/0651/6211/7274/files/DSC_0864.jpg?v=1745078810"
+        ],
+        "price": 600.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Charcoal"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Charcoal"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Navy Baby Jersey",
+    "category": "Tops - Crop Tops",
+    "description": "Navy Baby Jersey. Football Jersey material.",
+    "material": "Jersey",
+    "department": [
+      "Women"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Navy"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0651/6211/7274/files/WhatsAppImage2025-03-31at6.29.28PM.jpg?v=1743470445"
+        ],
+        "price": 480.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Navy"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 480.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Navy"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 480.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Pink Baby Jersey",
+    "category": "Tops - Crop Tops",
+    "description": "Pink Baby Jersey. Football Jersey material.",
+    "material": "Jersey",
+    "department": [
+      "Women"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0651/6211/7274/files/WhatsAppImage2025-03-31at6.29.17PM.jpg?v=1743470121"
+        ],
+        "price": 480.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 480.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 480.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  }
+]
