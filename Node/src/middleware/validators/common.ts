@@ -2,7 +2,7 @@ import { createSchemaBuilder } from './builder.js';
 import { Website, Address } from '../../types/models/common.js';
 import { Payment } from '../../types/models/order.js';
 import { ProductVariant } from '../../types/models/product.js';
-import { paymentMethod, paymentMethodValues } from '../../config/order.js';
+import { paymentMethodValues } from '../../config/order.js';
 
 interface PatternRegex {
     regex: RegExp;
@@ -10,7 +10,7 @@ interface PatternRegex {
 }
 
 export const emailPattern: PatternRegex = {
-    regex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+    regex: /^[\w-]+(\.[\w-]+)*@[a-zA-Z\d-]+(\.[a-zA-Z\d-]+)*\.[a-zA-Z]{2,}$/,
     Hint: 'Must be a valid email address format'
 }
 export const phonePattern: PatternRegex = {
@@ -55,7 +55,7 @@ export const websiteSchema = createSchemaBuilder<Website>()
 
 export const paymentSchema = createSchemaBuilder<Payment>()
     .field('method', { type: 'string', required: true, in: paymentMethodValues, value: paymentMethodValues.join(' / ') })
-    .field('credentials', { type: 'string', required: true, minLength: 16, maxLength: 16, value: '1234567812345678' })
+    .field('credentials', { type: 'string', required: true, minLength: 0, maxLength: 20, value: '1234567812345678' })
     .build();
 
 export const productVariantSchema = createSchemaBuilder<ProductVariant>()

@@ -7,7 +7,7 @@ import { getCustomer } from './customer.js';
 import { Address } from '../types/models/common.js';
 import { getBrand } from './brand.js';
 import { v4 as uuidv4 } from 'uuid';
-import { shipmentType as SHIPMMENT_TYPES } from '../config/order.js';
+import { ORDER_TIMEOUT_SEC, shipmentType as SHIPMMENT_TYPES } from '../config/order.js';
 
 const firestore = admin.firestore();
 const orderCollection = FIREBASE_COLLECTIONS['order'];
@@ -110,64 +110,145 @@ export const getOrdersByStatus = async (status: OrderStatus, page: number = 1) =
     );
 };
 
+// export const addOrder = async (order: Order) => {
+//     try {
+//         const addedOrderData = OrderUtils.generateFullyOrderData(order);
+//         const orderDoc = firestore.collection(orderCollection).doc();
+//         const batch = firestore.batch();
+
+//         let totalPrice = 0;
+//         let brandIds = new Set<string>();
+
+//         for (let i = 0; i < addedOrderData.products.length; i++) {
+//             const item = addedOrderData.products[i];
+//             // Use productService.getProductVariant if you want, or keep your current fetching logic
+//             const productRef = firestore.collection(FIREBASE_COLLECTIONS['product']).doc(item.productId);
+//             const productDoc = await productRef.get();
+
+//             if (!productDoc.exists) {
+//                 throw new Error(`Product with ID ${item.productId} not found`);
+//             }
+
+//             const productData = productDoc.data()! as Product;
+//             const variants = productData?.variants ?? [];
+//             const variant = variants.find((v: any) => v.id === item.variantId);
+
+//             if (!variant) {
+//                 throw new Error(`Variant with ID ${item.variantId} not found in product ${item.productId}`);
+//             }
+
+//             // Check if the variant has enough stock
+//             if (variant.stock < item.quantity) {
+//                 throw new Error(`Not enough stock for variant ${item.variantId} in product ${item.productId}`);
+//             }
+
+//             // Fill denormalized fields
+//             addedOrderData.products[i] = {
+//                 ...item, // Item has these fields: variantId, productId, quantity
+//                 productName: productData.name,
+//                 brandId: productData.brandId,
+//                 brandName: productData.brandName,
+//                 colors: variant.colors ?? [],
+//                 size: variant.size,
+//                 price: variant.price,
+//                 imageURL: variant.images[0] ?? productData.variants[0].images[0] ?? "",
+//             };
+
+//             // Add brand ID to the set
+//             brandIds.add(productData.brandId);
+
+//             // Accumulate total price
+//             totalPrice += variant.price * item.quantity;
+
+//             // Update the variant stock
+//             const updatedVariants = [...variants];
+//             const variantIndex = variants.findIndex((v: any) => v.id === item.variantId);
+//             updatedVariants[variantIndex] = {
+//                 ...updatedVariants[variantIndex],
+//                 stock: updatedVariants[variantIndex].stock - item.quantity
+//             };
+
+//             batch.update(productRef, { variants: updatedVariants });
+//         }
+
+//         // Set the calculated price
+//         addedOrderData.price = totalPrice;
+//         addedOrderData.shipment = {} as Order['shipment']; // Initialize shipment as empty
+//         addedOrderData.payment = {} as Order['payment']; // Initialize payment as empty
+//         addedOrderData.status = OrderStatus.PENDING; // Set initial status
+//         addedOrderData.brandIds = Array.from(brandIds); // Convert Set to Array
+
+//         batch.set(orderDoc, addedOrderData);
+
+//         await batch.commit();
+//         return { ...addedOrderData, id: orderDoc.id };
+//     } catch (error: any) {
+//         throw new Error(`Failed to add order: ${error.message}`);
+//     }
+// };
+
 export const addOrder = async (order: Order) => {
     try {
         const addedOrderData = OrderUtils.generateFullyOrderData(order);
         const orderDoc = firestore.collection(orderCollection).doc();
         const batch = firestore.batch();
 
+        const itemsByProduct = new Map<string, { product: typeof addedOrderData.products[0], index: number }[]>();
+        addedOrderData.products.forEach((item, index) => {
+            if (!itemsByProduct.has(item.productId)) {
+                itemsByProduct.set(item.productId, []);
+            }
+            itemsByProduct.get(item.productId)!.push({
+                product: item,
+                index: index
+            });
+        });
+
         let totalPrice = 0;
         let brandIds = new Set<string>();
 
-        for (let i = 0; i < addedOrderData.products.length; i++) {
-            const item = addedOrderData.products[i];
-            // Use productService.getProductVariant if you want, or keep your current fetching logic
-            const productRef = firestore.collection(FIREBASE_COLLECTIONS['product']).doc(item.productId);
+        for (const [productId, productItems] of itemsByProduct) {
+            const productRef = firestore.collection(FIREBASE_COLLECTIONS['product']).doc(productId);
             const productDoc = await productRef.get();
 
             if (!productDoc.exists) {
-                throw new Error(`Product with ID ${item.productId} not found`);
+                throw new Error(`Product with ID ${productId} not found`);
             }
 
             const productData = productDoc.data()! as Product;
-            const variants = productData?.variants ?? [];
-            const variant = variants.find((v: any) => v.id === item.variantId);
+            const updatedVariants = [...productData.variants];
+            // Update all variants for this product
+            for (const item of productItems) {
+                const variantIndex = updatedVariants.findIndex(v => v.id === item.product.variantId);
+                if (variantIndex === -1) {
+                    throw new Error(`Variant with ID ${item.product.variantId} not found in product ${productId}`);
+                }
+                if (updatedVariants[variantIndex].stock < item.product.quantity) {
+                    throw new Error(`Not enough stock for variant ${item.product.variantId} in product ${productId}, 
+                        requested ${item.product.quantity}, available ${updatedVariants[variantIndex].stock}`);
+                }
+                updatedVariants[variantIndex].stock -= item.product.quantity;
 
-            if (!variant) {
-                throw new Error(`Variant with ID ${item.variantId} not found in product ${item.productId}`);
+                // Fill denormalized fields
+                addedOrderData.products[item.index] = {
+                    ...item.product, // Item product has these fields: variantId, productId, quantity
+                    productName: productData.name,
+                    brandId: productData.brandId,
+                    brandName: productData.brandName,
+                    colors: updatedVariants[variantIndex].colors ?? [],
+                    size: updatedVariants[variantIndex].size,
+                    price: updatedVariants[variantIndex].price,
+                    imageURL: updatedVariants[variantIndex].images[0] ?? productData.variants[0].images[0] ?? "",
+                };
+
+                // Accumulate total price
+                totalPrice += updatedVariants[variantIndex].price * item.product.quantity;
             }
-
-            // Check if the variant has enough stock
-            if (variant.stock < item.quantity) {
-                throw new Error(`Not enough stock for variant ${item.variantId} in product ${item.productId}`);
-            }
-
-            // Fill denormalized fields
-            addedOrderData.products[i] = {
-                ...item, // Item has these fields: variantId, productId, quantity
-                productName: productData.name,
-                brandId: productData.brandId,
-                brandName: productData.brandName,
-                colors: variant.colors ?? [],
-                size: variant.size,
-                price: variant.price,
-                imageURL: variant.images[0] ?? productData.variants[0].images[0] ?? "",
-            };
 
             // Add brand ID to the set
             brandIds.add(productData.brandId);
-
-            // Accumulate total price
-            totalPrice += variant.price * item.quantity;
-
-            // Update the variant stock
-            const updatedVariants = [...variants];
-            const variantIndex = variants.findIndex((v: any) => v.id === item.variantId);
-            updatedVariants[variantIndex] = {
-                ...updatedVariants[variantIndex],
-                stock: updatedVariants[variantIndex].stock - item.quantity
-            };
-
+            // Update the variant stock in the batch
+            // Note: This will update the stock for all variants of this product
             batch.update(productRef, { variants: updatedVariants });
         }
 
@@ -285,10 +366,9 @@ export const confirmOrder = async (orderID: string, customerId: string, remainin
             throw new Error('Order is already confirmed or cannot be modified');
         }
 
-        // Check if confirmation is within [20] minutes of creation
+        // Check if confirmation is within the allowed time frame
         const createdAt = confirmedOrderData.createdAt as Timestamp;
-        const orderConfirmationTimeLimit = 20 * 60; // seconds
-        if ((Timestamp.now().seconds - createdAt.seconds) > orderConfirmationTimeLimit) {
+        if ((Timestamp.now().seconds - createdAt.seconds) > ORDER_TIMEOUT_SEC) {
             // Rollback the order
             await orderRestoreProductStocks(batch, confirmedOrderData.products);
             batch.update(orderRef, { status: OrderStatus.CANCELLED });
@@ -335,33 +415,32 @@ export const confirmOrder = async (orderID: string, customerId: string, remainin
     }
 };
 
-const orderRollback = async (batch: admin.firestore.WriteBatch, order: Order) => {
-    await orderRestoreProductStocks(batch, order.products);
-}
-
 /**
  * Restores product stocks for the products in an order (Don't miss to commit the batch after calling this function)
  * @param batch  The Firestore batch to perform the updates
  * @param products  The products in the order to restore stocks for
  */
 const orderRestoreProductStocks = async (batch: admin.firestore.WriteBatch, products: Order['products']) => {
+    const itemsByProduct = new Map<string, typeof products>();
+    products.forEach((item) => {
+        if (!itemsByProduct.has(item.productId)) {
+            itemsByProduct.set(item.productId, []);
+        }
+        itemsByProduct.get(item.productId)!.push(item);
+    });
     // Restore product stock
-    for (const item of products) {
-        const productRef = firestore.collection(FIREBASE_COLLECTIONS['product']).doc(item.productId);
+    for (const [productId, productItems] of itemsByProduct) {
+        const productRef = firestore.collection(FIREBASE_COLLECTIONS['product']).doc(productId);
         const productDoc = await productRef.get();
         if (!productDoc.exists) continue;
-
         const productData = productDoc.data();
-        const variants = productData?.variants ?? [];
-        const variantIndex = variants.findIndex((v: any) => v.id === item.variantId);
-        if (variantIndex === -1) continue;
+        const updatedVariants = [...productData!.variants];
 
-        // Restore the stock
-        const updatedVariants = [...variants];
-        updatedVariants[variantIndex] = {
-            ...updatedVariants[variantIndex],
-            stock: updatedVariants[variantIndex].stock + item.quantity
-        };
+        for (const item of productItems) {
+            const variantIndex = updatedVariants.findIndex((v: any) => v.id === item.variantId);
+            if (variantIndex === -1) continue;
+            updatedVariants[variantIndex].stock += item.quantity;
+        }
 
         batch.update(productRef, { variants: updatedVariants });
     }

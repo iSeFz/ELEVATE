@@ -1,20 +1,22 @@
 import { Request, Response, NextFunction } from 'express';
 import { createSchemaBuilder, validateObjectStrict } from './builder.js';
-import { Order } from '../../types/models/order.js';
+import { Order, OrderProduct } from '../../types/models/order.js';
 import { addressSchema, paymentSchema, phonePattern } from './common.js';
 import { shipmentTypeValues } from '../../config/order.js';
 
+const productOrderSchema = createSchemaBuilder<OrderProduct>()
+    .field('variantId', { type: 'string', required: true, value: 'variant_12345' })
+    .field('productId', { type: 'string', required: true, value: '01234567890' })
+    .field('quantity', { type: 'number', required: true, minValue: 1, value: 1 })
+    .build();
 const expectedCreateOrderData = createSchemaBuilder<Order>()
     .field('products', {
         type: 'array',
         required: true,
         items: {
             type: 'object',
-            fields: {
-                variantId: { type: 'string', required: true, value: 'variant_12345' },
-                productId: { type: 'string', required: true, value: '01234567890' },
-                quantity: { type: 'number', required: true, minValue: 1, value: 1 }
-            }
+            fields: productOrderSchema,
+            required: true,
         }
     })
     .build();
@@ -60,7 +62,7 @@ const expectedConfirmOrderData = createSchemaBuilder<Order>()
         type: 'string', required: true, minLength: 11, maxLength: 11,
         value: '01234567890', patternRgx: phonePattern.regex, patternHint: phonePattern.Hint
     })
-    .field('pointsRedeemed', { type: 'number', required: true, value: 0 })
+    .field('pointsRedeemed', { type: 'number', required: false, value: 0 })
     .field('payment', { type: 'object', required: true, fields: paymentSchema })
     .build();
 export const validateConfirmOrder = (req: Request, res: Response, next: NextFunction) => {

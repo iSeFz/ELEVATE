@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { createSchemaBuilder, validateObjectStrict } from './builder.js';
-import { emailPattern, passwordPattern } from './common.js';
+import { emailPattern } from './common.js';
 
 const signupSchema = createSchemaBuilder()
     .field('email', {
@@ -29,8 +29,7 @@ const loginSchema = createSchemaBuilder()
         value: 'name@elevate.com', patternRgx: emailPattern.regex, patternHint: emailPattern.Hint
     })
     .field('password', {
-        type: 'string', required: true, minLength: 6, maxLength: 30,
-        value: 'password123', patternRgx: passwordPattern.regex, patternHint: passwordPattern.Hint
+        type: 'string', required: true
     })
     .build();
 export const validateLogin = (req: Request, res: Response, next: NextFunction) => {

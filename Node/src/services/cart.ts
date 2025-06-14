@@ -1,5 +1,5 @@
 import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
-import { CartItem, Customer } from '../types/models/customer.js';
+import { Cart, CartItem, Customer } from '../types/models/customer.js';
 import { Product } from '../types/models/product.js';
 import { getProduct } from './product.js';
 
@@ -81,7 +81,9 @@ export const addToCart = async (customerId: string, item: Partial<CartItem>) => 
 
             // Verify stock again with combined quantity
             if (variant.stock < newQuantity) {
-                throw new Error('Not enough stock available for the requested quantity' + ', product name: ' + product.name + ', available stock: ' + variant.stock + ', requested quantity: ' + newQuantity);
+                throw new Error(`Same product with same variant exists before, combinning their quantities results with no enough 
+                    stock available for the combined quantities, product name: ${product.name}, 
+                    available stock: ${variant.stock}, combined quantities: ${newQuantity}`);
             }
 
             updatedItems[existingItemIndex] = {
@@ -279,7 +281,7 @@ export const clearCart = async (customerId: string) => {
         }
 
         // Create empty cart
-        const emptyCart = {
+        const emptyCart: Cart = {
             items: [],
             subtotal: 0,
             updatedAt: admin.firestore.Timestamp.now()

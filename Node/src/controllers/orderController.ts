@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import * as orderService from '../services/order.js';
+import * as cartService from '../services/cart.js';
 import { validateOrderStatus } from '../services/utils/order.js';
 import { OrderStatus } from '../types/models/order.js';
 
@@ -71,6 +72,7 @@ export const confirmCustomerOrder = async (req: Request, res: Response) => {
         const orderData = req.body;
 
         const result = await orderService.confirmOrder(orderID, customerID, orderData);
+        await cartService.clearCart(customerID); // Clear the cart after confirming the order
 
         return res.status(200).json({
             status: 'success',

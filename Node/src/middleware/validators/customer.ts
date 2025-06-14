@@ -34,7 +34,8 @@ const customerSchemaBuilder = createSchemaBuilder<Customer>()
     .field('imageURL', {
         type: 'string', required: false,
         patternRgx: websitePattern.regex, patternHint: websitePattern.Hint
-    });
+    })
+    .field('loyaltyPoints', { type: 'number', required: false, value: 0 })
 
 const signupCustomerSchema = new SchemaBuilder(customerSchemaBuilder)
     .field('email', {
