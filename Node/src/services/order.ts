@@ -274,7 +274,15 @@ export const calculateShipmentFees = async (
     productItems: { productId: string, quantity: number }[]
 ) => {
     if (shipmentType === SHIPMMENT_TYPES["pickup"]) {
-        return {};
+        return {
+            totalFees: 0,
+            breakdown: [],
+            carrier: 'N/A', // No carrier for pickup
+            estimatedDeliveryDays: 0,
+            method: SHIPMMENT_TYPES["pickup"],
+            createdAt: Timestamp.now(),
+            trackingNumber: '', // No tracking for pickup
+        } as Order['shipment'];
     }
 
     // 1. Get unique brands from products
