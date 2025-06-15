@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import * as reviewService from '../services/review.js';
 import * as productService from '../services/product.js';
+import * as customerService from '../services/customer.js';
 import { Review } from '../types/models/review.js';
 
 export const getAllReviewsOfProduct = async (req: Request, res: Response) => {
@@ -50,8 +51,16 @@ export const addReview = async (req: Request, res: Response) => {
             return res.status(404).json({ status: 'error', message: 'Product not found' });
         }
 
+        const customer = await customerService.getCustomer(userId);
+        if (!customer) {
+            return res.status(404).json({ status: 'error', message: 'Customer not found' });
+        }
+
         reviewData.customerId = userId;
         reviewData.productId = productId;
+        reviewData.customerFirstName = customer.firstName;
+        reviewData.customerLastName = customer.lastName;
+        reviewData.customerImageURL = customer.imageURL;
 
         const newReview = await reviewService.addReview(reviewData);
 

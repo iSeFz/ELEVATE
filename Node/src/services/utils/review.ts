@@ -9,6 +9,10 @@ const emptyReview: Review = {
     content: "",
     rating: 0,
 
+    customerFirstName: "",
+    customerLastName: "",
+    customerImageURL: "",
+
     createdAt: "",
     updatedAt: "",
 }
@@ -21,6 +25,10 @@ export const generateFullyReviewData = (review: Review): Review => {
         title: review.title ?? emptyReview.title,
         content: review.content ?? emptyReview.content,
         rating: review.rating ?? emptyReview.rating,
+
+        customerFirstName: review.customerFirstName ?? emptyReview.customerFirstName,
+        customerLastName: review.customerLastName ?? emptyReview.customerLastName,
+        customerImageURL: review.customerImageURL ?? emptyReview.customerImageURL,
 
         createdAt: convertToTimestamp(review.createdAt),
         updatedAt: convertToTimestamp(review.updatedAt),
