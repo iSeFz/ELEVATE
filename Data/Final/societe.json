@@ -1,0 +1,212 @@
+[
+  {
+    "name": "Lazy Boy Full Set in White",
+    "category": "Sets",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0658/3078/1085/files/IMG_7734.jpg?v=1745155235",
+          "https://cdn.shopify.com/s/files/1/0658/3078/1085/files/IMG_7738.jpg?v=1745155235"
+        ],
+        "price": 1200.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Lazy Boy Full Set in Black",
+    "category": "Sets",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0658/3078/1085/files/IMG_7742.jpg?v=1745154206",
+          "https://cdn.shopify.com/s/files/1/0658/3078/1085/files/IMG_7746.jpg?v=1745155584"
+        ],
+        "price": 1200.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Lazy Boy T-shirt in White",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0658/3078/1085/files/IMG_7734.jpg?v=1745155235",
+          "https://cdn.shopify.com/s/files/1/0658/3078/1085/files/IMG_7735.jpg?v=1745155235",
+          "https://cdn.shopify.com/s/files/1/0658/3078/1085/files/IMG_7736.jpg?v=1745155235",
+          "https://cdn.shopify.com/s/files/1/0658/3078/1085/files/IMG_7737.jpg?v=1745155235",
+          "https://cdn.shopify.com/s/files/1/0658/3078/1085/files/1B86E8B9-DD50-4448-B572-A58A152B572F.jpg?v=1745168526"
+        ],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Lazy Boy T-shirt in Black",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0658/3078/1085/files/IMG_7742.jpg?v=1745154206",
+          "https://cdn.shopify.com/s/files/1/0658/3078/1085/files/IMG_7743.jpg?v=1745154205",
+          "https://cdn.shopify.com/s/files/1/0658/3078/1085/files/IMG_7744.jpg?v=1745154206",
+          "https://cdn.shopify.com/s/files/1/0658/3078/1085/files/IMG_7745.jpg?v=1745154310",
+          "https://cdn.shopify.com/s/files/1/0658/3078/1085/files/1B86E8B9-DD50-4448-B572-A58A152B572F.jpg?v=1745168526"
+        ],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  }
+]

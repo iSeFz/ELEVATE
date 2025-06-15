@@ -1,0 +1,752 @@
+[
+  {
+    "name": "WHITE HOODIE",
+    "category": "Tops - Hoodies",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Melton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/BACK_fbab6205-75b4-44e4-997b-c490116087d0.png?v=1707171395",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/FRONT_bbd43749-dda2-420e-aeb8-3caf55ad3550.png?v=1707171395"
+        ],
+        "price": 1200.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "BLACK HOODIE",
+    "category": "Tops - Hoodies",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Melton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/BACK.png?v=1707170932",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/FRONT.png?v=1707170936"
+        ],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "GREY ZIP-UP",
+    "category": "Tops - Jackets",
+    "description": "Experience ultimate comfort and style with our FW25 Drop 4.0 zip-up hoodies. Perfectly blending streetwear aesthetics with premium materials, this collection features versatile pieces designed for every season.",
+    "material": "Melton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/grey_front_905a9188-8020-4967-b7bb-cabdb06c1e4d.png?v=1733088967",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/grey_back.png?v=1733086970",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/7B0961B5-F903-4A17-9F9C-16D7E448D1DA.jpg?v=1733066158",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/0CDBE10F-2303-4F62-A02B-E22CA333CD1B.jpg?v=1733066158",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/E3F74C0F-7D9F-4CBD-8361-63C293899F96.jpg?v=1733066158",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/IMG-0210.jpg?v=1733067607"
+        ],
+        "price": 1200.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "BROWN ZIP-UP",
+    "category": "Tops - Jackets",
+    "description": "Experience ultimate comfort and style with our FW25 Drop 4.0 zip-up hoodies. Perfectly blending streetwear aesthetics with premium materials, this collection features versatile pieces designed for every season.",
+    "material": "Melton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Brown"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/brown-front_ba1edbb2-9237-47ea-8968-a8b1d961ffda.png?v=1733088997",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/brown-back.png?v=1733086970",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/0F87F246-D032-4FAF-90A5-CC7D76A43FAF.jpg?v=1733066059",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/DE8CFBAA-9412-4826-953E-C79E09544F7F.jpg?v=1733066059",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/7F21BEBA-6748-4CDE-98FC-1E92663655FE.jpg?v=1733066059",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/2F04329D-1A07-4C7B-9C0A-4FA7A981559F.jpg?v=1733066059"
+        ],
+        "price": 1200.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Brown"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Brown"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "BLACK ZIP-UP",
+    "category": "Tops - Jackets",
+    "description": "Experience ultimate comfort and style with our FW25 Drop 4.0 zip-up hoodies. Perfectly blending streetwear aesthetics with premium materials, this collection features versatile pieces designed for every season.",
+    "material": "Melton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/ZIPUP-BLACK-_2.png?v=1733089003",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/ZIPUP-BLACK_1.png?v=1733086914",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/E6BCED7C-33F0-4C2C-85A1-81CCB4C50F62.jpg?v=1733065839",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/D703E765-66C8-419C-8692-44994E871621.jpg?v=1733065839",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/9D6DEC15-4300-430B-959F-615260F090A6.jpg?v=1733065839",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/FA0CA690-8D57-4318-96AB-32A192CA7278.jpg?v=1733065839"
+        ],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "GREEN ZIP-UP",
+    "category": "Tops - Jackets",
+    "description": "Experience ultimate comfort and style with our FW25 Drop 4.0 zip-up hoodies. Perfectly blending streetwear aesthetics with premium materials, this collection features versatile pieces designed for every season.",
+    "material": "Melton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Green"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/green-front_eb52aec5-c932-41f5-af02-e7bcb2c8ed88.png?v=1733077198",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/green-zip-back.png?v=1733077194",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/A5DDB57B-FDF1-4123-A170-60DE61FD7277.jpg?v=1733065767",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/CBD2A389-3610-46F1-98B7-F5A61F9B3ADA.jpg?v=1733066814",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/28260B4A-20AD-4C63-84DA-DED77E4DE4AA.jpg?v=1733066815",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/61AF8389-7E8E-4FD8-A9BE-DE37750BD0A7.jpg?v=1733067618"
+        ],
+        "price": 1200.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Green"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Green"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "BLACK AND GREEN ZIP-UP",
+    "category": "Tops - Jackets",
+    "description": "Experience ultimate comfort and style with our FW25 Drop 4.0 zip-up hoodies. Perfectly blending streetwear aesthetics with premium materials, this collection features versatile pieces designed for every season.",
+    "material": "Melton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/black-front.png?v=1733077186",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/black-back.png?v=1733077182",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/70AB458E-2C97-4A65-A390-CEB193EFE99D.jpg?v=1733065724",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/3BD25690-1074-40DE-BF20-88827C1CD732.jpg?v=1733065724",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/7CA4C527-BD0A-4BEA-BBDE-9E1531017347.jpg?v=1733065724",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/EF59A021-1D63-4B4F-B7E3-BBF78CA1DBBE.jpg?v=1733065724"
+        ],
+        "price": 750.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "PERFECT BAGGY JEANS IN BLACK",
+    "category": "Bottoms - Jeans",
+    "description": "BLACK BAGGY JEANS STONE WASHED.",
+    "material": "Denim",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/front_black_jeanss-l.png?v=1733075169",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/back_black_jeans-l_b6d46591-c1d5-465e-bae8-890dc616deca.png?v=1733075323",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/58D4778D-C3F3-4C75-BBB5-BF815989EA05.jpg?v=1733066399",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/3EA34C72-502D-4540-B5B5-91B8F2A5F005.jpg?v=1733066399",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/691E5B6D-21E7-45DF-90A1-3C133DCCFF2F.jpg?v=1733066399",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/E3C10E95-519B-4BDB-97E6-AB9792757496.jpg?v=1733066399",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/1509584D-D192-4170-88A9-94B0BD68DAD6.jpg?v=1733066399",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/6CF0788C-124B-42A8-A74F-67C036E933D1.jpg?v=1733066399",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/B47F912A-2089-4001-B5B2-79CF2B38D108.jpg?v=1733066399"
+        ],
+        "price": 1200.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1200.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "PERFECT BAGGY JEANS IN GREY",
+    "category": "Bottoms - Jeans",
+    "description": "GREY BAGGY JEANS STONE WASHED.",
+    "material": "Denim",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/grey_ftont-s_949573b1-730b-4283-ab3b-9d3388775c28.png?v=1733075122",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/grey_back-s_a95eaf0c-4b26-4991-9be2-72a342e8b524.png?v=1733075097",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/C82A7B82-A264-4730-B33E-CC61D5DD15B0.jpg?v=1733066270",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/94D88B4A-50D0-4492-9B52-38AD031763C3.jpg?v=1733066270",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/42B743EF-0DCF-4260-906F-C85C51B61ED2.jpg?v=1733066270",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/F712FEB0-98E6-4437-8A3B-D785AE1EDB51.jpg?v=1733066270"
+        ],
+        "price": 1000.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1000.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1000.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1000.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "PERFECT BAGGY JEANS IN BLUE",
+    "category": "Bottoms - Jeans",
+    "description": "BLUE BAGGY JEANS STONE WASHED.",
+    "material": "Denim",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/front_jeansbb.png?v=1733074948",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/back_jeanss-b.png?v=1733074929",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/7EBFD026-EC99-40BD-8A61-1B07DC3773CD.jpg?v=1733066642",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/9FC5B8B6-508B-4D88-80CD-F15FC0F433B2.jpg?v=1733066642",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/9DD5D10E-9EFF-422C-9D41-810A9F6C8880.jpg?v=1733066642",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/45CEFB9D-3BB4-442A-B652-CCEDB95BA166.jpg?v=1733066642",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/674824E0-2B01-4B09-9013-B6C39D2A08B6.jpg?v=1733066642",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/989F8F4D-5495-4984-8AF3-5E437D14F841.jpg?v=1733066642",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/7BBDBEFD-5ED7-4FF0-A193-30D9F8DBCBF2.jpg?v=1733066642"
+        ],
+        "price": 1000.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1000.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1000.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1000.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "VINTAGE STAR JEANS",
+    "category": "Bottoms - Jeans",
+    "description": "A PERFECT COMBINATION OF STYLE, COMFORT, AND QUALITY. CRAFTED WITH CARE, THESE JEANS FEATURE SUPERIOR DENIM FABRIC, EXQUISITE EMBROIDERY, AND A RELAXED BAGGY FIT. ELEVATE YOUR WARDROBE WITH OUR STANDOUT JEANS THAT OFFER DURABILITY, STUNNING DETAILS, AND A TRENDY LOOK.",
+    "material": "Denim",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/vintagefromt-web.png?v=1701342936",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/vintageback-web.png?v=1701342936",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/CopyofDSC09948.jpg?v=1701346656",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/CopyofDSC09956.jpg?v=1701346656"
+        ],
+        "price": 1400.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1400.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1400.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1400.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1400.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "VINTAGE STAR JEANS",
+    "category": "Bottoms - Jeans",
+    "description": "A PERFECT COMBINATION OF STYLE, COMFORT, AND QUALITY. CRAFTED WITH CARE, THESE JEANS FEATURE SUPERIOR DENIM FABRIC, EXQUISITE EMBROIDERY, AND A RELAXED BAGGY FIT. ELEVATE YOUR WARDROBE WITH OUR STANDOUT JEANS THAT OFFER DURABILITY, STUNNING DETAILS, AND A TRENDY LOOK.",
+    "material": "Denim",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/jeansback.png?v=1695318838",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/jeans.png?v=1695318838",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/black1.png?v=1695318029",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/black2.png?v=1695318029"
+        ],
+        "price": 1600.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1600.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1600.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1600.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1600.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Washed Out Jeans",
+    "category": "Bottoms - Jeans",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Denim",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/Artboard1_13f8eb19-b5c8-465f-9e97-97274fbc9122.png?v=1715271669",
+          "https://cdn.shopify.com/s/files/1/0772/6927/0819/files/Artboard2.png?v=1715271670"
+        ],
+        "price": 800.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 800.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 800.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 800.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 800.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  }
+]

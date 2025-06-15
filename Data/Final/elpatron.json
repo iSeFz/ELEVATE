@@ -1,0 +1,271 @@
+[
+  {
+    "name": "Silver Sweatpants",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Model is 180 cm wearing size Medium.",
+    "material": "Cotton",
+    "department": [
+      "Men"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Silver"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/1_0b7bd8c3-fc88-42d0-adac-0e3b00e6db68.png?v=1745208373",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/3_fe8bd722-d8ae-412e-8a91-eb4581fcc864.png?v=1745209045",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/4_386dc475-afcb-43d1-b242-bf390650b97c.png?v=1745209053",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/2_d5a48f4b-b972-4134-b4de-12074732d6fc.png?v=1745209053"
+        ],
+        "price": 699.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Silver"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 699.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Silver"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 699.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Black Sweatpants",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Model is 180 cm wearing size Medium.",
+    "material": "Cotton",
+    "department": [
+      "Men"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/1_62c87560-acb1-444e-9765-caf9dd05fa21.png?v=1745207849",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/2_5bae6097-7315-49ab-ba02-931664b3ec27.png?v=1745208101",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/4_e5e1b7d0-c628-4c46-8536-afb2ba0b9a0b.png?v=1745208185",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/3_6d431a2a-9da6-4b1e-80e1-9cb41d75bdc4.png?v=1745208185"
+        ],
+        "price": 699.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 699.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 699.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "EL PATRON blue t-shirt",
+    "category": "Tops - T-Shirts",
+    "description": "Male model is 186 cm wearing size Large. Female is 165 cm wearing a size Small.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/back_no_background.png?v=1744572020",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/frontnobackground.png?v=1744572020",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/back_details.png?v=1744761337",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/front_details.png?v=1744761337",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/relaxed_fit_copy.png?v=1744761337"
+        ],
+        "price": 699.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 699.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 699.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 699.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "PLATA rose gold t-shirt",
+    "category": "Tops - T-Shirts",
+    "description": "Male model is 186 cm wearing size Large. Female is 165 cm wearing a size Small.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Rose Gold"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/rosegoldnobackgroundcopy.png?v=1744393604",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/frontrose.png?v=1744393604",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/3_d60fc6e2-7bdf-48df-bf1c-bca167f4f22b.png?v=1744393356",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/4_e61af064-a662-4626-bc13-3b7baa0b04ad.png?v=1744393357",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/5_fdf60705-6e01-411c-b8bc-33befd51fb63.png?v=1744393356"
+        ],
+        "price": 649.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Rose Gold"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 649.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Rose Gold"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 649.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Rose Gold"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 649.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "EL COMMANDANTE olive t-shirt",
+    "category": "Tops - T-Shirts",
+    "description": "Male model is 186 cm wearing size Large. Female is 165 cm wearing a size Small.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/1_8315a5cd-88f0-47b2-890a-30ea8c7b13b9.png?v=1744382660",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/2_ed2dc576-5002-4f4b-8d39-16ff4d2eac8c.png?v=1744382660",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/front_closeup.png?v=1744382853",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/olive_back_details.png?v=1744382854",
+          "https://cdn.shopify.com/s/files/1/0788/3879/2474/files/relaxed_fit.png?v=1744382853"
+        ],
+        "price": 649.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 649.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 649.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 649.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  }
+]
