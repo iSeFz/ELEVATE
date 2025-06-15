@@ -1,0 +1,866 @@
+[
+  {
+    "name": "WHITE LAQTA TSHIRT",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/FC27BA1C-710E-49DD-A3B6-23755BBA52B0.jpg?v=1724275538",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/07E331FC-6B9E-41C6-B736-197B08C5E087.jpg?v=1724275538",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/06FCF33B-D594-4973-B352-979821ACB7C3.jpg?v=1724275538",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/E28E10B8-83C7-4EC1-9C2F-4A31F21FB333.jpg?v=1724275604",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/66B654D4-40E7-4923-AFF3-877B8D724404.jpg?v=1724275606",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/721FDDA1-B8FD-40F9-A80E-B7FCE7E0521C.jpg?v=1724801746"
+        ],
+        "price": 550.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 550.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 550.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 550.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "GREY LAQTA TSHIRT",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/F9A65806-3CB1-4F97-A856-FDB90BB4F9C6.jpg?v=1724273403",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/31EB9066-ACC7-4A19-B06F-FA87FC8D38F5.jpg?v=1724273402",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/CECD0255-9275-40AC-8D3E-0A7E76971A55.jpg?v=1724273403",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/04D0079F-1AA3-44FC-A4E1-71D33B7D6487.jpg?v=1724273402",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/3B6B4E0C-7794-4007-8D5A-57C4D1CD4B77.jpg?v=1724801707"
+        ],
+        "price": 550.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 550.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 550.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 550.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "BLACK LAST SHOT TSHIRT",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/D2F5A0CE-2028-493E-8CCA-480C298EDDAF.jpg?v=1724274015",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/DA0AEF9E-B945-4816-BF34-F1563E97FBE7.jpg?v=1724274014",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/B315DDB0-EB96-481A-A6C9-EB4BB28539CD.jpg?v=1724801652"
+        ],
+        "price": 550.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 550.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 550.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 550.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Black sweatpants",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/58C4E356-924E-4F41-9AD3-073CC8FE072D.jpg?v=1735747389",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/8BFC6304-AD8F-4940-BF8E-503397946686.jpg?v=1735747389",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/114E4655-B2D5-44F0-AE3B-B8D12C8308AB.jpg?v=1735747389",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/D92F7509-F8A2-49F6-9483-4216DB9E82FF.jpg?v=1735747389",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/D592F7D6-E15E-42FE-B594-72185325CC4C.jpg?v=1735747389"
+        ],
+        "price": 750.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "White knitted pants",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Wool",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/46F48820-2A6C-42B4-94EA-451D37808DBF.jpg?v=1735407996",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/9A52AA04-6E0F-4A5C-A0F3-A24FFA9DC606.jpg?v=1735407997",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/2B69AC55-270D-4935-91D8-BE8EF6DF1EBD.jpg?v=1735407996",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/35675284-FFFC-4E0B-9527-0501482202A8.jpg?v=1735407997"
+        ],
+        "price": 650.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 650.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 650.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "BLACK KNITTED SWEATER",
+    "category": "Tops - Sweaters",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Wool",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/43C12E94-F9CB-45DC-87DF-667E6FB925CD.jpg?v=1735227983",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/51C64FF7-0B8D-4857-988D-E4C818DECBAC.jpg?v=1735227983",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/E3865D8F-9E80-4BD3-B594-146557781417.jpg?v=1735227983",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/4E5A92DC-75D0-4576-8E13-D56795D57AE1.jpg?v=1735227983"
+        ],
+        "price": 650.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 650.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 650.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "FROSTED ROSE SWEATER",
+    "category": "Tops - Sweaters",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Wool",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Rose"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/bdcc89e1-35eb-4825-8642-e963d732f9d2.jpg?v=1735075309",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/ed92f9ab-e54b-4052-9641-997754bda35d.jpg?v=1735075324",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/e9936703-aa92-4a23-88fa-b55a4569b22f.jpg?v=1735075336",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/e3ba55ee-23f1-4017-bebe-c33c7f0c6a2c.jpg?v=1735075347"
+        ],
+        "price": 650.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Rose"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 650.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Rose"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 650.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "MAROON JACKET",
+    "category": "Tops - Jackets",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Melton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Maroon"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/92C7EBEC-8AB5-4AF8-8999-0AE400E611F8.jpg?v=1734138669",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/6509B3D2-C167-436D-A181-ACECEF573CF0.jpg?v=1734138669",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/CD4441CB-F10D-4AFD-AB0B-94958078BD7F.jpg?v=1734138669"
+        ],
+        "price": 900.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Maroon"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 900.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Maroon"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 900.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "DARK GREY SWEATPANT",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Melton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Dark Grey"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/0B9878CD-C133-4A9D-A480-3DA0301B8AC5.jpg?v=1734137740",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/5A9FD561-902E-49CD-8C70-6B1D415E93E7.jpg?v=1734137740",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/D3797A6B-6C5A-4650-8BE2-75C86DEF6C79.jpg?v=1734137740"
+        ],
+        "price": 600.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Dark Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Dark Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Dark Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "PINK SWEATPANT",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Melton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/66F17E74-A13E-4D7D-A163-264787DFF09B.jpg?v=1734137553",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/C4CADA86-81D6-4BFA-9FC2-D8C14EFA4926.jpg?v=1734137553",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/D3C14AD6-9F3F-4248-8EC4-BAC5D89E04A8.jpg?v=1734137553"
+        ],
+        "price": 600.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "MAROON SWEATPANT",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Melton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Maroon"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/059E740F-8D37-4A49-A01C-B5DDF1867DFC.jpg?v=1734136394",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/E7FB07B4-1126-486D-8228-DBC863489C73.jpg?v=1734136394",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/D36DAECF-4F6A-44C9-B3C4-AEF192C22CA2.jpg?v=1734136394"
+        ],
+        "price": 600.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Maroon"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Maroon"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Maroon"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "ROYAL BLUE SWEATPANTS",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Melton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/DB294ABD-A504-4C2A-80C7-1F39639D6DA0.jpg?v=1734134893",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/6B461766-6987-487C-9880-6F1436EEC312.jpg?v=1734134892",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/552DE8A7-3209-483C-9972-E9FAF76D2D97.jpg?v=1734134893"
+        ],
+        "price": 600.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "BLACK CREWNECK",
+    "category": "Tops - Sweatshirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/65B315F6-7719-4720-9138-2C79F2C35C3A.jpg?v=1734134048",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/AC0E5A79-1AB5-43E5-84C4-4D339CE9E301.jpg?v=1734134048",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/EDA74727-15F6-4333-9C9D-3EF176FA5AF8.jpg?v=1734134048",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/01398B37-E253-485A-806F-B3EA7475C5E4.jpg?v=1734134048"
+        ],
+        "price": 600.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "WHITE CREWNECK",
+    "category": "Tops - Sweatshirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/F1C0CBCC-913E-4285-812B-641BFA3A1687.jpg?v=1703606042",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/89C831A9-9156-4684-9DE3-A23BF8428EB8.jpg?v=1703606042"
+        ],
+        "price": 650.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 650.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 650.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "BLACK STAR PANT",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/35813A22-479E-4A0B-B365-38DA28F2C417.jpg?v=1724275984",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/52A4A4A3-48DA-4B72-B3AB-BB33262A535B.jpg?v=1724275985",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/E08D2B2B-372F-428F-AFC6-A4CCE5425A5D.jpg?v=1724801809"
+        ],
+        "price": 750.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "ONLY PINK VIBES TSHIRT",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/IMG-7012.jpg?v=1716932852",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/IMG-7011.jpg?v=1716932852",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/IMG-7010.jpg?v=1716932852",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/IMG-7013.jpg?v=1716932852",
+          "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/9C9B28C2-8571-4454-84AA-7099FF986C20.jpg?v=1724801629"
+        ],
+        "price": 550.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 550.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 550.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 550.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  }
+]

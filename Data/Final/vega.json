@@ -1,0 +1,1220 @@
+[
+  {
+    "name": "BLUE JEANS",
+    "category": "Bottoms - Jeans",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Denim",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/DSC05076.jpg?v=1735576132",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/DSC05080.jpg?v=1735576121",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/DSC05084.jpg?v=1735576060",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/DSC05087.jpg?v=1735576124",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/DSC05090.jpg?v=1735576102",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/DSC05091_9eadfa5e-ae4d-4525-9ee7-c00428c20e91.jpg?v=1735576698",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_fdbb63c0-7560-4e40-a405-d867e3ee70e2.jpg?v=1735707893"
+        ],
+        "price": 1100.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1100.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1100.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1100.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1100.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "BLACK JEANS",
+    "category": "Bottoms - Jeans",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Denim",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/DSC05053.jpg?v=1735574829",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/DSC05056.jpg?v=1735574830",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/DSC05061.jpg?v=1735574829",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/DSC05064.jpg?v=1735574829",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/DSC05057_84ff67ac-5395-440c-afc4-b08eb0109b53.jpg?v=1735575043",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_b71c4b0e-4f7e-437c-a662-2a5b825fbe7e.jpg?v=1735707886"
+        ],
+        "price": 1100.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1100.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1100.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1100.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 1100.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "GREY LOGO TEE",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/01BB24BB-FEBF-45D1-BD17-C1DFDBAEB83A.jpg?v=1742332623",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/31906301-E914-4718-8DAA-89AC581040D7.jpg?v=1742332622",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_66b8d278-4e18-4c47-9dcb-faffebd620e6.jpg?v=1742354585"
+        ],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "BROWN ARCHWAY TEE",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Brown"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/594E298F-CE7D-4D9E-BFDE-D91AD0647C2B.jpg?v=1742332786",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/5ABA220C-21FF-47BD-B79A-DDCBC2E6F6B8.jpg?v=1742332786",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/6C1009AC-E751-4598-8648-746E6AF19826.jpg?v=1742332786",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_2e1b7fef-094d-4984-879a-87fcb5c0fbee.jpg?v=1742354674"
+        ],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Brown"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Brown"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Brown"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Brown"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "WHITE CAMO TEE",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/BFA8743D-8E59-4EC3-B837-604AD539C799.jpg?v=1742163362",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/15185442-1D86-4BB1-9DC1-7617C9B558F6.jpg?v=1742163404",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/28A07811-D925-4A88-938E-555B65F40C1E.png?v=1742163404",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_1d0de795-b324-41f3-a2ba-867354577ca8.jpg?v=1742354687"
+        ],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "PINK MELT DOWN TEE",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/4D6123B3-A4A8-48DD-83E5-F77893050A6D.jpg?v=1742165249",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/7BD348AD-9E17-432E-B180-83F4FAC2EC44.png?v=1742165249",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_cf38f355-e7a5-4966-a2ed-3fd73da5d6be.jpg?v=1742354656"
+        ],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "BLACK IRON TEE",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/BD67F09F-B7FF-4F8E-9CC7-442F9CF2D57F.jpg?v=1742165003",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/E0F0A80C-3270-40E8-BAAA-2A096F43B0B0.jpg?v=1742165003",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/ECC25CA8-9B2A-4D15-9BA2-865CED1D1B67.png?v=1742165003",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_706b2bba-857f-4471-83ef-93a0d5d1e81c.jpg?v=1742354634"
+        ],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "BLACK CHROME TEE",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/64323A5F-58B4-4CC7-B4DE-24F06C206A4E.jpg?v=1742164412",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/1409E091-2F69-45D4-AF4B-E8F49BB66CBE.jpg?v=1742164412",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_906789cd-e849-45d6-b588-7e30e5535410.jpg?v=1742354623"
+        ],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "OLIVE DOUBLE LOGO TEE",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/88DC20AD-DDCF-4E8F-9E37-2CA812A660E5.jpg?v=1742164245",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/8DE6935E-259F-4FD6-B3B7-3734814041D1.jpg?v=1742164246",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_5eddf778-8851-439c-94df-a8d1919ccb7a.jpg?v=1742354606"
+        ],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "BLACK NEBULA TEE",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/62146CD3-657F-430B-9067-0DBEFB57B06C.jpg?v=1742163762",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/3E88DB0C-3B9E-4E26-9431-E8CB38C55683.png?v=1742163791",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_b252997a-4a41-4566-ac2b-5243126caa9c.jpg?v=1742354544"
+        ],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "WHITE NEBULA TEE",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/865F1110-AC51-42A6-A17A-68C512C942A2.jpg?v=1742235099",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/2C910F3E-F03F-4454-B7F6-1778A6F0C5F3.png?v=1742235101",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_e2865283-1a60-462c-9e74-823f07a5330a.jpg?v=1742354507"
+        ],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "OLIVE LEGACY TEE",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/600F2445-1821-4FF2-A50B-BE3F85C0BC2D.jpg?v=1742163712",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/491AD1A3-A8C4-4A68-8896-91BC67E18C54.jpg?v=1742163712",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_4880736e-f7a5-41d7-8def-52de1d021920.jpg?v=1742354527"
+        ],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "BLACK FTB TEE",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/293612F7-4255-4E1F-B4A2-DE3E273169F2.jpg?v=1742163463",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/3A47E5B1-2EC6-4C0D-A2DB-BDD5424DC3E1.jpg?v=1742163463",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/C010B864-58E9-47C6-B7B3-2918B7C3F569.jpg?v=1742163463",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_f600e81a-c40c-4ac3-9b95-6159b379ef28.jpg?v=1742319577"
+        ],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "OLIVE MONOCHROME TEE",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/7125B3E4-AC0F-424F-BE81-A85DE8F0A12A.jpg?v=1742163605",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/5F5D81A1-D1DE-4C07-83E8-21B4121FCDF8.png?v=1742163605",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_2c77cb0a-914a-473f-8758-090b1219f99a.jpg?v=1742319364"
+        ],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "BLACK TRIPLE V TEE",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/863EA97E-45DD-4A40-B43A-426323091F6C.jpg?v=1742163669",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/87F3477F-3B73-4D5F-92EB-C5B57A33BAD5.png?v=1742163669",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_1f98d9eb-beee-4422-8f37-6a87396ef426.jpg?v=1742319373"
+        ],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "WHITE SLOGAN TEE",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/EAB58E2B-4C48-4D0F-A658-3C2C09354F4E.jpg?v=1742163521",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/D08C964A-9617-42DF-8DCF-079E44AF2A3D.jpg?v=1742163521",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_d3a5282e-8695-430a-9ee5-748dc1f26bb3.jpg?v=1742319381"
+        ],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "PINK LAVA TEE",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/IMG-7956.jpg?v=1742165179",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/IMG-7955.jpg?v=1742165179",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/IMG-7954.jpg?v=1742165179",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_38dd9e7a-7ba2-4d1d-9ca6-24c1d7b4fe3f.jpg?v=1742319392"
+        ],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "BROWN VARSITY TEE",
+    "category": "Tops - T-Shirts",
+    "description": "Relaxed fit, comfortable and unique.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Brown"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/5AB7F52D-A082-47D0-BFDE-5215CAA43FF0.jpg?v=1742165447",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/40D18D8A-EF04-4CC0-9CC3-D0FEB7924F41.jpg?v=1742165447",
+          "https://cdn.shopify.com/s/files/1/0749/0361/7844/files/FullSizeRender_6b406c7f-5705-4341-b504-3feb4990e137.jpg?v=1742319399"
+        ],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Brown"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Brown"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Brown"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Brown"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  }
+]
