@@ -29,6 +29,7 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
     ],
     tags: [
       { name: 'Authentication' },
+      { name: 'Utilities', description: 'Utility APIs for common tasks' },
       { name: 'Customers', description: 'All APIs related to customers' },
       { name: 'Wishlist' },
       { name: 'Cart' },

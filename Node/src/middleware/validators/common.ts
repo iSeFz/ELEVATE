@@ -41,8 +41,8 @@ export const addressSchema = createSchemaBuilder<Address>()
     .field('building', { type: 'number', required: true })
     .field('city', { type: 'string', required: true, minLength: 1, maxLength: 20 })
     .field('street', { type: 'string', required: true, minLength: 1, maxLength: 100 })
-    .field('latitude', { type: 'number', required: true, value: 30.0313294 })
-    .field('longitude', { type: 'number', required: true, value: 31.2081442 })
+    .field('latitude', { type: 'number', required: false, value: 30.0313294 })
+    .field('longitude', { type: 'number', required: false, value: 31.2081442 })
     .build();
 
 export const websiteSchema = createSchemaBuilder<Website>()

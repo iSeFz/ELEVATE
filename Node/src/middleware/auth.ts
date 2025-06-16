@@ -32,7 +32,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
             req.user = {
                 id: req.query?.userId as string ?? 'shawky.ebrahim2514', // Attch `userId` in the request query to act as this user (Must enable admin access env)
                 email: req.query?.email as string ?? 'shawky.ebrahim2514@gmail.com',
-                role: req.query?.role as string ?? 'admin'
+                role: req.query?.userRole as string ?? 'admin'
             };
             console.log("Admin Access", req.query?.userId);
             delete req.body?.userId;

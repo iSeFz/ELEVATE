@@ -3,6 +3,7 @@ import { generateFullyBrandData } from './utils/brand.js';
 import { Brand } from '../types/models/brand.js';
 import { updateProductsBrandSubscriptionPlan } from './product.js';
 import { getSubscriptionPlanDetails } from '../config/subscriptionPlans.js';
+import { fillDataAddressesCoordinates } from './utils/common.js';
 
 const firestore = admin.firestore();
 const brandCollection = FIREBASE_COLLECTIONS['brand'];
@@ -66,6 +67,7 @@ export const getBrandByName = async (brandName: string) => {
 
 export const addBrand = async (brand: Brand) => {
     try {
+        await fillDataAddressesCoordinates(brand.addresses);
         const brandData = generateFullyBrandData(brand);
 
         const docRef = await firestore.collection(brandCollection).add(brandData);
@@ -81,6 +83,7 @@ export const updateBrand = async (brandID: string, newBrandData: Partial<Brand>)
     }
 
     try {
+        await fillDataAddressesCoordinates(newBrandData.addresses);
         const brandRef = firestore.collection(brandCollection).doc(brandID);
         await brandRef.update(newBrandData);
 

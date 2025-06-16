@@ -3,6 +3,7 @@ import * as orderService from '../services/order.js';
 import * as cartService from '../services/cart.js';
 import { validateOrderStatus } from '../services/utils/order.js';
 import { OrderStatus } from '../types/models/order.js';
+import { fillDataAddressesCoordinates } from '../services/utils/common.js';
 
 export const getAllOrders = async (req: Request, res: Response) => {
     // This route is already protected by the authorize middleware in the router
@@ -97,6 +98,10 @@ export const calculateShipmentFees = async (req: Request, res: Response) => {
             });
         }
 
+        const ensuredAddressWithCoordinates = [address];
+        await fillDataAddressesCoordinates(ensuredAddressWithCoordinates);
+
+
         const customerOrder = await orderService.getCustomerOrder(orderID, customerID);
 
         if (customerOrder.status !== OrderStatus.PENDING) {
@@ -106,8 +111,8 @@ export const calculateShipmentFees = async (req: Request, res: Response) => {
             });
         }
 
-        const shipmentData = await orderService.calculateShipmentFees(address, shipmentType, customerOrder.products);
-        await orderService.updateOrderAfterShipment(orderID, shipmentData, address);
+        const shipmentData = await orderService.calculateShipmentFees(ensuredAddressWithCoordinates[0], shipmentType, customerOrder.products);
+        await orderService.updateOrderAfterShipment(orderID, shipmentData, ensuredAddressWithCoordinates[0]);
 
         return res.status(200).json({
             status: 'success',

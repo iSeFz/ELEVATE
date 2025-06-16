@@ -6,6 +6,7 @@ import { BrandOwner } from '../types/models/brandOwner.js';
 import { generateFullyCustomerData } from './utils/customer.js';
 import { generateFullyStaffData } from './utils/staff.js';
 import { generateFullyBrandOwnerData } from './utils/brandOwner.js';
+import { fillDataAddressesCoordinates } from './utils/common.js';
 
 const auth = admin.auth();
 const firestore = admin.firestore();
@@ -51,7 +52,7 @@ export const genericSignup = async (userData: any, userType: UserType, signupMet
 
     try {
         if (userType === 'customer') {
-            userData = generateFullyCustomerData(userData);
+            userData = await generateFullyCustomerData(userData);
         } else if (userType === 'staff') {
             userData = generateFullyStaffData(userData);
         } else if (userType === 'brandOwner') {
@@ -118,6 +119,7 @@ export const thirdPartySignup = async (userData: any) => {
 
 // Type-specific signup functions that use the generic function
 export const customerSignup = async (customer: Customer) => {
+    await fillDataAddressesCoordinates(customer.addresses);
     return await genericSignup(customer, 'customer', 'email');
 };
 

@@ -2,8 +2,6 @@ import { Request, Response } from 'express';
 import * as authService from '../services/auth.js';
 import { AuthError } from '../services/auth.js';
 import { BrandOwner } from '../types/models/brandOwner.js';
-import * as customerService from '../services/customer.js';
-import * as staffService from '../services/staff.js';
 import * as brandService from '../services/brand.js';
 import * as brandOwnerService from '../services/brandOwner.js';
 import { Brand } from '../types/models/brand.js';
@@ -234,75 +232,6 @@ export const brandOwnerLogin = async (req: Request, res: Response) => {
         return res.status(500).json({
             status: 'error',
             message: 'An unexpected error occurred during brand owner login'
-        });
-    }
-};
-
-/**
- * Get the current authenticated user's profile
- */
-export const getCurrentUser = async (req: Request, res: Response) => {
-    try {
-        if (!req.user) {
-            return res.status(401).json({
-                status: 'error',
-                message: 'Authentication required'
-            });
-        }
-
-        const userId = req.user.id;
-        const userRole = req.user.role;
-        let userData = null;
-
-        // Get user data based on role
-        switch (userRole) {
-            case 'customer':
-                userData = await customerService.getCustomer(userId);
-                break;
-            case 'staff':
-                userData = await staffService.getStaff(userId);
-                break;
-            case 'brandOwner':
-                userData = await brandOwnerService.getBrandOwnerById(userId);
-                break;
-            case 'admin':
-                // For admin users, we might have a separate admin service
-                // or we could return basic information from the token
-                userData = {
-                    id: userId,
-                    name: "Shawky Ebrahim Ahmed",
-                    email: req.user.email,
-                    role: userRole
-                };
-                break;
-            default:
-                return res.status(400).json({
-                    status: 'error',
-                    message: 'Invalid user role'
-                });
-        }
-
-        if (!userData) {
-            return res.status(404).json({
-                status: 'error',
-                message: 'User profile not found'
-            });
-        }
-
-        // Remove sensitive fields if they exist
-        if ('password' in userData) {
-            delete userData.password;
-        }
-
-        return res.status(200).json({
-            status: 'success',
-            data: userData
-        });
-    } catch (error: any) {
-        console.error('Get current user error:', error);
-        return res.status(500).json({
-            status: 'error',
-            message: error.message ?? 'An error occurred while retrieving user profile'
         });
     }
 };

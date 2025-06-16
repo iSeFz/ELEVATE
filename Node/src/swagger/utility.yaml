@@ -1,8 +1,8 @@
 paths:
-  /send-password-reset:
+  /utilities/send-password-reset:
     post:
       summary: Send password reset email (OTP)
-      tags: [Authentication]
+      tags: [Utilities]
       requestBody:
         required: true
         content:
@@ -41,10 +41,10 @@ paths:
                   message:
                     type: string
 
-  /confirm-password-reset:
+  /utilities/confirm-password-reset:
     post:
       summary: Confirm password reset with OTP and new password
-      tags: [Authentication]
+      tags: [Utilities]
       requestBody:
         required: true
         content:
@@ -88,47 +88,10 @@ paths:
                   message:
                     type: string
 
-  /me:
-    get:
-      summary: Get current user profile
-      tags: [Authentication]
-      parameters:
-        - in: query
-          name: userRole
-          schema:
-            type: string
-          description: User role to filter by (Admin use only)
-      responses:
-        200:
-          description: Current user profile
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    enum: [success]
-                  data:
-                    type: object
-                    description: User profile data
-        401:
-          description: Unauthorized - Invalid or missing token
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    enum: [error]
-                  message:
-                    type: string
-
-  /refresh-token:
+  /utilities/refresh-token:
     post:
       summary: Refresh Firebase access token using a refresh token
-      tags: [Authentication]
+      tags: [Utilities]
       requestBody:
         required: true
         content:
@@ -178,6 +141,69 @@ paths:
                     type: string
         401:
           description: Refresh failed or unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /utilities/address-coordinates:
+    post:
+      summary: Get coordinates for a given address
+      tags: [Utilities]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+                # building, street, city, postalCode
+              type: object
+              required:
+                - building
+                - street
+                - city
+                - postalCode
+              properties:
+                building:
+                  type: string
+                  description: Building name or number
+                street:
+                  type: string
+                  description: Street name
+                city:
+                  type: string
+                  description: City name
+                postalCode:
+                  type: string
+                  description: Postal code of the area
+                
+      responses:
+        200:
+          description: Coordinates retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: object
+                    properties:
+                      latitude:
+                        type: number
+                        format: float
+                      longitude:
+                        type: number
+                        format: float
+        400:
+          description: Invalid address format
           content:
             application/json:
               schema:

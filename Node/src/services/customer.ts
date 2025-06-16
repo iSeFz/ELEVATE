@@ -1,6 +1,7 @@
 import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
 import { Customer } from '../types/models/customer.js';
 import { deleteCredentialsUsingUID } from './auth.js';
+import { fillDataAddressesCoordinates } from './utils/common.js';
 
 const firestore = admin.firestore();
 const customerCollection = FIREBASE_COLLECTIONS['customer'];
@@ -85,13 +86,14 @@ export const addCustomer = async (customer: Customer) => {
     // No implementation as the add customer logic is the same as signup
 };
 
-export const updateCustomer = async (customerID: string, newCustomerData: any) => {
+export const updateCustomer = async (customerID: string, newCustomerData: Customer) => {
     if (!customerID) {
         throw new Error('Please provide a customer ID');
     }
     try {
+        await fillDataAddressesCoordinates(newCustomerData.addresses);
         const customerRef = firestore.collection(customerCollection).doc(customerID);
-        await customerRef.update(newCustomerData);
+        await customerRef.update(newCustomerData as any);
         return true;
     } catch (error: any) {
         throw new Error(error.message);

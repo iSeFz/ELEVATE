@@ -5,8 +5,8 @@ export interface Address {
     city: string;
     postalCode: number;
     street: string;
-    latitude: number;
-    longitude: number;
+    latitude?: number;
+    longitude?: number;
 }
 
 export interface Website {
