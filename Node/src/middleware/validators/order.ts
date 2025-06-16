@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { createSchemaBuilder, validateObjectStrict } from './builder.js';
+import { createSchemaBuilder, extractSchemaFieldsMiddleware, validateObjectStrict } from './builder.js';
 import { Order, OrderProduct } from '../../types/models/order.js';
 import { addressSchema, paymentSchema, phonePattern } from './common.js';
 import { shipmentTypeValues } from '../../config/order.js';
@@ -31,7 +31,7 @@ export const validateCreateOrder = (req: Request, res: Response, next: NextFunct
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(expectedCreateOrderData)(req, res, next);
 }
 
 const expectedShipmentData = createSchemaBuilder()
@@ -54,7 +54,7 @@ export const validateCalculateShipmentFees = (req: Request, res: Response, next:
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(expectedShipmentData)(req, res, next);
 }
 
 const expectedConfirmOrderData = createSchemaBuilder<Order>()
@@ -76,5 +76,5 @@ export const validateConfirmOrder = (req: Request, res: Response, next: NextFunc
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(expectedConfirmOrderData)(req, res, next);
 }

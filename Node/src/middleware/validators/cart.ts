@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { createSchemaBuilder, validateObjectStrict } from './builder.js';
+import { createSchemaBuilder, extractSchemaFieldsMiddleware, validateObjectStrict } from './builder.js';
 import { CartItem } from '../../types/models/customer.js';
 
 const expectedAddToCartData = createSchemaBuilder<CartItem>()
@@ -18,7 +18,7 @@ export const validateAddToCart = (req: Request, res: Response, next: NextFunctio
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(expectedAddToCartData)(req, res, next);
 };
 
 const expectedUpdateCartItemData = createSchemaBuilder<CartItem>()
@@ -35,7 +35,7 @@ export const validateUpdateCartItem = (req: Request, res: Response, next: NextFu
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(expectedUpdateCartItemData)(req, res, next);
 };
 
 /**

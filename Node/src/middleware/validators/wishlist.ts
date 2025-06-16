@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { createSchemaBuilder, validateObjectStrict } from './builder.js';
+import { createSchemaBuilder, extractSchemaFieldsMiddleware, validateObjectStrict } from './builder.js';
 
 
 const expectedAddToWishlistData = createSchemaBuilder<{ productId: string }>()
@@ -16,7 +16,7 @@ export const validateAddToWishlist = (req: Request, res: Response, next: NextFun
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(expectedAddToWishlistData)(req, res, next);
 };
 
 /**

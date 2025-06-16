@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { Customer } from '../../types/models/customer.js';
-import { createSchemaBuilder, SchemaBuilder, validateObjectStrict } from './builder.js';
+import { createSchemaBuilder, extractSchemaFieldsMiddleware, SchemaBuilder, validateObjectStrict } from './builder.js';
 import { addressSchema, emailPattern, passwordPattern, phonePattern, usernamePattern, websitePattern } from './common.js';
 
 export const validateGetAllCustomers = (req: Request, res: Response, next: NextFunction) => {
@@ -58,13 +58,13 @@ export const validateSignupCustomer = (req: Request, res: Response, next: NextFu
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(signupCustomerSchema)(req, res, next);
 }
 
-const customerSchema = customerSchemaBuilder.build();
+const updateCustomerSchema = customerSchemaBuilder.build();
 export const validateUpdateCustomer = (req: Request, res: Response, next: NextFunction) => {
     const customer = req.body as Customer;
-    const result = validateObjectStrict(customer, customerSchema);
+    const result = validateObjectStrict(customer, updateCustomerSchema);
     if (result.isValid === false) {
         return res.status(400).json({
             status: 'error',
@@ -72,5 +72,5 @@ export const validateUpdateCustomer = (req: Request, res: Response, next: NextFu
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(updateCustomerSchema)(req, res, next);
 }

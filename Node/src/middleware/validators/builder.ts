@@ -35,7 +35,6 @@ export interface ValidationResult {
     isValid: boolean;
     missingFields: string[];
     invalidFields: string[];
-    extraFields: string[];
     errorDetails?: string[];
     requiredFields?: string[];
     schemaExample: any;
@@ -99,17 +98,10 @@ function validateNestedObject(
     missingFields: string[];
     invalidFields: string[];
     errorDetails: string[];
-    extraFields: string[];
 } {
     const missingFields: string[] = [];
     const invalidFields: string[] = [];
     const errorDetails: string[] = [];
-
-    const objKeys = Object.keys(obj);
-    const schemaKeys = Object.keys(schema);
-
-    // Find extra fields (present in object but not in schema)
-    const extraFields = objKeys.filter(key => !schemaKeys.includes(key));
 
     for (const [fieldName, fieldSchema] of Object.entries(schema)) {
         const fieldPath = path ? `${path}.${fieldName}` : fieldName;
@@ -144,7 +136,6 @@ function validateNestedObject(
             missingFields.push(...nestedValidation.missingFields);
             invalidFields.push(...nestedValidation.invalidFields);
             errorDetails.push(...nestedValidation.errorDetails);
-            extraFields.push(...nestedValidation.extraFields);
         }
 
         if (fieldSchema.type === 'array' && fieldSchema.items && Array.isArray(fieldValue)) {
@@ -152,11 +143,10 @@ function validateNestedObject(
             missingFields.push(...arrayValidation.missingFields);
             invalidFields.push(...arrayValidation.invalidFields);
             errorDetails.push(...arrayValidation.errorDetails);
-            extraFields.push(...arrayValidation.extraFields);
         }
     }
 
-    return { missingFields, invalidFields, errorDetails, extraFields };
+    return { missingFields, invalidFields, errorDetails };
 }
 
 const checkSchemaConstraints = (schema: SchemaField, value: any, path: string) => {
@@ -210,14 +200,10 @@ function validateArrayItems(
     invalidFields: string[];
     errorDetails: string[];
     missingFields: string[];
-    extraFields: string[];
 } {
     const invalidFields: string[] = [];
     const errorDetails: string[] = [];
     const missingFields: string[] = [];
-
-    // Find extra fields (present in object but not in schema)
-    const extraFields: string[] = [];
 
     arrayValue.forEach((item, index) => {
         const itemPath = `${fieldPath}[${index}]`;
@@ -240,11 +226,10 @@ function validateArrayItems(
             invalidFields.push(...itemValidation.invalidFields);
             errorDetails.push(...itemValidation.errorDetails);
             missingFields.push(...itemValidation.missingFields);
-            extraFields.push(...itemValidation.extraFields);
         }
     });
 
-    return { invalidFields, errorDetails, missingFields, extraFields };
+    return { invalidFields, errorDetails, missingFields };
 }
 
 /**
@@ -380,7 +365,6 @@ export function validateObjectStrict<T extends Record<string, any>>(
             isValid: false,
             missingFields: Object.keys(schema).filter(key => schema[key].required !== false),
             invalidFields: ['Invalid or missing object'],
-            extraFields: [],
             errorDetails: ['Expected an object but received invalid input'],
             requiredFields: extractRequiredFields(schema),
             schemaExample: generateSchemaExample(schema, true),
@@ -388,21 +372,16 @@ export function validateObjectStrict<T extends Record<string, any>>(
     }
 
     // Validate fields according to schema
-    const { missingFields, invalidFields, errorDetails, extraFields } = validateNestedObject(obj, schema);
+    const { missingFields, invalidFields, errorDetails } = validateNestedObject(obj, schema);
 
     // Add error details for extra fields
     const allErrorDetails = [...errorDetails];
-    if (extraFields.length > 0) {
-        allErrorDetails.push(`Extra fields not allowed: ${extraFields.join(', ')}`);
-    }
-
-    const isValid = missingFields.length === 0 && invalidFields.length === 0 && extraFields.length === 0;
+    const isValid = missingFields.length === 0 && invalidFields.length === 0;
 
     const result: ValidationResult & { validatedData?: T } = {
         isValid,
         missingFields,
         invalidFields,
-        extraFields,
         errorDetails: allErrorDetails,
         requiredFields: extractRequiredFields(schema),
         schemaExample: generateSchemaExample(schema, true),
@@ -476,4 +455,69 @@ export class SchemaBuilder<T extends Record<string, any>> {
  */
 export function createSchemaBuilder<T extends Record<string, any>>(): SchemaBuilder<T> {
     return new SchemaBuilder<T>({} as SchemaBuilder<T>);
+}
+
+/**
+ * Extracts only schema-defined fields from an object, filtering out extra fields
+ * @param data - The input object (e.g., req.body)
+ * @param schema - The schema definition containing field specifications
+ * @returns A new object containing only the fields defined in the schema
+ */
+export function extractSchemaFields<T = any>(data: any, schema: Schema): T {
+    if (!data || typeof data !== 'object' || Array.isArray(data)) {
+        return {} as T;
+    }
+
+    const extractedData: any = {};
+
+    // Iterate through schema fields only
+    for (const [fieldName, fieldSchema] of Object.entries(schema)) {
+        if (data.hasOwnProperty(fieldName)) {
+            const fieldValue = data[fieldName];
+
+            // Handle nested objects
+            if (fieldSchema.type === 'object' && fieldSchema.fields) {
+                if (fieldValue && typeof fieldValue === 'object' && !Array.isArray(fieldValue)) {
+                    extractedData[fieldName] = extractSchemaFields(fieldValue, fieldSchema.fields);
+                } else if (fieldSchema.required) {
+                    // If required but not a valid object, include null/undefined
+                    extractedData[fieldName] = fieldValue;
+                }
+            }
+            // Handle arrays of objects
+            else if (fieldSchema.type === 'array' && fieldSchema.items?.type === 'object' && fieldSchema.items.fields) {
+                if (Array.isArray(fieldValue)) {
+                    extractedData[fieldName] = fieldValue.map(item =>
+                        extractSchemaFields(item, fieldSchema.items!.fields!)
+                    );
+                } else if (fieldSchema.required) {
+                    extractedData[fieldName] = fieldValue;
+                }
+            }
+            // Handle primitive types and arrays of primitives
+            else {
+                extractedData[fieldName] = fieldValue;
+            }
+        } else if (fieldSchema.required) {
+            // Include required fields even if missing (for validation to catch)
+            extractedData[fieldName] = undefined;
+        }
+        // Optional fields that don't exist in data are simply omitted
+    }
+
+    return extractedData as T;
+}
+
+/**
+ * Middleware helper to extract schema fields from req.body
+ * @param schema - The schema definition
+ * @returns Middleware function that modifies req.body to contain only schema fields
+ */
+export function extractSchemaFieldsMiddleware(schema: Schema) {
+    return (req: any, res: any, next: any) => {
+        if (req.body) {
+            req.body = extractSchemaFields(req.body, schema);
+        }
+        next();
+    };
 }

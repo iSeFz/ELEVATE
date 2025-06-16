@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { createSchemaBuilder, validateObjectStrict } from './builder.js';
+import { createSchemaBuilder, extractSchemaFieldsMiddleware, validateObjectStrict } from './builder.js';
 import { emailPattern } from './common.js';
 
 const signupSchema = createSchemaBuilder()
@@ -20,7 +20,7 @@ export const validateThirdPartySignup = (req: Request, res: Response, next: Next
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(signupSchema)(req, res, next);
 }
 
 const loginSchema = createSchemaBuilder()
@@ -43,5 +43,5 @@ export const validateLogin = (req: Request, res: Response, next: NextFunction) =
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(loginSchema)(req, res, next);
 };

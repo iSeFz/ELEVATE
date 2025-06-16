@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { BrandOwner } from '../../types/models/brandOwner.js';
 import { Brand } from '../../types/models/brand.js';
-import { createSchemaBuilder, validateObjectStrict } from './builder.js';
+import { createSchemaBuilder, extractSchemaFieldsMiddleware, validateObjectStrict } from './builder.js';
 import { addressSchema, emailPattern, passwordPattern, phonePattern, usernamePattern, websitePattern, websiteSchema } from './common.js';
 
 const expectedBrandData = createSchemaBuilder<Brand>()
@@ -62,7 +62,7 @@ export const validateSignupBrandOwner = (req: Request, res: Response, next: Next
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(expecteSignupData)(req, res, next);
 }
 
 const expectedUpdateBrandOwnerData = createSchemaBuilder<BrandOwner>()
@@ -82,5 +82,5 @@ export const validateUpdateBrandOwner = (req: Request, res: Response, next: Next
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(expectedUpdateBrandOwnerData)(req, res, next);
 }

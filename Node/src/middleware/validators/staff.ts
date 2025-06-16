@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { Staff } from '../../types/models/staff.js';
-import { createSchemaBuilder, validateObjectStrict } from './builder.js';
+import { createSchemaBuilder, extractSchemaFieldsMiddleware, validateObjectStrict } from './builder.js';
 import { emailPattern, phonePattern, usernamePattern } from './common.js';
 
 const expectedSignupStaffData = createSchemaBuilder<Staff>()
@@ -30,5 +30,5 @@ export const validateSignupStaff = (req: Request, res: Response, next: NextFunct
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(expectedSignupStaffData)(req, res, next);
 }

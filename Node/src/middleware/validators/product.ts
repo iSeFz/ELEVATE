@@ -1,5 +1,5 @@
 import e, { Request, Response, NextFunction } from 'express';
-import { createSchemaBuilder, Schema, validateObjectStrict } from './builder.js';
+import { createSchemaBuilder, extractSchemaFieldsMiddleware, Schema, validateObjectStrict } from './builder.js';
 import { Product, ProductVariant } from '../../types/models/product.js';
 import { DEPARTMENTS, getAllCategoriesDetails } from '../../config/product.js';
 import { productVariantSchema } from './common.js';
@@ -30,7 +30,7 @@ export const validateAddProduct = (req: Request, res: Response, next: NextFuncti
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(expectedProductData)(req, res, next);
 };
 
 const expectedUpdateProductData: Schema = {}
@@ -39,10 +39,7 @@ for (const key in expectedProductData) {
     expectedUpdateProductData[key].required = false; // Make all fields optional for update
     if (key === 'variants') {
         expectedUpdateProductData[key].minLength = 0; // Allow empty variants array for update
-        if (
-            expectedUpdateProductData[key].items &&
-            expectedUpdateProductData[key].items.fields
-        ) {
+        if (expectedUpdateProductData[key].items?.fields) {
             // If you need to iterate over the fields object, use Object.entries or Object.keys
             for (const variant in (expectedUpdateProductData[key].items.fields)) {
                 expectedUpdateProductData[key].items.fields[variant].required = false;
@@ -61,7 +58,7 @@ export const validateUpdateProduct = (req: Request, res: Response, next: NextFun
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(expectedUpdateProductData)(req, res, next);
 };
 
 const expectedProductvariantData = productVariantSchema;
@@ -76,7 +73,7 @@ export const validateAddProductVariant = (req: Request, res: Response, next: Nex
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(expectedProductvariantData)(req, res, next);
 }
 
 
@@ -105,7 +102,7 @@ export const validateUpdateProductVariant = (req: Request, res: Response, next: 
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(expectedUpdateProductVariantData)(req, res, next);
 }
 
 export const validateDeleteProductVariant = (req: Request, res: Response, next: NextFunction) => {

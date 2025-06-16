@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { Brand } from '../../types/models/brand.js';
-import { createSchemaBuilder, validateObjectStrict } from './builder.js';
+import { createSchemaBuilder, extractSchemaFieldsMiddleware, validateObjectStrict } from './builder.js';
 import { SUBSCRIPTION_PLANS, SubscriptionPlan } from '../../config/subscriptionPlans.js';
 import { addressSchema, emailPattern, websiteSchema } from './common.js';
 
@@ -33,17 +33,17 @@ export const validateUpdateBrand = (req: Request, res: Response, next: NextFunct
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(expectedUpdateBrandData)(req, res, next);
 }
 
-const validateBrandDataSchema = createSchemaBuilder()
+const validateUpgradeBrandOwnerSchema = createSchemaBuilder()
     .field('newPlan', { type: 'number', required: true, value: SubscriptionPlan.FREE })
     .build();
 export const validateUgradeSubscription = (req: Request, res: Response, next: NextFunction) => {
     const data = req.body;
 
 
-    const result = validateObjectStrict(data, validateBrandDataSchema);
+    const result = validateObjectStrict(data, validateUpgradeBrandOwnerSchema);
     if (result.isValid === false) {
         return res.status(400).json({
             status: 'error',
@@ -59,5 +59,5 @@ export const validateUgradeSubscription = (req: Request, res: Response, next: Ne
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(validateUpgradeBrandOwnerSchema)(req, res, next);
 }

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { createSchemaBuilder, validateObjectStrict } from './builder.js';
+import { createSchemaBuilder, extractSchemaFieldsMiddleware, validateObjectStrict } from './builder.js';
 import { Review } from '../../types/models/review.js';
 
 const expectedAddReviewData = createSchemaBuilder<Review>()
@@ -18,7 +18,7 @@ export const validateAddReview = (req: Request, res: Response, next: NextFunctio
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(expectedAddReviewData)(req, res, next);
 };
 
 const expectedUpdateReviewData = createSchemaBuilder<Review>()
@@ -28,7 +28,7 @@ const expectedUpdateReviewData = createSchemaBuilder<Review>()
     .build();
 export const validateUpdateReview = (req: Request, res: Response, next: NextFunction) => {
     const data = req.body;
-    const result = validateObjectStrict(data, expectedAddReviewData);
+    const result = validateObjectStrict(data, expectedUpdateReviewData);
 
     if (result.isValid === false) {
         return res.status(400).json({
@@ -37,7 +37,7 @@ export const validateUpdateReview = (req: Request, res: Response, next: NextFunc
         });
     }
 
-    next();
+    extractSchemaFieldsMiddleware(expectedUpdateReviewData)(req, res, next);
 };
 
 export const validateDeleteReview = (req: Request, res: Response, next: NextFunction) => {
