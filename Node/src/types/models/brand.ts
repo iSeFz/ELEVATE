@@ -3,7 +3,7 @@ import { Address, addressDataValidators, commonDataValidators, TimestampUnion, W
 import { SubscriptionPlan } from '../../config/subscriptionPlans.js';
 
 export interface Subscription {
-    plan: SubscriptionPlan;
+    plan: SubscriptionPlan | string;
     price: number;
     startDate: TimestampUnion;
     endDate: TimestampUnion;

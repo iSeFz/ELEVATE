@@ -36,7 +36,7 @@ export interface Product {
     name: string;
     variants: ProductVariant[];
     reviewSummary: ProductReviewSummary;
-    brandSubscriptionPlan: SubscriptionPlan;
+    brandSubscriptionPlan: SubscriptionPlan | string; // Helps with filtering products by subscription plan
 
     createdAt: TimestampUnion;
     updatedAt: TimestampUnion;

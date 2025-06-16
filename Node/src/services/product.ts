@@ -2,7 +2,7 @@ import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
 import { generateFullyProductData } from './utils/product.js';
 import { Product, ProductVariant } from '../types/models/product.js';
 import { Timestamp } from 'firebase-admin/firestore';
-import { SubscriptionPlan } from '../config/subscriptionPlans.js';
+import { getSubscriptionPlanDetails, SubscriptionPlan } from '../config/subscriptionPlans.js';
 
 const firestore = admin.firestore();
 const productCollection = FIREBASE_COLLECTIONS['product'];
@@ -39,7 +39,9 @@ const fetchProducts = async (
         const snapshot = await query.get();
         const products: Product[] = [];
         snapshot.forEach((doc) => {
-            products.push({ ...doc.data(), id: doc.id } as Product);
+            const product = doc.data() as Product;
+            product.brandSubscriptionPlan = getSubscriptionPlanDetails(product.brandSubscriptionPlan as number).name;
+            products.push({ ...product, id: doc.id } as Product);
         });
         const hasNextPage = products.length === limit;
         return {
@@ -102,7 +104,9 @@ export const getProduct = async (productID: string) => {
         const docSnap = await docRef.get();
 
         if (docSnap.exists) {
-            return { ...docSnap.data(), id: docSnap.id } as Product;
+            const productData = docSnap.data() as Product;
+            productData.brandSubscriptionPlan = getSubscriptionPlanDetails(productData.brandSubscriptionPlan as number).name;
+            return { ...productData, id: docSnap.id } as Product;
         } else {
             return null;
         }

@@ -49,5 +49,5 @@ export const SUBSCRIPTION_PLANS: Record<SubscriptionPlan, SubscriptionPlanDetail
 
 // Helper to get plan details by enum value
 export function getSubscriptionPlanDetails(plan: SubscriptionPlan): SubscriptionPlanDetails {
-    return SUBSCRIPTION_PLANS[plan];
+    return SUBSCRIPTION_PLANS[plan] || SUBSCRIPTION_PLANS[SubscriptionPlan.FREE];
 }

@@ -2,6 +2,7 @@ import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
 import { generateFullyBrandData } from './utils/brand.js';
 import { Brand } from '../types/models/brand.js';
 import { updateProductsBrandSubscriptionPlan } from './product.js';
+import { getSubscriptionPlanDetails } from '../config/subscriptionPlans.js';
 
 const firestore = admin.firestore();
 const brandCollection = FIREBASE_COLLECTIONS['brand'];
@@ -12,7 +13,9 @@ export const getAllBrands = async (page = 1) => {
         const snapshot = await firestore.collection(brandCollection).offset(offset).limit(10).get();
         const brands: Brand[] = [];
         snapshot.forEach((doc) => {
-            brands.push({ ...doc.data(), id: doc.id } as Brand);
+            const data = doc.data() as Brand;
+            data.subscription.plan = getSubscriptionPlanDetails(data.subscription.plan as number).name
+            brands.push({ ...data, id: doc.id } as Brand);
         });
         return brands;
     } catch (error: any) {
@@ -29,7 +32,9 @@ export const getBrand = async (brandID: string) => {
         const docSnap = await docRef.get();
 
         if (docSnap.exists) {
-            return { ...docSnap.data(), id: docSnap.id } as Brand;
+            const data = docSnap.data() as Brand;
+            data.subscription.plan = getSubscriptionPlanDetails(data.subscription.plan as number).name
+            return { ...data, id: docSnap.id } as Brand;
         } else {
             return null;
         }
@@ -49,7 +54,9 @@ export const getBrandByName = async (brandName: string) => {
 
         const brands: Brand[] = [];
         snapshot.forEach((doc) => {
-            brands.push({ ...doc.data(), id: doc.id } as Brand);
+            const data = doc.data() as Brand;
+            data.subscription.plan = getSubscriptionPlanDetails(data.subscription.plan as number).name;
+            brands.push({ ...data, id: doc.id } as Brand);
         });
         return brands.length > 0 ? brands[0] : null;
     } catch (error: any) {
@@ -79,7 +86,7 @@ export const updateBrand = async (brandID: string, newBrandData: Partial<Brand>)
 
         // If the subscription plan is being updated, update all products for this brand
         if (newBrandData.subscription) {
-            await updateProductsBrandSubscriptionPlan(brandID, newBrandData.subscription.plan);
+            await updateProductsBrandSubscriptionPlan(brandID, newBrandData.subscription.plan as number);
         }
         return true;
     } catch (error: any) {
@@ -113,7 +120,9 @@ export const getBrandByOwnerId = async (brandOwnerId: string) => {
             return null;
         }
         const doc = snapshot.docs[0];
-        return { ...doc.data(), id: doc.id } as Brand;
+        const data = doc.data() as Brand;
+        data.subscription.plan = getSubscriptionPlanDetails(data.subscription.plan as number).name
+        return { ...data, id: doc.id } as Brand;
     } catch (error: any) {
         throw new Error(error.message);
     }

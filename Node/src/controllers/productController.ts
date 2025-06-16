@@ -21,20 +21,17 @@ export const getAllProducts = async (req: Request, res: Response) => {
     }
 
     try {
+        let results;
         if (category) {
-            const results = await productService.getProductsByCategory(category, page);
-            return res.status(200).json({ status: 'success', data: results.products, pagination: results.pagination });
+            results = await productService.getProductsByCategory(category, page);
+        } else if (brand) {
+            results = await productService.getProductsByBrand(brand, page);
+        } else if (department) {
+            results = await productService.getProductsByDepartment(department, page);
+        } else {
+            // If no filters are provided, return all products
+            results = await productService.getAllProducts(page);
         }
-        if (brand) {
-            const results = await productService.getProductsByBrand(brand, page);
-            return res.status(200).json({ status: 'success', data: results.products, pagination: results.pagination });
-        }
-        if (department) {
-            const results = await productService.getProductsByDepartment(department, page);
-            return res.status(200).json({ status: 'success', data: results.products, pagination: results.pagination });
-        }
-        // If no filters are provided, return all products
-        const results = await productService.getAllProducts(page);
         return res.status(200).json({ status: 'success', data: results.products, pagination: results.pagination });
     } catch (error: any) {
         return res.status(500).json({ status: 'error', message: error.message });
@@ -103,7 +100,7 @@ export const addProduct = async (req: Request, res: Response) => {
         if (!brand) {
             return res.status(404).json({ status: 'error', message: 'Brand not found' });
         }
-        const plan = brand.subscription?.plan;
+        const plan = brand.subscription?.plan as number;
         const planDetails = getSubscriptionPlanDetails(plan);
         const limit = planDetails.productLimit;
         if (limit !== undefined && brand.productCount >= limit) {
