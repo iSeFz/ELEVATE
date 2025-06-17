@@ -7,6 +7,8 @@ const router = express.Router();
 // Staff/admin access to all orders, with optional filtering by status or productId
 router.get('/', authenticate, authorize(['admin', 'staff']), OrderController.getAllOrders);
 
+router.put('/cleanup-expired', authenticate, authorize(['admin']), OrderController.cleanupExpiredOrders);
+
 // Only admins can delete orders
 router.delete('/:id', authenticate, authorize(['admin']), OrderController.deleteOrder);
 

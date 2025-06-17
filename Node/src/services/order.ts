@@ -459,3 +459,36 @@ export const deleteOrder = async (orderID: string) => {
         throw new Error(`Failed to delete order: ${error.message}`);
     }
 };
+
+export const cleanupExpiredOrders = async () => {
+    try {
+        const timeoutThreshold = Timestamp.fromDate(
+            new Date(Date.now() - ORDER_TIMEOUT_SEC * 1000)
+        );
+
+        // Query pending orders older than timeout threshold
+        const expiredOrdersSnapshot = await firestore
+            .collection(FIREBASE_COLLECTIONS['order'])
+            .where('status', '==', OrderStatus.PENDING)
+            .where('createdAt', '<=', timeoutThreshold)
+            .orderBy('createdAt', 'desc')
+            .get();
+
+        if (expiredOrdersSnapshot.empty) {
+            return;
+        }
+
+        let processedCount = 0;
+        // Process each expired order
+        for (const orderDoc of expiredOrdersSnapshot.docs) {
+            // Restore stock for each product in the order
+            await cancelOrder(orderDoc.id);
+            processedCount++;
+        }
+
+        return processedCount;
+    } catch (error) {
+        console.error('Error in order cleanup:', error);
+        throw error;
+    }
+};

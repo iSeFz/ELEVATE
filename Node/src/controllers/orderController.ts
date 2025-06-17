@@ -182,3 +182,18 @@ export const deleteOrder = async (req: Request, res: Response) => {
         return res.status(400).json({ status: 'error', message: error.message });
     }
 };
+
+export const cleanupExpiredOrders = async (req: Request, res: Response) => {
+    try {
+        const result = await orderService.cleanupExpiredOrders();
+        return res.status(200).json({
+            status: 'success',
+            message: 'Expired orders cleanup initiated',
+            processedCount: result,
+            timestamp: new Date().toISOString()
+        });
+    } catch (error: any) {
+        console.error('Error during expired orders cleanup:', error);
+        return res.status(500).json({ status: 'error', message: 'Failed to initiate expired orders cleanup' });
+    }
+};

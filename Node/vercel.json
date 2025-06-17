@@ -33,5 +33,11 @@
         "Access-Control-Expose-Headers": "*"
       }
     }
+  ],
+  "crons": [
+    {
+      "path": "src/cron/order-cleanup",
+      "schedule": "*/10 * * * *"
+    }
   ]
 }

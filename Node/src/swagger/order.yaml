@@ -297,6 +297,32 @@ paths:
         500:
           description: Server error
 
+  /orders/cleanup-expired:
+    put:
+      summary: Cleanup expired orders (admin only) - Its also a cron job
+      description: |
+        This endpoint is used to cleanup expired orders that are older than 10 minutes.
+        It is intended to be called by a cron job or admin user to maintain the order database.
+      tags: [Orders]
+      responses:
+        200:
+          description: Expired orders cleanup initiated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        401:
+          description: Unauthorized - Invalid or missing token
+        403:
+          description: Forbidden - Insufficient permissions
+        500:
+          description: Server error
+
   /customers/me/orders:
     get:
       summary: Get orders for the authenticated customer
