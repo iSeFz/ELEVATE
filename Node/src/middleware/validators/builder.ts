@@ -55,7 +55,7 @@ function isValidType(value: any, fieldSchema: SchemaField): boolean {
             if (minLength !== undefined && value.length < minLength) return false;
             if (maxLength !== undefined && value.length > maxLength) return false;
             if (fieldSchema.patternRgx && !new RegExp(fieldSchema.patternRgx).test(value)) return false;
-            if (fieldSchema.in && !fieldSchema.in.includes(value)) return false;
+            if (fieldSchema.in && !fieldSchema.in.includes(value.toLowerCase())) return false;
             return true;
 
         case 'number':
@@ -160,7 +160,7 @@ const checkSchemaConstraints = (schema: SchemaField, value: any, path: string) =
         if (schema.patternRgx && !new RegExp(schema.patternRgx).test(value)) {
             return (`Field '${path}' must match the pattern: ${schema.patternHint ?? schema.patternRgx}`);
         }
-        if (schema.in && !schema.in.includes(value)) {
+        if (schema.in && !schema.in.includes(value.toLowerCase())) {
             return (`Field '${path}' must be one of: ${schema.in.join(', ')}`);
         }
     } else if (schema.type === 'number' && typeof value === 'number') {

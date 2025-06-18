@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import * as BrandOwnerService from '../services/brandOwner.js';
 import * as productService from '../services/product.js';
 import { roles } from '../config/roles.js';
+import { getSubscriptionPlanDetails } from '../config/subscriptionPlans.js';
 
 /**
  * Get all brand owners (admin only)
@@ -63,6 +64,9 @@ export const getMyProducts = async (req: Request, res: Response) => {
             return res.status(404).json({ status: 'error', message: 'Brand owner not found' });
         }
         const results = await productService.getProductsByBrand(brandOwner.brandId, page);
+        results.products.forEach(product => {
+            product.brandSubscriptionPlan = getSubscriptionPlanDetails(product.brandSubscriptionPlan as number).name;
+        })
         return res.status(200).json({ status: 'success', data: results.products, pagination: results.pagination });
     } catch (error: any) {
         return res.status(400).json({ status: 'error', message: error.message });

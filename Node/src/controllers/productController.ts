@@ -32,6 +32,9 @@ export const getAllProducts = async (req: Request, res: Response) => {
             // If no filters are provided, return all products
             results = await productService.getAllProducts(page);
         }
+        results.products.forEach(product => {
+            product.brandSubscriptionPlan = getSubscriptionPlanDetails(product.brandSubscriptionPlan as number).name;
+        })
         return res.status(200).json({ status: 'success', data: results.products, pagination: results.pagination });
     } catch (error: any) {
         return res.status(500).json({ status: 'error', message: error.message });
@@ -46,6 +49,7 @@ export const getProduct = async (req: Request, res: Response) => {
             return res.status(404).json({ status: 'error', message: 'Product not found' });
         }
 
+        product.brandSubscriptionPlan = getSubscriptionPlanDetails(product.brandSubscriptionPlan as number).name;
         return res.status(200).json({ status: 'success', data: product });
     } catch (error: any) {
         return res.status(400).json({ status: 'error', message: error.message });
@@ -114,6 +118,8 @@ export const addProduct = async (req: Request, res: Response) => {
         // Set the brandSubscriptionPlan field from the brand's current subscription
         productData.brandSubscriptionPlan = plan;
 
+        console.log("Plan details: ", plan);
+
         const newProduct = await productService.addProduct(productData);
         // Increment productCount for the brand
         await brandService.updateBrand(brand.id ?? '', { productCount: (brand.productCount || 0) + 1 });
@@ -168,6 +174,36 @@ export const deleteProduct = async (req: Request, res: Response) => {
         return res.status(400).json({ status: 'error', message: error.message });
     }
 };
+
+export const deleteAllBrandProducts = async (req: Request, res: Response) => {
+    try {
+        const brandOwnerId = req.user?.id as string;
+        const brandOwner = await brandOwnerService.getBrandOwnerById(brandOwnerId);
+
+        if (!brandOwner) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'Brand owner not found'
+            });
+        }
+
+        const products = await productService.getAllBrandProductsWithoutPagination(brandOwner.brandId);
+
+        // Delete each product and decrement the product count
+        for (const product of products) {
+            await productService.deleteProduct(product.id!);
+        }
+
+        const brand = await brandService.getBrand(brandOwner.brandId);
+        if (brand) {
+            await brandService.updateBrand(brand.id ?? '', { productCount: 0 });
+        }
+
+        return res.status(200).json({ status: 'success', message: 'All products deleted successfully' });
+    } catch (error: any) {
+        return res.status(400).json({ status: 'error', message: error.message });
+    }
+}
 
 export const addProductVariant = async (req: Request, res: Response) => {
     try {

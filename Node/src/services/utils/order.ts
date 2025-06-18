@@ -1,9 +1,8 @@
-import { Order, orderDataValidators, OrderStatus, Shipment, WeightSurcharge } from '../../types/models/order.js';
+import { Order, OrderStatus, WeightSurcharge, ShippingRate } from '../../types/models/order.js';
 import * as productService from '../product.js';
 import { convertToTimestamp } from './common.js';
 import { getDistance } from 'geolib';
 import { Address } from '../../types/models/common.js';
-import { DistanceRange, ShippingRate } from '../../types/models/order.js';
 import { shipmentType as SHIPMMENT_TYPES } from '../../config/order.js';
 
 
@@ -204,10 +203,6 @@ export const generateFullyOrderData = (order: Order): Order => {
         fullyData.id = order.id;
     }
 
-    if (!orderDataValidators(fullyData)) {
-        throw new Error('Invalid order data, check types and formats');
-    }
-
     return fullyData;
 }
 
@@ -232,8 +227,8 @@ export const findNearestBranch = (customerAddr: Address, brandAddresses: Address
 
 export const calculateDistance = (addr1: Address, addr2: Address): number => {
     const distanceInMeters = getDistance(
-        { latitude: addr1.latitude, longitude: addr1.longitude },
-        { latitude: addr2.latitude, longitude: addr2.longitude }
+        { latitude: addr1.latitude!, longitude: addr1.longitude! },
+        { latitude: addr2.latitude!, longitude: addr2.longitude! }
     );
     return distanceInMeters / 1000; // Convert to kilometers
 };

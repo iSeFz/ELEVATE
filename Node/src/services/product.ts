@@ -2,7 +2,7 @@ import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
 import { generateFullyProductData } from './utils/product.js';
 import { Product, ProductVariant } from '../types/models/product.js';
 import { Timestamp } from 'firebase-admin/firestore';
-import { getSubscriptionPlanDetails, SubscriptionPlan } from '../config/subscriptionPlans.js';
+import { SubscriptionPlan } from '../config/subscriptionPlans.js';
 
 const firestore = admin.firestore();
 const productCollection = FIREBASE_COLLECTIONS['product'];
@@ -26,6 +26,28 @@ const ensureVariantIds = (variants: ProductVariant[]): ProductVariant[] => {
     });
 };
 
+export const getAllBrandProductsWithoutPagination = async (brandId: string): Promise<Product[]> => {
+    if (!brandId) {
+        throw new Error('Please provide a brand ID');
+    }
+
+    try {
+        const ref = firestore.collection(productCollection);
+        const query = ref.where("brandId", "==", brandId);
+
+        const snapshot = await query.get();
+        const products: Product[] = [];
+        snapshot.forEach((doc) => {
+            const product = doc.data() as Product;
+            products.push({ ...product, id: doc.id } as Product);
+        });
+
+        return products;
+    } catch (error: any) {
+        throw new Error(error.message);
+    }
+}
+
 // Helper to fetch products with custom query and pagination
 const fetchProducts = async (
     queryBuilder: (ref: FirebaseFirestore.CollectionReference) => FirebaseFirestore.Query,
@@ -40,7 +62,6 @@ const fetchProducts = async (
         const products: Product[] = [];
         snapshot.forEach((doc) => {
             const product = doc.data() as Product;
-            product.brandSubscriptionPlan = getSubscriptionPlanDetails(product.brandSubscriptionPlan as number).name;
             products.push({ ...product, id: doc.id } as Product);
         });
         const hasNextPage = products.length === limit;
@@ -105,7 +126,6 @@ export const getProduct = async (productID: string) => {
 
         if (docSnap.exists) {
             const productData = docSnap.data() as Product;
-            productData.brandSubscriptionPlan = getSubscriptionPlanDetails(productData.brandSubscriptionPlan as number).name;
             return { ...productData, id: docSnap.id } as Product;
         } else {
             return null;
@@ -125,6 +145,7 @@ export const addProduct = async (product: Product) => {
 
         // Ensure brandSubscriptionPlan is numeric
         if (typeof productData.brandSubscriptionPlan !== 'number') {
+            console.error('Invalid brandSubscriptionPlan:', productData.brandSubscriptionPlan);
             throw new Error('brandSubscriptionPlan must be a numeric SubscriptionPlan enum value');
         }
 

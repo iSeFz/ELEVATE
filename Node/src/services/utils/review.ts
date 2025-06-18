@@ -1,4 +1,4 @@
-import { Review, reviewDataValidators } from '../../types/models/review.js';
+import { Review } from '../../types/models/review.js';
 import { convertToTimestamp } from './common.js';
 
 const emptyReview: Review = {
@@ -35,10 +35,6 @@ export const generateFullyReviewData = (review: Review): Review => {
     };
     if (review.id) {
         fullyData.id = review.id;
-    }
-
-    if (!reviewDataValidators(fullyData)) {
-        throw new Error('Invalid review data, check types and formats');
     }
 
     return fullyData;

@@ -1,4 +1,4 @@
-import { Staff, staffDataValidators } from '../../types/models/staff.js';
+import { Staff } from '../../types/models/staff.js';
 
 export const checkMissingStaffUpdateData = (staff: any) => {
     if (Object.keys(staff).length === 0) {
@@ -29,10 +29,6 @@ export const generateFullyStaffData = (staff: Staff): Staff => {
     };
     if (staff.id) {
         fullyData.id = staff.id;
-    }
-
-    if (staffDataValidators(fullyData)) {
-        throw new Error('Invalid staff data, check types and formats');
     }
 
     return fullyData;

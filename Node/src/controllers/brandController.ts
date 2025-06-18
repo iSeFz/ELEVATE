@@ -8,6 +8,9 @@ export const getAllBrands = async (req: Request, res: Response) => {
     try {
         const page = parseInt(req.query.page as string) || 1;
         const brands = await brandService.getAllBrands(page);
+        brands.forEach(brand => {
+            brand.subscription.plan = getSubscriptionPlanDetails(brand.subscription.plan as number).name
+        })
         return res.status(200).json({ status: 'success', data: brands });
     } catch (error: any) {
         return res.status(500).json({ status: 'error', message: error.message });
@@ -18,11 +21,12 @@ export const getBrand = async (req: Request, res: Response) => {
     try {
         const brandID = req.params.id;
         const brand = await brandService.getBrand(brandID);
-        
+
         if (!brand) {
             return res.status(404).json({ status: 'error', message: 'Brand not found' });
         }
-        
+
+        brand.subscription.plan = getSubscriptionPlanDetails(brand.subscription.plan as number).name
         return res.status(200).json({ status: 'success', data: brand });
     } catch (error: any) {
         return res.status(400).json({ status: 'error', message: error.message });
@@ -32,17 +36,18 @@ export const getBrand = async (req: Request, res: Response) => {
 export const getBrandByName = async (req: Request, res: Response) => {
     try {
         const brandName = req.query.name as string;
-        
+
         if (!brandName) {
             return res.status(400).json({ status: 'error', message: 'Brand name parameter is required' });
         }
-        
+
         const brand = await brandService.getBrandByName(brandName);
-        
+
         if (!brand) {
             return res.status(404).json({ status: 'error', message: 'Brand not found' });
         }
-        
+
+        brand.subscription.plan = getSubscriptionPlanDetails(brand.subscription.plan as number).name;
         return res.status(200).json({ status: 'success', data: brand });
     } catch (error: any) {
         return res.status(400).json({ status: 'error', message: error.message });
@@ -55,7 +60,7 @@ export const addBrand = async (req: Request, res: Response) => {
         const brandData = req.body;
         const requestingUserID = req.user?.id;
         const userRole = req.user?.role;
-        
+
         // If user is a brand owner, ensure the brand is linked to them
         if (userRole === 'brandOwner') {
             // Set the brandOwner reference to the current user
@@ -66,15 +71,15 @@ export const addBrand = async (req: Request, res: Response) => {
         } else {
             return res.status(403).json({ status: 'error', message: 'You are not authorized to add a brand' });
         }
-        
+
         // Remove any ID if provided - always use auto-generated IDs for brands
         delete brandData.id;
-        
+
         const newBrand = await brandService.addBrand(brandData);
-        return res.status(201).json({ 
-            status: 'success', 
-            message: 'Brand added successfully', 
-            data: newBrand 
+        return res.status(201).json({
+            status: 'success',
+            message: 'Brand added successfully',
+            data: newBrand
         });
     } catch (error: any) {
         return res.status(400).json({ status: 'error', message: error.message });
@@ -95,13 +100,13 @@ export const updateBrand = async (req: Request, res: Response) => {
 export const deleteBrand = async (req: Request, res: Response) => {
     try {
         const brandID = req.params.id;
-        
+
         // Check if brand exists first
         const existingBrand = await brandService.getBrand(brandID);
         if (!existingBrand) {
             return res.status(404).json({ status: 'error', message: 'Brand not found' });
         }
-        
+
         // Authorization check is now handled by the authorizeBrandAccess middleware
         await brandService.deleteBrand(brandID);
         return res.status(200).json({ status: 'success', message: 'Brand deleted successfully' });
@@ -120,6 +125,8 @@ export const getMyBrand = async (req: Request, res: Response) => {
         if (!brand) {
             return res.status(404).json({ status: 'error', message: 'Brand not found' });
         }
+
+        brand.subscription.plan = getSubscriptionPlanDetails(brand.subscription.plan as number).name;
         return res.status(200).json({ status: 'success', data: brand });
     } catch (error: any) {
         return res.status(400).json({ status: 'error', message: error.message });

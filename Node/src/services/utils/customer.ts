@@ -1,6 +1,5 @@
-import { Customer, customerDataValidators } from '../../types/models/customer.js';
+import { Customer } from '../../types/models/customer.js';
 import { Staff } from '../../types/models/staff.js';
-import { AuthError, AuthErrorType } from '../auth.js';
 import { convertToTimestamp } from './common.js';
 
 export const checkMissingFullCustomerData = (customer: any) => {
@@ -73,13 +72,6 @@ export const generateFullyCustomerData = (customer: Customer): Customer => {
     };
     if (customer.id) {
         fullyData.id = customer.id;
-    }
-
-    if (!customerDataValidators(fullyData)) {
-        throw new AuthError(
-            "Invalid customer data, check types and formats",
-            AuthErrorType.INVALID_DATA_TYPES,
-        );
     }
 
     return fullyData;

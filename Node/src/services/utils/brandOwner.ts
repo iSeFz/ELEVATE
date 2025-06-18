@@ -1,4 +1,4 @@
-import { BrandOwner, brandOwnerDataValidators } from '../../types/models/brandOwner.js';
+import { BrandOwner } from '../../types/models/brandOwner.js';
 import { convertToTimestamp } from './common.js';
 
 export const checkMissingBrandOwnerUpdateData = (brandOwner: any) => {
@@ -38,10 +38,6 @@ export const generateFullyBrandOwnerData = (brandOwner: BrandOwner): BrandOwner 
     };
     if (brandOwner.id) {
         fullyData.id = brandOwner.id;
-    }
-
-    if (!brandOwnerDataValidators(fullyData)) {
-        throw new Error('Invalid brand owner data, check types and formats');
     }
 
     return fullyData;

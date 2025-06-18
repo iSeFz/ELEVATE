@@ -1,5 +1,5 @@
 import { Timestamp } from 'firebase-admin/firestore';
-import { Brand, brandDataValidators } from '../../types/models/brand.js';
+import { Brand } from '../../types/models/brand.js';
 import { SubscriptionPlan } from '../../config/subscriptionPlans.js';
 import { convertToTimestamp } from './common.js';
 
@@ -49,10 +49,6 @@ export const generateFullyBrandData = (brand: Brand): Brand => {
     };
     if (brand.id) {
         fullyData.id = brand.id;
-    }
-
-    if (!brandDataValidators(fullyData)) {
-        throw new Error('Invalid brand data, check types and formats');
     }
 
     return fullyData;

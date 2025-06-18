@@ -31,7 +31,7 @@ export const namePattern: PatternRegex = {
 }
 
 export const websitePattern: PatternRegex = {
-    regex: /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/[\w- ./?%&=]*)?$/,
+    regex: /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/.*)?$/,
     Hint: 'Must be a valid URL starting with http:// or https://'
 }
 
@@ -74,6 +74,6 @@ export const productVariantSchema = createSchemaBuilder<ProductVariant>()
         }
     })
     .field('price', { type: 'number', required: true, value: 100 })
-    .field('size', { type: 'string', required: true, minLength: 1, maxLength: 5, value: 'M' })
+    .field('size', { type: 'string', required: true, value: 'M' })
     .field('stock', { type: 'number', required: true, value: 50 })
     .build();

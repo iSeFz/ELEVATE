@@ -1,4 +1,4 @@
-import { Product, productDataValidators, ProductVariant } from '../../types/models/product.js';
+import { Product, ProductVariant } from '../../types/models/product.js';
 import { convertToTimestamp } from './common.js';
 import { SubscriptionPlan } from '../../config/subscriptionPlans.js';
 
@@ -62,10 +62,6 @@ export const generateFullyProductData = (product: Product): Product => {
     };
     if(product.id) {
         fullyData.id = product.id;
-    }
-
-    if (!productDataValidators(fullyData)) {
-        throw new Error('Invalid product data, check types and formats');
     }
 
     return fullyData;

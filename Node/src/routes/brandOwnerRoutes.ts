@@ -40,6 +40,7 @@ router.post('/me/products',
     authorize(['admin', 'staff', 'brandOwner']),
     ProductValidators.validateAddProduct,
     ProductController.addProduct);
+router.delete('/me/products', authenticate, ProductController.deleteAllBrandProducts);
 router.get('/me/products/:id',
     authenticate,
     ProductController.getProduct);

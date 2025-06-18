@@ -2,7 +2,6 @@ import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
 import { generateFullyBrandData } from './utils/brand.js';
 import { Brand } from '../types/models/brand.js';
 import { updateProductsBrandSubscriptionPlan } from './product.js';
-import { getSubscriptionPlanDetails } from '../config/subscriptionPlans.js';
 import { fillDataAddressesCoordinates } from './utils/common.js';
 
 const firestore = admin.firestore();
@@ -15,7 +14,6 @@ export const getAllBrands = async (page = 1) => {
         const brands: Brand[] = [];
         snapshot.forEach((doc) => {
             const data = doc.data() as Brand;
-            data.subscription.plan = getSubscriptionPlanDetails(data.subscription.plan as number).name
             brands.push({ ...data, id: doc.id } as Brand);
         });
         return brands;
@@ -34,7 +32,6 @@ export const getBrand = async (brandID: string) => {
 
         if (docSnap.exists) {
             const data = docSnap.data() as Brand;
-            data.subscription.plan = getSubscriptionPlanDetails(data.subscription.plan as number).name
             return { ...data, id: docSnap.id } as Brand;
         } else {
             return null;
@@ -56,7 +53,6 @@ export const getBrandByName = async (brandName: string) => {
         const brands: Brand[] = [];
         snapshot.forEach((doc) => {
             const data = doc.data() as Brand;
-            data.subscription.plan = getSubscriptionPlanDetails(data.subscription.plan as number).name;
             brands.push({ ...data, id: doc.id } as Brand);
         });
         return brands.length > 0 ? brands[0] : null;
@@ -124,7 +120,6 @@ export const getBrandByOwnerId = async (brandOwnerId: string) => {
         }
         const doc = snapshot.docs[0];
         const data = doc.data() as Brand;
-        data.subscription.plan = getSubscriptionPlanDetails(data.subscription.plan as number).name
         return { ...data, id: doc.id } as Brand;
     } catch (error: any) {
         throw new Error(error.message);
