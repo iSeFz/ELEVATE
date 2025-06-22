@@ -925,3 +925,117 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
+
+  /products/most-popular:
+    get:
+      summary: Get the most popular products based on user engagement (favourites)
+      tags: [Products]
+      description: Returns a list of the most popular products based on sales or user engagement.
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Page number for pagination, default is 1, page size is 10
+      responses:
+        200:
+          description: A list of the most popular products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ProductResponse"
+                  pagination:
+                    $ref: "#/components/schemas/PaginationInfo"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /products/top-rated:
+    get:
+      summary: Get the most popular products based on user ratings
+      tags: [Products]
+      description: Returns a list of the most popular products based on user ratings.
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Page number for pagination, default is 1, page size is 10
+      responses:
+        200:
+          description: A list of the most popular products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ProductResponse"
+                  pagination:
+                    $ref: "#/components/schemas/PaginationInfo"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /products/{id}/picked-together:
+    get:
+      summary: Get the most popular products based on user ratings
+      tags: [Products]
+      description: Returns a list of the most popular products based on user ratings.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Product ID
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Page number for pagination, default is 1, page size is 10
+      responses:
+        200:
+          description: A list of the most popular products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ProductResponse"
+                  pagination:
+                    $ref: "#/components/schemas/PaginationInfo"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"

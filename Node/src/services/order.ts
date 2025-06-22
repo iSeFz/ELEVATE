@@ -8,6 +8,7 @@ import { Address } from '../types/models/common.js';
 import { getBrand } from './brand.js';
 import { v4 as uuidv4 } from 'uuid';
 import { ORDER_TIMEOUT_SEC, shipmentType as SHIPMMENT_TYPES } from '../config/order.js';
+import { updateProductAssociations } from './productAssociation.js';
 
 const firestore = admin.firestore();
 const orderCollection = FIREBASE_COLLECTIONS['order'];
@@ -339,7 +340,10 @@ export const confirmOrder = async (orderID: string, customerId: string, remainin
         confirmedOrderData.payment = remainingOrderData.payment!;
         confirmedOrderData.shipment.trackingNumber = uuidv4(); // Generate a tracking number
         batch.update(orderRef, { ...confirmedOrderData });
+
         await batch.commit();
+        await updateProductAssociations(confirmedOrderData.products);
+
         return confirmedOrderData;
     } catch (error: any) {
         throw new Error(`Failed to confirm order: ${error.message}`);

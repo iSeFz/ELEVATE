@@ -116,6 +116,33 @@ export const getProductsByDepartment = async (departmentValue: string, page: num
     );
 };
 
+/**
+ * Get most popular products based on wishlist count
+ * @param page - Page number for pagination (default: 1)
+ * @param limit - Number of products per page (default: 10)
+ * @param minWishlistCount - Minimum wishlist count to filter by (optional)
+ * @returns Promise with products array and pagination info
+ */
+export const getMostPopularProducts = async (
+    page: number = 1,
+) => {
+    return fetchProducts(
+        ref => ref.orderBy("wishlistCount", "desc")
+            .orderBy("brandSubscriptionPlan", "desc")
+            .orderBy("createdAt", "desc"),
+        page,
+    );
+};
+
+export const getTopRatedProducts = async (page: number = 1) => {
+    return fetchProducts(
+        ref => ref.orderBy("reviewSummary.averageRating", "desc")
+            .orderBy("brandSubscriptionPlan", "desc")
+            .orderBy("createdAt", "desc"),
+        page
+    );
+}
+
 export const getProduct = async (productID: string) => {
     if (!productID) {
         throw new Error('Please provide a product ID');
@@ -159,6 +186,23 @@ export const addProduct = async (product: Product) => {
         throw new Error(error.message);
     }
 };
+
+export const increaseProductWishlistCount = async (productID: string) => {
+    if (!productID) {
+        throw new Error('Please provide a product ID');
+    }
+
+    try {
+        const productRef = firestore.collection(productCollection).doc(productID);
+        await productRef.update({
+            wishlistCount: admin.firestore.FieldValue.increment(1),
+            updatedAt: Timestamp.now()
+        });
+        return true;
+    } catch (error: any) {
+        throw new Error(error.message);
+    }
+}
 
 export const updateProduct = async (productID: string, newProductData: Partial<Product>) => {
     if (!productID) {

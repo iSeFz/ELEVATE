@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import * as productService from '../services/product.js';
+import * as productAssociationService from '../services/productAssociation.js';
 import * as brandOwnerService from '../services/brandOwner.js';
 import * as brandService from '../services/brand.js';
 import { Product, ProductVariant } from '../types/models/product.js';
@@ -48,6 +49,50 @@ export const getAllProducts = async (req: Request, res: Response) => {
         return res.status(500).json({ status: 'error', message: error.message });
     }
 };
+
+export const getMostPopularProducts = async (req: Request, res: Response) => {
+    try {
+        const page = parseInt(req.query.page as string) || 1;
+        const results = await productService.getMostPopularProducts(page);
+
+        results.products.forEach(product => {
+            product.brandSubscriptionPlan = getSubscriptionPlanDetails(product.brandSubscriptionPlan as number).name;
+        });
+        return res.status(200).json({ status: 'success', data: results.products, pagination: results.pagination });
+    } catch (error: any) {
+        return res.status(500).json({ status: 'error', message: error.message });
+    }
+}
+
+export const getTopRatedProducts = async (req: Request, res: Response) => {
+    try {
+        const page = parseInt(req.query.page as string) || 1;
+        const results = await productService.getTopRatedProducts(page);
+
+        results.products.forEach(product => {
+            product.brandSubscriptionPlan = getSubscriptionPlanDetails(product.brandSubscriptionPlan as number).name;
+        });
+        return res.status(200).json({ status: 'success', data: results.products, pagination: results.pagination });
+    } catch (error: any) {
+        return res.status(500).json({ status: 'error', message: error.message });
+    }
+}
+
+export const getProductRecommendations = async (req: Request, res: Response) => {
+    try {
+        const productId = req.params.id;
+        const page = parseInt(req.query.page as string) || 1;
+
+        if (!productId) {
+            return res.status(400).json({ status: 'error', message: 'Product ID is required' });
+        }
+
+        const results = await productAssociationService.getFrequentlyBoughtTogether(productId, page);
+        return res.status(200).json({ status: 'success', data: results.recommendations, pagination: results.pagination });
+    } catch (error: any) {
+        return res.status(500).json({ status: 'error', message: error.message });
+    }
+}
 
 export const getProduct = async (req: Request, res: Response) => {
     try {

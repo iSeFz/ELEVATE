@@ -39,6 +39,7 @@ const emptyProduct: Product = {
             '5': 0,
         },
     },
+    wishlistCount: 0,
     brandSubscriptionPlan: SubscriptionPlan.FREE, // Default, should always be set explicitly
     createdAt: "",
     updatedAt: "",
@@ -56,6 +57,7 @@ export const generateFullyProductData = (product: Product): Product => {
         name: product.name ?? emptyProduct.name,
         variants: product.variants ?? emptyProduct.variants,
         reviewSummary: product.reviewSummary ?? emptyProduct.reviewSummary,
+        wishlistCount: product.wishlistCount ?? emptyProduct.wishlistCount,
         brandSubscriptionPlan: product.brandSubscriptionPlan ?? emptyProduct.brandSubscriptionPlan,
         createdAt: convertToTimestamp(product.createdAt),
         updatedAt: convertToTimestamp(product.updatedAt),

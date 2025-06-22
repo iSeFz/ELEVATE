@@ -25,12 +25,12 @@ export interface Shipment {
 }
 
 export enum OrderStatus {
-    PENDING = 'Pending',
-    PROCESSING = 'Processing',
-    SHIPPED = 'Shipped',
-    DELIVERED = 'Delivered',
-    CANCELLED = 'Cancelled',
-    REFUNDED = 'Refunded'
+    PENDING = 'pending',
+    PROCESSING = 'processing',
+    SHIPPED = 'shipped',
+    DELIVERED = 'delivered',
+    CANCELLED = 'cancelled',
+    REFUNDED = 'refunded'
 }
 
 export interface OrderProduct {

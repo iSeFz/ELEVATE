@@ -22,6 +22,7 @@ export const FIREBASE_COLLECTIONS = {
   "order": "order",
   "customer": "customer",
   "product": "product",
+  "productAssociation": "productAssociation",
   "review": "review",
   "staff": "staff",
 }

@@ -1,12 +1,12 @@
 export const shipmentType = {
-    "express": "Express",
-    "standard": "Standard",
-    "pickup": "Pickup"
+    "express": "express",
+    "standard": "standard",
+    "pickup": "pickup"
 }
 
 export const paymentMethod = {
-    "cash-on-delivery": "Cash on delivery",
-    "card": "Card payment"
+    "cash-on-delivery": "cash on delivery",
+    "card": "card payment"
 }
 
 export const ORDER_TIMEOUT_SEC = 10 * 60; // 10 minutes

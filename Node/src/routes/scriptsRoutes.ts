@@ -5,6 +5,6 @@ import { migrateCustomerAddresses } from '../controllers/scriptsController.js';
 const router = Router();
 
 // POST endpoint to trigger migration
-router.post('/migrate-customer-addresses', migrateCustomerAddresses);
+router.post('/migrate', migrateCustomerAddresses);
 
 export default router;

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import * as wishlistService from '../services/wishlist.js';
+import * as productService from '../services/product.js';
 
 /**
  * User must be authenticated to access the wishlist.
@@ -51,6 +52,7 @@ export const addToWishlist = async (req: Request, res: Response) => {
         const { productId } = req.body;
 
         const updatedWishlist = await wishlistService.addToWishlist(customerId, productId);
+        await productService.increaseProductWishlistCount(productId);
 
         return res.status(200).json({
             status: 'success',

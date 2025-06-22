@@ -10,7 +10,11 @@ router.get('/departments', ProductController.getAllDepartments);
 router.get('/sizes', ProductController.getAllSizes);
 
 router.get('/', ProductController.getAllProducts);
+router.get('/most-popular', ProductController.getMostPopularProducts);
+router.get('/top-rated', ProductController.getTopRatedProducts);
+
 router.get('/:id', ProductController.getProduct);
+router.get('/:id/picked-together', ProductController.getProductRecommendations);
 
 // Review routes
 router.get('/:productId/reviews', ReviewController.getAllReviewsOfProduct);

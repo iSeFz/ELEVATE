@@ -35,8 +35,24 @@ export interface Product {
     name: string;
     variants: ProductVariant[];
     reviewSummary: ProductReviewSummary;
+    wishlistCount: number; // Number of times this product has been added to wishlists, used for popularity ranking
     brandSubscriptionPlan: SubscriptionPlan | string; // Helps with filtering products by subscription plan
 
     createdAt: TimestampUnion;
     updatedAt: TimestampUnion;
+}
+
+export interface ProductAssociation {
+    id?: string;
+    productId: string; // Lexicographically smaller product ID
+    associatedProductId: string; // Lexicographically larger product ID
+    coOccurrenceCount: number; // How many times bought together
+    confidence: number; // Percentage confidence score
+    lastUpdated: TimestampUnion;
+}
+
+export interface ProductRecommendation {
+    product: any; // Product object
+    score: number; // Co-occurrence count
+    confidence: number; // Confidence percentage
 }
