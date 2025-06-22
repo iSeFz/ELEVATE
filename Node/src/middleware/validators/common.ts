@@ -3,6 +3,7 @@ import { Website, Address } from '../../types/models/common.js';
 import { Payment } from '../../types/models/order.js';
 import { ProductVariant } from '../../types/models/product.js';
 import { paymentMethodValues } from '../../config/order.js';
+import { SIZES } from '../../config/product.js';
 
 interface PatternRegex {
     regex: RegExp;
@@ -34,7 +35,6 @@ export const websitePattern: PatternRegex = {
     regex: /^(https?:\/\/)?([\w-]+\.)+[\w-]+(\/.*)?$/,
     Hint: 'Must be a valid URL starting with http:// or https://'
 }
-
 
 export const addressSchema = createSchemaBuilder<Address>()
     .field('postalCode', { type: 'number', required: true })
@@ -74,6 +74,6 @@ export const productVariantSchema = createSchemaBuilder<ProductVariant>()
         }
     })
     .field('price', { type: 'number', required: true, value: 100 })
-    .field('size', { type: 'string', required: true, value: 'M' })
+    .field('size', { type: 'string', required: true, value: SIZES.join(' / '), in: SIZES })
     .field('stock', { type: 'number', required: true, value: 50 })
     .build();

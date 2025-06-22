@@ -99,7 +99,7 @@ paths:
   /brand-owners:
     get:
       summary: Get all brand owners (admin only)
-      tags: [Brand Owners]
+      tags: [Admin]
       responses:
         200:
           description: List of all brand owners
@@ -231,7 +231,7 @@ paths:
 
     delete:
       summary: Delete a brand owner and their associated brand (For admin only)
-      tags: [Brand Owners]
+      tags: [Admin]
       responses:
         200:
           description: Brand owner and associated brand deleted successfully

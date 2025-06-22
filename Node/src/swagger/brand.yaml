@@ -300,7 +300,7 @@ paths:
   /brands/me/upgrade-subscription:
     post:
       summary: Upgrade a brand's subscription plan (admin only)
-      tags: [Brands]
+      tags: [Admin]
       requestBody:
         required: true
         content:

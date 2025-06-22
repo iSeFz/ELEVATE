@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { getAddressCoordinatesAPI } from '../services/utility.js';
+import * as UtilitiesService from '../services/utility.js';
 
 export const getAddressCoordinates = async (req: Request, res: Response) => {
     const { building, street, city, postalCode } = req.query;
@@ -8,7 +8,7 @@ export const getAddressCoordinates = async (req: Request, res: Response) => {
         return res.status(400).json({ error: 'Missing required query parameters (building, street, city, postalCode)' });
     }
 
-    const location = await getAddressCoordinatesAPI(
+    const location = await UtilitiesService.getAddressCoordinatesAPI(
         building as string,
         street as string,
         city as string,
@@ -20,4 +20,22 @@ export const getAddressCoordinates = async (req: Request, res: Response) => {
     }
 
     res.json(location);
+}
+
+export const tryOn = async (req: Request, res: Response) => {
+    const { productImg, personImg } = req.body;
+
+    try {
+        const result = await UtilitiesService.tryOn(personImg, productImg);
+        res.json({
+            status: 'success',
+            imageURL: result
+        });
+    } catch (error) {
+        console.error('Error during try-on:', error);
+        res.status(500).json({
+            status: 'error',
+            message: 'Try-on processing failed'
+        });
+    }
 }

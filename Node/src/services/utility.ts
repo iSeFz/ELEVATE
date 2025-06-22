@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { generateGeocodingURL } from '../config/googleServices.js';
+import * as API from '../api/index.js';
 
 export const getAddressCoordinatesAPI = async (building: string, street: string, city: string, postalCode: string) => {
     const url = generateGeocodingURL(building, street, city, postalCode);
@@ -18,5 +19,15 @@ export const getAddressCoordinatesAPI = async (building: string, street: string,
     } catch (error) {
         console.error('Error fetching address location:', error);
         return null; // or handle the error as needed
+    }
+}
+
+export const tryOn = async (modelImg: string, garmentImg: string) => {
+    try {
+        const result = await API.tryOn(modelImg, garmentImg);
+        return result;
+    } catch (error) {
+        console.error("Error during try-on:", error);
+        throw error;
     }
 }

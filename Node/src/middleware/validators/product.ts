@@ -1,21 +1,21 @@
 import e, { Request, Response, NextFunction } from 'express';
 import { createSchemaBuilder, extractSchemaFieldsMiddleware, Schema, validateObjectStrict } from './builder.js';
 import { Product, ProductVariant } from '../../types/models/product.js';
-import { DEPARTMENTS, getAllCategoriesDetails } from '../../config/product.js';
+import { DEPARTMENTS, CATEGORIES } from '../../config/product.js';
 import { productVariantSchema } from './common.js';
 
 const expectedProductData = createSchemaBuilder<Product>()
     .field('name', { type: 'string', required: true, minLength: 1, maxLength: 100, value: 'Sample Product' })
     .field('category', {
         type: 'string', required: true,
-        value: getAllCategoriesDetails().join(' / '), in: getAllCategoriesDetails()
+        value: CATEGORIES.join(' / '), in: CATEGORIES
     })
     .field('description', { type: 'string', required: true, minLength: 1, maxLength: 500, value: 'This is a sample product description.' })
     .field('material', { type: 'string', required: true, minLength: 1, maxLength: 50, value: 'Cotton' })
     .field('department', {
         type: 'array',
         required: true,
-        items: { type: 'string', minLength: 1, maxLength: 30, value: DEPARTMENTS.join(' / '), in: DEPARTMENTS }
+        items: { type: 'string', value: DEPARTMENTS.join(' / '), in: DEPARTMENTS }
     })
     .field('variants', { type: 'array', required: true, minLength: 1, items: { type: 'object', fields: productVariantSchema } })
     .build();

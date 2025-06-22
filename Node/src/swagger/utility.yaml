@@ -214,3 +214,53 @@ paths:
                     enum: [error]
                   message:
                     type: string
+
+  /utilities/try-on:
+    post:
+      summary: Try on a product virtually
+      tags: [Utilities]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - productImg
+                - personImg
+              properties:
+                productImg:
+                  type: string
+                  format: uri
+                  description: URL of the product image to try on
+                personImg:
+                  type: string
+                  format: uri
+                  description: URL of the person's image to apply the product on
+      responses:
+        200:
+          description: Virtual try-on successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  imageURL:
+                    type: string
+                    format: uri
+                    description: URL of the resulting image after applying the product
+        400:
+          description: Invalid product ID or image URL
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string

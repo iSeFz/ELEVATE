@@ -291,7 +291,7 @@ paths:
   /customers:
     get:
       summary: Retrieve a list of all existing customers (Admin only)
-      tags: [Customers]
+      tags: [Admin]
       parameters:
         - in: query
           name: page
@@ -545,7 +545,7 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
     delete:
       summary: Delete a customer (For admin use)
-      tags: [Customers]
+      tags: [Admin]
       responses:
         200:
           description: The customer was successfully deleted

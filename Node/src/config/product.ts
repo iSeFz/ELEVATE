@@ -11,8 +11,12 @@ export const DEPARTMENTS: string[] = [
     "men", "women", "kids", "unisex"
 ]
 
-// Helper to get all categories (future-proof for adding metadata)
-export function getAllCategoriesDetails(): string[] {
-    return CATEGORIES;
-}
-
+export const SIZES: string[] = [
+    "xxsmall",
+    "xsmall",
+    "small",
+    "medium",
+    "large",
+    "xlarge",
+    "xxlarge",
+];

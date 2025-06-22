@@ -278,7 +278,7 @@ paths:
   /orders/{id}:
     delete:
       summary: Delete an order (admin/staff only)
-      tags: [Orders]
+      tags: [Admin]
       parameters:
         - in: path
           name: id
@@ -303,7 +303,7 @@ paths:
       description: |
         This endpoint is used to cleanup expired orders that are older than 10 minutes.
         It is intended to be called by a cron job or admin user to maintain the order database.
-      tags: [Orders]
+      tags: [CRON Jobs]
       responses:
         200:
           description: Expired orders cleanup initiated

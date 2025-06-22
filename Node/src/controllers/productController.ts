@@ -4,10 +4,18 @@ import * as brandOwnerService from '../services/brandOwner.js';
 import * as brandService from '../services/brand.js';
 import { Product, ProductVariant } from '../types/models/product.js';
 import { getSubscriptionPlanDetails } from '../config/subscriptionPlans.js';
-import { getAllCategoriesDetails } from '../config/product.js';
+import { CATEGORIES, DEPARTMENTS, SIZES } from '../config/product.js';
 
 export const getAllCategories = (req: Request, res: Response) => {
-    res.status(200).json({ status: 'success', data: getAllCategoriesDetails() });
+    res.status(200).json({ status: 'success', data: CATEGORIES });
+}
+
+export const getAllDepartments = (req: Request, res: Response) => {
+    res.status(200).json({ status: 'success', data: DEPARTMENTS });
+}
+
+export const getAllSizes = (req: Request, res: Response) => {
+    res.status(200).json({ status: 'success', data: SIZES });
 }
 
 export const getAllProducts = async (req: Request, res: Response) => {
