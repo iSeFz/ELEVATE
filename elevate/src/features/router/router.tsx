@@ -8,7 +8,6 @@ import {
 
 import Layout from "../brandOwner/components/layout";
 import Dashboard from "../brandOwner/pages/dashboard/dashboard";
-import Profile from "../brandOwner/pages/profile/profile";
 import Product from "../brandOwner/pages/products/products";
 import { Account } from "../brandOwner/pages/settings/pages/account";
 import { Subscriptions } from "../brandOwner/pages/settings/pages/subscriptions";
@@ -17,6 +16,8 @@ import LoginPage from "../authentication/pages/login";
 import AddProductPage from "../brandOwner/pages/products/addProductPage";
 import EditProductPage from "../brandOwner/pages/products/editProductPage";
 import { EditAccount } from "../brandOwner/pages/settings/pages/editAccount";
+import EditProfile from "../brandOwner/pages/profile/editProfile";
+import Profile from "../brandOwner/pages/profile/profile";
 
 const ProtectedRoute = () => {
   const isAuthenticated = localStorage.getItem("refreshToken") !== null;
@@ -39,7 +40,11 @@ const router = createBrowserRouter([
           },
           {
             path: "profile",
-            element: <Profile />,
+            element: <Profile isEditMode={false} />,
+          },
+          {
+            path: "profile/edit",
+            element: <Profile isEditMode={true} />,
           },
           {
             path: "products",

@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   TextField,
   Grid,
   Paper,
-  Select,
-  MenuItem,
   FormControl,
   InputLabel,
   IconButton,
@@ -27,8 +25,6 @@ import {
   Alert,
   Snackbar,
 } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import EditIcon from "@mui/icons-material/Edit";
@@ -36,22 +32,17 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import { StyledTypography } from "../../../../components/StyledTypography";
 import { StyledTextField } from "../../../../components/StyledTextField";
-import { BlackStyledButton, StyledButton } from "../../../../components/StyledButton";
-import { StlyedChip } from "../../../../components/StyledChip";// Adjust this path
+import {
+  BlackStyledButton,
+  StyledButton,
+} from "../../../../components/StyledButton";
+import { StlyedChip } from "../../../../components/StyledChip"; // Adjust this path
 import { uploadImageAndGetURL } from "../../../../services/imageUpload";
 import { useQueryClient } from "@tanstack/react-query";
-
-const VisuallyHiddenInput = styled("input")({
-  clip: "rect(0 0 0 0)",
-  clipPath: "inset(50%)",
-  height: 1,
-  overflow: "hidden",
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  whiteSpace: "nowrap",
-  width: 1,
-});
+import { UploadImage } from "../../../../components/UploadImage";
+import ImageDelete from "../../../../components/ImageDelete";
+import { useProductOptions } from "../../../../hooks/productOptionsHook";
+import { StyledAutocomplete, StyledFormControl, StyledMenuItem, StyledSelect } from "../../../../components/StyledDropDown";
 
 // Yup validation schemas
 const variantSchema = yup.object({
@@ -182,7 +173,7 @@ const ProductForm = ({
       stock: "",
       discount: 0,
       images: [],
-      imagePreviews: [], // For displaying previews
+      imagePreviews: [],
     },
     validationSchema: variantSchema,
     onSubmit: (values) => {
@@ -218,31 +209,22 @@ const ProductForm = ({
     }
   }, [mode, productData]);
 
-  const departments = ["Men", "Women", "Kids", "Unisex"];
-  const categories = [
-    "Tops - T-Shirts",
-    "Tops - Shirts",
-    "Tops - Blouses",
-    "Tops - Crop Tops",
-    "Tops - Tank Tops",
-    "Tops - Sweaters",
-    "Tops - Hoodies",
-    "Tops - Sweatshirts",
-    "Tops - Jackets",
-    "Tops - Coats",
-    "Bottoms - Jeans",
-    "Bottoms - Pants / Trousers",
-    "Bottoms - Leggings",
-    "Bottoms - Shorts",
-    "Bottoms - Skirts",
-    "Dresses & One-Pieces - Dresses",
-    "Dresses & One-Pieces - Jumpsuits",
-    "Dresses & One-Pieces - Abayas / Kaftans",
-    "Sets",
-    "Activewear - Gym Tops",
-    "Activewear - Gym Leggings",
-    "Activewear - Tracksuits",
-  ];
+  useEffect(() => {
+    return () => {
+      // Cleanup any remaining blob URLs on unmount
+      formik.values.variants.forEach((variant) => {
+        if (variant.imagePreviews) {
+          variant.imagePreviews.forEach((preview) => {
+            if (preview && preview.startsWith("blob:")) {
+              URL.revokeObjectURL(preview);
+            }
+          });
+        }
+      });
+    };
+  }, []);
+
+  const { departments, categories, sizes } = useProductOptions();
   const availableColors = [
     "Black",
     "White",
@@ -254,7 +236,6 @@ const ProductForm = ({
     "Navy",
     "Pink",
   ];
-  const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
   const showSnackbar = (message, severity = "success") => {
     setSnackbar({ open: true, message, severity });
@@ -269,10 +250,19 @@ const ProductForm = ({
 
   const openVariantDialog = (variant = null, index = null) => {
     if (variant) {
-      // For existing variants, set both images and previews
+      // For existing variants, create previews for any File objects
+      const imagePreviews = variant.images.map((image) => {
+        if (typeof image === "string" && isValidUrl(image)) {
+          return image; // Already a URL
+        } else if (image instanceof File) {
+          return URL.createObjectURL(image); // Create preview for File
+        }
+        return image;
+      });
+
       variantFormik.setValues({
         ...variant,
-        imagePreviews: variant.images || [],
+        imagePreviews,
       });
       setEditingVariantIndex(index);
     } else {
@@ -283,6 +273,13 @@ const ProductForm = ({
   };
 
   const closeVariantDialog = () => {
+    // Clean up any blob URLs
+    variantFormik.values.imagePreviews.forEach((preview) => {
+      if (preview && preview.startsWith("blob:")) {
+        URL.revokeObjectURL(preview);
+      }
+    });
+
     setVariantDialog(false);
     variantFormik.resetForm();
     setEditingVariantIndex(null);
@@ -318,23 +315,20 @@ const ProductForm = ({
     if (validFiles.length === 0) return;
 
     // Create previews for display
-    const newPreviews = [];
+    const newPreviews = [...variantFormik.values.imagePreviews];
     const newImages = [...variantFormik.values.images];
 
     validFiles.forEach((file) => {
       // Store the actual File object
       newImages.push(file);
 
-      // Create preview URL
+      // Create preview URL for the File object
       const previewUrl = URL.createObjectURL(file);
       newPreviews.push(previewUrl);
     });
 
     variantFormik.setFieldValue("images", newImages);
-    variantFormik.setFieldValue("imagePreviews", [
-      ...variantFormik.values.imagePreviews,
-      ...newPreviews,
-    ]);
+    variantFormik.setFieldValue("imagePreviews", newPreviews);
 
     showSnackbar(`${validFiles.length} image(s) added`, "success");
   };
@@ -422,14 +416,14 @@ const ProductForm = ({
                   helperText={formik.touched.material && formik.errors.material}
                 />
 
-                <FormControl
+                <StyledFormControl
                   fullWidth
                   error={
                     formik.touched.category && Boolean(formik.errors.category)
                   }
                 >
                   <InputLabel>Category</InputLabel>
-                  <Select
+                  <StyledSelect
                     name="category"
                     value={formik.values.category}
                     onChange={formik.handleChange}
@@ -437,17 +431,17 @@ const ProductForm = ({
                     label="Category"
                   >
                     {categories.map((cat) => (
-                      <MenuItem key={cat} value={cat}>
+                      <StyledMenuItem key={cat} value={cat}>
                         {cat}
-                      </MenuItem>
+                      </StyledMenuItem>
                     ))}
-                  </Select>
+                  </StyledSelect>
                   {formik.touched.category && formik.errors.category && (
                     <FormHelperText>{formik.errors.category}</FormHelperText>
                   )}
-                </FormControl>
+                </StyledFormControl>
 
-                <Autocomplete
+                <StyledAutocomplete
                   multiple
                   options={departments}
                   value={formik.values.department}
@@ -638,7 +632,7 @@ const ProductForm = ({
                 }
               >
                 <InputLabel>Size</InputLabel>
-                <Select
+                <StyledSelect
                   name="size"
                   value={variantFormik.values.size}
                   onChange={variantFormik.handleChange}
@@ -646,17 +640,17 @@ const ProductForm = ({
                   label="Size"
                 >
                   {sizes.map((size) => (
-                    <MenuItem key={size} value={size}>
+                    <StyledMenuItem key={size} value={size}>
                       {size}
-                    </MenuItem>
+                    </StyledMenuItem>
                   ))}
-                </Select>
+                </StyledSelect>
                 {variantFormik.touched.size && variantFormik.errors.size && (
                   <FormHelperText>{variantFormik.errors.size}</FormHelperText>
                 )}
               </FormControl>
 
-              <Autocomplete
+              <StyledAutocomplete
                 multiple
                 options={availableColors}
                 value={variantFormik.values.colors}
@@ -772,20 +766,10 @@ const ProductForm = ({
                                 e.currentTarget.src = "/images/placeholder.jpg";
                               }}
                             />
-                            <IconButton
-                              size="small"
-                              sx={{
-                                position: "absolute",
-                                top: -8,
-                                right: -8,
-                                bgcolor: "white",
-                                boxShadow: 1,
-                                "&:hover": { bgcolor: "grey.100" },
-                              }}
+                            <ImageDelete
                               onClick={() => removeVariantImage(index)}
-                            >
-                              <DeleteIcon fontSize="small" />
-                            </IconButton>
+                              pending={variantFormik.isSubmitting}
+                            />
                           </Box>
                         </Grid>
                       )
@@ -793,29 +777,10 @@ const ProductForm = ({
                   </Grid>
                 )}
 
-                <StyledButton
-                  component="label"
-                  variant="outlined"
-                  fullWidth
-                  startIcon={<CloudUploadIcon />}
-                >
-                  Upload Images
-                  <VisuallyHiddenInput
-                    type="file"
-                    accept="image/*"
-                    multiple
-                    onChange={handleVariantImageUpload}
-                  />
-                </StyledButton>
-                <StyledTypography
-                  variant="caption"
-                  color="text.secondary"
-                  sx={{ mt: 1, display: "block" }}
-                >
-                  Accepted formats: JPG, JPEG, PNG, WEBP • Maximum 5MB per image
-                  • Multiple images allowed • Show all angles for better
-                  conversions
-                </StyledTypography>
+                <UploadImage
+                  handleUpload={handleVariantImageUpload}
+                  msg="• Multiple images allowed • Show all angles for better conversions"
+                />
                 {variantFormik.values.images.some(
                   (img) => img instanceof File
                 ) && (
@@ -851,10 +816,7 @@ const ProductForm = ({
       </Dialog>
 
       {/* Snackbar for notifications */}
-      <Snackbar
-        open={snackbar.open}
-        onClose={handleCloseSnackbar}
-      >
+      <Snackbar open={snackbar.open} onClose={handleCloseSnackbar}>
         <Alert
           onClose={handleCloseSnackbar}
           severity={snackbar.severity}

@@ -2,13 +2,10 @@ import {
   Box,
   Typography,
   Card,
-  IconButton,
   Snackbar,
   Alert,
 } from "@mui/material";
 import { useState, useEffect, useRef } from "react";
-import DeleteIcon from "@mui/icons-material/Delete";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import {
   BlackStyledButton,
   StyledButton,
@@ -22,6 +19,8 @@ import { updateBrandOwnerData } from "../../../../../api/endpoints";
 import * as yup from "yup";
 import { useFormik } from "formik"; // Adjust this path
 import { uploadImageAndGetURL } from "../../../../../services/imageUpload";
+import { UploadImage } from "../../../../../components/UploadImage";
+import ImageDelete from "../../../../../components/ImageDelete";
 
 const validationSchema = yup.object({
   firstName: yup
@@ -321,69 +320,14 @@ export const EditAccount = () => {
                       }}
                     />
                   </Card>
-                  <IconButton
-                    size="small"
+                  <ImageDelete
                     onClick={handleRemoveImage}
-                    disabled={mutation.isPending}
-                    sx={{
-                      position: "absolute",
-                      top: -8,
-                      right: -8,
-                      backgroundColor: "background.paper",
-                      boxShadow: 2,
-                      "&:hover": {
-                        backgroundColor: "error.light",
-                        color: "white",
-                      },
-                    }}
-                  >
-                    <DeleteIcon fontSize="small" />
-                  </IconButton>
+                    pending={mutation.isPending}
+                  />
                 </Box>
               )}
-
-              {/* Upload button */}
-              <Box
-                onClick={mutation.isPending ? undefined : handleUploadClick}
-                sx={{
-                  border: "2px dashed #ccc",
-                  borderRadius: 2,
-                  padding: 3,
-                  textAlign: "center",
-                  cursor: mutation.isPending ? "not-allowed" : "pointer",
-                  backgroundColor: "#fafafa",
-                  transition: "all 0.3s",
-                  opacity: mutation.isPending ? 0.6 : 1,
-                  "&:hover": {
-                    borderColor: mutation.isPending ? "#ccc" : "#1976d2",
-                    backgroundColor: mutation.isPending ? "#fafafa" : "#f5f5f5",
-                  },
-                }}
-              >
-                <CloudUploadIcon sx={{ fontSize: 40, color: "#666", mb: 1 }} />
-                <Typography variant="body1" fontWeight="500">
-                  {selectedFile ? "Change Image" : "Upload Image"}
-                </Typography>
-              </Box>
-
-              <Typography variant="caption" color="text.secondary">
-                Accepted formats: JPG, JPEG, PNG • Maximum file size: 5MB
-                {selectedFile && (
-                  <Typography variant="caption" color="primary" display="block">
-                    New image selected: {selectedFile.name}
-                  </Typography>
-                )}
-              </Typography>
+              <UploadImage handleUpload={handleImageChange} />
             </Box>
-
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/jpeg,image/jpg,image/png"
-              style={{ display: "none" }}
-              onChange={handleImageChange}
-              disabled={mutation.isPending}
-            />
           </Box>
         </Box>
 
@@ -408,10 +352,7 @@ export const EditAccount = () => {
         </Box>
       </form>
 
-      <Snackbar
-        open={snackbar.open}
-        onClose={handleCloseSnackbar}
-      >
+      <Snackbar open={snackbar.open} onClose={handleCloseSnackbar}>
         <Alert
           onClose={handleCloseSnackbar}
           severity={snackbar.severity}

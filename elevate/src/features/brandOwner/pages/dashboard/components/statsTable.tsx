@@ -1,8 +1,7 @@
 import { Grid2, CardContent, Typography, Box, styled, SvgIcon } from "@mui/material";
 
 import { StyledCard } from "./styledCard";
-import { useQuery } from "@tanstack/react-query";
-import { getBrandStats } from "../../../../../api/endpoints";
+import { useDashboardData } from "../../../../../hooks/dashboardHook";
 
 const StyledSvgIcon = styled(SvgIcon)({
   fontSize: 36,
@@ -19,11 +18,7 @@ const StatCard = styled(Box)(({ color }) => ({
 }));
 
 export const StatsTable = () => {
-  const {
-    data: StatsData,
-    isLoading,
-    error,
-  } = useQuery({queryKey: ['stats'], queryFn: getBrandStats});
+  const {stats: StatsData} = useDashboardData();
 
   return (
     <StyledCard>
@@ -84,7 +79,7 @@ export const StatsTable = () => {
                   </StyledSvgIcon>
                 </Box>
 
-                <Typography variant="h6" color="text.primary" fontWeight="bold">
+                <Typography color="text.primary" fontWeight="bold">
                   {StatsData?.topProduct?.productName || "N/A"}
                 </Typography>
                 <Typography color="text.secondary">Top Product</Typography>

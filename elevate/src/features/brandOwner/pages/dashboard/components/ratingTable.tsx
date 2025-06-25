@@ -1,8 +1,7 @@
 import { CardContent, Typography, Box, Rating, styled } from "@mui/material";
 import { FC, memo, useState, useEffect, useRef } from "react";
 import { StyledCard } from "./styledCard";
-import { useQuery } from "@tanstack/react-query";
-import { getBrandRatings } from "../../../../../api/endpoints";
+import { useDashboardData } from "../../../../../hooks/dashboardHook";
 
 const ProgressContainer = styled(Box)({
   width: "100%",
@@ -61,15 +60,7 @@ export const RatingTable = memo(() => {
   const [isVisible, setIsVisible] = useState(false);
   const componentRef = useRef<HTMLDivElement>(null);
 
-  const {
-    data: reviews,
-    isLoading,
-    error,
-    
-  } = useQuery({
-    queryKey: ["ratings"],
-    queryFn: () => getBrandRatings(),
-  });
+  const { reviews } = useDashboardData();
 
   useEffect(() => {
     const observer = new IntersectionObserver(

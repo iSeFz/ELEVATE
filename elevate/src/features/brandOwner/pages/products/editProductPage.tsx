@@ -23,7 +23,8 @@ const EditProductPage = () => {
   const editProductMutation = useMutation({
     mutationFn: async (productData) => {
       // Include the product ID in the update
-      return editProduct(productId!, productData);
+      console.log(productData);
+      return editProduct(productData);
     },
     onSuccess: (data) => {
       console.log("Product updated successfully:", data);

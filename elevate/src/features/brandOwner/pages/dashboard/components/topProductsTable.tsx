@@ -1,8 +1,7 @@
 import { CardContent, Table, TableHead, TableRow, TableBody, styled, TableCell } from "@mui/material";
 
 import { StyledCard } from "./styledCard";
-import { useQuery } from "@tanstack/react-query";
-import { getBrandStats } from "../../../../../api/endpoints";
+import { useDashboardData } from "../../../../../hooks/dashboardHook";
 
 const StyledTableHeaderCell = styled(TableCell)({
   border: "none",
@@ -22,11 +21,7 @@ const StyledTableRowCell = styled(TableCell)({
 
 
 export const TopProductsTable = () => {
-  const {
-    data: StatsData,
-    isLoading,
-    error,
-  } = useQuery({ queryKey: ["stats"], queryFn: getBrandStats });
+  const {stats: StatsData} = useDashboardData();
 
 
   return (

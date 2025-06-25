@@ -205,6 +205,12 @@ const getBrandData = async (): Promise<BrandData> => {
   return response.data.data;
 };
 
+const UpdateBrandData = async (data: BrandData): Promise<BrandData> => {
+  const response = await axios.put("/brands/me", data);
+  return response.data.data;
+};
+
+
 const getBrandOwnerData = async (): Promise<UserData> => {
   const response = await axios.get("/brand-owners/me");
   return response.data.data;
@@ -260,6 +266,20 @@ const getBrandStats = async (): Promise<StatsData> => {
   return response.data.data;
 };
 
+const getProductCategories = async (): Promise<string[]> => {
+  const response = await axios.get(`/products/categories`);
+  return response.data.data;
+};
+
+const getProductDepartments = async (): Promise<string[]> => {
+  const response = await axios.get(`/products/departments`);
+  return response.data.data;
+};
+
+const getProductSizes = async (): Promise<string[]> => {
+  const response = await axios.get(`/products/sizes`);
+  return response.data.data;
+};
 
 export {
   loginRequest,
@@ -273,4 +293,8 @@ export {
   deleteProduct,
   getBrandRatings,
   getBrandStats,
+  getProductCategories,
+  getProductDepartments,
+  getProductSizes,
+  UpdateBrandData,
 };
