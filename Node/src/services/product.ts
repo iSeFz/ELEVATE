@@ -3,6 +3,8 @@ import { generateFullyProductData } from './utils/product.js';
 import { Product, ProductVariant } from '../types/models/product.js';
 import { Timestamp } from 'firebase-admin/firestore';
 import { SubscriptionPlan } from '../config/subscriptionPlans.js';
+import { processProductEmbeddings, updateProductEmbeddings } from './retrieving/imageSearch.js';
+import { deleteProductEmbeddings } from './retrieving/upstachVectorDatabase.js';
 
 const firestore = admin.firestore();
 const productCollection = FIREBASE_COLLECTIONS['product'];
@@ -181,7 +183,14 @@ export const addProduct = async (product: Product) => {
         const docRef = await firestore.collection(productCollection).add(productData);
         productId = docRef.id;
 
-        return { ...productData, id: productId };
+        const createdProduct = { ...productData, id: productId };
+
+        // Process image embeddings asynchronously (don't block the response)
+        processProductEmbeddings(createdProduct).catch(error => {
+            console.error(`Failed to process embeddings for new product ${productId}:`, error);
+        });
+
+        return createdProduct;
     } catch (error: any) {
         throw new Error(error.message);
     }
@@ -221,6 +230,16 @@ export const updateProduct = async (productID: string, newProductData: Partial<P
         const productRef = firestore.collection(productCollection).doc(productID);
         await productRef.update(newProductData);
 
+        // If images were updated, refresh embeddings asynchronously
+        if (newProductData.variants) {
+            const updatedProduct = await getProduct(productID);
+            if (updatedProduct) {
+                updateProductEmbeddings(productID, updatedProduct).catch(error => {
+                    console.error(`Failed to update embeddings for product ${productID}:`, error);
+                });
+            }
+        }
+
         return true;
     } catch (error: any) {
         throw new Error(error.message);
@@ -255,6 +274,8 @@ export const deleteProduct = async (productID: string) => {
         // Delete the product
         const productRef = firestore.collection(productCollection).doc(productID);
         await productRef.delete();
+
+        deleteProductEmbeddings(productID);
 
         return true;
     } catch (error: any) {

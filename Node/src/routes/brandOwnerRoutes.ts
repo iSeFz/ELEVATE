@@ -6,6 +6,7 @@ import * as ProductController from '../controllers/productController.js';
 import * as AuthValidators from '../middleware/validators/auth.js';
 import * as BrandOwnerValidators from '../middleware/validators/brandOwner.js';
 import * as ProductValidators from '../middleware/validators/product.js';
+import { processBrandEmbeddings } from '../controllers/retrieving/imageSearchController.js';
 
 const router = express.Router();
 
@@ -41,6 +42,10 @@ router.post('/me/products',
     ProductValidators.validateAddProduct,
     ProductController.addProduct);
 router.delete('/me/products', authenticate, ProductController.deleteAllBrandProducts);
+router.post('/me/products/embedding-images',
+    authenticate,
+    authorize(['admin']),
+    processBrandEmbeddings);
 router.get('/me/products/:id',
     authenticate,
     ProductController.getProduct);

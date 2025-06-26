@@ -264,3 +264,35 @@ paths:
                     enum: [error]
                   message:
                     type: string
+
+
+  /utilities/image-search:
+    post:
+      summary: Search products by image
+      tags: [Image Search]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - imageUrl
+              properties:
+                imageUrl:
+                  type: string
+                  description: URL of the image to search with
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+          description: Number of results to return
+      responses:
+        200:
+          description: Search results
+        400:
+          description: Invalid request
+        500:
+          description: Server error
