@@ -22,11 +22,12 @@ export const getAddressCoordinates = async (req: Request, res: Response) => {
     res.json(location);
 }
 
-export const tryOn = async (req: Request, res: Response) => {
-    const { productImg, personImg } = req.body;
+export const tryBeforeYouBuy = async (req: Request, res: Response) => {
+    const { productImg, personImg, category } = req.body;
 
     try {
-        const result = await UtilitiesService.tryOn(personImg, productImg);
+        console.log("Starting try-on process with category:", category);
+        const result = await UtilitiesService.tryBeforeYouBuy(personImg, productImg, category);
         res.json({
             status: 'success',
             imageURL: result

@@ -18,8 +18,6 @@ export const tryOn = async (modelImg: string, garmentImg: string) => {
                 }
             },
         });
-        console.log(result.data);
-        console.log(result.requestId);
         return result.data.images[0].url;
     } catch (error) {
         console.error("Error during try-on:", error);

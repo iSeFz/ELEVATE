@@ -138,8 +138,6 @@ export const addProduct = async (req: Request, res: Response) => {
         const brandOwnerId = req.user?.id as string;
         const brandOwner = await brandOwnerService.getBrandOwnerById(brandOwnerId);
 
-        console.log("Adding product for brand owner:", brandOwnerId);
-
         if (!brandOwner) {
             return res.status(404).json({
                 status: 'error',
@@ -170,8 +168,6 @@ export const addProduct = async (req: Request, res: Response) => {
 
         // Set the brandSubscriptionPlan field from the brand's current subscription
         productData.brandSubscriptionPlan = plan;
-
-        console.log("Plan details: ", plan);
 
         const newProduct = await productService.addProduct(productData);
         // Increment productCount for the brand

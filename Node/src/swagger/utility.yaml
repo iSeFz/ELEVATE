@@ -215,7 +215,7 @@ paths:
                   message:
                     type: string
 
-  /utilities/try-on:
+  /utilities/try-before-you-buy:
     post:
       summary: Try on a product virtually
       tags: [Utilities]
@@ -237,6 +237,10 @@ paths:
                   type: string
                   format: uri
                   description: URL of the person's image to apply the product on
+                category:
+                  type: string
+                  enum: [upper_body, lower_body, dresses]
+                  description: Category of the product being tried on, by default it is upper_body
       responses:
         200:
           description: Virtual try-on successful

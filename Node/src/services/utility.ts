@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { generateGeocodingURL } from '../config/googleServices.js';
-import * as API from '../api/index.js';
+import { tryOn } from '../api/replicate-try-on.js';
 
 export const getAddressCoordinatesAPI = async (building: string, street: string, city: string, postalCode: string) => {
     const url = generateGeocodingURL(building, street, city, postalCode);
@@ -22,9 +22,9 @@ export const getAddressCoordinatesAPI = async (building: string, street: string,
     }
 }
 
-export const tryOn = async (modelImg: string, garmentImg: string) => {
+export const tryBeforeYouBuy = async (personImage: string, productImage: string, category: string) => {
     try {
-        const result = await API.tryOn(modelImg, garmentImg);
+        const result = await tryOn(personImage, productImage, category);
         return result;
     } catch (error) {
         console.error("Error during try-on:", error);

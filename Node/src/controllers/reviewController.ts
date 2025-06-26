@@ -41,7 +41,6 @@ export const addReview = async (req: Request, res: Response) => {
         const reviewData = req.body as Review;
         const userId = req.user?.id as string;
         const productId = req.params.productId;
-        console.log('Adding review for product:', productId);
         if (!productId) {
             return res.status(400).json({ status: 'error', message: 'Product ID parameter is required' });
         }
