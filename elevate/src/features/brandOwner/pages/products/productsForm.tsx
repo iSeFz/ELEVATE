@@ -144,6 +144,7 @@ const ProductForm = ({
         // Submit with processed data
         const finalData = {
           ...values,
+          id: productData ? productData.id : undefined, // Include ID if editing
           variants: processedVariants,
         };
 
@@ -154,7 +155,6 @@ const ProductForm = ({
             : "Product updated successfully",
           "success"
         );
-        queryClient.invalidateQueries({ queryKey: ["products"] });
       } catch (error) {
         console.error("Error processing product:", error);
         showSnackbar("Failed to save product. Please try again.", "error");

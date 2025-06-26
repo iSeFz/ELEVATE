@@ -218,7 +218,7 @@ const getBrandOwnerData = async (): Promise<UserData> => {
 
 const updateBrandOwnerData = async (data: UserData): Promise<void> => {
   const response = await axios.put("/brand-owners/me", data);
-  if (response.status !== 200) {
+  if (response.data.status !== "success") {
     throw new Error("Failed to update brand owner data");
   }
 };
@@ -230,15 +230,15 @@ const getProductsData = async (): Promise<ProductData[]> => {
 
 const addProduct = async (data: ProductData): Promise<void> => {
   const response = await axios.post(`/brand-owners/me/products`, data);
-  if (response.status !== 201) {
+  if (response.data.status !== 'success') {
     throw new Error("Failed to add product");
   }
 };
 
 const editProduct = async (data: ProductData): Promise<void> => {
   const response = await axios.put(`/brand-owners/me/products/` + data.id, data);
-  if (response.status !== 201) {
-    throw new Error("Failed to add product");
+  if (response.data.status !== "success") {
+    throw new Error("Failed to edit product");
   }
 };
 
