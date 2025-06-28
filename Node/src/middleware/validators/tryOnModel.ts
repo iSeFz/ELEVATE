@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
+import { CATEGORIES } from '../../config/try-on-model.js';
 import { createSchemaBuilder, extractSchemaFieldsMiddleware, validateObjectStrict } from './builder.js';
 import { websitePattern } from './common.js';
-import { CATEGORIES } from '../../config/try-on-model.js';
 
-const expectedTryOnData = createSchemaBuilder()
+const expectedTryOnRequestSchema = createSchemaBuilder()
     .field('productImg', {
         type: 'string', required: true,
         value: 'https://example.com/image.jpg', patternRgx: websitePattern.regex, patternHint: websitePattern.Hint
@@ -14,12 +14,12 @@ const expectedTryOnData = createSchemaBuilder()
     })
     .field('category', {
         type: 'string', required: false,
-        in: CATEGORIES, value: `Supported categories are: ${CATEGORIES.join(', ')}`
+        value: CATEGORIES.join(', '), in: CATEGORIES
     })
     .build();
 export const validateTryOnRequest = (req: Request, res: Response, next: NextFunction) => {
     const data = req.body;
-    const result = validateObjectStrict(data, expectedTryOnData);
+    const result = validateObjectStrict(data, expectedTryOnRequestSchema);
 
     if (result.isValid === false) {
         return res.status(400).json({
@@ -28,5 +28,5 @@ export const validateTryOnRequest = (req: Request, res: Response, next: NextFunc
         });
     }
 
-    extractSchemaFieldsMiddleware(expectedTryOnData)(req, res, next);
+    extractSchemaFieldsMiddleware(expectedTryOnRequestSchema)(req, res, next);
 };

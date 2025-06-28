@@ -22,7 +22,7 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
     servers: [
       {
         url: process.env.NODE_ENV === 'production'
-          ? 'https://elevate-fcai-cu.vercel.app/api/v1'
+          ? `${process.env.API_BASE_URL}/api/v1`
           : `http://localhost:${port}/api/v1`,
         description: process.env.NODE_ENV === 'production' ? 'Production server' : 'Development server',
       },
@@ -30,6 +30,7 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
     tags: [
       { name: 'Authentication' },
       { name: 'Utilities', description: 'Utility APIs for common tasks' },
+      { name: 'Try On', description: 'APIs for virtual try-on functionality' },
       { name: 'Customers', description: 'All APIs related to customers' },
       { name: 'Wishlist' },
       { name: 'Cart' },
@@ -41,6 +42,7 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
       { name: 'Brand Owners Products' },
       { name: 'Brand Owners Dashboard' },
       { name: 'CRON Jobs', description: 'Cron jobs for scheduled tasks' },
+      { name: 'Admin', description: "APIs for admin access and management" },
     ],
     components: {
       securitySchemes: {

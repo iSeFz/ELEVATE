@@ -1,9 +1,5 @@
 import { fal } from "@fal-ai/client";
 
-fal.config({
-    credentials: "YOUR_FAL_KEY"
-});
-
 export const tryOn = async (modelImg: string, garmentImg: string) => {
     try {
         const result = await fal.subscribe("fal-ai/fashn/tryon/v1.5", {
