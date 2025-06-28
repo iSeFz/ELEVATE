@@ -92,7 +92,7 @@ export const addToCart = async (customerId: string, item: Partial<CartItem>) => 
             };
         } else {
             // Add new item
-            const productImage = variant.images && variant.images.length > 0 ? variant.images[0] : '';
+            const productImage = variant.images && variant.images.length > 0 ? variant.images[0] : product.variants[0].images[0];
 
             updatedItems.unshift({
                 id: generateCartItemtId(),
