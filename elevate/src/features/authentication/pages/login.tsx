@@ -25,6 +25,9 @@ interface LoginFormInputs {
 interface Tokens {
   accessToken: string;
   refreshToken: string;
+  user: {
+    role: string;
+  };
 }
 
 const schema = yup.object({
@@ -55,9 +58,9 @@ const LoginPage: React.FC = () => {
   const mutation = useMutation({
     mutationFn: loginRequest,
     onSuccess: (data: Tokens) => {
-      console.log(data);
       localStorage.setItem("accessToken", data.accessToken);
       localStorage.setItem("refreshToken", data.refreshToken);
+      localStorage.setItem("userRole", data.user.role);
 
       try {
         navigate("/");

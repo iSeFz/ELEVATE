@@ -21,6 +21,7 @@ import { useFormik } from "formik"; // Adjust this path
 import { uploadImageAndGetURL } from "../../../../../services/imageUpload";
 import { UploadImage } from "../../../../../components/UploadImage";
 import ImageDelete from "../../../../../components/ImageDelete";
+import { useSnackbar } from "notistack";
 
 const validationSchema = yup.object({
   firstName: yup
@@ -54,11 +55,7 @@ export const EditAccount = () => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    severity: "success" as "success" | "error" | "warning" | "info",
-  });
+  const { enqueueSnackbar } = useSnackbar();
 
   const [imagePreview, setImagePreview] = useState<string>("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -94,23 +91,14 @@ export const EditAccount = () => {
       });
     },
     onSuccess: () => {
-      setSnackbar({
-        open: true,
-        message: "Account updated successfully!",
-        severity: "success",
-      });
+      enqueueSnackbar("Account updated successfully!",{variant: "success"});
       setTimeout(() => {
         navigate("/settings/account");
       }, 1500);
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },
     onError: (error: any) => {
-      setSnackbar({
-        open: true,
-        message:
-          error?.message || "Failed to update account. Please try again.",
-        severity: "error",
-      });
+      enqueueSnackbar("Failed to update account. Please try again.", {variant: "error"});
     },
   });
 
@@ -152,21 +140,13 @@ export const EditAccount = () => {
     if (file) {
       // Validation checks
       if (file.size > 5 * 1024 * 1024) {
-        setSnackbar({
-          open: true,
-          message: "File size must be less than 5MB",
-          severity: "error",
-        });
+        enqueueSnackbar("File size must be less than 5MB",{variant: "error"});
         return;
       }
 
       const validTypes = ["image/jpeg", "image/jpg", "image/png"];
       if (!validTypes.includes(file.type)) {
-        setSnackbar({
-          open: true,
-          message: "Please upload only JPG, JPEG, or PNG files",
-          severity: "error",
-        });
+        enqueueSnackbar("Please upload only JPG, JPEG, or PNG files",{variant: "error"});
         return;
       }
 
@@ -184,19 +164,11 @@ export const EditAccount = () => {
     }
   };
 
-  const handleUploadClick = () => {
-    fileInputRef.current?.click();
-  };
-
   const handleRemoveImage = () => {
     setImagePreview("");
     setSelectedFile(null);
     formik.setFieldValue("imageURL", "");
-    setSnackbar({
-      open: true,
-      message: "Profile picture removed",
-      severity: "info",
-    });
+    enqueueSnackbar("Profile picture removed",{variant: "info"});
   };
 
   const handleCancel = () => {
@@ -213,10 +185,6 @@ export const EditAccount = () => {
       setImagePreview(userData.imageURL || "");
     }
     navigate("/settings/account");
-  };
-
-  const handleCloseSnackbar = () => {
-    setSnackbar({ ...snackbar, open: false });
   };
 
   return (
@@ -351,16 +319,6 @@ export const EditAccount = () => {
           </BlackStyledButton>
         </Box>
       </form>
-
-      <Snackbar open={snackbar.open} onClose={handleCloseSnackbar}>
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          sx={{ width: "100%" }}
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
     </Box>
   );
 };

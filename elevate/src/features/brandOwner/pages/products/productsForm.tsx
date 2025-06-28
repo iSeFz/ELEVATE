@@ -10,7 +10,6 @@ import {
   Stack,
   FormHelperText,
   Chip,
-  Autocomplete,
   Table,
   TableBody,
   TableCell,
@@ -22,8 +21,6 @@ import {
   DialogContent,
   DialogActions,
   CircularProgress,
-  Alert,
-  Snackbar,
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
@@ -43,6 +40,7 @@ import { UploadImage } from "../../../../components/UploadImage";
 import ImageDelete from "../../../../components/ImageDelete";
 import { useProductOptions } from "../../../../hooks/productOptionsHook";
 import { StyledAutocomplete, StyledFormControl, StyledMenuItem, StyledSelect } from "../../../../components/StyledDropDown";
+import { useSnackbar } from "notistack";
 
 // Yup validation schemas
 const variantSchema = yup.object({
@@ -93,13 +91,7 @@ const ProductForm = ({
   const [editingVariantIndex, setEditingVariantIndex] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const queryClient = useQueryClient();
-
-  // Snackbar state
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    severity: "success",
-  });
+  const { enqueueSnackbar } = useSnackbar();
 
   // Main form using Formik
   const formik = useFormik({
@@ -149,15 +141,18 @@ const ProductForm = ({
         };
 
         await mutationFn(finalData);
-        showSnackbar(
+        enqueueSnackbar(
           mode === "add"
             ? "Product created successfully"
             : "Product updated successfully",
-          "success"
+            {variant:"success"}
         );
+        queryClient.invalidateQueries({ queryKey: ["products"] });
       } catch (error) {
         console.error("Error processing product:", error);
-        showSnackbar("Failed to save product. Please try again.", "error");
+        enqueueSnackbar("Failed to save product. Please try again.", {
+          variant: "error",
+        });
       } finally {
         setIsUploading(false);
       }
@@ -184,10 +179,10 @@ const ProductForm = ({
 
       if (editingVariantIndex !== null) {
         updatedVariants[editingVariantIndex] = variantData;
-        showSnackbar("Variant updated successfully", "success");
+        enqueueSnackbar("Variant updated successfully", {variant: "success"});
       } else {
         updatedVariants.push(variantData);
-        showSnackbar("Variant added successfully", "success");
+        enqueueSnackbar("Variant added successfully", {variant: "success"});
       }
 
       formik.setFieldValue("variants", updatedVariants);
@@ -237,17 +232,6 @@ const ProductForm = ({
     "Pink",
   ];
 
-  const showSnackbar = (message, severity = "success") => {
-    setSnackbar({ open: true, message, severity });
-  };
-
-  const handleCloseSnackbar = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setSnackbar({ ...snackbar, open: false });
-  };
-
   const openVariantDialog = (variant = null, index = null) => {
     if (variant) {
       // For existing variants, create previews for any File objects
@@ -290,7 +274,7 @@ const ProductForm = ({
       (_, i) => i !== index
     );
     formik.setFieldValue("variants", updatedVariants);
-    showSnackbar("Variant deleted", "warning");
+    enqueueSnackbar("Variant deleted", {variant: "warning"});
   };
 
   const handleVariantImageUpload = (event) => {
@@ -302,11 +286,11 @@ const ProductForm = ({
 
     const validFiles = files.filter((file) => {
       if (!validTypes.includes(file.type)) {
-        showSnackbar(`${file.name} is not a valid image type`, "error");
+        enqueueSnackbar(`${file.name} is not a valid image type`, {variant: "error"});
         return false;
       }
       if (file.size > maxSize) {
-        showSnackbar(`${file.name} exceeds 5MB size limit`, "error");
+        enqueueSnackbar(`${file.name} exceeds 5MB size limit`, {variant: "error"});
         return false;
       }
       return true;
@@ -330,7 +314,7 @@ const ProductForm = ({
     variantFormik.setFieldValue("images", newImages);
     variantFormik.setFieldValue("imagePreviews", newPreviews);
 
-    showSnackbar(`${validFiles.length} image(s) added`, "success");
+    enqueueSnackbar(`${validFiles.length} image(s) added`, {variant: "success"});
   };
 
   const removeVariantImage = (index) => {
@@ -349,7 +333,7 @@ const ProductForm = ({
 
     variantFormik.setFieldValue("images", updatedImages);
     variantFormik.setFieldValue("imagePreviews", updatedPreviews);
-    showSnackbar("Image removed", "info");
+    enqueueSnackbar("Image removed", {variant: "info"});
   };
 
   const handleCancel = () => {
@@ -814,18 +798,6 @@ const ProductForm = ({
           </DialogActions>
         </form>
       </Dialog>
-
-      {/* Snackbar for notifications */}
-      <Snackbar open={snackbar.open} onClose={handleCloseSnackbar}>
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          sx={{ width: "100%" }}
-          variant="filled"
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
     </Box>
   );
 };

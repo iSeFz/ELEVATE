@@ -21,14 +21,9 @@ const EditProductPage = () => {
   });
 
   const editProductMutation = useMutation({
-    mutationFn: async (productData) => {
-      // Include the product ID in the update
-      console.log(productData);
-      return editProduct(productData);
-    },
+    mutationFn: async (productData) => editProduct(productData),
     onSuccess: (data) => {
       console.log("Product updated successfully:", data);
-      // Invalidate queries to refresh data
       queryClient.invalidateQueries({ queryKey: ["products"] });
       queryClient.invalidateQueries({ queryKey: ["product", productId] });
       navigate("/products"); // or "/admin/products" - be consistent

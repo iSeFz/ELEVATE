@@ -16,13 +16,32 @@ import LoginPage from "../authentication/pages/login";
 import AddProductPage from "../brandOwner/pages/products/addProductPage";
 import EditProductPage from "../brandOwner/pages/products/editProductPage";
 import { EditAccount } from "../brandOwner/pages/settings/pages/editAccount";
-import EditProfile from "../brandOwner/pages/profile/editProfile";
 import Profile from "../brandOwner/pages/profile/profile";
 
-const ProtectedRoute = () => {
-  const isAuthenticated = localStorage.getItem("refreshToken") !== null;
+// Define user roles
+type UserRole = "brandOwner" | "brandManager";
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
+interface ProtectedRouteProps {
+  allowedRoles?: UserRole[];
+}
+
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles }) => {
+  const isAuthenticated = localStorage.getItem("refreshToken") !== null;
+  const userRole = localStorage.getItem("userRole") as UserRole;
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (allowedRoles && !allowedRoles.includes(userRole)) {
+    return <Navigate to="/products" replace />;
+  }
+
+  return <Outlet />;
+};
+
+const BrandOwnerRoute = () => {
+  return <ProtectedRoute allowedRoles={["brandOwner"]} />;
 };
 
 const router = createBrowserRouter([
@@ -36,27 +55,44 @@ const router = createBrowserRouter([
         children: [
           {
             path: "",
-            element: <Dashboard />,
+            element: <BrandOwnerRoute />,
+            children: [
+              {
+                path: "",
+                element: <Dashboard />,
+              },
+            ],
           },
           {
             path: "profile",
-            element: <Profile isEditMode={false} />,
-          },
-          {
-            path: "profile/edit",
-            element: <Profile isEditMode={true} />,
+            element: <BrandOwnerRoute />,
+            children: [
+              {
+                path: "",
+                element: <Profile isEditMode={false} />,
+              },
+              {
+                path: "edit",
+                element: <Profile isEditMode={true} />,
+              },
+            ],
           },
           {
             path: "products",
-            element: <Product />,
-          },
-          {
-            path: "/products/add",
-            element: <AddProductPage />,
-          },
-          {
-            path: "/products/edit/:id",
-            element: <EditProductPage />,
+            children: [
+              {
+                path: "",
+                element: <Product />,
+              },
+              {
+                path: "add",
+                element: <AddProductPage />,
+              },
+              {
+                path: "edit/:id",
+                element: <EditProductPage />,
+              },
+            ],
           },
           {
             path: "settings",
@@ -85,6 +121,7 @@ const router = createBrowserRouter([
     element: <LoginPage />,
   },
 ]);
+
 const Router: React.FC = () => {
   return <RouterProvider router={router} />;
 };

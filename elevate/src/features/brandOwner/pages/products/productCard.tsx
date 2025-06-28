@@ -11,7 +11,6 @@ import {
   DialogContent,
   DialogActions,
   Alert,
-  Snackbar,
 } from "@mui/material";
 import {
   StyledButton,
@@ -21,6 +20,7 @@ import { StyledSmallSvgIcon } from "../../../../components/StyledSmallSvgIcon";
 import { useNavigate } from "react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteProduct } from "../../../../api/endpoints"; // Adjust import path
+import { useSnackbar } from "notistack";
 
 interface ProductData {
   id: string;
@@ -40,12 +40,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-
-  const [snackbar, setSnackbar] = useState({
-    open: false,
-    message: "",
-    severity: "success" as "success" | "error",
-  });
+  const { enqueueSnackbar } = useSnackbar();
 
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -62,20 +57,13 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
 
-      setSnackbar({
-        open: true,
-        message: "Product deleted successfully",
-        severity: "success",
-      });
+      enqueueSnackbar("Product deleted successfully", { variant: "success" });
 
       setDeleteDialogOpen(false);
     },
     onError: (error: any) => {
-      setSnackbar({
-        open: true,
-        message:
-          error?.message || "Failed to delete product. Please try again.",
-        severity: "error",
+      enqueueSnackbar("Failed to delete product. Please try again.", {
+        variant: "error",
       });
 
       setDeleteDialogOpen(false);
@@ -92,10 +80,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   const handleConfirmDelete = () => {
     deleteMutation.mutate();
-  };
-
-  const handleCloseSnackbar = () => {
-    setSnackbar({ ...snackbar, open: false });
   };
 
   return (
@@ -175,21 +159,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </BlackStyledButton>
         </DialogActions>
       </Dialog>
-
-      {/* Snackbar for notifications */}
-      <Snackbar
-        open={snackbar.open}
-        onClose={handleCloseSnackbar}
-      >
-        <Alert
-          onClose={handleCloseSnackbar}
-          severity={snackbar.severity}
-          sx={{ width: "100%" }}
-          variant="filled"
-        >
-          {snackbar.message}
-        </Alert>
-      </Snackbar>
     </>
   );
 };

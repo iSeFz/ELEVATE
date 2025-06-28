@@ -1,9 +1,10 @@
 import { FC } from "react";
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, IconButton } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Router from "./features/router/router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SnackbarProvider } from "notistack";
+import { closeSnackbar, SnackbarProvider } from "notistack";
+import CloseIcon from "@mui/icons-material/Close"; // Add this line
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,8 +38,18 @@ const App: FC = () => {
       <QueryClientProvider client={queryClient}>
         <SnackbarProvider
           maxSnack={3}
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          autoHideDuration={6000}
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+          autoHideDuration={4000}
+          action={(snackbarId) => (
+            <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={() => closeSnackbar(snackbarId)}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          )}
         >
           <CssBaseline />
           <Router />

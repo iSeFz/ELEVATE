@@ -7,8 +7,6 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Snackbar,
-  Alert,
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -29,8 +27,9 @@ import { useUser } from "../../../../hooks/userHook";
 import { UploadImage } from "../../../../components/UploadImage";
 import ImageDelete from "../../../../components/ImageDelete";
 import { useNavigate } from "react-router";
-import { QueryClient, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { UpdateBrandData } from "../../../../api/endpoints";
+import { useSnackbar } from "notistack";
 
 interface Address {
   building: number;
@@ -119,8 +118,7 @@ const Profile = ({ isEditMode }: { isEditMode: boolean }) => {
   const { brandData, updateBrandData } = useBrand();
   const { userData } = useUser();
 
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const { enqueueSnackbar } = useSnackbar();
 
   const [showAddressDialog, setShowAddressDialog] = useState(false);
   const [showWebsiteDialog, setShowWebsiteDialog] = useState(false);
@@ -130,12 +128,13 @@ const Profile = ({ isEditMode }: { isEditMode: boolean }) => {
   const mutation = useMutation({
     mutationFn: UpdateBrandData,
     onSuccess: () => {
-      setSuccessMessage("Profile updated successfully!");
+      enqueueSnackbar("Profile updated successfully!", {variant: "success"});
+      queryClient.invalidateQueries({ queryKey: ["brand"] });
       navigate("/profile");
     },
     onError: (error: any) => {
       console.error("Error updating profile:", error);
-      setErrorMessage("Failed to update profile. Please try again.");
+      enqueueSnackbar("Failed to update profile. Please try again.", {variant: "error"});
     },
   });
 
@@ -189,12 +188,8 @@ const Profile = ({ isEditMode }: { isEditMode: boolean }) => {
         imageURL: values.imageURL,
         storyDescription: values.storyDescription,
       });
-      queryClient.invalidateQueries({ queryKey: ["brand"] });
-      navigate("/profile");
-      setSuccessMessage("Profile updated successfully!");
     } catch (error) {
       console.error("Error updating profile:", error);
-      setErrorMessage("Failed to update profile. Please try again.");
     }
   };
 
@@ -206,14 +201,14 @@ const Profile = ({ isEditMode }: { isEditMode: boolean }) => {
     if (file) {
       // Validate file size (5MB max)
       if (file.size > 5 * 1024 * 1024) {
-        setErrorMessage("File size must be less than 5MB");
+        enqueueSnackbar("File size must be less than 5MB", {variant: "error"});
         return;
       }
 
       // Validate file type
       const acceptedTypes = ["image/jpeg", "image/jpg", "image/png"];
       if (!acceptedTypes.includes(file.type)) {
-        setErrorMessage("Only JPG, JPEG, and PNG files are accepted");
+        enqueueSnackbar("Only JPG, JPEG, and PNG files are accepted", {variant: "error"});
         return;
       }
 
@@ -1064,30 +1059,6 @@ const Profile = ({ isEditMode }: { isEditMode: boolean }) => {
                 </StyledButton>
               </DialogActions>
             </Dialog>
-
-            {/* Success/Error Snackbars */}
-            <Snackbar
-              open={!!successMessage}
-              onClose={() => setSuccessMessage("")}
-            >
-              <Alert
-                onClose={() => setSuccessMessage("")}
-                severity="success"
-                sx={{ width: "100%" }}
-              >
-                {successMessage}
-              </Alert>
-            </Snackbar>
-
-            <Snackbar open={!!errorMessage} onClose={() => setErrorMessage("")}>
-              <Alert
-                onClose={() => setErrorMessage("")}
-                severity="error"
-                sx={{ width: "100%" }}
-              >
-                {errorMessage}
-              </Alert>
-            </Snackbar>
           </Box>
         </Form>
       )}

@@ -18,6 +18,7 @@ const Sidebar: FC = () => {
   const location = useLocation();
   const [selectedItem, setSelectedItem] = useState("");
   const queryClient = useQueryClient();
+  const userRole = localStorage.getItem("userRole");
 
   useEffect(() => {
     setSelectedItem(location.pathname.split("/")[1] || "");
@@ -40,6 +41,7 @@ const Sidebar: FC = () => {
       <TitleText variant="h4">ELEVATE</TitleText>
 
       <List>
+        {userRole == "brandOwner" && 
         <SidebarItem
           handleItemClick={handleItemClick}
           getListItemStyles={getListItemStyles}
@@ -48,8 +50,8 @@ const Sidebar: FC = () => {
           path="/"
           icon={<PieChartOutline />}
           name="Dashboard"
-        />
-
+        />}
+        {userRole == "brandOwner" && 
         <SidebarItem
           handleItemClick={handleItemClick}
           getListItemStyles={getListItemStyles}
@@ -58,8 +60,7 @@ const Sidebar: FC = () => {
           path="/profile"
           icon={<PersonOutline />}
           name="Profile"
-        />
-
+        />}
         <SidebarItem
           handleItemClick={handleItemClick}
           getListItemStyles={getListItemStyles}
@@ -69,7 +70,6 @@ const Sidebar: FC = () => {
           icon={<ShoppingBagOutlined />}
           name="Manage Products"
         />
-
         <SidebarItem
           handleItemClick={handleItemClick}
           getListItemStyles={getListItemStyles}
@@ -79,7 +79,6 @@ const Sidebar: FC = () => {
           icon={<SettingsOutlined />}
           name="Settings"
         />
-
         <SidebarItem
           handleItemClick={() => {
             localStorage.removeItem("refreshToken");
