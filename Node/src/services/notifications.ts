@@ -1,5 +1,6 @@
 import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
 import { TryOnRequest } from '../config/try-on-model.js';
+import { getCustomer, updateCustomer } from './customer.js';
 
 export class NotificationService {
     /**
@@ -13,8 +14,12 @@ export class NotificationService {
     ): Promise<void> {
         try {
             // Get user's FCM token from Firestore
-            const userDoc = await admin.firestore().collection('users').doc(userId).get();
-            const fcmToken = userDoc.data()?.fcmToken;
+            const customerData = await getCustomer(userId);
+            if (!customerData) {
+                console.error(`Customer data not found for userId: ${userId}`);
+                return;
+            }
+            const fcmToken = customerData.fcmToken;
 
             if (!fcmToken) {
                 return;
@@ -29,7 +34,7 @@ export class NotificationService {
                     type: 'try_on_update',
                     requestId: requestId,
                     status: status,
-                    resultUrl: resultUrl || '',
+                    resultUrl: resultUrl ?? '',
                     userId: userId
                 },
                 android: {
@@ -89,10 +94,7 @@ export class NotificationService {
      */
     static async saveFCMToken(userId: string, fcmToken: string): Promise<void> {
         try {
-            await admin.firestore()
-                .collection('users')
-                .doc(userId)
-                .update({ fcmToken });
+            await updateCustomer(userId, { fcmToken });
         } catch (error: any) {
             console.error("Error saving FCM token:", error);
             throw new Error(`Failed to save FCM token: ${error.message}`);

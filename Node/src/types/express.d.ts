@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { Role } from '../config/roles.ts';
 
 // Add user property to Express Request interface
 declare global {
@@ -7,7 +8,7 @@ declare global {
       user?: {
         id: string;
         email?: string;
-        role: string;
+        role: Role;
       };
     }
   }

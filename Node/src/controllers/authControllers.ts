@@ -5,6 +5,7 @@ import { BrandOwner } from '../types/models/brandOwner.js';
 import * as brandService from '../services/brand.js';
 import * as brandOwnerService from '../services/brandOwner.js';
 import { Brand } from '../types/models/brand.js';
+import { BrandManager } from '../types/models/brandManager.js';
 
 export const customerSignup = async (req: Request, res: Response) => {
     try {
@@ -97,13 +98,24 @@ export const customerLogin = async (req: Request, res: Response) => {
     }
 };
 
-export const staffSignup = async (req: Request, res: Response) => {
+export const brandManagerSignup = async (req: Request, res: Response) => {
     try {
-        const userRecord = await authService.staffSignup(req.body);
+        const brandManagerData = req.body as BrandManager;
+        const brandOwnerData = await brandOwnerService.getBrandOwnerById(brandManagerData.brandOwnerId);
+        if (!brandOwnerData) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'Brand owner not found'
+            });
+        }
+        brandManagerData.brandId = brandOwnerData.brandId;
+        brandManagerData.brandName = brandOwnerData.brandName;
+
+        const userRecord = await authService.brandManagerSignup(brandManagerData);
 
         return res.status(201).json({
             status: 'success',
-            message: 'Staff registration successful',
+            message: 'Brand manager registration successful',
             data: {
                 id: userRecord.id,
                 email: userRecord.email,
@@ -119,10 +131,10 @@ export const staffSignup = async (req: Request, res: Response) => {
             });
         }
 
-        console.error('Staff signup error:', error);
+        console.error('Brand Manager signup error:', error);
         return res.status(500).json({
             status: 'error',
-            message: 'An unexpected error occurred during staff registration'
+            message: 'An unexpected error occurred during brand manager registration'
         });
     }
 };
@@ -187,7 +199,7 @@ export const brandManagerLogin = async (req: Request, res: Response) => {
 
         return res.status(200).json({
             status: 'success',
-            message: 'Staff login successful',
+            message: 'Brand Manager login successful',
             data: userData
         });
     } catch (error: any) {
@@ -200,10 +212,10 @@ export const brandManagerLogin = async (req: Request, res: Response) => {
             });
         }
 
-        console.error('Staff login error:', error);
+        console.error('Brand Manager login error:', error);
         return res.status(500).json({
             status: 'error',
-            message: 'An unexpected error occurred during staff login'
+            message: 'An unexpected error occurred during Brand Manager login'
         });
     }
 };

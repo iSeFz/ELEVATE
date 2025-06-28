@@ -1,0 +1,416 @@
+paths:
+  /brand-managers/signup:
+    post:
+      summary: Register a new brand manager
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BrandManagerSignupRequest"
+      responses:
+        201:
+          description: The brand manager was successfully registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+                    description: Success message
+                    example: Brand manager registration successful
+                  data:
+                    $ref: "#/components/schemas/BrandManagerResponse"
+        400:
+          description: Registration failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /brand-managers/login:
+    post:
+      summary: Brand manager login
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        200:
+          description: The brand manager was successfully logged in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: "#/components/schemas/BrandManagerResponse"
+                      token:
+                        type: string
+                        description: JWT token for authentication
+        400:
+          description: Login failed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /brand-managers:
+    get:
+      summary: Get all brand managers (admin only)
+      tags: [Admin]
+      responses:
+        200:
+          description: List of all brand managers
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/BrandManagerResponse"
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /brand-managers/me:
+    get:
+      summary: Get current brand manager profile
+      tags: [Brand Managers]
+      responses:
+        200:
+          description: Brand manager details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: "#/components/schemas/BrandManagerResponse"
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        404:
+          description: Brand manager not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    put:
+      summary: Update current brand manager profile
+      tags: [Brand Managers]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BrandManagerUpdateRequest"
+      responses:
+        200:
+          description: Brand manager updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: "#/components/schemas/BrandManagerResponse"
+        400:
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        404:
+          description: Brand manager not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    delete:
+      summary: Delete current brand manager (admin only)
+      tags: [Admin]
+      responses:
+        200:
+          description: Brand manager deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+                    example: Brand manager deleted successfully
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        404:
+          description: Brand manager not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    BrandManagerSignupRequest:
+      type: object
+      required:
+        - email
+        - password
+        - firstName
+        - lastName
+        - brandOwnerId
+      properties:
+        email:
+          type: string
+          format: email
+          pattern: "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"
+          description: The brand manager email
+          example: "name@elevate.com"
+        password:
+          type: string
+          format: password
+          minLength: 6
+          maxLength: 30
+          pattern: "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d@$!%*?&]{6,}$"
+          description: Password with at least one uppercase, one lowercase, and one digit
+          example: "password123"
+        firstName:
+          type: string
+          minLength: 2
+          maxLength: 15
+          description: The first name of the brand manager
+          example: "John"
+        lastName:
+          type: string
+          minLength: 2
+          maxLength: 15
+          description: The last name of the brand manager
+          example: "Doe"
+        username:
+          type: string
+          minLength: 3
+          maxLength: 15
+          pattern: "^[a-zA-Z0-9_]+$"
+          description: The unique username (alphanumeric and underscore only)
+          example: "elevateUser"
+        imageURL:
+          type: string
+          format: uri
+          pattern: "^https?://[^\\s/$.?#].[^\\s]*$"
+          description: Profile image URL
+        brandOwnerId:
+          type: string
+          description: ID of the brand owner this manager will be associated with
+          example: "brandOwnerId123"
+
+    BrandManagerUpdateRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          minLength: 2
+          maxLength: 15
+          description: The first name of the brand manager
+        lastName:
+          type: string
+          minLength: 2
+          maxLength: 15
+          description: The last name of the brand manager
+        username:
+          type: string
+          minLength: 3
+          maxLength: 15
+          pattern: "^[a-zA-Z0-9_]+$"
+          description: The unique username (alphanumeric and underscore only)
+          example: "elevateUser"
+        imageURL:
+          type: string
+          format: uri
+          description: Profile image URL
+
+    BrandManagerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The auto-generated id of the brand manager
+        role:
+          type: string
+          enum: [brandManager]
+          description: The role of the user
+        email:
+          type: string
+          description: The brand manager email
+        firstName:
+          type: string
+          description: The first name of the brand manager
+        lastName:
+          type: string
+          description: The last name of the brand manager
+        username:
+          type: string
+          description: The unique username of the brand manager
+        brandOwnerId:
+          type: string
+          description: ID of the brand owner this manager is associated with
+        imageURL:
+          type: string
+          description: Profile image URL
+        createdAt:
+          type: object
+          properties:
+            _seconds:
+              type: number
+              description: Seconds since Unix epoch
+            _nanoseconds:
+              type: number
+              description: Nanoseconds fraction
+          description: Timestamp when the brand manager was created
+        updatedAt:
+          type: object
+          properties:
+            _seconds:
+              type: number
+              description: Seconds since Unix epoch
+            _nanoseconds:
+              type: number
+              description: Nanoseconds fraction
+          description: Timestamp when the brand manager was last updated
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [error]
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              message:
+                type: string
+
+    AuthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success]
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+              description: JWT token for authentication
+            user:
+              $ref:

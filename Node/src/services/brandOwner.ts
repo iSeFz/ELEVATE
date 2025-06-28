@@ -1,10 +1,12 @@
 import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
+import { Role, roles } from '../config/roles.js';
 import { BrandOwner } from '../types/models/brandOwner.js';
 import { Order, OrderStatus } from '../types/models/order.js';
 import { deleteCredentialsUsingUID } from './auth.js';
 
 const firestore = admin.firestore();
 const brandOwnerCollection = firestore.collection(FIREBASE_COLLECTIONS['brandOwner']);
+const brandManagerCollection = firestore.collection(FIREBASE_COLLECTIONS['brandManager']);
 
 /**
  * Get all brand owners
@@ -26,11 +28,17 @@ export const getAllBrandOwners = async (): Promise<BrandOwner[]> => {
 /**
  * Get a brand owner by ID
  * @param {string} id - Brand owner ID
+ * @param {Role} [userType] - Optional user type to determine which collection to query (BrandManager or BrandOwner)
  * @returns {Promise<BrandOwner|null>} Brand owner object or null if not found
  */
-export const getBrandOwnerById = async (id: string): Promise<BrandOwner | null> => {
+export const getBrandOwnerById = async (id: string, userType?: Role): Promise<BrandOwner | null> => {
     try {
-        const doc = await brandOwnerCollection.doc(id).get();
+        let doc;
+        if(userType === roles["brandManager"]) {
+            doc = await brandManagerCollection.doc(id).get();
+        } else {
+            doc = await brandOwnerCollection.doc(id).get();
+        }
 
         if (!doc.exists) {
             return null;

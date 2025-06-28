@@ -47,5 +47,6 @@ export interface Customer {
     createdAt: TimestampUnion;
     updatedAt: TimestampUnion;
 
+    fcmToken?: string; // Optional for push notifications
     password?: string; // Optional for authentication purposes
 }

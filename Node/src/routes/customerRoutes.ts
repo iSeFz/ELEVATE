@@ -14,7 +14,7 @@ const router = express.Router();
 // Protected routes requiring authentication
 router.get('/',
     authenticate,
-    authorize(['admin', 'staff']),
+    authorize(['admin']),
     CustomerValidators.validateGetAllCustomers,
     CustomerController.getAllCustomers);
 
@@ -53,14 +53,13 @@ router.patch('/me/orders/:id/cancel',
     OrderController.cancelOrder);
 router.patch('/me/orders/:id/refund',
     authenticate,
+    OrderValidators.validateRefundOrder,
     OrderController.refundOrder);
 
-// Users can access their own data, admins/staff can access any user's data
 router.get('/me',
     authenticate,
     CustomerController.getCustomer);
 
-// Users can update their own data, admins can update any user
 router.put('/me',
     authenticate,
     CustomerValidators.validateUpdateCustomer,

@@ -86,7 +86,7 @@ export const addCustomer = async (customer: Customer) => {
     // No implementation as the add customer logic is the same as signup
 };
 
-export const updateCustomer = async (customerID: string, newCustomerData: Customer) => {
+export const updateCustomer = async (customerID: string, newCustomerData: Partial<Customer>) => {
     if (!customerID) {
         throw new Error('Please provide a customer ID');
     }

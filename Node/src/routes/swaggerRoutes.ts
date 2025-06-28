@@ -41,6 +41,7 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
       { name: 'Brand Owners' },
       { name: 'Brand Owners Products' },
       { name: 'Brand Owners Dashboard' },
+      { name: "Brand Managers" },
       { name: 'CRON Jobs', description: 'Cron jobs for scheduled tasks' },
       { name: 'Admin', description: "APIs for admin access and management" },
     ],
@@ -51,6 +52,13 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
           scheme: 'bearer',
           bearerFormat: 'JWT',
           description: 'Enter JWT Bearer (For real requests, use the token from the login response)',
+        },
+        userRole: {
+          type: 'apiKey',
+          in: 'query',
+          name: 'userRole',
+          description: `Custom user role to be used in the request (For endpoints that require a user role to be performed)
+                        (Admin use only - Must provide the admin access token as well)`,
         },
         userId: {
           type: 'apiKey',
@@ -68,7 +76,7 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
       },
     },
     security: [
-      { bearerAuth: [], userId: [], adminAccessHeaderToken: [] }
+      { bearerAuth: [], userRole: [], userId: [], adminAccessHeaderToken: [] }
     ],
   },
   // Use path.join for better cross-platform compatibility

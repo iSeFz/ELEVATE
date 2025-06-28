@@ -135,8 +135,9 @@ export const getProductVariant = async (req: Request, res: Response) => {
 export const addProduct = async (req: Request, res: Response) => {
     try {
         const productData = req.body as Product;
+        const userRole = req.user?.role;
         const brandOwnerId = req.user?.id as string;
-        const brandOwner = await brandOwnerService.getBrandOwnerById(brandOwnerId);
+        const brandOwner = await brandOwnerService.getBrandOwnerById(brandOwnerId, userRole);
 
         if (!brandOwner) {
             return res.status(404).json({
@@ -227,7 +228,8 @@ export const deleteProduct = async (req: Request, res: Response) => {
 export const deleteAllBrandProducts = async (req: Request, res: Response) => {
     try {
         const brandOwnerId = req.user?.id as string;
-        const brandOwner = await brandOwnerService.getBrandOwnerById(brandOwnerId);
+        const userRole = req.user?.role;
+        const brandOwner = await brandOwnerService.getBrandOwnerById(brandOwnerId, userRole);
 
         if (!brandOwner) {
             return res.status(404).json({

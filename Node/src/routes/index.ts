@@ -4,7 +4,7 @@ import CustomerRoutes from './customerRoutes.js';
 import BrandRoutes from './brandRoutes.js';
 import ReviewRoutes from './reviewRoutes.js';
 import OrderRoutes from './orderRoutes.js';
-import StaffRoutes from './staffRoutes.js';
+import BrandManagerRoutes from './brandManagerRoutes.js';
 import BrandOwnerRoutes from './brandOwnerRoutes.js';
 import SwaggerRoutes from './swaggerRoutes.js';
 import ScriptsRoutes from './scriptsRoutes.js';
@@ -29,7 +29,7 @@ router.use('/orders', OrderRoutes);
 router.use('/scripts', ScriptsRoutes);
 
 // User type specific routes
-router.use('/staff', StaffRoutes);
+router.use('/brand-managers', BrandManagerRoutes);
 router.use('/brand-owners', BrandOwnerRoutes);
 
 export default router;
