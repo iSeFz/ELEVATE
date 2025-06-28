@@ -40,6 +40,9 @@ router.post('/me/orders',
 router.get('/me/orders/:id',
     authenticate,
     OrderController.getCustomerOrder);
+router.delete('/me/orders/:id',
+    authenticate,
+    OrderController.deleteOrder);
 router.put('/me/orders/:id/calculate-shipment-fees',
     authenticate,
     OrderValidators.validateCalculateShipmentFees,

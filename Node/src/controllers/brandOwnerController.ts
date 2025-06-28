@@ -28,7 +28,8 @@ export const getAllBrandOwners = async (req: Request, res: Response) => {
 export const getBrandOwner = async (req: Request, res: Response) => {
     try {
         const brandOwnerId = req.user!.id;
-        const brandOwner = await BrandOwnerService.getBrandOwnerById(brandOwnerId);
+        const userRole = req.user!.role;
+        const brandOwner = await BrandOwnerService.getBrandOwnerById(brandOwnerId, userRole);
 
         if (!brandOwner) {
             return res.status(404).json({
@@ -41,7 +42,7 @@ export const getBrandOwner = async (req: Request, res: Response) => {
             status: 'success',
             data: {
                 ...brandOwner,
-                role: roles['brandOwner'] // Include the role from the request user
+                role: roles[userRole] // Include the role from the request user
             }
         });
     } catch (error: any) {
@@ -80,12 +81,13 @@ export const getMyProducts = async (req: Request, res: Response) => {
 export const updateBrandOwner = async (req: Request, res: Response) => {
     try {
         const brandOwnerId = req.user!.id;
-        const updatedBrandOwner = await BrandOwnerService.updateBrandOwner(brandOwnerId, req.body);
+        const userRole = req.user!.role;
+        const updatedBrandOwner = await BrandOwnerService.updateBrandOwner(brandOwnerId, req.body, userRole);
 
         if (!updatedBrandOwner) {
             return res.status(404).json({
                 status: 'error',
-                message: 'Brand owner not found'
+                message: 'Brand owner/manager not found'
             });
         }
 

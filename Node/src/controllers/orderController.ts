@@ -174,9 +174,26 @@ export const refundOrder = async (req: Request, res: Response) => {
 }
 
 export const deleteOrder = async (req: Request, res: Response) => {
-    // This route is already protected by the authorize middleware in the router (admin only)
     try {
         const orderID = req.params.id;
+        const orderData = await orderService.getOrder(orderID);
+        if (!orderData) {
+            return res.status(404).json({ status: 'error', message: 'Order not found' });
+        }
+        
+        if (orderData.status !== OrderStatus.PENDING) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Only pending orders can be deleted'
+            });
+        }
+
+        // Check if the order belongs to the customer
+        const customerID = req.user?.id!;
+        if (orderData.customerId !== customerID) {
+            return res.status(403).json({ status: 'error', message: 'Unauthorized access to this order' });
+        }
+
         await orderService.deleteOrder(orderID);
         return res.status(200).json({ status: 'success', message: 'Order deleted successfully' });
     } catch (error: any) {

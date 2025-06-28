@@ -111,6 +111,24 @@ export const getOrdersByStatus = async (status: OrderStatus, page: number = 1) =
     );
 };
 
+export const getOrder = async (orderID: string) => {
+    if (!orderID) {
+        throw new Error('Please provide an order ID');
+    }
+    try {
+        const docRef = firestore.collection(orderCollection).doc(orderID);
+        const docSnap = await docRef.get();
+
+        if (!docSnap.exists) {
+            return null;
+        }
+
+        return { ...docSnap.data(), id: docSnap.id } as Order;
+    } catch (error: any) {
+        throw new Error(`Failed to get order: ${error.message}`);
+    }
+}
+
 export const addOrder = async (order: Order) => {
     try {
         const addedOrderData = OrderUtils.generateFullyOrderData(order);
@@ -479,10 +497,6 @@ export const deleteOrder = async (orderID: string) => {
 
     try {
         const orderRef = firestore.collection(orderCollection).doc(orderID);
-        const orderDoc = await orderRef.get();
-        if (!orderDoc.exists) {
-            throw new Error('Order not found');
-        }
         await orderRef.delete();
     } catch (error: any) {
         throw new Error(`Failed to delete order: ${error.message}`);
@@ -511,7 +525,7 @@ export const cleanupExpiredOrders = async () => {
         // Process each expired order
         for (const orderDoc of expiredOrdersSnapshot.docs) {
             // Restore stock for each product in the order
-            await cancelOrder(orderDoc.id);
+            await deleteOrder(orderDoc.id);
             processedCount++;
         }
 

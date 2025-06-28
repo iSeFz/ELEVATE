@@ -223,11 +223,16 @@ export const brandManagerLogin = async (req: Request, res: Response) => {
 export const brandOwnerLogin = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
-        const userData = await authService.brandOwnerLogin(email, password);
+        let userData;
+        try {
+            userData = await authService.brandOwnerLogin(email, password);
+        } catch (error: any) {
+            userData = await authService.brandManagerLogin(email, password);
+        }
 
         return res.status(200).json({
             status: 'success',
-            message: 'Brand owner login successful',
+            message: 'Brand owner/manager login successful',
             data: userData
         });
     } catch (error: any) {

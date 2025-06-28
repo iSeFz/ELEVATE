@@ -6,7 +6,10 @@ import { SubscriptionPlan } from '../config/subscriptionPlans.js';
 
 const firestore = admin.firestore();
 const productCollection = FIREBASE_COLLECTIONS['product'];
-const brandCollection = FIREBASE_COLLECTIONS['brand'];
+
+const normalizeString = (str: string): string => {
+    return str.trim().toLowerCase();
+}
 
 // Helper function to generate unique IDs for product variants
 const generateVariantId = (): string => {
@@ -88,7 +91,7 @@ export const getProductsByCategory = async (category: string, page: number = 1) 
     if (!category) throw new Error('Please provide a category');
     return fetchProducts(
         ref => ref
-            .where("category", "==", category)
+            .where("category", "==", normalizeString(category))
             .orderBy("brandSubscriptionPlan", "desc")
             .orderBy("createdAt", "desc"),
         page
@@ -109,7 +112,7 @@ export const getProductsByDepartment = async (departmentValue: string, page: num
     if (!departmentValue) throw new Error('Please provide a department value');
     return fetchProducts(
         ref => ref
-            .where("department", "array-contains", departmentValue)
+            .where("department", "array-contains", normalizeString(departmentValue))
             .orderBy("brandSubscriptionPlan", "desc")
             .orderBy("createdAt", "desc"),
         page
@@ -213,6 +216,16 @@ export const updateProduct = async (productID: string, newProductData: Partial<P
         // If variants are being updated, ensure they all have IDs
         if (newProductData.variants) {
             newProductData.variants = ensureVariantIds(newProductData.variants);
+        }
+        // ensure all fixed values are normalized
+        if (newProductData.category) {
+            newProductData.category = normalizeString(newProductData.category);
+        }
+        if (newProductData.department) {
+            newProductData.department = newProductData.department.map(dept => normalizeString(dept));
+        }
+        if (newProductData.material) {
+            newProductData.material = normalizeString(newProductData.material);
         }
 
         // Always update the timestamp

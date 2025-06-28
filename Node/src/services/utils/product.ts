@@ -2,6 +2,13 @@ import { Product, ProductVariant } from '../../types/models/product.js';
 import { convertToTimestamp } from './common.js';
 import { SubscriptionPlan } from '../../config/subscriptionPlans.js';
 
+export const normalizeString = (str: string | null): string => {
+    if (str == null) {
+        return '';
+    }
+    return str.trim().toLowerCase();
+}
+
 export const checkMissingProductVariantData = (productVariants: any) => {
     if (!Array.isArray(productVariants) || productVariants.length === 0) {
         return 'Product variants must be an array and cannot be empty';
@@ -50,10 +57,10 @@ export const generateFullyProductData = (product: Product): Product => {
         brandId: product.brandId ?? emptyProduct.brandId,
         brandOwnerId: product.brandOwnerId ?? emptyProduct.brandOwnerId,
         brandName: product.brandName ?? emptyProduct.brandName,
-        category: product.category ?? emptyProduct.category,
-        department: product.department ?? emptyProduct.department,
+        category: normalizeString(product.category) ?? emptyProduct.category,
+        department: product.department?.map((value) => normalizeString(value)) ?? emptyProduct.department,
         description: product.description ?? emptyProduct.description,
-        material: product.material ?? emptyProduct.material,
+        material: normalizeString(product.material) ?? emptyProduct.material,
         name: product.name ?? emptyProduct.name,
         variants: product.variants ?? emptyProduct.variants,
         reviewSummary: product.reviewSummary ?? emptyProduct.reviewSummary,
@@ -62,7 +69,7 @@ export const generateFullyProductData = (product: Product): Product => {
         createdAt: convertToTimestamp(product.createdAt),
         updatedAt: convertToTimestamp(product.updatedAt),
     };
-    if(product.id) {
+    if (product.id) {
         fullyData.id = product.id;
     }
 

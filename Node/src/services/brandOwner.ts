@@ -34,7 +34,7 @@ export const getAllBrandOwners = async (): Promise<BrandOwner[]> => {
 export const getBrandOwnerById = async (id: string, userType?: Role): Promise<BrandOwner | null> => {
     try {
         let doc;
-        if(userType === roles["brandManager"]) {
+        if (userType === roles["brandManager"]) {
             doc = await brandManagerCollection.doc(id).get();
         } else {
             doc = await brandOwnerCollection.doc(id).get();
@@ -62,22 +62,26 @@ export const getBrandOwnerById = async (id: string, userType?: Role): Promise<Br
  */
 export const updateBrandOwner = async (
     id: string,
-    data: Partial<BrandOwner>
+    data: Partial<BrandOwner>,
+    userType?: Role
 ) => {
     try {
-        // Check if brand owner exists
-        const brandOwnerDoc = await brandOwnerCollection.doc(id).get();
-
-        if (!brandOwnerDoc.exists) {
-            return null;
-        }
-
-        // Remove sensitive fields from the update
         const { id: _, ...updateData } = data;
 
         // Update the document
-        await brandOwnerCollection.doc(id).update(updateData);
-
+        if (userType === roles["brandManager"]) {
+            const brandManagerDoc = await brandManagerCollection.doc(id).get();
+            if (!brandManagerDoc.exists) {
+                return null;
+            }
+            await brandManagerCollection.doc(id).update(updateData);
+        } else {
+            const brandOwnerDoc = await brandOwnerCollection.doc(id).get();
+            if (!brandOwnerDoc.exists) {
+                return null;
+            }
+            await brandOwnerCollection.doc(id).update(updateData);
+        }
         return true;
     } catch (error) {
         console.error(`Error updating brand owner with ID ${id}:`, error);
