@@ -33,6 +33,12 @@ export enum OrderStatus {
     REFUNDED = 'refunded'
 }
 
+export enum REFUND_STATUS {
+    PENDING = 'pending',
+    APPROVED = 'approved',
+    REJECTED = 'rejected',
+}
+
 export interface OrderProduct {
     variantId: string; // Selected variant of the product in the order
     productId: string; // ID of the product in the order
@@ -45,6 +51,8 @@ export interface OrderProduct {
     colors: string[];     // Variant Colors
     price: number;       // Variant Price at time of order (after discounts)
     imageURL?: string;   // Variant Product image for order display
+    // Data for refunding
+    refundStatus?: REFUND_STATUS; // Status of the refund process
 }
 
 export interface Order {

@@ -78,3 +78,21 @@ export const validateConfirmOrder = (req: Request, res: Response, next: NextFunc
 
     extractSchemaFieldsMiddleware(expectedConfirmOrderData)(req, res, next);
 }
+
+const expectedRefundOrderData = createSchemaBuilder<Order["products"][0]>()
+    .field('variantId', { type: 'string', required: true })
+    .field('productId', { type: 'string', required: true })
+    .build();
+export const validateRefundOrder = (req: Request, res: Response, next: NextFunction) => {
+    const order = req.body as Order["products"][0];
+
+    const result = validateObjectStrict(order, expectedRefundOrderData);
+    if (result.isValid === false) {
+        return res.status(400).json({
+            status: 'error',
+            ...result
+        });
+    }
+
+    extractSchemaFieldsMiddleware(expectedRefundOrderData)(req, res, next);
+}

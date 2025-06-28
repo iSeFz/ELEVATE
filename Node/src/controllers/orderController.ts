@@ -153,6 +153,7 @@ export const cancelOrder = async (req: Request, res: Response) => {
 export const refundOrder = async (req: Request, res: Response) => {
     try {
         const orderID = req.params.id;
+        const { productId, variantId } = req.body;
         const customerID = req.user?.id!;
 
         // Check if order exists first
@@ -165,7 +166,7 @@ export const refundOrder = async (req: Request, res: Response) => {
             throw new Error('Unauthorized access to this order');
         }
 
-        await orderService.refundOrder(orderID);
+        await orderService.refundOrder(orderID, productId, variantId);
         return res.status(200).json({ status: 'success', message: 'Order refunded successfully' });
     } catch (error: any) {
         return res.status(400).json({ status: 'error', message: error.message });
@@ -195,5 +196,20 @@ export const cleanupExpiredOrders = async (req: Request, res: Response) => {
     } catch (error: any) {
         console.error('Error during expired orders cleanup:', error);
         return res.status(500).json({ status: 'error', message: 'Failed to initiate expired orders cleanup' });
+    }
+};
+
+export const progressOrderStatuses = async (req: Request, res: Response) => {
+    try {
+        const result = await orderService.progressOrderStatuses();
+        return res.status(200).json({
+            status: 'success',
+            message: 'Order status progression completed',
+            processedCount: result,
+            timestamp: new Date().toISOString()
+        });
+    } catch (error: any) {
+        console.error('Error during order status progression:', error);
+        return res.status(500).json({ status: 'error', message: 'Failed to progress order statuses' });
     }
 };
