@@ -1,22 +1,22 @@
 import { fal } from "@fal-ai/client";
+import { FalAICategoryType } from "../config/try-on-model.js";
 
-export const tryOn = async (modelImg: string, garmentImg: string) => {
-    try {
-        const result = await fal.subscribe("fal-ai/fashn/tryon/v1.5", {
-            input: {
-                model_image: modelImg,
-                garment_image: garmentImg,
-            },
-            logs: true,
-            onQueueUpdate: (update) => {
-                if (update.status === "IN_PROGRESS") {
-                    update.logs.map((log) => log.message).forEach(console.log);
-                }
-            },
-        });
-        return result.data.images[0].url;
-    } catch (error) {
-        console.error("Error during try-on:", error);
-        throw error;
-    }
+export const CATEGORIES: FalAICategoryType[] = ["tops", "bottoms", "one-pieces", "auto"];
+
+// https://fal.ai/models/fal-ai/kling/v1-5/kolors-virtual-try-on/api
+export const startTryOnPrediction = async (
+    humanImage: string,
+    productImage: string,
+    category?: FalAICategoryType,
+    webhookUrl?: string
+) => {
+    const { request_id } = await fal.queue.submit("fal-ai/kling/v1-5/kolors-virtual-try-on", {
+        input: {
+            human_image_url: humanImage,
+            garment_image_url: productImage,
+        },
+        webhookUrl
+    });
+
+    return { id: request_id }
 }

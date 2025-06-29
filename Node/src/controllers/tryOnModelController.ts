@@ -1,9 +1,12 @@
 import { Request, Response } from 'express';
 import { TryOnService } from '../services/tryOnModel.js';
 import { ReplicateService } from '../api/replicate-try-on.js';
+import * as FalAIService from '../api/fal-ai-try-on.js';
 import { NotificationService } from '../services/notifications.js';
-import { TryOnResponse, ReplicateWebhookPayload, CategoryType } from '../config/try-on-model.js';
-const port = process.env.PORT || 3000;
+import { TryOnResponse, ReplicateWebhookPayload, FalAICategoryType, ReplicateCategoryType, CategoryType } from '../config/try-on-model.js';
+
+type Platform = "replicate" | "falAI";
+type Status = 'pending' | 'processing' | 'succeeded' | 'failed';
 
 export class TryOnController {
     private static readonly url = process.env.NODE_ENV === 'production'
@@ -14,28 +17,42 @@ export class TryOnController {
      */
     static async startTryOn(req: Request, res: Response): Promise<void> {
         try {
-            const { productImg, personImg, category = 'upper_body' } = req.body;
+            const { productImg, personImg } = req.body;
+            const platform: Platform = (req.query.platform as Platform | null) ?? "replicate";
+            const category: CategoryType = TryOnController.setCategory(req.body.category, platform);
             const userId = req.user?.id!;
 
             // Generate webhook URL
-            const webhookUrl = `${TryOnController.url}/utilities/try-on/webhook`;
+            const replicateWebhookUrl = `${TryOnController.url}/utilities/try-on/webhook/replicate`;
+            const falAIWebhookUrl = `${TryOnController.url}/utilities/try-on/webhook/falAI`;
 
             // Create try-on request document
             const tryOnRequest = await TryOnService.createTryOnRequest(
                 userId,
                 productImg,
                 personImg,
-                category as CategoryType,
-                webhookUrl
+                category,
+                (platform === "replicate" ? replicateWebhookUrl : falAIWebhookUrl),
             );
 
             // Start Replicate prediction
-            const prediction = await ReplicateService.startTryOnPrediction(
-                personImg,
-                productImg,
-                category as CategoryType,
-                webhookUrl
-            );
+            let prediction;
+
+            if (platform === "replicate") {
+                prediction = await ReplicateService.startTryOnPrediction(
+                    personImg,
+                    productImg,
+                    category as ReplicateCategoryType,
+                    replicateWebhookUrl
+                );
+            } else {
+                prediction = await FalAIService.startTryOnPrediction(
+                    personImg,
+                    productImg,
+                    category as FalAICategoryType,
+                    falAIWebhookUrl
+                )
+            }
 
             // Update document with prediction ID and processing status
             await TryOnService.updateTryOnRequest(tryOnRequest.id!, {
@@ -70,16 +87,49 @@ export class TryOnController {
         }
     }
 
+    private static setCategory(category: string | null, platform: Platform): CategoryType {
+        if (!category) {
+            return platform === "replicate" ? 'upper_body' : 'auto';
+        } else if (platform === "replicate" && !ReplicateService.CATEGORIES.includes(category as ReplicateCategoryType)) {
+            throw new Error(`Invalid category for Replicate. Supported categories are: ${ReplicateService.CATEGORIES.join(", ")}`);
+        } else if (platform === "falAI" && !FalAIService.CATEGORIES.includes(category as FalAICategoryType)) {
+            throw new Error(`Invalid category for Fal.AI. Supported categories are: ${FalAIService.CATEGORIES.join(", ")}`);
+        }
+        return platform === "replicate" ? 'upper_body' : 'auto';
+    }
+
     /**
-     * Handle Replicate webhook for try-on completion
+     * Common webhook handler logic for both Replicate and FalAI
      */
-    static async handleWebhook(req: Request, res: Response): Promise<void> {
+    private static async handleWebhookCommon(
+        req: Request,
+        res: Response,
+        options: {
+            platform: 'replicate' | 'falAI';
+            predictionIdField: string;
+            parseWebhookData: (webhookData: any) => {
+                predictionId: string;
+                status: string;
+                output?: any;
+                payload?: any;
+                error?: string;
+            };
+            processStatusUpdate: (status: string, output?: any, payload?: any, error?: string) => {
+                status: Status;
+                resultUrl?: string;
+                error?: string;
+                progress: number;
+            };
+        }
+    ): Promise<void> {
         try {
-            const webhookData: ReplicateWebhookPayload = req.body;
-            const { id: predictionId, status, output, error } = webhookData;
+            const webhookData = req.body;
+            console.log(`Received ${options.platform} webhook data:`, JSON.stringify(webhookData, null, 2));
+
+            const { predictionId, status, output, payload, error } = options.parseWebhookData(webhookData);
 
             if (!predictionId || !status) {
-                console.error('Invalid webhook data:', webhookData);
+                console.error(`Invalid ${options.platform} webhook data:`, webhookData);
                 res.status(400).json({ error: 'Invalid webhook data' });
                 return;
             }
@@ -88,44 +138,111 @@ export class TryOnController {
             const tryOnRequest = await TryOnService.getTryOnRequestByPredictionId(predictionId);
 
             if (!tryOnRequest) {
-                console.error(`Try-on request not found for prediction ID: ${predictionId}`);
+                console.error(`Try-on request not found for ${options.platform} prediction ID: ${predictionId}`);
                 res.status(404).json({ error: 'Try-on request not found' });
                 return;
             }
 
-            let updateData: any = { status };
-
-            if (status === 'succeeded') {
-                const resultUrl = Array.isArray(output) ? output[0] : output;
-                updateData = {
-                    status: 'succeeded',
-                    resultUrl,
-                    progress: 100
-                };
-            } else if (status === 'failed') {
-                updateData = {
-                    status: 'failed',
-                    error: error || 'Processing failed',
-                    progress: 0
-                };
-            }
+            // Process status update based on platform-specific logic
+            const updateData = options.processStatusUpdate(status, output, payload, error);
 
             // Update Firestore document (this triggers real-time listeners)
             await TryOnService.updateTryOnRequest(tryOnRequest.id!, updateData);
 
-            // Send FCM notification
-            await NotificationService.sendTryOnNotification(
-                tryOnRequest.userId,
-                status,
-                tryOnRequest.id!,
-                updateData.resultUrl
-            );
+            // Send FCM notification for completed or failed status
+            if (updateData.status === 'succeeded' || updateData.status === 'failed') {
+                await NotificationService.sendTryOnNotification(
+                    tryOnRequest.userId,
+                    updateData.status,
+                    tryOnRequest.id!,
+                    updateData.resultUrl
+                );
+            }
 
             res.status(200).json({ received: true });
         } catch (error: any) {
-            console.error('Webhook error:', error);
+            console.error(`${options.platform} Webhook error:`, error);
             res.status(500).json({ error: 'Webhook processing failed' });
         }
+    }
+
+    /**
+     * Handle Replicate webhook for try-on completion
+     */
+    static async handleReplicateWebhook(req: Request, res: Response): Promise<void> {
+        await TryOnController.handleWebhookCommon(req, res, {
+            platform: 'replicate',
+            predictionIdField: 'id',
+            parseWebhookData: (webhookData: ReplicateWebhookPayload) => ({
+                predictionId: webhookData.id,
+                status: webhookData.status,
+                output: webhookData.output,
+                error: webhookData.error
+            }),
+            processStatusUpdate: (status, output, _, error) => {
+                if (status === 'succeeded') {
+                    const resultUrl = Array.isArray(output) ? output[0] : output;
+                    return {
+                        status: 'succeeded' as const,
+                        resultUrl,
+                        progress: 100
+                    };
+                } else if (status === 'failed') {
+                    return {
+                        status: 'failed' as const,
+                        error: error ?? 'Processing failed',
+                        progress: 0
+                    };
+                } else {
+                    return {
+                        status: status as 'pending' | 'processing' | 'succeeded' | 'failed',
+                        progress: status === 'processing' ? 50 : 0
+                    };
+                }
+            }
+        });
+    }
+
+    /**
+     * Handle FalAI webhook for try-on completion
+     */
+    static async handleFalAIWebhook(req: Request, res: Response): Promise<void> {
+        await TryOnController.handleWebhookCommon(req, res, {
+            platform: 'falAI',
+            predictionIdField: 'request_id',
+            parseWebhookData: (webhookData: any) => ({
+                predictionId: webhookData.request_id,
+                status: webhookData.status,
+                payload: webhookData.payload,
+                error: webhookData.error
+            }),
+            processStatusUpdate: (status, _, payload, error) => {
+                if (status === 'OK') {
+                    const resultUrl = payload?.images?.[0]?.url;
+                    return {
+                        status: 'succeeded' as const,
+                        resultUrl,
+                        progress: 100
+                    };
+                } else if (status === 'ERROR') {
+                    return {
+                        status: 'failed' as const,
+                        error: error ?? 'FalAI processing failed',
+                        progress: 0
+                    };
+                } else if (status === 'in_progress' || status === 'processing') {
+                    return {
+                        status: 'processing' as const,
+                        progress: 50
+                    };
+                } else {
+                    return {
+                        status: status as Status,
+                        progress: 0
+                    };
+                }
+            }
+        });
     }
 
     /**

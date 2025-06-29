@@ -1,3 +1,9 @@
+export type ReplicateCategoryType = 'upper_body' | 'lower_body' | 'dresses';
+
+export type FalAICategoryType = 'tops' | 'bottoms' | 'one-pieces' | 'auto';
+
+export type CategoryType = ReplicateCategoryType | FalAICategoryType;
+
 export interface TryOnRequest {
     id?: string;
     userId: string;
@@ -5,7 +11,7 @@ export interface TryOnRequest {
     status: 'pending' | 'processing' | 'succeeded' | 'failed';
     productImg: string;
     personImg: string;
-    category: 'upper_body' | 'lower_body' | 'dresses';
+    category: ReplicateCategoryType | FalAICategoryType;
     resultUrl: string;
     error?: string;
     progress: number;
@@ -31,5 +37,13 @@ export interface ReplicateWebhookPayload {
     logs?: string;
 }
 
-export const CATEGORIES = ["upper_body", "lower_body", "dresses"];
-export type CategoryType = "upper_body" | "lower_body" | "dresses";
+export const CATEGORIES: CategoryType[]
+    = [
+        'upper_body',
+        'lower_body',
+        'dresses',
+        'tops',
+        'bottoms',
+        'one-pieces',
+        'auto'
+    ]

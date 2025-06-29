@@ -1,7 +1,8 @@
 import Replicate from "replicate";
-import { CATEGORIES, CategoryType } from "../config/try-on-model.js";
+import { ReplicateCategoryType } from "../config/try-on-model.js";
 
 export class ReplicateService {
+    public static readonly CATEGORIES: ReplicateCategoryType[] = ["upper_body", "lower_body", "dresses"];
     private static readonly replicate = new Replicate();
     private static readonly MODEL_VERSION = "0513734a452173b8173e907e3a59d19a36266e55b48528559432bd21c7d7e985";
 
@@ -11,12 +12,12 @@ export class ReplicateService {
     static async startTryOnPrediction(
         humanImage: string,
         productImage: string,
-        category: CategoryType,
+        category: ReplicateCategoryType,
         webhookUrl?: string
     ): Promise<{ id: string; status: string; urls: any }> {
         try {
-            if (!CATEGORIES.includes(category)) {
-                throw new Error(`Invalid category. Supported categories are: ${CATEGORIES.join(", ")}`);
+            if (!ReplicateService.CATEGORIES.includes(category)) {
+                throw new Error(`Invalid category. Supported categories are: ${ReplicateService.CATEGORIES.join(", ")}`);
             }
 
             const input = {

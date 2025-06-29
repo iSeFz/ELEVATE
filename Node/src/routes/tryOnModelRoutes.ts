@@ -14,7 +14,10 @@ router.post(
 );
 
 // Webhook endpoint for Replicate (no auth needed)
-router.post('/webhook', TryOnController.handleWebhook);
+router.post('/webhook/replicate', TryOnController.handleReplicateWebhook);
+
+// Webhook endpoint for Replicate (no auth needed)
+router.post('/webhook/falAI', TryOnController.handleFalAIWebhook);
 
 // Get specific try-on request
 router.get(

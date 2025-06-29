@@ -51,6 +51,15 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/TryOnRequest"
+      # A query parameter (platform) with value ["replicate", "falAI"]
+      parameters:
+        - name: platform
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: ["replicate", "falAI"]
+          description: Platform to use for the try-on session (replicate or falAI)
       responses:
         200:
           description: Try-on session started successfully

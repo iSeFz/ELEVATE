@@ -1,5 +1,5 @@
 import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
-import { TryOnRequest, TryOnResponse, CategoryType, CATEGORIES } from '../config/try-on-model.js';
+import { FalAICategoryType, ReplicateCategoryType, TryOnRequest } from '../config/try-on-model.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export class TryOnService {
@@ -13,7 +13,7 @@ export class TryOnService {
         userId: string,
         productImg: string,
         personImg: string,
-        category: CategoryType,
+        category: ReplicateCategoryType | FalAICategoryType,
         webhookUrl?: string
     ): Promise<TryOnRequest> {
         try {
@@ -202,12 +202,5 @@ export class TryOnService {
         } catch (error: any) {
             console.error('Error clearing realtime status:', error);
         }
-    }
-
-    /**
-     * Validate category
-     */
-    static validateCategory(category: string): boolean {
-        return CATEGORIES.includes(category as CategoryType);
     }
 }
