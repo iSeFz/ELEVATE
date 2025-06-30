@@ -55,6 +55,11 @@ export const addReview = async (req: Request, res: Response) => {
             return res.status(404).json({ status: 'error', message: 'Customer not found' });
         }
 
+        const existingReview = await reviewService.hasCustomerReviewedProduct(userId, productId);
+        if (existingReview) {
+            return res.status(400).json({ status: 'error', message: 'You have already reviewed this product' });
+        }
+
         reviewData.customerId = userId;
         reviewData.productId = productId;
         reviewData.customerFirstName = customer.firstName;
