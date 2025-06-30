@@ -77,6 +77,10 @@ router.delete('/me/products/:productId/variants/:variantId',
     ProductController.deleteProductVariant);
 
 // Dashborad routes for brand owners
+router.get('/me/dashboard/sales-by-month',
+    authenticate,
+    authorize(['admin', 'brandOwner']),
+    BrandOwnerController.getSalesByMonth);
 router.get('/me/dashboard/current-month-stats',
     authenticate,
     authorize(['admin', 'brandOwner']),

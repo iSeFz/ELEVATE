@@ -213,3 +213,40 @@ export const getBrandReviewsSummary = async (req: Request, res: Response) => {
         });
     }
 }
+
+// ...existing imports...
+
+export const getSalesByMonth = async (req: Request, res: Response) => {
+    try {
+        const brandOwnerId = req.user!.id;
+        const monthsBack = parseInt(req.query.months as string) || 12;
+
+        // Validate monthsBack parameter
+        if (monthsBack < 1 || monthsBack > 24) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'months parameter must be between 1 and 24'
+            });
+        }
+
+        const brandOwner = await BrandOwnerService.getBrandOwnerById(brandOwnerId);
+        if (!brandOwner) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'Brand owner not found'
+            });
+        }
+
+        const salesData = await BrandOwnerService.getSalesByMonth(brandOwner.brandId, monthsBack);
+
+        res.status(200).json({
+            status: 'success',
+            data: salesData
+        });
+    } catch (error: any) {
+        res.status(500).json({
+            status: 'error',
+            message: error.message
+        });
+    }
+};
