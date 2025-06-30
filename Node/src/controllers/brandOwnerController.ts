@@ -164,31 +164,6 @@ export const deleteBrandOwner = async (req: Request, res: Response) => {
     }
 };
 
-export const getCurrentMonthStats = async (req: Request, res: Response) => {
-    try {
-        const brandOwnerId = req.user!.id;
-        const brandOwner = await BrandOwnerService.getBrandOwnerById(brandOwnerId);
-
-        if (!brandOwner) {
-            return res.status(404).json({
-                status: 'error',
-                message: 'Brand owner not found'
-            });
-        }
-
-        const stats = await BrandOwnerService.getCurrentMonthStats(brandOwner.brandId);
-        res.status(200).json({
-            status: 'success',
-            data: stats
-        });
-    } catch (error: any) {
-        res.status(500).json({
-            status: 'error',
-            message: error.message
-        });
-    }
-}
-
 export const getBrandReviewsSummary = async (req: Request, res: Response) => {
     try {
         const brandOwnerId = req.user!.id;
@@ -214,21 +189,19 @@ export const getBrandReviewsSummary = async (req: Request, res: Response) => {
     }
 }
 
-// ...existing imports...
-
-export const getSalesByMonth = async (req: Request, res: Response) => {
+/**
+ * Get comprehensive brand owner dashboard data
+ * Unified endpoint that provides current month stats, reviews summary, and sales chart
+ */
+export const getBrandOwnerMonthSalesStats = async (req: Request, res: Response) => {
     try {
         const brandOwnerId = req.user!.id;
-        const monthsBack = parseInt(req.query.months as string) || 12;
+        const {
+            months = '12',
+            topProducts = '10'
+        } = req.query;
 
-        // Validate monthsBack parameter
-        if (monthsBack < 1 || monthsBack > 24) {
-            return res.status(400).json({
-                status: 'error',
-                message: 'months parameter must be between 1 and 24'
-            });
-        }
-
+        // Validate brand owner
         const brandOwner = await BrandOwnerService.getBrandOwnerById(brandOwnerId);
         if (!brandOwner) {
             return res.status(404).json({
@@ -237,16 +210,42 @@ export const getSalesByMonth = async (req: Request, res: Response) => {
             });
         }
 
-        const salesData = await BrandOwnerService.getSalesByMonth(brandOwner.brandId, monthsBack);
+        // Validate and parse parameters
+        const topProductsLimit = parseInt(topProducts as string);
+        if (isNaN(topProductsLimit) || topProductsLimit < 1 || topProductsLimit > 50) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'topProducts must be a number between 1 and 50'
+            });
+        }
+
+        const monthsBack = parseInt(months as string);
+        if (isNaN(monthsBack) || monthsBack < 1 || monthsBack > 24) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'months parameter must be between 1 and 24'
+            });
+        }
+
+        // Get unified dashboard data
+        const data = await BrandOwnerService.getBrandOwnerMonthSalesStats(
+            brandOwner.brandId,
+            {
+                monthsBack: monthsBack,
+                topProductsLimit: topProductsLimit
+            }
+        );
 
         res.status(200).json({
             status: 'success',
-            data: salesData
+            data,
         });
+
     } catch (error: any) {
+        console.error('Error in getBrandOwnerDashboard:', error);
         res.status(500).json({
             status: 'error',
-            message: error.message
+            message: error.message ?? 'Internal server error'
         });
     }
 };

@@ -116,117 +116,6 @@ export const deleteBrandOwner = async (id: string): Promise<boolean> => {
     }
 };
 
-interface CurrentMonthStats {
-    totalProductsSold: number;
-    totalSales: number;
-    topProduct: {
-        productId: string;
-        productName: string;
-        quantitySold: number;
-        totalSales: number;
-    } | null;
-    topProductsSales: Array<{
-        productId: string;
-        productName: string;
-        quantitySold: number;
-        totalSales: number;
-    }>;
-}
-
-/**
- * Get comprehensive current month statistics for a brand
- * Uses composite index: brandIds (Array) + status (Ascending) + createdAt (Ascending)
- * @param {string} brandId - Brand ID to filter by
- * @param {number} topProductsLimit - Number of top products to return (default: 10)
- * @returns {Promise<CurrentMonthStats>} Current month statistics
- */
-export const getCurrentMonthStats = async (
-    brandId: string,
-    topProductsLimit: number = 10
-): Promise<CurrentMonthStats> => {
-    try {
-        // Calculate current month boundaries
-        const now = new Date();
-        const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-        const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
-
-        // Convert to Firestore timestamps
-        const startTimestamp = admin.firestore.Timestamp.fromDate(startOfMonth);
-        const endTimestamp = admin.firestore.Timestamp.fromDate(endOfMonth);
-
-        // Valid statuses for completed sales
-        const validStatuses = [OrderStatus.PROCESSING, OrderStatus.SHIPPED, OrderStatus.DELIVERED];
-
-        // Optimized query using composite index: brandIds + status + createdAt
-        const ordersSnapshot = await firestore.collection(FIREBASE_COLLECTIONS['order'])
-            .where('brandIds', 'array-contains', brandId)
-            .where('status', 'in', validStatuses)
-            .where('createdAt', '>=', startTimestamp)
-            .where('createdAt', '<=', endTimestamp)
-            .orderBy('createdAt', 'desc')
-            .get();
-
-        // Initialize tracking variables
-        let totalProductsSold = 0;
-        let totalSales = 0;
-        const productMap = new Map<string, {
-            productId: string;
-            productName: string;
-            quantitySold: number;
-            totalSales: number;
-        }>();
-
-        // Process each order
-        ordersSnapshot.forEach(doc => {
-            const order = doc.data() as Order;
-
-            // Process each product in the order
-            order.products.forEach(product => {
-                // Only count products from the specified brand
-                if (product.brandId === brandId) {
-                    const productTotalPrice = product.price * product.quantity;
-
-                    // Update overall totals
-                    totalProductsSold += product.quantity;
-                    totalSales += productTotalPrice;
-
-                    // Update product-specific tracking
-                    const existingProduct = productMap.get(product.productId);
-                    if (existingProduct) {
-                        existingProduct.quantitySold += product.quantity;
-                        existingProduct.totalSales += productTotalPrice;
-                    } else {
-                        productMap.set(product.productId, {
-                            productId: product.productId,
-                            productName: product.productName,
-                            quantitySold: product.quantity,
-                            totalSales: productTotalPrice
-                        });
-                    }
-                }
-            });
-        });
-
-        // Convert product map to array and sort by quantity sold (descending)
-        const sortedProducts = Array.from(productMap.values())
-            .sort((a, b) => b.quantitySold - a.quantitySold);
-
-        // Get top product (first in sorted array)
-        const topProduct = sortedProducts.length > 0 ? sortedProducts[0] : null;
-
-        return {
-            totalProductsSold,
-            totalSales: Math.round(totalSales * 100) / 100,
-            topProduct,
-            topProductsSales: sortedProducts
-        };
-
-    } catch (error) {
-        console.error(`Error getting current month stats for brand id ${brandId}:`, error);
-        throw new Error(`Failed to retrieve current month statistics for brand id ${brandId}`);
-    }
-};
-
 /**
  * Interface for brand reviews summary statistics
  */
@@ -351,9 +240,23 @@ export const getBrandReviewsSummary = async (brandId: string): Promise<BrandRevi
     }
 };
 
-/**
- * Interface for monthly sales data point
- */
+interface CurrentMonthStats {
+    totalProductsSold: number;
+    totalSales: number;
+    topProduct: {
+        productId: string;
+        productName: string;
+        quantitySold: number;
+        totalSales: number;
+    } | null;
+    topProductsSales: Array<{
+        productId: string;
+        productName: string;
+        quantitySold: number;
+        totalSales: number;
+    }>;
+}
+
 interface MonthlySalesData {
     year: number;
     month: number;
@@ -363,11 +266,8 @@ interface MonthlySalesData {
     orderCount: number;
 }
 
-/**
- * Interface for sales chart response
- */
-interface SalesChartData {
-    chartData: MonthlySalesData[];
+interface MonthsSales {
+    data: MonthlySalesData[];
     summary: {
         totalPeriodSales: number;
         totalPeriodProducts: number;
@@ -378,40 +278,65 @@ interface SalesChartData {
     };
 }
 
+interface BrandOwnerMonthSalesStats {
+    currentMonthStats: CurrentMonthStats;
+    monthsSales: MonthsSales;
+}
+
 /**
- * Get sales data by month for chart visualization
- * Optimized for performance using composite index: brandIds + createdAt
+ * Get comprehensive brand owner dashboard data in a single optimized query
+ * Combines current month stats, reviews summary, and sales chart data
  * @param {string} brandId - Brand ID to filter by
- * @param {number} monthsBack - Number of months to go back from current month (default: 12)
- * @returns {Promise<SalesChartData>} Monthly sales data for chart
+ * @param {object} options - Configuration options for the dashboard
+ * @param {number} options.monthsBack - Number of months for monthly chart (default: 12)
+ * @param {number} options.topProductsLimit - Number of top products to return (default: 10)
+ * @returns {Promise<BrandOwnerDashboard>} Complete dashboard data
  */
-export const getSalesByMonth = async (
+export const getBrandOwnerMonthSalesStats = async (
     brandId: string,
-    monthsBack: number = 12
-): Promise<SalesChartData> => {
+    options: {
+        monthsBack?: number;
+        topProductsLimit?: number;
+    }
+): Promise<BrandOwnerMonthSalesStats> => {
     try {
         // Validate input
         if (!brandId) {
             throw new Error('Brand ID is required');
         }
 
+        const {
+            monthsBack = 12,
+            topProductsLimit = 10
+        } = options;
+
         if (monthsBack < 1 || monthsBack > 24) {
             throw new Error('monthsBack must be between 1 and 24');
         }
 
-        // Calculate date range
+        // Calculate date ranges for different analyses
         const now = new Date();
-        const startDate = new Date(now.getFullYear(), now.getMonth() - monthsBack + 1, 1);
-        const endDate = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+
+        // Current month boundaries for current stats
+        const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+        const currentMonthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+
+        // Chart date boundaries
+        const chartStartDate = new Date(now.getFullYear(), now.getMonth() - monthsBack + 1, 1);
+        const chartEndDate = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59, 999);
+
+        // Use the broader date range to fetch all necessary orders
+        const overallStartDate = new Date(Math.min(currentMonthStart.getTime(), chartStartDate.getTime()));
+        const overallEndDate = new Date(Math.max(currentMonthEnd.getTime(), chartEndDate.getTime()));
 
         // Convert to Firestore timestamps
-        const startTimestamp = admin.firestore.Timestamp.fromDate(startDate);
-        const endTimestamp = admin.firestore.Timestamp.fromDate(endDate);
+        const startTimestamp = admin.firestore.Timestamp.fromDate(overallStartDate);
+        const endTimestamp = admin.firestore.Timestamp.fromDate(overallEndDate);
 
         // Valid statuses for completed sales
         const validStatuses = [OrderStatus.PROCESSING, OrderStatus.SHIPPED, OrderStatus.DELIVERED];
 
-        // Optimized query using composite index: brandIds + createdAt
+        // Single optimized query to fetch all required orders
         const ordersSnapshot = await firestore.collection(FIREBASE_COLLECTIONS['order'])
             .where('brandIds', 'array-contains', brandId)
             .where('status', 'in', validStatuses)
@@ -420,102 +345,207 @@ export const getSalesByMonth = async (
             .orderBy('createdAt', 'desc')
             .get();
 
-        // Initialize monthly data map
-        const monthlyDataMap = new Map<string, MonthlySalesData>();
+        // Convert orders to array for easier processing
+        const orders = ordersSnapshot.docs.map(doc => ({
+            ...doc.data(),
+            id: doc.id
+        } as Order));
 
-        // Initialize all months in the range with zero values
-        for (let i = 0; i < monthsBack; i++) {
-            const date = new Date(now.getFullYear(), now.getMonth() - monthsBack + 1 + i, 1);
-            const year = date.getFullYear();
-            const month = date.getMonth() + 1; // Convert to 1-based month
-            const monthKey = `${year}-${month.toString().padStart(2, '0')}`;
+        // Process current month stats
+        const currentMonthStats = processCurrentMonthStats(
+            orders,
+            brandId,
+            currentMonthStart,
+            currentMonthEnd,
+            topProductsLimit
+        );
 
-            monthlyDataMap.set(monthKey, {
-                year,
-                month,
-                monthName: date.toLocaleString('en-US', { month: 'long', year: 'numeric' }),
-                totalSales: 0,
-                totalProductsSold: 0,
-                orderCount: 0
-            });
-        }
-
-        // Process orders and aggregate by month
-        ordersSnapshot.forEach(doc => {
-            const order = doc.data() as Order;
-            const orderDate = (order.createdAt as admin.firestore.Timestamp).toDate();
-            const year = orderDate.getFullYear();
-            const month = orderDate.getMonth() + 1; // Convert to 1-based month
-            const monthKey = `${year}-${month.toString().padStart(2, '0')}`;
-
-            // Get or create monthly data entry
-            const monthlyData = monthlyDataMap.get(monthKey);
-            if (!monthlyData) return; // Skip if outside our range
-
-            // Calculate brand-specific totals for this order
-            let orderBrandSales = 0;
-            let orderBrandProductCount = 0;
-
-            order.products.forEach(product => {
-                if (product.brandId === brandId) {
-                    const productTotal = product.price * product.quantity;
-                    orderBrandSales += productTotal;
-                    orderBrandProductCount += product.quantity;
-                }
-            });
-
-            // Update monthly totals only if this order contains brand products
-            if (orderBrandSales > 0) {
-                monthlyData.totalSales += orderBrandSales;
-                monthlyData.totalProductsSold += orderBrandProductCount;
-                monthlyData.orderCount += 1;
-            }
-        });
-
-        // Convert map to sorted array
-        const chartData = Array.from(monthlyDataMap.values())
-            .sort((a, b) => {
-                if (a.year !== b.year) return a.year - b.year;
-                return a.month - b.month;
-            })
-            .map(data => ({
-                ...data,
-                totalSales: Math.round(data.totalSales * 100) / 100 // Round to 2 decimal places
-            }));
-
-        // Calculate summary statistics
-        const dataWithSales = chartData.filter(data => data.totalSales > 0);
-        const totalPeriodSales = chartData.reduce((sum, data) => sum + data.totalSales, 0);
-        const totalPeriodProducts = chartData.reduce((sum, data) => sum + data.totalProductsSold, 0);
-        const totalPeriodOrders = chartData.reduce((sum, data) => sum + data.orderCount, 0);
-
-        const averageMonthlySales = chartData.length > 0
-            ? Math.round((totalPeriodSales / chartData.length) * 100) / 100
-            : 0;
-
-        // Find highest and lowest sales months (excluding zero sales months for lowest)
-        const highestSalesMonth = chartData.length > 0
-            ? chartData.reduce((max, current) => current.totalSales > max.totalSales ? current : max, chartData[0])
-            : null;
-
-        const lowestSalesMonth = dataWithSales.length > 0
-            ? dataWithSales.reduce((min, current) => current.totalSales < min.totalSales ? current : min, dataWithSales[0])
-            : null;
+        // Process sales chart data
+        const salesChart = processMonthlySalesData(orders, brandId, monthsBack, now)
 
         return {
-            chartData,
-            summary: {
-                totalPeriodSales: Math.round(totalPeriodSales * 100) / 100,
-                totalPeriodProducts,
-                totalPeriodOrders,
-                averageMonthlySales,
-                highestSalesMonth,
-                lowestSalesMonth
-            }
+            currentMonthStats,
+            monthsSales: salesChart,
         };
 
     } catch (error) {
-        console.error(`Error getting sales by month for brand id ${brandId}:`, error);
-        throw new Error(`Failed to retrieve monthly sales data for brand id ${brandId}`);
+        console.error(`Error getting brand owner dashboard for brand id ${brandId}:`, error);
+        throw new Error(`Failed to retrieve brand owner dashboard for brand id ${brandId}`);
     }
 };
+
+/**
+ * Process current month statistics from pre-fetched orders
+ */
+function processCurrentMonthStats(
+    orders: Order[],
+    brandId: string,
+    startDate: Date,
+    endDate: Date,
+    topProductsLimit: number
+): CurrentMonthStats {
+    // Initialize tracking variables
+    let totalProductsSold = 0;
+    let totalSales = 0;
+    const productMap = new Map<string, {
+        productId: string;
+        productName: string;
+        quantitySold: number;
+        totalSales: number;
+    }>();
+
+    // Filter orders for current month and process
+    orders.forEach(order => {
+        const orderDate = (order.createdAt as admin.firestore.Timestamp).toDate();
+
+        // Check if order is within current month
+        if (orderDate >= startDate && orderDate <= endDate) {
+            order.products.forEach(product => {
+                if (product.brandId === brandId) {
+                    const productTotalPrice = product.price * product.quantity;
+
+                    // Update overall totals
+                    totalProductsSold += product.quantity;
+                    totalSales += productTotalPrice;
+
+                    // Update product-specific tracking
+                    const existingProduct = productMap.get(product.productId);
+                    if (existingProduct) {
+                        existingProduct.quantitySold += product.quantity;
+                        existingProduct.totalSales += productTotalPrice;
+                    } else {
+                        productMap.set(product.productId, {
+                            productId: product.productId,
+                            productName: product.productName,
+                            quantitySold: product.quantity,
+                            totalSales: productTotalPrice
+                        });
+                    }
+                }
+            });
+        }
+    });
+
+    // Convert product map to array and sort by quantity sold (descending)
+    const sortedProducts = Array.from(productMap.values())
+        .sort((a, b) => b.quantitySold - a.quantitySold);
+
+    // Get top product and limit results
+    const topProduct = sortedProducts.length > 0 ? sortedProducts[0] : null;
+    const topProductsSales = sortedProducts.slice(0, topProductsLimit);
+
+    return {
+        totalProductsSold,
+        totalSales: Math.round(totalSales * 100) / 100,
+        topProduct,
+        topProductsSales
+    };
+}
+
+/**
+ * Process monthly chart data from pre-fetched orders
+ */
+function processMonthlySalesData(
+    orders: Order[],
+    brandId: string,
+    monthsBack: number,
+    now: Date
+): MonthsSales {
+    // Initialize monthly data map
+    const monthlyDataMap = new Map<string, MonthlySalesData>();
+
+    // Initialize all months in the range with zero values
+    for (let i = 0; i < monthsBack; i++) {
+        const date = new Date(now.getFullYear(), now.getMonth() - monthsBack + 1 + i, 1);
+        const year = date.getFullYear();
+        const month = date.getMonth() + 1;
+        const monthKey = `${year}-${month.toString().padStart(2, '0')}`;
+
+        monthlyDataMap.set(monthKey, {
+            year,
+            month,
+            monthName: date.toLocaleString('en-US', { month: 'long', year: 'numeric' }),
+            totalSales: 0,
+            totalProductsSold: 0,
+            orderCount: 0
+        });
+    }
+
+    // Process orders and aggregate by month
+    orders.forEach(order => {
+        const orderDate = (order.createdAt as admin.firestore.Timestamp).toDate();
+        const year = orderDate.getFullYear();
+        const month = orderDate.getMonth() + 1;
+        const monthKey = `${year}-${month.toString().padStart(2, '0')}`;
+
+        const monthlyData = monthlyDataMap.get(monthKey);
+        if (!monthlyData) return;
+
+        // Calculate brand-specific totals for this order
+        let orderBrandSales = 0;
+        let orderBrandProductCount = 0;
+
+        order.products.forEach(product => {
+            if (product.brandId === brandId) {
+                const productTotal = product.price * product.quantity;
+                orderBrandSales += productTotal;
+                orderBrandProductCount += product.quantity;
+            }
+        });
+
+        // Update monthly totals
+        if (orderBrandSales > 0) {
+            monthlyData.totalSales += orderBrandSales;
+            monthlyData.totalProductsSold += orderBrandProductCount;
+            monthlyData.orderCount += 1;
+        }
+    });
+
+    return generateSalesResponse(monthlyDataMap);
+}
+
+/**
+ * Generate sales chart response from data map
+ */
+function generateSalesResponse(dataMap: Map<string, MonthlySalesData>): MonthsSales {
+    // Convert map to sorted array
+    const chartData = Array.from(dataMap.values())
+        .sort((a, b) => {
+            if (a.year !== b.year) return a.year - b.year;
+            return a.month - b.month;
+        })
+        .map(data => ({
+            ...data,
+            totalSales: Math.round(data.totalSales * 100) / 100
+        }));
+
+    // Calculate summary statistics
+    const dataWithSales = chartData.filter(data => data.totalSales > 0);
+    const totalPeriodSales = chartData.reduce((sum, data) => sum + data.totalSales, 0);
+    const totalPeriodProducts = chartData.reduce((sum, data) => sum + data.totalProductsSold, 0);
+    const totalPeriodOrders = chartData.reduce((sum, data) => sum + data.orderCount, 0);
+
+    const averageMonthlySales = chartData.length > 0
+        ? Math.round((totalPeriodSales / chartData.length) * 100) / 100
+        : 0;
+
+    const highestSalesMonth = chartData.length > 0
+        ? chartData.reduce((max, current) => current.totalSales > max.totalSales ? current : max, chartData[0])
+        : null;
+
+    const lowestSalesMonth = dataWithSales.length > 0
+        ? dataWithSales.reduce((min, current) => current.totalSales < min.totalSales ? current : min, dataWithSales[0])
+        : null;
+
+    return {
+        data: chartData,
+        summary: {
+            totalPeriodSales: Math.round(totalPeriodSales * 100) / 100,
+            totalPeriodProducts,
+            totalPeriodOrders,
+            averageMonthlySales,
+            highestSalesMonth,
+            lowestSalesMonth
+        }
+    };
+}

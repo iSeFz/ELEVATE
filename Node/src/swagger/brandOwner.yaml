@@ -271,7 +271,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
-  /brand-owners/me/dashboard/sales-by-month:
+  /brand-owners/me/dashboard/months-sales:
     get:
       summary: Get sales data by month for the brand owner
       tags: [Brand Owners Dashboard]
@@ -281,85 +281,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SalesChartData"
-        401:
-          description: Unauthorized - Invalid or missing token
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        403:
-          description: Forbidden - Insufficient permissions
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        500:
-          description: Server error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-
-  /brand-owners/me/dashboard/current-month-stats:
-    get:
-      summary: Get current month stats for the brand owner
-      tags: [Brand Owners Dashboard]
-      responses:
-        200:
-          description: Current month stats retrieved successfully
-          content:
-            application/json:
-              schema:
                 type: object
                 properties:
-                  status:
-                    type: string
-                    enum: [success]
-                  data:
-                    type: object
-                    properties:
-                      totalProductsSold:
-                        type: integer
-                        description: Total number of products sold in the current month
-                      totalSales:
-                        type: number
-                        format: float
-                        description: Total sales amount in the current month
-                      topProduct:
-                        type: object
-                        properties:
-                          productId:
-                            type: string
-                            description: ID of the top-selling product
-                          productName:
-                            type: string
-                            description: Name of the top-selling product
-                          quantitySold:
-                            type: integer
-                            description: Quantity sold of the top-selling product
-                          totalSales:
-                            type: number
-                            format: float
-                            description: Total sales amount of the top-selling product
-                      topProductsSales:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            productId:
-                              type: string
-                              description: ID of the product
-                            productName:
-                              type: string
-                              description: Name of the product
-                            quantitySold:
-                              type: integer
-                              description: Quantity sold of the product
-                            totalSales:
-                              type: number
-                              format: float
-                              description: Total sales amount of the product
+                  currentMonthStats:
+                    $ref: "#/components/schemas/CurrentMonthSales"
+                  monthsSales:
+                    $ref: "#/components/schemas/MonthsSales"
         401:
           description: Unauthorized - Invalid or missing token
           content:
@@ -671,10 +598,10 @@ components:
           type: integer
           description: Total number of orders placed in the month
 
-    SalesChartData:
+    MonthsSales:
       type: object
       properties:
-        chartData:
+        data:
           type: array
           items:
             $ref: "#/components/schemas/MonthlySalesData"
@@ -702,3 +629,48 @@ components:
             lowestSalesMonth:
               $ref: "#/components/schemas/MonthlySalesData"
               description: Month with the lowest sales
+
+    CurrentMonthSales:
+      type: object
+      properties:
+        totalProductsSold:
+          type: integer
+          description: Total number of products sold in the current month
+        totalSales:
+          type: number
+          format: float
+          description: Total sales amount in the current month
+        topProduct:
+          type: object
+          properties:
+            productId:
+              type: string
+              description: ID of the top-selling product
+            productName:
+              type: string
+              description: Name of the top-selling product
+            quantitySold:
+              type: integer
+              description: Quantity sold of the top-selling product
+            totalSales:
+              type: number
+              format: float
+              description: Total sales amount of the top-selling product
+        topProductsSales:
+          type: array
+          items:
+            type: object
+            properties:
+              productId:
+                type: string
+                description: ID of the product
+              productName:
+                type: string
+                description: Name of the product
+              quantitySold:
+                type: integer
+                description: Quantity sold of the product
+              totalSales:
+                type: number
+                format: float
+                description: Total sales amount of the product
