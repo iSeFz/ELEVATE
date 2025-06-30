@@ -513,6 +513,7 @@ export const deleteOrder = async (orderID: string) => {
             });
         }
         batch.delete(orderDoc.ref);
+        await batch.commit();
         await orderRef.delete();
     } catch (error: any) {
         throw new Error(`Failed to delete order: ${error.message}`);
