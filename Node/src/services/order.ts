@@ -321,7 +321,7 @@ export const confirmOrder = async (orderID: string, customerId: string, remainin
         if ((Timestamp.now().seconds - createdAt.seconds) > ORDER_TIMEOUT_SEC) {
             // Rollback the order
             await orderRestoreProductStocks(batch, confirmedOrderData.products);
-            batch.update(orderRef, { status: OrderStatus.CANCELLED });
+            batch.delete(orderRef);
             await batch.commit();
             throw new Error('Order confirmation time expired. Order has been cancelled and stock restored.');
         }
@@ -445,10 +445,12 @@ export const cancelOrder = async (orderID: string) => {
         const order = orderDoc.data() as Order;
         await orderRestoreProductStocks(batch, order.products);
         batch.update(orderRef, { status: OrderStatus.CANCELLED });
-        const customerRef = firestore.collection(customerCollection).doc(order.customerId);
-        batch.update(customerRef, {
-            loyaltyPoints: admin.firestore.FieldValue.increment(order.pointsRedeemed - order.pointsEarned)
-        });
+        if (order.pointsRedeemed > 0) {
+            const customerRef = firestore.collection(customerCollection).doc(order.customerId);
+            batch.update(customerRef, {
+                loyaltyPoints: admin.firestore.FieldValue.increment(order.pointsRedeemed - order.pointsEarned)
+            });
+        }
         await batch.commit();
         return true;
     } catch (error: any) {
@@ -497,6 +499,20 @@ export const deleteOrder = async (orderID: string) => {
 
     try {
         const orderRef = firestore.collection(orderCollection).doc(orderID);
+        const orderDoc = await orderRef.get();
+        if (!orderDoc.exists) {
+            throw new Error('Order not found');
+        }
+        const order = orderDoc.data() as Order;
+        const batch = firestore.batch();
+        await orderRestoreProductStocks(batch, order.products);
+        if (order.pointsRedeemed > 0) {
+            const customerRef = firestore.collection(customerCollection).doc(order.customerId);
+            batch.update(customerRef, {
+                loyaltyPoints: admin.firestore.FieldValue.increment(order.pointsRedeemed - order.pointsEarned)
+            });
+        }
+        batch.delete(orderDoc.ref);
         await orderRef.delete();
     } catch (error: any) {
         throw new Error(`Failed to delete order: ${error.message}`);
@@ -522,12 +538,22 @@ export const cleanupExpiredOrders = async () => {
         }
 
         let processedCount = 0;
+        const batch = firestore.batch();
         // Process each expired order
         for (const orderDoc of expiredOrdersSnapshot.docs) {
+            const order = orderDoc.data() as Order;
             // Restore stock for each product in the order
-            await deleteOrder(orderDoc.id);
+            await orderRestoreProductStocks(batch, order.products);
+            if (order.pointsRedeemed > 0) {
+                const customerRef = firestore.collection(customerCollection).doc(order.customerId);
+                batch.update(customerRef, {
+                    loyaltyPoints: admin.firestore.FieldValue.increment(order.pointsRedeemed - order.pointsEarned)
+                });
+            }
+            batch.delete(orderDoc.ref);
             processedCount++;
         }
+        await batch.commit();
 
         return processedCount;
     } catch (error) {
