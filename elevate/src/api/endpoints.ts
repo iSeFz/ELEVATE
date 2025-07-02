@@ -303,7 +303,7 @@ const confirmResetPassword = async (data: {
   oobCode: "string";
   newPassword: "string";
 }): Promise<void> => {
-  const response = await axios.post(`/utilities/send-password-reset`, data);
+  const response = await axios.post(`/utilities/confirm-password-reset`, data);
   if (response.data.status !== "success") {
     throw new Error("Failed to add product");
   }
