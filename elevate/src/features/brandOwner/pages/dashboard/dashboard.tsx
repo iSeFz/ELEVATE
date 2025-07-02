@@ -21,7 +21,7 @@ const Dashboard = () => {
         <SalesChart />
       </Box>
 
-      <OrdersTable />
+      {/* <OrdersTable /> */}
     </Box>
   );
 };

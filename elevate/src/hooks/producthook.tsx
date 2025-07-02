@@ -40,10 +40,10 @@ interface UseProductsResult {
   error: string | null;
 }
 
-export function useProducts(): UseProductsResult {
+export function useProducts(page: number): UseProductsResult {
   const { data, isLoading, error } = useQuery<ProductData[]>({
-    queryKey: ["products"],
-    queryFn: getProductsData,
+    queryKey: ["products", page],
+    queryFn: () => getProductsData(page),
   });
 
   return {

@@ -20,13 +20,37 @@ const EditProductPage = () => {
     enabled: !!productId,
   });
 
+  const getChangedFields = (originalData: any, newData: any) => {
+    const changes: any = {};
+    
+    changes.id = productId;
+    
+    Object.keys(newData).forEach(key => {
+      if (JSON.stringify(originalData[key]) !== JSON.stringify(newData[key])) {
+        changes[key] = newData[key];
+      }
+    });
+    
+    return changes;
+  };
+
   const editProductMutation = useMutation({
-    mutationFn: async (productData) => editProduct(productData),
+    mutationFn: async (newProductData) => {
+      const changedData = getChangedFields(productData, newProductData);
+      
+      if (Object.keys(changedData).length <= 1) {
+        console.log("No changes detected");
+        return productData;
+      }
+      
+      console.log("Sending changed fields:", changedData);
+      return editProduct(changedData);
+    },
     onSuccess: (data) => {
       console.log("Product updated successfully:", data);
       queryClient.invalidateQueries({ queryKey: ["products"] });
       queryClient.invalidateQueries({ queryKey: ["product", productId] });
-      navigate("/products"); // or "/admin/products" - be consistent
+      navigate("/products");
     },
     onError: (error) => {
       console.error("Error updating product:", error);
@@ -36,7 +60,6 @@ const EditProductPage = () => {
   const handleCancel = () => {
     navigate("/products");
   };
-
 
   // Loading state
   if (isLoading) {

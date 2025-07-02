@@ -81,8 +81,7 @@ const Sidebar: FC = () => {
         />
         <SidebarItem
           handleItemClick={() => {
-            localStorage.removeItem("refreshToken");
-            localStorage.removeItem("accessToken");
+            localStorage.clear();
             queryClient.invalidateQueries();
             navigate("/login");
           }}

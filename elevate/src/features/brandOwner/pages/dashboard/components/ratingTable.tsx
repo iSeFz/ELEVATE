@@ -1,4 +1,11 @@
-import { CardContent, Typography, Box, Rating, styled } from "@mui/material";
+import {
+  CardContent,
+  Typography,
+  Box,
+  Rating,
+  styled,
+  Skeleton,
+} from "@mui/material";
 import { FC, memo, useState, useEffect, useRef } from "react";
 import { StyledCard } from "./styledCard";
 import { useDashboardData } from "../../../../../hooks/dashboardHook";
@@ -43,7 +50,6 @@ const ProgressBar: FC<{ percentage: number; delay: number }> = memo(
   }
 );
 
-
 export interface ReviewData {
   totalReviews: number;
   averageRating: number;
@@ -60,25 +66,80 @@ export const RatingTable = memo(() => {
   const [isVisible, setIsVisible] = useState(false);
   const componentRef = useRef<HTMLDivElement>(null);
 
-  const { reviews } = useDashboardData();
+  const { reviews, reviewsLoading } = useDashboardData();
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
+    if (!reviewsLoading && reviews) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.disconnect();
+          }
+        },
+        { threshold: 0.1 }
+      );
 
-    if (componentRef.current) {
-      observer.observe(componentRef.current);
+      if (componentRef.current) {
+        observer.observe(componentRef.current);
+      }
+
+      return () => observer.disconnect();
     }
+  }, [reviewsLoading, reviews]);
 
-    return () => observer.disconnect();
-  }, []);
+  useEffect(() => {
+    if (!reviewsLoading && reviews) {
+      setTimeout(() => {
+        setIsVisible(true);
+      }, 100);
+    }
+  }, [reviewsLoading, reviews]);
+
+  if (reviewsLoading) {
+    return (
+      <StyledCard>
+        <CardContent>
+          <Skeleton variant="text" width={150} height={32} sx={{ mb: 2 }} />
+
+          <Box display="flex" gap={3}>
+            <Box width="100%">
+              {[...Array(5)].map((_, index) => (
+                <Box display="flex" gap={3} key={index} marginBottom={1}>
+                  <Skeleton variant="text" width={15} height={20} />
+                  <Box flex={1} marginTop="6px">
+                    <Skeleton
+                      variant="rectangular"
+                      width="100%"
+                      height={10}
+                      sx={{ borderRadius: 0.5 }}
+                      animation="wave"
+                      animationDelay={`${index * 0.1}s`}
+                    />
+                  </Box>
+                </Box>
+              ))}
+            </Box>
+
+            <Box minWidth={120}>
+              <Skeleton
+                variant="text"
+                width={80}
+                height={48}
+                sx={{ mb: 0.5 }}
+              />
+              <Box display="flex" gap={0.5} mb={0.5}>
+                {[...Array(5)].map((_, i) => (
+                  <Skeleton key={i} variant="circular" width={18} height={18} />
+                ))}
+              </Box>
+              <Skeleton variant="text" width={90} height={20} />
+            </Box>
+          </Box>
+        </CardContent>
+      </StyledCard>
+    );
+  }
 
   return (
     <StyledCard ref={componentRef}>
@@ -90,9 +151,9 @@ export const RatingTable = memo(() => {
         <Box display="flex" gap={3}>
           <Box width="100%">
             {reviews &&
-              Object.entries(reviews.ratingDistribution)
-                .map(([stars, count], index) => {
-                  const total = reviews.totalReviews 
+              Object.entries(reviews.ratingDistribution).map(
+                ([stars, count], index) => {
+                  const total = reviews.totalReviews;
                   const percentage = total > 0 ? (count / total) * 100 : 0;
                   return (
                     <Box display="flex" gap={3} key={stars} marginBottom={1}>
@@ -107,7 +168,8 @@ export const RatingTable = memo(() => {
                       </Box>
                     </Box>
                   );
-                })}
+                }
+              )}
           </Box>
 
           <Box>

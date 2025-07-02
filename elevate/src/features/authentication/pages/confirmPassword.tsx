@@ -1,9 +1,8 @@
 import {
-  Box,
-  Button,
   InputAdornment,
   Typography,
   IconButton,
+  Box,
 } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -14,61 +13,54 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import AuthTextInput from "../components/AuthTextInput";
 import { useSnackbar } from "notistack";
 import { useMutation } from "@tanstack/react-query";
-import { loginRequest } from "../../../api/endpoints";
-import { Link, useNavigate } from "react-router";
+import { confirmResetPassword } from "../../../api/endpoints";
+import { useNavigate } from "react-router";
 import AuthLayout from "../components/Layout";
 import { BlackStyledButton } from "../../../components/StyledButton";
+import { useParams } from "react-router";
 
-interface LoginFormInputs {
-  email: string;
+interface ResetPasswordFormInputs {
   password: string;
-}
-
-interface Tokens {
-  accessToken: string;
-  refreshToken: string;
-  user: {
-    role: string;
-  };
+  confirmPassword: string;
 }
 
 const schema = yup.object({
-  email: yup
-    .string()
-    .email("Email format is incorrect")
-    .required("Email is required"),
   password: yup
     .string()
     .min(6, "Password must be at least 6 characters")
     .required("Password is required"),
+  confirmPassword: yup
+    .string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required")
+    .oneOf([yup.ref('password')], 'Passwords must match'),
 });
 
-const LoginPage: React.FC = () => {
+const ConfirmPassword: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setConfirmPassword] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+  const params = useParams();
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormInputs>({
+  } = useForm<ResetPasswordFormInputs>({
     resolver: yupResolver(schema),
     mode: "onChange",
   });
 
   const mutation = useMutation({
-    mutationFn: loginRequest,
-    onSuccess: (data: Tokens) => {
-      localStorage.setItem("accessToken", data.accessToken);
-      localStorage.setItem("refreshToken", data.refreshToken);
-      localStorage.setItem("userRole", data.user.role);
-
+    mutationFn: confirmResetPassword,
+    onSuccess: () => {
+      localStorage.clear();
       try {
         navigate("/");
-        enqueueSnackbar("Login successful!", { variant: "success" });
+        enqueueSnackbar("Password reset successful!", { variant: "success" });
       } catch (error) {
-        console.error("Error decoding token:", error);
+        console.error("Error:", error);
         enqueueSnackbar("An error occurred. Please try again.", {
           variant: "error",
         });
@@ -76,7 +68,7 @@ const LoginPage: React.FC = () => {
     },
     onError: (error) => {
       enqueueSnackbar(
-        error.response?.data?.message || "Invalid username or password",
+        error.response?.data?.message || "Invalid password, please try again.",
         {
           variant: "error",
         }
@@ -84,33 +76,17 @@ const LoginPage: React.FC = () => {
     },
   });
 
-  const onSubmit = (data: LoginFormInputs) => {
-    mutation.mutate(data);
+  const onSubmit = (data: ResetPasswordFormInputs) => {
+    mutation.mutate({newPassword: data.password, oobCode: params.oobCode || ""});
   };
 
   return (
     <AuthLayout>
       <Typography variant="h6" fontWeight="bold" mb={2} color="#A51930">
-        Sign in
+        Reset Password
       </Typography>
 
-      <form onSubmit={handleSubmit(onSubmit)} noValidate>
-        <Controller
-          name="email"
-          control={control}
-          defaultValue=""
-          render={({ field }) => (
-            <AuthTextInput
-              {...field}
-              fullWidth
-              margin="normal"
-              placeholder="example@email.com"
-              size="small"
-              error={!!errors.email}
-              helperText={errors.email?.message}
-            />
-          )}
-        />
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="password"
           control={control}
@@ -148,30 +124,52 @@ const LoginPage: React.FC = () => {
             />
           )}
         />
-        <Button
-          variant="text"
-          size="small"
-          sx={{
-            display: "block",
-            ml: "auto",
-            mt: 1,
-            mb: 2,
-            color: "#A51930",
-            fontSize: "0.75rem",
-            textTransform: "none",
-            p: 0,
-            minWidth: "auto"
-          }}
-          onClick={() => navigate("/reset-password")}
-        >
-          Forgot password?
-        </Button>
-        <BlackStyledButton variant="contained" fullWidth type="submit">
-          Login
-        </BlackStyledButton>
+        <Box display={"flex"} flexDirection="column" gap={2}>
+          <Controller
+            name="confirmPassword"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <AuthTextInput
+                {...field}
+                fullWidth
+                margin="normal"
+                placeholder="Confirm Password"
+                size="small"
+                type={showConfirmPassword ? "text" : "password"}
+                error={!!errors.confirmPassword}
+                helperText={errors.confirmPassword?.message}
+                FormHelperTextProps={{
+                  style: { backgroundColor: "transparent" },
+                }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        onClick={() => setConfirmPassword((prev) => !prev)}
+                        edge="end"
+                        sx={{ color: "#A51930" }}
+                      >
+                        {showConfirmPassword ? (
+                          <VisibilityOff fontSize="small" />
+                        ) : (
+                          <Visibility fontSize="small" />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            )}
+          />
+
+          <BlackStyledButton variant="contained" fullWidth type="submit">
+            Reset Password
+          </BlackStyledButton>
+        </Box>
       </form>
     </AuthLayout>
   );
 };
 
-export default LoginPage;
+export default ConfirmPassword;

@@ -8,10 +8,33 @@ import { StyledTypography } from "../../../../../components/StyledTypography";
 import { StyledTextField } from "../../../../../components/StyledTextField";
 import { useUser } from "../../../../../hooks/userHook";
 import { useNavigate } from "react-router";
+import { useMutation } from "@tanstack/react-query";
+import { resetPassword } from "../../../../../api/endpoints";
+import { useSnackbar } from "notistack";
 
 export const Account = () => {
   const { userData } = useUser();
   const navigate = useNavigate();
+  const {enqueueSnackbar} = useSnackbar();
+
+  const resetPasswordMutation = useMutation({
+    mutationFn: (email) => resetPassword({ email: email }),
+    onSuccess: () => {
+      enqueueSnackbar("Password reset email sent successfully!", {
+        variant: "success",
+      });
+    },
+    onError: (error) => {
+      enqueueSnackbar("Failed to send password reset email: " + error.message, {
+        variant: "error",
+      });
+    },
+  });
+
+  function handleChangePassword(): void {
+    resetPasswordMutation.mutate(userData?.email || "");
+    navigate("../../email-check?email=" + userData?.email);
+  }
 
   return (
     <Box width="100%">
@@ -22,14 +45,20 @@ export const Account = () => {
 
         <Box display="flex" justifyContent="right">
           <Box display="flex" gap={2}>
-            <StyledButton variant="outlined" onClick={() => navigate("/settings/account/edit")}>
+            <StyledButton
+              variant="outlined"
+              onClick={() => navigate("/settings/account/edit")}
+            >
               <StyledSmallSvgIcon>
                 <image href="/icons/Edit.svg" width="100%" height="100%" />
               </StyledSmallSvgIcon>
               &nbsp; Edit
             </StyledButton>
 
-            <BlackStyledButton variant="outlined">
+            <BlackStyledButton
+              variant="outlined"
+              onClick={() => handleChangePassword()}
+            >
               <StyledSmallSvgIcon>
                 <image href="/icons/WhiteEdit.svg" width="100%" height="100%" />
               </StyledSmallSvgIcon>

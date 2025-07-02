@@ -1,6 +1,5 @@
-import axios from "axios";
-
-declare module "axios" {
+import { useQueryClient } from "@tanstack/react-query";
+import axios from "axios";declare module "axios" {
   interface AxiosRequestConfig {
     skipAuth?: boolean;
   }
@@ -51,11 +50,11 @@ axios.interceptors.response.use(
         isRefreshing = true;
         try {
           const response = await axios.post(
-            "/user/auth/refresh-token",
+            "/utilities/refresh-token",
             { refreshToken },
             { skipAuth: true }
           );
-          const { accessToken } = response.data;
+          const accessToken = response.data.data.accessToken;
 
           localStorage.setItem("accessToken", accessToken);
 
@@ -64,8 +63,9 @@ axios.interceptors.response.use(
           isRefreshing = false;
           return axios(originalRequest);
         } catch (refreshError) {
-          localStorage.removeItem("refreshToken");
-          localStorage.removeItem("accessToken");
+          const queryClient = useQueryClient();
+          localStorage.clear();
+          queryClient.invalidateQueries();
           console.error("Refresh token expired or invalid.");
           isRefreshing = false;
           window.location.href = "/login";
@@ -127,6 +127,7 @@ interface BrandData {
       _nanoseconds: number;
     };
   };
+  productCount: number;
 }
 
 export interface ProductVariant {
@@ -174,23 +175,33 @@ export interface ReviewData {
   };
 }
 
-export interface StatsData {
-  totalProductsSold: number;
-  totalSales: number;
-  topProduct: {
-    productId: string;
-    productName: string;
-    quantitySold: number;
+interface StatsData {
+  currentMonthStats: {
+    totalProductsSold: number;
     totalSales: number;
-  };
-  topProductsSales: [
-    {
+    topProduct: {
       productId: string;
       productName: string;
       quantitySold: number;
       totalSales: number;
-    },
-  ];
+    };
+    topProductsSales: {
+      productId: string;
+      productName: string;
+      quantitySold: number;
+      totalSales: number;
+    }[];
+  };
+  monthsSales: {
+    data: {
+      year: number;
+      month: number;
+      monthName: string;
+      totalSales: number;
+      totalProductsSold: number;
+      ordersCount: number;
+    }[];
+  };
 }
 
 const loginRequest = async (data: LoginData): Promise<Tokens> => {
@@ -223,8 +234,8 @@ const updateBrandOwnerData = async (data: UserData): Promise<void> => {
   }
 };
 
-const getProductsData = async (): Promise<ProductData[]> => {
-  const response = await axios.get(`/brand-owners/me/products`);
+const getProductsData = async (page: number): Promise<ProductData[]> => {
+  const response = await axios.get(`/brand-owners/me/products`, {params: { page, limit: 9}});
   return response.data.data;
 };
 
@@ -261,7 +272,7 @@ const getBrandRatings = async (): Promise<ReviewData> => {
 
 const getBrandStats = async (): Promise<StatsData> => {
   const response = await axios.get(
-    `/brand-owners/me/dashboard/current-month-stats`
+    `/brand-owners/me/dashboard/months-sales`
   );
   return response.data.data;
 };
@@ -281,6 +292,23 @@ const getProductSizes = async (): Promise<string[]> => {
   return response.data.data;
 };
 
+const resetPassword = async (email: string): Promise<void> => {
+  const response = await axios.post(`/utilities/send-password-reset`, email);
+  if (response.data.status !== 'success') {
+    throw new Error("Failed to add product");
+  }
+};
+
+const confirmResetPassword = async (data: {
+  oobCode: "string";
+  newPassword: "string";
+}): Promise<void> => {
+  const response = await axios.post(`/utilities/send-password-reset`, data);
+  if (response.data.status !== "success") {
+    throw new Error("Failed to add product");
+  }
+};
+
 export {
   loginRequest,
   getBrandData,
@@ -297,4 +325,6 @@ export {
   getProductDepartments,
   getProductSizes,
   UpdateBrandData,
+  resetPassword,
+  confirmResetPassword
 };

@@ -32,6 +32,7 @@ interface BrandData {
       _nanoseconds: number;
     };
   };
+  productCount: number;
 }
 
 export const useBrand = () => {

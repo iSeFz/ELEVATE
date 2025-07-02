@@ -1,4 +1,12 @@
-import { Grid2, CardContent, Typography, Box, styled, SvgIcon } from "@mui/material";
+import {
+  Grid2,
+  CardContent,
+  Typography,
+  Box,
+  styled,
+  SvgIcon,
+  Skeleton,
+} from "@mui/material";
 
 import { StyledCard } from "./styledCard";
 import { useDashboardData } from "../../../../../hooks/dashboardHook";
@@ -18,7 +26,37 @@ const StatCard = styled(Box)(({ color }) => ({
 }));
 
 export const StatsTable = () => {
-  const {stats: StatsData} = useDashboardData();
+  const { stats: StatsData, statsLoading } = useDashboardData();
+
+  if (statsLoading) {
+    return (
+      <StyledCard>
+        <Grid2 container spacing={3}>
+          <Grid2 item>
+            <CardContent>
+              <Skeleton variant="text" width={150} height={32} />
+              <Skeleton variant="text" width={120} height={20} sx={{ mb: 3 }} />
+
+              <Box display="flex" gap={3}>
+                {[1, 2, 3].map((item) => (
+                  <StatCard key={item} color="#f5f5f5">
+                    <Skeleton
+                      variant="circular"
+                      width={36}
+                      height={36}
+                      sx={{ mb: 2 }}
+                    />
+                    <Skeleton variant="text" width={80} height={32} />
+                    <Skeleton variant="text" width={100} height={20} />
+                  </StatCard>
+                ))}
+              </Box>
+            </CardContent>
+          </Grid2>
+        </Grid2>
+      </StyledCard>
+    );
+  }
 
   return (
     <StyledCard>
@@ -48,7 +86,7 @@ export const StatsTable = () => {
                 </Box>
 
                 <Typography variant="h6" color="text.primary" fontWeight="bold">
-                  {StatsData?.totalProductsSold || 0}
+                  {StatsData?.currentMonthStats?.totalProductsSold || 0}
                 </Typography>
                 <Typography color="text.secondary">Products Sold</Typography>
               </StatCard>
@@ -64,7 +102,7 @@ export const StatsTable = () => {
                 </Box>
 
                 <Typography variant="h6" color="text.primary" fontWeight="bold">
-                  {StatsData?.totalSales || 0} EGP
+                  {StatsData?.currentMonthStats?.totalSales || 0} EGP
                 </Typography>
                 <Typography color="text.secondary">Total Sales</Typography>
               </StatCard>
@@ -80,7 +118,8 @@ export const StatsTable = () => {
                 </Box>
 
                 <Typography color="text.primary" fontWeight="bold">
-                  {StatsData?.topProduct?.productName || "N/A"}
+                  {StatsData?.currentMonthStats?.topProduct?.productName ||
+                    "N/A"}
                 </Typography>
                 <Typography color="text.secondary">Top Product</Typography>
               </StatCard>

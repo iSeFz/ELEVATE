@@ -2,22 +2,32 @@ import { useQuery } from "@tanstack/react-query";
 import { getBrandRatings, getBrandStats } from "../api/endpoints";
 
 interface StatsData {
-  totalProductsSold: number;
-  totalSales: number;
-  topProduct: {
-    productId: string;
-    productName: string;
-    quantitySold: number;
+  currentMonthStats: {
+    totalProductsSold: number;
     totalSales: number;
-  };
-  topProductsSales: [
-    {
+    topProduct: {
       productId: string;
       productName: string;
       quantitySold: number;
       totalSales: number;
-    },
-  ];
+    };
+    topProductsSales: {
+      productId: string;
+      productName: string;
+      quantitySold: number;
+      totalSales: number;
+    }[];
+  };
+  monthsSales: {
+    data: {
+      year: number;
+      month: number;
+      monthName: string;
+      totalSales: number;
+      totalProductsSold: number;
+      ordersCount: number;
+    }[];
+  };
 }
 
 interface ReviewData {
@@ -39,12 +49,12 @@ interface DashboardData {
 
 
 export function useDashboardData() {
-  const { data: stats } = useQuery<StatsData>({
+  const { data: stats, isLoading: statsLoading} = useQuery<StatsData>({
     queryKey: ["stats"],
     queryFn: getBrandStats,
   });
 
-  const { data: reviews } = useQuery<ReviewData>({
+  const { data: reviews, isLoading: reviewsLoading} = useQuery<ReviewData>({
     queryKey: ["reviews"],
     queryFn: getBrandRatings,
   });
@@ -70,7 +80,9 @@ export function useDashboardData() {
         3: 0,
         4: 0,
         5: 0,
-      }
+      },
     },
+    statsLoading,
+    reviewsLoading,
   } as DashboardData;
 }

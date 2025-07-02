@@ -17,6 +17,9 @@ import AddProductPage from "../brandOwner/pages/products/addProductPage";
 import EditProductPage from "../brandOwner/pages/products/editProductPage";
 import { EditAccount } from "../brandOwner/pages/settings/pages/editAccount";
 import Profile from "../brandOwner/pages/profile/profile";
+import CheckEmail from "../authentication/pages/checkEmailPage";
+import EnterEmailPage from "../authentication/pages/enterEmailPage";
+import ConfirmPassword from "../authentication/pages/confirmPassword";
 
 // Define user roles
 type UserRole = "brandOwner" | "brandManager";
@@ -120,6 +123,18 @@ const router = createBrowserRouter([
     path: "/login",
     element: <LoginPage />,
   },
+  {
+    path: "reset-password",
+    element: <EnterEmailPage />,
+  },
+  {
+    path: "email-check",
+    element: <CheckEmail />,
+  },
+  {
+    path: "confirm-password",
+    element: <ConfirmPassword/>
+  }
 ]);
 
 const Router: React.FC = () => {
