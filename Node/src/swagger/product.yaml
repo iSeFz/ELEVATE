@@ -376,6 +376,54 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /brand-owners/me/products/embedding-images:
+    post:
+      summary: Add embedding images to all brand products
+      tags: [Admin]
+      responses:
+        200:
+          description: Product updated successfully with embedding images sent to the vector database
+        400:
+          description: Bad request
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden - Insufficient permissions
+        500:
+          description: Server error
+
+  /brand-owners/me/products/multi-image-embedding:
+    post:
+      summary: Add embedding images to all brand products
+      tags: [Admin]
+      requestBody:
+        description: You can submit multiple images to embed
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  productId:
+                    type: string
+                    description: Product ID to which the images belong
+                  url:
+                    type: string
+                    description: URL of the image to embed
+      responses:
+        200:
+          description: Product updated successfully with embedding images sent to the vector database
+        400:
+          description: Bad request
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden - Insufficient permissions
+        500:
+          description: Server error
+
   /products/{id}:
     get:
       summary: Get a product by ID

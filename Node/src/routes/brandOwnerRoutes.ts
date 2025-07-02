@@ -6,6 +6,7 @@ import * as ProductController from '../controllers/productController.js';
 import * as AuthValidators from '../middleware/validators/auth.js';
 import * as BrandOwnerValidators from '../middleware/validators/brandOwner.js';
 import * as ProductValidators from '../middleware/validators/product.js';
+import { processBrandEmbeddings, processMultipleImageEmbedding } from '../controllers/imageSearchController.js';
 
 const router = express.Router();
 
@@ -14,6 +15,7 @@ router.post('/login',
     AuthValidators.validateLogin, brandOwnerLogin);
 router.post('/signup',
     BrandOwnerValidators.validateSignupBrandOwner, brandOwnerSignup);
+// ------------------------------------------------
 
 // Brand owner management routes
 router.get('/',
@@ -30,6 +32,7 @@ router.put('/me',
 router.delete('/me',
     authenticate, authorize(['admin']),
     BrandOwnerController.deleteBrandOwner);
+// ------------------------------------------------
 
 // Product routes for brand owners
 router.get('/me/products',
@@ -40,9 +43,20 @@ router.post('/me/products',
     authorize(['admin', 'brandOwner', 'brandManager']),
     ProductValidators.validateAddProduct,
     ProductController.addProduct);
-router.delete('/me/products',
+router.delete('/me/products', 
+              authenticate, 
+              ProductController.deleteAllBrandProducts);
+
+// Admin Access only
+router.post('/me/products/embedding-images',
     authenticate,
-    ProductController.deleteAllBrandProducts);
+    authorize(['admin']),
+    processBrandEmbeddings);
+router.post('/me/products/multi-image-embedding',
+    authenticate,
+    authorize(['admin']),
+    processMultipleImageEmbedding);
+
 router.get('/me/products/:id',
     authenticate,
     ProductController.getProduct);
@@ -55,6 +69,7 @@ router.delete('/me/products/:id',
     authenticate,
     authorizeProductAccess,
     ProductController.deleteProduct);
+// -------------------------------------------------
 
 // Product variant routes for brand owners
 router.post('/me/products/:productId/variants',
@@ -75,6 +90,7 @@ router.delete('/me/products/:productId/variants/:variantId',
     ProductValidators.validateDeleteProductVariant,
     authorizeProductAccess,
     ProductController.deleteProductVariant);
+// -------------------------------------------------
 
 // Dashborad routes for brand owners
 router.get('/me/dashboard/months-sales',
@@ -85,5 +101,6 @@ router.get('/me/dashboard/reviews-summary',
     authenticate,
     authorize(['admin', 'brandOwner']),
     BrandOwnerController.getBrandReviewsSummary);
+// -------------------------------------------------
 
 export default router;

@@ -3,7 +3,8 @@ import serviceAccount from './serviceAccountKey.json' with { type: 'json' };
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount as any),
-  databaseURL: "https://elevate-fcai-cu-default-rtdb.europe-west1.firebasedatabase.app"
+  databaseURL: "https://elevate-fcai-cu-default-rtdb.europe-west1.firebasedatabase.app",
+  storageBucket: "elevate-fcai-cu.appspot.com"
 });
 
 const firestoreKey = "AIzaSyDupVh4a_BioIJteaPBRZKgBFBGhhDKY8Q";

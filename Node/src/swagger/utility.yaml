@@ -257,3 +257,29 @@ paths:
                   message:
                     type: string
 
+  /utilities/image-search:
+    get:
+      summary: Search products by image
+      tags: [Utilities]
+      parameters:
+        - in: query
+          name: imageUrl
+          required: true
+          schema:
+            type: string
+            format: uri
+          description: URL of the image to search with
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+          description: Number of results to return
+      responses:
+        200:
+          description: Search results
+        400:
+          description: Invalid request
+        500:
+          description: Server error
+
