@@ -215,9 +215,9 @@ paths:
                   message:
                     type: string
 
-  /utilities/try-on:
+  /utilities/fcm-token:
     post:
-      summary: Try on a product virtually
+      summary: Save FCM token for notifications
       tags: [Utilities]
       requestBody:
         required: true
@@ -226,20 +226,14 @@ paths:
             schema:
               type: object
               required:
-                - productImg
-                - personImg
+                - fcmToken
               properties:
-                productImg:
+                fcmToken:
                   type: string
-                  format: uri
-                  description: URL of the product image to try on
-                personImg:
-                  type: string
-                  format: uri
-                  description: URL of the person's image to apply the product on
+                  description: Firebase Cloud Messaging token for push notifications
       responses:
         200:
-          description: Virtual try-on successful
+          description: FCM token saved successfully
           content:
             application/json:
               schema:
@@ -248,12 +242,10 @@ paths:
                   status:
                     type: string
                     enum: [success]
-                  imageURL:
+                  message:
                     type: string
-                    format: uri
-                    description: URL of the resulting image after applying the product
         400:
-          description: Invalid product ID or image URL
+          description: Invalid FCM token format
           content:
             application/json:
               schema:
@@ -290,3 +282,4 @@ paths:
           description: Invalid request
         500:
           description: Server error
+

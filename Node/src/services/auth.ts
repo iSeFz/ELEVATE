@@ -1,12 +1,13 @@
 import { admin, CONFIRM_RESET_PASSWORD_URL, REFRESH_TOKEN_URL, SEND_RESET_EMAIL_URL, verifyCredentialsURL } from '../config/firebase.js';
 import axios from 'axios';
 import { Customer } from '../types/models/customer.js';
-import { Staff } from '../types/models/staff.js';
+import { BrandManager } from '../types/models/brandManager.js';
 import { BrandOwner } from '../types/models/brandOwner.js';
 import { generateFullyCustomerData } from './utils/customer.js';
-import { generateFullyStaffData } from './utils/staff.js';
+import { generateFullyBrandManagerData } from './utils/brandManager.js';
 import { generateFullyBrandOwnerData } from './utils/brandOwner.js';
 import { fillDataAddressesCoordinates } from './utils/common.js';
+import { Role } from '../config/roles.js';
 
 const auth = admin.auth();
 const firestore = admin.firestore();
@@ -42,19 +43,18 @@ export class AuthError extends Error {
     }
 }
 
-type UserType = 'customer' | 'staff' | 'brandOwner';
 type SignupMethod = 'email' | 'thirdParty';
 
 // Generic signup function that handles different user types
-export const genericSignup = async (userData: any, userType: UserType, signupMethod: SignupMethod, otherClaims = {}) => {
+export const genericSignup = async (userData: any, userType: Role, signupMethod: SignupMethod, otherClaims = {}) => {
     // Validate data based on user type
     let missedData = null;
 
     try {
         if (userType === 'customer') {
-            userData = await generateFullyCustomerData(userData);
-        } else if (userType === 'staff') {
-            userData = generateFullyStaffData(userData);
+            userData = generateFullyCustomerData(userData);
+        } else if (userType === 'brandManager') {
+            userData = generateFullyBrandManagerData(userData);
         } else if (userType === 'brandOwner') {
             userData = generateFullyBrandOwnerData(userData);
         }
@@ -91,7 +91,7 @@ export const genericSignup = async (userData: any, userType: UserType, signupMet
     }
 };
 
-const setUserClaimAndCollection = async (userData: any, userType: UserType, otherClaims = {}) => {
+const setUserClaimAndCollection = async (userData: any, userType: Role, otherClaims = {}) => {
     try {
         await auth.setCustomUserClaims(userData.id, { role: userType, ...otherClaims });
         const { password, id, ...cleanedData } = userData;
@@ -123,8 +123,8 @@ export const customerSignup = async (customer: Customer) => {
     return await genericSignup(customer, 'customer', 'email');
 };
 
-export const staffSignup = async (staff: Staff) => {
-    return genericSignup(staff, 'staff', 'email');
+export const brandManagerSignup = async (brandManager: BrandManager) => {
+    return genericSignup(brandManager, 'brandManager', 'email');
 };
 
 export const brandOwnerSignup = async (brandOwner: BrandOwner) => {
@@ -132,7 +132,7 @@ export const brandOwnerSignup = async (brandOwner: BrandOwner) => {
 };
 
 // Enhanced base login function that handles common functionality
-export const baseLogin = async (email: string, password: string, userType: 'customer' | 'brandOwner' | 'brandManager') => {
+export const baseLogin = async (email: string, password: string, userType: Role) => {
     try {
         // Authenticate with Firebase
         const response = await axios.post(verifyCredentialsURL, {
@@ -157,7 +157,6 @@ export const baseLogin = async (email: string, password: string, userType: 'cust
 
         const userData = userDoc.data();
 
-        // Return standardized user object
         return {
             user: {
                 id: uid,
@@ -182,17 +181,14 @@ export const baseLogin = async (email: string, password: string, userType: 'cust
     }
 };
 
-// Simplified customer login function
 export const customerLogin = async (email: string, password: string) => {
     return baseLogin(email, password, 'customer');
 };
 
-// Simplified brand owner login function
 export const brandOwnerLogin = async (email: string, password: string) => {
     return baseLogin(email, password, 'brandOwner');
 };
 
-// Simplified staff login function
 export const brandManagerLogin = async (email: string, password: string) => {
     return baseLogin(email, password, 'brandManager');
 };

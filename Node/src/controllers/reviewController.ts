@@ -41,7 +41,6 @@ export const addReview = async (req: Request, res: Response) => {
         const reviewData = req.body as Review;
         const userId = req.user?.id as string;
         const productId = req.params.productId;
-        console.log('Adding review for product:', productId);
         if (!productId) {
             return res.status(400).json({ status: 'error', message: 'Product ID parameter is required' });
         }
@@ -54,6 +53,11 @@ export const addReview = async (req: Request, res: Response) => {
         const customer = await customerService.getCustomer(userId);
         if (!customer) {
             return res.status(404).json({ status: 'error', message: 'Customer not found' });
+        }
+
+        const existingReview = await reviewService.hasCustomerReviewedProduct(userId, productId);
+        if (existingReview) {
+            return res.status(400).json({ status: 'error', message: 'You have already reviewed this product' });
         }
 
         reviewData.customerId = userId;

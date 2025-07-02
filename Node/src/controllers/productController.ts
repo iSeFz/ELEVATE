@@ -135,10 +135,9 @@ export const getProductVariant = async (req: Request, res: Response) => {
 export const addProduct = async (req: Request, res: Response) => {
     try {
         const productData = req.body as Product;
+        const userRole = req.user?.role;
         const brandOwnerId = req.user?.id as string;
-        const brandOwner = await brandOwnerService.getBrandOwnerById(brandOwnerId);
-
-        console.log("Adding product for brand owner:", brandOwnerId);
+        const brandOwner = await brandOwnerService.getBrandOwnerById(brandOwnerId, userRole);
 
         if (!brandOwner) {
             return res.status(404).json({
@@ -170,8 +169,6 @@ export const addProduct = async (req: Request, res: Response) => {
 
         // Set the brandSubscriptionPlan field from the brand's current subscription
         productData.brandSubscriptionPlan = plan;
-
-        console.log("Plan details: ", plan);
 
         const newProduct = await productService.addProduct(productData);
         // Increment productCount for the brand
@@ -231,7 +228,8 @@ export const deleteProduct = async (req: Request, res: Response) => {
 export const deleteAllBrandProducts = async (req: Request, res: Response) => {
     try {
         const brandOwnerId = req.user?.id as string;
-        const brandOwner = await brandOwnerService.getBrandOwnerById(brandOwnerId);
+        const userRole = req.user?.role;
+        const brandOwner = await brandOwnerService.getBrandOwnerById(brandOwnerId, userRole);
 
         if (!brandOwner) {
             return res.status(404).json({

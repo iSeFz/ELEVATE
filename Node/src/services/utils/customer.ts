@@ -1,5 +1,4 @@
 import { Customer } from '../../types/models/customer.js';
-import { Staff } from '../../types/models/staff.js';
 import { convertToTimestamp } from './common.js';
 
 export const checkMissingFullCustomerData = (customer: any) => {
@@ -15,14 +14,6 @@ export const checkMissingFullCustomerData = (customer: any) => {
 export const checkMissingCustomerCredentials = (customer: any) => {
     const currentCustomer = customer as Customer;
     if (currentCustomer.email == null || currentCustomer.password == undefined) {
-        return 'All fields are required';
-    }
-    return null;
-}
-
-export const checkMissingStaffCredentials = (staff: any) => {
-    const currentStaff = staff as Staff;
-    if (currentStaff.email == null || currentStaff.password == undefined) {
         return 'All fields are required';
     }
     return null;

@@ -153,6 +153,7 @@ export const cancelOrder = async (req: Request, res: Response) => {
 export const refundOrder = async (req: Request, res: Response) => {
     try {
         const orderID = req.params.id;
+        const { productId, variantId } = req.body;
         const customerID = req.user?.id!;
 
         // Check if order exists first
@@ -165,7 +166,7 @@ export const refundOrder = async (req: Request, res: Response) => {
             throw new Error('Unauthorized access to this order');
         }
 
-        await orderService.refundOrder(orderID);
+        await orderService.refundOrder(orderID, productId, variantId);
         return res.status(200).json({ status: 'success', message: 'Order refunded successfully' });
     } catch (error: any) {
         return res.status(400).json({ status: 'error', message: error.message });
@@ -173,9 +174,26 @@ export const refundOrder = async (req: Request, res: Response) => {
 }
 
 export const deleteOrder = async (req: Request, res: Response) => {
-    // This route is already protected by the authorize middleware in the router (admin only)
     try {
         const orderID = req.params.id;
+        const orderData = await orderService.getOrder(orderID);
+        if (!orderData) {
+            return res.status(404).json({ status: 'error', message: 'Order not found' });
+        }
+        
+        if (orderData.status !== OrderStatus.PENDING) {
+            return res.status(400).json({
+                status: 'error',
+                message: 'Only pending orders can be deleted'
+            });
+        }
+
+        // Check if the order belongs to the customer
+        const customerID = req.user?.id!;
+        if (orderData.customerId !== customerID) {
+            return res.status(403).json({ status: 'error', message: 'Unauthorized access to this order' });
+        }
+
         await orderService.deleteOrder(orderID);
         return res.status(200).json({ status: 'success', message: 'Order deleted successfully' });
     } catch (error: any) {
@@ -195,5 +213,20 @@ export const cleanupExpiredOrders = async (req: Request, res: Response) => {
     } catch (error: any) {
         console.error('Error during expired orders cleanup:', error);
         return res.status(500).json({ status: 'error', message: 'Failed to initiate expired orders cleanup' });
+    }
+};
+
+export const progressOrderStatuses = async (req: Request, res: Response) => {
+    try {
+        const result = await orderService.progressOrderStatuses();
+        return res.status(200).json({
+            status: 'success',
+            message: 'Order status progression completed',
+            processedCount: result,
+            timestamp: new Date().toISOString()
+        });
+    } catch (error: any) {
+        console.error('Error during order status progression:', error);
+        return res.status(500).json({ status: 'error', message: 'Failed to progress order statuses' });
     }
 };

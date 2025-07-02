@@ -2,6 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 import { admin } from '../config/firebase.js';
 import { FirebaseError } from 'firebase-admin';
 import * as authorizationService from '../services/authorization.js';
+import { Role } from '../config/roles.js';
+import { getProduct } from '../services/product.js';
+import { getBrandOwnerById } from '../services/brandOwner.js';
 
 // Test key for bypassing auth in development environments
 const TEST_AUTH_KEY = process.env.ADMIN_ACCESS_TOKEN ?? 'shawkyebrahim2514';
@@ -32,7 +35,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
             req.user = {
                 id: req.query?.userId as string ?? 'shawky.ebrahim2514', // Attch `userId` in the request query to act as this user (Must enable admin access env)
                 email: req.query?.email as string ?? 'shawky.ebrahim2514@gmail.com',
-                role: req.query?.userRole as string ?? 'admin'
+                role: req.query?.userRole as Role ?? 'admin'
             };
             console.log("Admin Access", req.query?.userId);
             delete req.body?.userId;
@@ -129,7 +132,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
  * Middleware to restrict access based on user roles
  * @param roles - Array of allowed roles
  */
-export const authorize = (roles: string[]) => {
+export const authorize = (roles: Role[]) => {
     return (req: Request, res: Response, next: NextFunction) => {
         if (!req.user) {
             return res.status(401).json({
@@ -157,7 +160,7 @@ export const authorize = (roles: string[]) => {
 type ResourceAuthorizationCheck = (
     resourceId: string,
     userId: string,
-    userRole: string
+    userRole: Role
 ) => Promise<boolean>;
 
 /**
@@ -213,70 +216,40 @@ const createResourceAuthorizationMiddleware = (
     };
 };
 
-// Create specialized middleware functions using the factory
-export const authorizeOrderAccess = createResourceAuthorizationMiddleware(
-    authorizationService.checkOrderAuthorization,
-    'Order'
-);
-
 export const authorizeReviewAccess = createResourceAuthorizationMiddleware(
     authorizationService.checkReviewAuthorization,
     'Review'
 );
 
-export const authorizeBrandAccess = createResourceAuthorizationMiddleware(
-    authorizationService.checkBrandAuthorization,
-    'Brand'
-);
+export const authorizeProductAccess = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const userRole = req.user?.role;
+        const brandOwnerId = req.user?.id as string;
+        const productID = req.params.id ?? req.params?.productId;
+        const productData = await getProduct(productID);
 
-export const authorizeProductAccess = createResourceAuthorizationMiddleware(
-    authorizationService.checkProductAuthorization,
-    'Product'
-);
+        if (!productData) {
+            return res.status(404).json({ status: 'error', message: 'Product not found' });
+        }
 
-export const authorizeProductVariantAccess = ((req: Request, res: Response, next: NextFunction) => {
-    return createResourceAuthorizationMiddleware(
-        authorizationService.checkProductAuthorization,
-        'Product',
-        req.params.productId
-    )(req, res, next);
-})
+        const brandOwner = await getBrandOwnerById(brandOwnerId, userRole);
+        if (!brandOwner) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'Brand owner not found'
+            });
+        }
 
-export const authorizeInventoryAccess = createResourceAuthorizationMiddleware(
-    authorizationService.checkInventoryAuthorization,
-    'Inventory'
-);
+        // Check if the product belongs to the brand owner
+        if (productData.brandId !== brandOwner.brandId) {
+            return res.status(403).json({
+                status: 'error',
+                message: 'You do not have permission to update this product'
+            });
+        }
 
-export const authorizeBrandOwnerProfileAccess = createResourceAuthorizationMiddleware(
-    authorizationService.checkBrandOwnerProfileAuthorization,
-    'Brand Owner Profile'
-);
-
-/**
- * Middleware to authorize access to customer resources
- * Allows access if the user is the customer themselves or has admin/staff role
- */
-export const authorizeCustomerAccess = async (req: Request, res: Response, next: NextFunction) => {
-    if (!req.user) {
-        return res.status(401).json({
-            status: 'error',
-            code: AuthErrorCodes.NO_TOKEN,
-            message: 'Authentication required'
-        });
-    }
-
-    const customerID = req.params.id;
-    const userRole = req.user.role;
-    const userID = req.user.id;
-
-    // Allow access if user is an admin, staff member, or the customer themselves
-    if (userRole === 'admin' || userRole === 'staff' || userID === customerID) {
         return next();
+    } catch (error: any) {
+        return res.status(400).json({ status: 'error', message: error.message });
     }
-
-    return res.status(403).json({
-        status: 'error',
-        code: AuthErrorCodes.INSUFFICIENT_PERMISSIONS,
-        message: 'You are not authorized to access this customer resource'
-    });
 };

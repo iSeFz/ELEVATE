@@ -17,7 +17,7 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
     servers: [
       {
         url: process.env.NODE_ENV === 'production'
-          ? 'https://elevate-fcai-cu.vercel.app/api/v1'
+          ? `${process.env.API_BASE_URL}/api/v1`
           : `http://localhost:${PORT}/api/v1`,
         description: process.env.NODE_ENV === 'production' ? 'Production server' : 'Development server',
       },
@@ -25,6 +25,7 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
     tags: [
       { name: 'Authentication' },
       { name: 'Utilities', description: 'Utility APIs for common tasks' },
+      { name: 'Try On', description: 'APIs for virtual try-on functionality' },
       { name: 'Customers', description: 'All APIs related to customers' },
       { name: 'Wishlist' },
       { name: 'Cart' },
@@ -35,7 +36,9 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
       { name: 'Brand Owners' },
       { name: 'Brand Owners Products' },
       { name: 'Brand Owners Dashboard' },
+      { name: "Brand Managers" },
       { name: 'CRON Jobs', description: 'Cron jobs for scheduled tasks' },
+      { name: 'Admin', description: "APIs for admin access and management" },
     ],
     components: {
       securitySchemes: {
@@ -44,6 +47,13 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
           scheme: 'bearer',
           bearerFormat: 'JWT',
           description: 'Enter JWT Bearer (For real requests, use the token from the login response)',
+        },
+        userRole: {
+          type: 'apiKey',
+          in: 'query',
+          name: 'userRole',
+          description: `Custom user role to be used in the request (For endpoints that require a user role to be performed)
+                        (Admin use only - Must provide the admin access token as well)`,
         },
         userId: {
           type: 'apiKey',
@@ -61,7 +71,7 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
       },
     },
     security: [
-      { bearerAuth: [], userId: [], adminAccessHeaderToken: [] }
+      { bearerAuth: [], userRole: [], userId: [], adminAccessHeaderToken: [] }
     ],
   },
   // Use path.join for better cross-platform compatibility

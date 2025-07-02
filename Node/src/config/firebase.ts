@@ -25,7 +25,8 @@ export const FIREBASE_COLLECTIONS = {
   "product": "product",
   "productAssociation": "productAssociation",
   "review": "review",
-  "staff": "staff",
+  "brandManager": "brandManager",
+  "tryOnRequests": "tryOnRequests",
 }
 
 export { admin, verifyCredentialsURL, SEND_RESET_EMAIL_URL, CONFIRM_RESET_PASSWORD_URL, REFRESH_TOKEN_URL };

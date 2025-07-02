@@ -667,7 +667,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SuccessResponse"
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+                    enum: [Item added to cart]
+                  data:
+                    $ref: "#/components/schemas/Cart"
         400:
           description: Invalid request data
           content:

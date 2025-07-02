@@ -4,7 +4,7 @@ export const CATEGORIES: string[] = [
     "bottoms - jeans", "bottoms - pants / trousers", "bottoms - leggings", "bottoms - shorts", "bottoms - skirts",
     "dresses & one-pieces - dresses", "dresses & one-pieces - jumpsuits", "dresses & one-pieces - abayas / kaftans",
     "sets",
-    "activewear - gym tops", "activewear - gym leggings", "activewear - tracksuits"
+    "activewear - gym tops", "activewear - gym bottoms", "activewear - gym leggings", "activewear - tracksuits"
 ];
 
 export const DEPARTMENTS: string[] = [

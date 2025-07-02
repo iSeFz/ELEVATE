@@ -80,6 +80,30 @@ export const addReview = async (review: Review) => {
     }
 };
 
+/**
+ * Checks if a customer has already reviewed a product.
+ * @param customerId 
+ * @param productId 
+ * @returns Returns true if the customer has reviewed the product, false otherwise.
+ */
+export const hasCustomerReviewedProduct = async (customerId: string, productId: string): Promise<boolean> => {
+    if (!customerId || !productId) {
+        throw new Error('Please provide both customer ID and product ID');
+    }
+
+    try {
+        const snapshot = await firestore.collection(reviewCollection)
+            .where('productId', '==', productId)
+            .where('customerId', '==', customerId)
+            .limit(1)
+            .get();
+
+        return !snapshot.empty;
+    } catch (error: any) {
+        throw new Error(error.message);
+    }
+};
+
 export const updateReview = async (reviewID: string, newReviewData: Partial<Review>) => {
     if (!reviewID) {
         throw new Error('Please provide a review ID');

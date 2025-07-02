@@ -1,13 +1,13 @@
 import { admin, FIREBASE_COLLECTIONS } from '../config/firebase.js';
 import * as OrderUtils from './utils/order.js';
-import { Order, OrderStatus } from '../types/models/order.js';
+import { Order, OrderStatus, REFUND_STATUS } from '../types/models/order.js';
 import { Timestamp } from 'firebase-admin/firestore';
 import { Product } from '../types/models/product.js';
 import { getCustomer } from './customer.js';
 import { Address } from '../types/models/common.js';
 import { getBrand } from './brand.js';
 import { v4 as uuidv4 } from 'uuid';
-import { ORDER_TIMEOUT_SEC, shipmentType as SHIPMMENT_TYPES } from '../config/order.js';
+import { ORDER_STATUS_PROGRESSION_INTERVAL_SEC, ORDER_TIMEOUT_SEC, shipmentType as SHIPMMENT_TYPES } from '../config/order.js';
 import { updateProductAssociations } from './productAssociation.js';
 
 const firestore = admin.firestore();
@@ -111,6 +111,24 @@ export const getOrdersByStatus = async (status: OrderStatus, page: number = 1) =
     );
 };
 
+export const getOrder = async (orderID: string) => {
+    if (!orderID) {
+        throw new Error('Please provide an order ID');
+    }
+    try {
+        const docRef = firestore.collection(orderCollection).doc(orderID);
+        const docSnap = await docRef.get();
+
+        if (!docSnap.exists) {
+            return null;
+        }
+
+        return { ...docSnap.data(), id: docSnap.id } as Order;
+    } catch (error: any) {
+        throw new Error(`Failed to get order: ${error.message}`);
+    }
+}
+
 export const addOrder = async (order: Order) => {
     try {
         const addedOrderData = OrderUtils.generateFullyOrderData(order);
@@ -197,7 +215,7 @@ export const calculateShipmentFees = async (
     shipmentType: typeof SHIPMMENT_TYPES[keyof typeof SHIPMMENT_TYPES],
     productItems: { productId: string, quantity: number }[]
 ) => {
-    if (shipmentType === SHIPMMENT_TYPES["pickup"]) {
+    if (shipmentType.toLowerCase() === SHIPMMENT_TYPES["pickup"]) {
         return {
             totalFees: 0,
             breakdown: [],
@@ -303,7 +321,7 @@ export const confirmOrder = async (orderID: string, customerId: string, remainin
         if ((Timestamp.now().seconds - createdAt.seconds) > ORDER_TIMEOUT_SEC) {
             // Rollback the order
             await orderRestoreProductStocks(batch, confirmedOrderData.products);
-            batch.update(orderRef, { status: OrderStatus.CANCELLED });
+            batch.delete(orderRef);
             await batch.commit();
             throw new Error('Order confirmation time expired. Order has been cancelled and stock restored.');
         }
@@ -427,10 +445,12 @@ export const cancelOrder = async (orderID: string) => {
         const order = orderDoc.data() as Order;
         await orderRestoreProductStocks(batch, order.products);
         batch.update(orderRef, { status: OrderStatus.CANCELLED });
-        const customerRef = firestore.collection(customerCollection).doc(order.customerId);
-        batch.update(customerRef, {
-            loyaltyPoints: admin.firestore.FieldValue.increment(order.pointsRedeemed - order.pointsEarned)
-        });
+        if (order.pointsRedeemed > 0) {
+            const customerRef = firestore.collection(customerCollection).doc(order.customerId);
+            batch.update(customerRef, {
+                loyaltyPoints: admin.firestore.FieldValue.increment(order.pointsRedeemed - order.pointsEarned)
+            });
+        }
         await batch.commit();
         return true;
     } catch (error: any) {
@@ -438,9 +458,34 @@ export const cancelOrder = async (orderID: string) => {
     }
 };
 
-export const refundOrder = async (orderID: string) => {
+export const refundOrder = async (orderID: string, productId: string, variantId: string) => {
     try {
-        await updateOrderStatus(orderID, OrderStatus.REFUNDED);
+        // await updateOrderStatus(orderID, OrderStatus.REFUNDED);
+        const orderRef = firestore.collection(orderCollection).doc(orderID);
+        const orderDoc = await orderRef.get();
+        if (!orderDoc.exists) {
+            throw new Error('Order not found');
+        }
+        const order = orderDoc.data() as Order;
+        if (order.status !== OrderStatus.DELIVERED) {
+            throw new Error('Order must be delivered before refunding');
+        }
+        const productIndex = order.products.findIndex(p => p.productId === productId && p.variantId === variantId);
+        if (productIndex === -1) {
+            throw new Error('Product not found in order');
+        }
+        if (order.products[productIndex].refundStatus) {
+            throw new Error('Product has already been refunded or is in the process of being refunded');
+        }
+        // Update the product to mark it as refunded
+        order.products[productIndex].refundStatus = REFUND_STATUS.PENDING;
+
+        // Update the order status to REFUNDED
+        await orderRef.update({
+            products: order.products,
+            status: OrderStatus.REFUNDED,
+            updatedAt: Timestamp.now()
+        });
         return true;
     } catch (error: any) {
         throw new Error(`Failed to refund order: ${error.message}`);
@@ -458,6 +503,17 @@ export const deleteOrder = async (orderID: string) => {
         if (!orderDoc.exists) {
             throw new Error('Order not found');
         }
+        const order = orderDoc.data() as Order;
+        const batch = firestore.batch();
+        await orderRestoreProductStocks(batch, order.products);
+        if (order.pointsRedeemed > 0) {
+            const customerRef = firestore.collection(customerCollection).doc(order.customerId);
+            batch.update(customerRef, {
+                loyaltyPoints: admin.firestore.FieldValue.increment(order.pointsRedeemed - order.pointsEarned)
+            });
+        }
+        batch.delete(orderDoc.ref);
+        await batch.commit();
         await orderRef.delete();
     } catch (error: any) {
         throw new Error(`Failed to delete order: ${error.message}`);
@@ -483,16 +539,104 @@ export const cleanupExpiredOrders = async () => {
         }
 
         let processedCount = 0;
+        const batch = firestore.batch();
         // Process each expired order
         for (const orderDoc of expiredOrdersSnapshot.docs) {
+            const order = orderDoc.data() as Order;
             // Restore stock for each product in the order
-            await cancelOrder(orderDoc.id);
+            await orderRestoreProductStocks(batch, order.products);
+            if (order.pointsRedeemed > 0) {
+                const customerRef = firestore.collection(customerCollection).doc(order.customerId);
+                batch.update(customerRef, {
+                    loyaltyPoints: admin.firestore.FieldValue.increment(order.pointsRedeemed - order.pointsEarned)
+                });
+            }
+            batch.delete(orderDoc.ref);
             processedCount++;
         }
+        await batch.commit();
 
         return processedCount;
     } catch (error) {
         console.error('Error in order cleanup:', error);
+        throw error;
+    }
+};
+
+export const progressOrderStatuses = async () => {
+    try {
+        const progressionThreshold = Timestamp.fromDate(
+            new Date(Date.now() - ORDER_STATUS_PROGRESSION_INTERVAL_SEC * 1000)
+        );
+
+        let processedCount = 0;
+        const batch = firestore.batch();
+
+        // Progress PROCESSING orders to SHIPPED
+        const processingOrdersSnapshot = await firestore
+            .collection(FIREBASE_COLLECTIONS['order'])
+            .where('status', '==', OrderStatus.PROCESSING)
+            .where('updatedAt', '<=', progressionThreshold)
+            .orderBy('updatedAt', 'desc')
+            .get();
+
+        processingOrdersSnapshot.forEach((orderDoc) => {
+            batch.update(orderDoc.ref, {
+                status: OrderStatus.SHIPPED,
+                updatedAt: Timestamp.now()
+            });
+            processedCount++;
+        });
+
+        // Progress SHIPPED orders to DELIVERED
+        const shippedOrdersSnapshot = await firestore
+            .collection(FIREBASE_COLLECTIONS['order'])
+            .where('status', '==', OrderStatus.SHIPPED)
+            .where('updatedAt', '<=', progressionThreshold)
+            .orderBy('updatedAt', 'desc')
+            .get();
+
+        shippedOrdersSnapshot.forEach((orderDoc) => {
+            batch.update(orderDoc.ref, {
+                status: OrderStatus.DELIVERED,
+                updatedAt: Timestamp.now(),
+                'shipment.deliveredAt': Timestamp.now()
+            });
+            processedCount++;
+        });
+
+        // Product Refund Pending to Approved
+        const refundPendingOrdersSnapshot = await firestore
+            .collection(FIREBASE_COLLECTIONS['order'])
+            .where('status', '==', OrderStatus.REFUNDED)
+            .where('updatedAt', '<=', progressionThreshold)
+            .orderBy('updatedAt', 'desc')
+            .get();
+        refundPendingOrdersSnapshot.forEach((orderDoc) => {
+            const orderData = orderDoc.data() as Order;
+            const productsToRefund = orderData.products.filter(p => p.refundStatus === REFUND_STATUS.PENDING);
+            if (productsToRefund.length === 0) return;
+            const updatedProducts = orderData.products.map(p => {
+                if (p.refundStatus === REFUND_STATUS.PENDING) {
+                    return { ...p, refundStatus: REFUND_STATUS.APPROVED };
+                }
+                return p;
+            });
+            batch.update(orderDoc.ref, {
+                status: OrderStatus.DELIVERED,
+                products: updatedProducts,
+                updatedAt: Timestamp.now()
+            });
+            processedCount++;
+        });
+
+        if (processedCount > 0) {
+            await batch.commit();
+        }
+
+        return processedCount;
+    } catch (error) {
+        console.error('Error in order status progression:', error);
         throw error;
     }
 };

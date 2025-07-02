@@ -21,21 +21,3 @@ export const getAddressCoordinates = async (req: Request, res: Response) => {
 
     res.json(location);
 }
-
-export const tryOn = async (req: Request, res: Response) => {
-    const { productImg, personImg } = req.body;
-
-    try {
-        const result = await UtilitiesService.tryOn(personImg, productImg);
-        res.json({
-            status: 'success',
-            imageURL: result
-        });
-    } catch (error) {
-        console.error('Error during try-on:', error);
-        res.status(500).json({
-            status: 'error',
-            message: 'Try-on processing failed'
-        });
-    }
-}

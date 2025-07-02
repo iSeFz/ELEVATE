@@ -1,5 +1,5 @@
 # ELEVATE Website
-> Egyptian Local E-commerce Virtualization and Augmented Technology Experience  
+> Egyptian Local E-commerce Visualization and Augmented Technology Experience  
 
 Our graduation project from the Faculty of Computers and Artificial Intelligence at Cairo University.
 

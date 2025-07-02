@@ -3,6 +3,8 @@ import * as brandService from '../services/brand.js';
 import { Brand } from '../types/models/brand.js';
 import { SubscriptionPlan, getSubscriptionPlanDetails } from '../config/subscriptionPlans.js';
 import { Timestamp } from 'firebase-admin/firestore';
+import { roles } from '../config/roles.js';
+import { getBrandOwnerById } from '../services/brandOwner.js';
 
 export const getAllBrands = async (req: Request, res: Response) => {
     try {
@@ -54,38 +56,6 @@ export const getBrandByName = async (req: Request, res: Response) => {
     }
 };
 
-// Don't use it, the brand is created once the brand owner is created
-export const addBrand = async (req: Request, res: Response) => {
-    try {
-        const brandData = req.body;
-        const requestingUserID = req.user?.id;
-        const userRole = req.user?.role;
-
-        // If user is a brand owner, ensure the brand is linked to them
-        if (userRole === 'brandOwner') {
-            // Set the brandOwner reference to the current user
-            brandData.brandOwnerId = requestingUserID;
-        } else if (userRole === 'admin') {
-            // Admins can create brands without linking to a specific user
-            // brandOwnerId will be provided in the request body if needed
-        } else {
-            return res.status(403).json({ status: 'error', message: 'You are not authorized to add a brand' });
-        }
-
-        // Remove any ID if provided - always use auto-generated IDs for brands
-        delete brandData.id;
-
-        const newBrand = await brandService.addBrand(brandData);
-        return res.status(201).json({
-            status: 'success',
-            message: 'Brand added successfully',
-            data: newBrand
-        });
-    } catch (error: any) {
-        return res.status(400).json({ status: 'error', message: error.message });
-    }
-};
-
 export const updateBrand = async (req: Request, res: Response) => {
     try {
         const brandID = req.params.id;
@@ -118,10 +88,17 @@ export const deleteBrand = async (req: Request, res: Response) => {
 export const getMyBrand = async (req: Request, res: Response) => {
     try {
         const brandOwnerId = req.user?.id;
+        const userRole = req.user?.role;
         if (!brandOwnerId) {
             return res.status(401).json({ status: 'error', message: 'Unauthorized' });
         }
-        const brand = await brandService.getBrandByOwnerId(brandOwnerId);
+
+        const brandOwner = await getBrandOwnerById(brandOwnerId, userRole);
+        if (!brandOwner) {
+            return res.status(404).json({ status: 'error', message: 'Brand owner not found' });
+        }
+
+        const brand = await brandService.getBrand(brandOwner.brandId);
         if (!brand) {
             return res.status(404).json({ status: 'error', message: 'Brand not found' });
         }
@@ -136,14 +113,22 @@ export const getMyBrand = async (req: Request, res: Response) => {
 export const updateMyBrand = async (req: Request, res: Response) => {
     try {
         const brandOwnerId = req.user?.id;
+        const userRole = req.user?.role;
+        const newBrandData = req.body as Partial<Brand>;
         if (!brandOwnerId) {
             return res.status(401).json({ status: 'error', message: 'Unauthorized' });
         }
-        const newBrandData = req.body as Partial<Brand>;
-        const brand = await brandService.getBrandByOwnerId(brandOwnerId);
+
+        const brandOwner = await getBrandOwnerById(brandOwnerId, userRole);
+        if (!brandOwner) {
+            return res.status(404).json({ status: 'error', message: 'Brand owner/manager not found' });
+        }
+
+        const brand = await brandService.getBrand(brandOwner.brandId);
         if (!brand) {
             return res.status(404).json({ status: 'error', message: 'Brand not found' });
         }
+
         await brandService.updateBrand(brand.id!, newBrandData);
         return res.status(200).json({ status: 'success', message: 'Brand updated successfully' });
     } catch (error: any) {
