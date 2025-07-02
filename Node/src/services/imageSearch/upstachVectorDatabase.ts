@@ -30,6 +30,7 @@ export const storeImageEmbedding = async (
     metadata: ImageMetadata
 ): Promise<string> => {
     try {
+        await new Promise(resolve => setTimeout(resolve, 500)); // 500ms delay after storing
         // Create a unique ID for the vector using productId, variantId, and image URL hash
         const imageHash = Buffer.from(metadata.imageUrl).toString('base64').slice(-8);
         const vectorId = `${metadata.productId}_${metadata.variantId}_${imageHash}`;

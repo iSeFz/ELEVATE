@@ -2,14 +2,9 @@ import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsDoc from 'swagger-jsdoc';
 import path from 'path';
+import { PORT, PROJECT_ROOT } from '../config/common.js';
 
 const router = express.Router();
-const port = process.env.PORT || 3000;
-
-// Fix path resolution for nested projects
-const projectRoot = process.env.VERCEL
-  ? '/var/task/Node' // Use the correct path in Vercel
-  : process.cwd();   // Use working directory in local dev
 
 const swaggerOptions: swaggerJsDoc.OAS3Options = {
   definition: {
@@ -23,7 +18,7 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
       {
         url: process.env.NODE_ENV === 'production'
           ? 'https://elevate-fcai-cu.vercel.app/api/v1'
-          : `http://localhost:${port}/api/v1`,
+          : `http://localhost:${PORT}/api/v1`,
         description: process.env.NODE_ENV === 'production' ? 'Production server' : 'Development server',
       },
     ],
@@ -70,10 +65,10 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
     ],
   },
   // Use path.join for better cross-platform compatibility
-  apis: [path.join(projectRoot, 'src', 'swagger', '*.yaml')],
+  apis: [path.join(PROJECT_ROOT, 'src', 'swagger', '*.yaml')],
 };
 
-const yamlPath = path.join(projectRoot, 'src', 'swagger', '*.yaml');
+const yamlPath = path.join(PROJECT_ROOT, 'src', 'swagger', '*.yaml');
 console.log("Looking for YAML files at:", yamlPath);
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);

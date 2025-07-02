@@ -3,8 +3,8 @@ import { generateFullyProductData } from './utils/product.js';
 import { Product, ProductVariant } from '../types/models/product.js';
 import { Timestamp } from 'firebase-admin/firestore';
 import { SubscriptionPlan } from '../config/subscriptionPlans.js';
-import { processProductEmbeddings, updateProductEmbeddings } from './retrieving/imageSearch.js';
-import { deleteProductEmbeddings } from './retrieving/upstachVectorDatabase.js';
+import { processProductEmbeddings, updateProductEmbeddings } from './imageSearch/index.js';
+import { deleteProductEmbeddings } from './imageSearch/upstachVectorDatabase.js';
 
 const firestore = admin.firestore();
 const productCollection = FIREBASE_COLLECTIONS['product'];

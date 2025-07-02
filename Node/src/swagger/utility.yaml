@@ -265,24 +265,18 @@ paths:
                   message:
                     type: string
 
-
   /utilities/image-search:
-    post:
+    get:
       summary: Search products by image
-      tags: [Image Search]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - imageUrl
-              properties:
-                imageUrl:
-                  type: string
-                  description: URL of the image to search with
+      tags: [Utilities]
       parameters:
+        - in: query
+          name: imageUrl
+          required: true
+          schema:
+            type: string
+            format: uri
+          description: URL of the image to search with
         - in: query
           name: limit
           schema:
