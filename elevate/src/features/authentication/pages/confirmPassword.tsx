@@ -41,7 +41,6 @@ const ConfirmPassword: React.FC = () => {
   const [showConfirmPassword, setConfirmPassword] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const params = useParams();
 
   const {
     control,
@@ -77,7 +76,8 @@ const ConfirmPassword: React.FC = () => {
   });
 
   const onSubmit = (data: ResetPasswordFormInputs) => {
-    mutation.mutate({newPassword: data.password, oobCode: params.oobCode || ""});
+    const oobCode = new URLSearchParams(location.search).get("oobCode");
+    mutation.mutate({ newPassword: data.password, oobCode: oobCode || "" });
   };
 
   return (
