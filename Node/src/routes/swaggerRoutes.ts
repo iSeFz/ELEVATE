@@ -35,6 +35,7 @@ const swaggerOptions: swaggerJsDoc.OAS3Options = {
       { name: 'Brands' },
       { name: 'Brand Owners' },
       { name: 'Brand Owners Products' },
+      { name: 'Brand Owners Orders' },
       { name: 'Brand Owners Dashboard' },
       { name: "Brand Managers" },
       { name: 'CRON Jobs', description: 'Cron jobs for scheduled tasks' },

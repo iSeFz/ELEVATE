@@ -651,6 +651,7 @@ export const getBrandProductsInProcessing = async (brandId: string) => {
         const productStats = new Map<string, {
             productId: string;
             productName: string;
+            productImage: string;
             brandId: string;
             brandName: string;
             totalQuantity: number;
@@ -672,6 +673,7 @@ export const getBrandProductsInProcessing = async (brandId: string) => {
                     productStats.set(key, {
                         productId: product.productId,
                         productName: product.productName,
+                        productImage: product.imageURL ?? "",
                         brandId: product.brandId,
                         brandName: product.brandName,
                         totalQuantity: 0,
@@ -707,6 +709,7 @@ export const getBrandProductsRefunded = async (brandId: string) => {
         const productStats = new Map<string, {
             productId: string;
             productName: string;
+            productImage: string;
             brandId: string;
             brandName: string;
             totalQuantity: number;
@@ -735,6 +738,7 @@ export const getBrandProductsRefunded = async (brandId: string) => {
                     productStats.set(key, {
                         productId: product.productId,
                         productName: product.productName,
+                        productImage: product.imageURL ?? "",
                         brandId: product.brandId,
                         brandName: product.brandName,
                         totalQuantity: 0,

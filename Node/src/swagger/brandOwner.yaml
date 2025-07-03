@@ -274,7 +274,7 @@ paths:
   /brand-owners/me/orders/processing-products:
     get:
       tags:
-        - Brand Owner Orders
+        - Brand Owners Orders
       summary: Get brand products in processing status
       description: Retrieve all products belonging to the brand that are currently in processing status with order statistics
       responses:
@@ -342,7 +342,7 @@ paths:
   /brand-owners/me/orders/refunded-products:
     get:
       tags:
-        - Brand Owner Orders
+        - Brand Owners Orders
       summary: Get brand products with refund requests
       description: Retrieve all products belonging to the brand that have refund requests with detailed refund statistics
       responses:
