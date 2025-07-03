@@ -163,6 +163,29 @@ export interface ProductData {
   id?: string;
 }
 
+export interface OrderData {
+  products: {
+    productId: string;
+    productName: string;
+    totalQuantity: number;
+    totalOrders: number;
+  }[];
+}
+
+export interface RefundData {
+  products: {
+    productId: string;
+    productName: string;
+    totalQuantity: number;
+    totalOrders: number;
+    refundStats: {
+      pending: number;
+      approved: number;
+      rejected: number;
+    };
+  }[];
+}
+
 export interface ReviewData {
   totalReviews: number;
   averageRating: number;
@@ -263,6 +286,16 @@ const deleteProduct = async (id: string): Promise<ProductData> => {
   return response.data.data;
 };
 
+const getOrders = async (): Promise<OrderData> => {
+  const response = await axios.get(`/brand-owners/me/orders/processing-products`);
+  return response.data.data;
+};
+
+const getRefunds = async (): Promise<RefundData> => {
+  const response = await axios.get(`/brand-owners/me/orders/refunded-products`);
+  return response.data.data;
+};
+
 const getBrandRatings = async (): Promise<ReviewData> => {
   const response = await axios.get(
     `/brand-owners/me/dashboard/reviews-summary`
@@ -319,6 +352,8 @@ export {
   editProduct,
   getProduct,
   deleteProduct,
+  getOrders,
+  getRefunds,
   getBrandRatings,
   getBrandStats,
   getProductCategories,

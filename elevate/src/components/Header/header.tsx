@@ -29,6 +29,7 @@ export const Header: FC = () => {
     products: "Manage Products",
     settings: "Settings",
     logout: "Sign Out",
+    orders: "Orders",
   };
 
   const pageTitle = pageTitles[location.pathname.split("/")[1]] || "Page";

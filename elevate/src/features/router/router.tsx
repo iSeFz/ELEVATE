@@ -20,6 +20,9 @@ import Profile from "../brandOwner/pages/profile/profile";
 import CheckEmail from "../authentication/pages/checkEmailPage";
 import EnterEmailPage from "../authentication/pages/enterEmailPage";
 import ConfirmPassword from "../authentication/pages/confirmPassword";
+import { OrdersLayout } from "../brandOwner/pages/orders/components/ordersLayout";
+import Orders from "../brandOwner/pages/orders/pages/orders";
+import Refunds from "../brandOwner/pages/orders/pages/refunds";
 
 // Define user roles
 type UserRole = "brandOwner" | "brandManager";
@@ -115,6 +118,20 @@ const router = createBrowserRouter([
               },
             ],
           },
+          {
+            path: "orders",
+            element: <OrdersLayout />,
+            children: [
+              {
+                path: "orders",
+                element: <Orders />,
+              },
+              {
+                path: "refunds",
+                element: <Refunds />,
+              },
+            ],
+          },
         ],
       },
     ],
@@ -133,8 +150,8 @@ const router = createBrowserRouter([
   },
   {
     path: "confirm-password",
-    element: <ConfirmPassword/>
-  }
+    element: <ConfirmPassword />,
+  },
 ]);
 
 const Router: React.FC = () => {

@@ -6,6 +6,7 @@ import {
   PersonOutline,
   ShoppingBagOutlined,
   SettingsOutlined,
+  ReceiptLongOutlined,
 } from "@mui/icons-material";
 import { useNavigate, useLocation } from "react-router";
 
@@ -41,26 +42,37 @@ const Sidebar: FC = () => {
       <TitleText variant="h4">ELEVATE</TitleText>
 
       <List>
-        {userRole == "brandOwner" && 
+        {userRole == "brandOwner" && (
+          <SidebarItem
+            handleItemClick={handleItemClick}
+            getListItemStyles={getListItemStyles}
+            getIconColor={getIconColor}
+            selectedItem={selectedItem}
+            path="/"
+            icon={<PieChartOutline />}
+            name="Dashboard"
+          />
+        )}
+        {userRole == "brandOwner" && (
+          <SidebarItem
+            handleItemClick={handleItemClick}
+            getListItemStyles={getListItemStyles}
+            getIconColor={getIconColor}
+            selectedItem={selectedItem}
+            path="/profile"
+            icon={<PersonOutline />}
+            name="Profile"
+          />
+        )}
         <SidebarItem
           handleItemClick={handleItemClick}
           getListItemStyles={getListItemStyles}
           getIconColor={getIconColor}
           selectedItem={selectedItem}
-          path="/"
-          icon={<PieChartOutline />}
-          name="Dashboard"
-        />}
-        {userRole == "brandOwner" && 
-        <SidebarItem
-          handleItemClick={handleItemClick}
-          getListItemStyles={getListItemStyles}
-          getIconColor={getIconColor}
-          selectedItem={selectedItem}
-          path="/profile"
-          icon={<PersonOutline />}
-          name="Profile"
-        />}
+          path="/orders/orders"
+          icon={<ReceiptLongOutlined />}
+          name="Orders"
+        />
         <SidebarItem
           handleItemClick={handleItemClick}
           getListItemStyles={getListItemStyles}
