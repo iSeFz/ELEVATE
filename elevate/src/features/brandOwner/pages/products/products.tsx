@@ -13,7 +13,7 @@ const Product: React.FC = () => {
 
   const [page, setPage] = useState(1);
   const { products } = useProducts(page);
-  const itemsPerPage = 10;
+  const itemsPerPage = products.length;
 
   const totalPages = Math.ceil(brandData?.productCount / itemsPerPage);
   const startIndex = (page - 1) * itemsPerPage;
