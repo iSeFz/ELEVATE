@@ -83,41 +83,45 @@ const fetchProducts = async (
     }
 };
 
-export const getAllProducts = async (page: number = 1) =>
+export const getAllProducts = async (page: number = 1, limit: number = 10) =>
     fetchProducts(
         ref => ref.orderBy("brandSubscriptionPlan", "desc").orderBy("createdAt", "desc"),
-        page
+        page,
+        limit
     );
 
-export const getProductsByCategory = async (category: string, page: number = 1) => {
+export const getProductsByCategory = async (category: string, page: number = 1, limit: number = 10) => {
     if (!category) throw new Error('Please provide a category');
     return fetchProducts(
         ref => ref
             .where("category", "==", normalizeString(category))
             .orderBy("brandSubscriptionPlan", "desc")
             .orderBy("createdAt", "desc"),
-        page
+        page,
+        limit
     );
 };
 
-export const getProductsByBrand = async (brandID: string, page: number = 1) => {
+export const getProductsByBrand = async (brandID: string, page: number = 1, limit: number = 9) => {
     if (!brandID) throw new Error('Please provide a brand ID');
     return fetchProducts(
         ref => ref
             .where("brandId", "==", brandID)
             .orderBy("createdAt", "desc"),
-        page
+        page,
+        limit
     );
 };
 
-export const getProductsByDepartment = async (departmentValue: string, page: number = 1) => {
+export const getProductsByDepartment = async (departmentValue: string, page: number = 1, limit: number = 10) => {
     if (!departmentValue) throw new Error('Please provide a department value');
     return fetchProducts(
         ref => ref
             .where("department", "array-contains", normalizeString(departmentValue))
             .orderBy("brandSubscriptionPlan", "desc")
             .orderBy("createdAt", "desc"),
-        page
+        page,
+        limit
     );
 };
 
@@ -130,21 +134,24 @@ export const getProductsByDepartment = async (departmentValue: string, page: num
  */
 export const getMostPopularProducts = async (
     page: number = 1,
+    limit: number = 10,
 ) => {
     return fetchProducts(
         ref => ref.orderBy("wishlistCount", "desc")
             .orderBy("brandSubscriptionPlan", "desc")
             .orderBy("createdAt", "desc"),
         page,
+        limit
     );
 };
 
-export const getTopRatedProducts = async (page: number = 1) => {
+export const getTopRatedProducts = async (page: number = 1, limit: number = 10) => {
     return fetchProducts(
         ref => ref.orderBy("reviewSummary.averageRating", "desc")
             .orderBy("brandSubscriptionPlan", "desc")
             .orderBy("createdAt", "desc"),
-        page
+        page,
+        limit
     );
 }
 

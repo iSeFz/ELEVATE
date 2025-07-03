@@ -271,6 +271,167 @@ paths:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
 
+  /brand-owners/me/orders/processing-products:
+    get:
+      tags:
+        - Brand Owner Orders
+      summary: Get brand products in processing status
+      description: Retrieve all products belonging to the brand that are currently in processing status with order statistics
+      responses:
+        '200':
+          description: Successfully retrieved processing products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      brandId:
+                        type: string
+                        example: "brand123"
+                      brandName:
+                        type: string
+                        example: "Fashion Brand"
+                      totalProducts:
+                        type: number
+                        example: 5
+                      totalQuantityInProcessing:
+                        type: number
+                        example: 25
+                      totalOrdersInProcessing:
+                        type: number
+                        example: 12
+                      products:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            productId:
+                              type: string
+                              example: "prod123"
+                            productName:
+                              type: string
+                              example: "Cotton T-Shirt"
+                            brandId:
+                              type: string
+                              example: "brand123"
+                            brandName:
+                              type: string
+                              example: "Fashion Brand"
+                            totalQuantity:
+                              type: number
+                              example: 10
+                            totalOrders:
+                              type: number
+                              example: 5
+                            orderIds:
+                              type: array
+                              items:
+                                type: string
+                              example: ["order1", "order2", "order3"]
+        '404':
+          description: Brand owner not found
+        '500':
+          description: Internal server error
+
+  /brand-owners/me/orders/refunded-products:
+    get:
+      tags:
+        - Brand Owner Orders
+      summary: Get brand products with refund requests
+      description: Retrieve all products belonging to the brand that have refund requests with detailed refund statistics
+      responses:
+        '200':
+          description: Successfully retrieved refunded products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      brandId:
+                        type: string
+                        example: "brand123"
+                      brandName:
+                        type: string
+                        example: "Fashion Brand"
+                      totalProducts:
+                        type: number
+                        example: 3
+                      totalQuantityRefunded:
+                        type: number
+                        example: 15
+                      totalOrdersWithRefunds:
+                        type: number
+                        example: 8
+                      refundSummary:
+                        type: object
+                        properties:
+                          totalPending:
+                            type: number
+                            example: 5
+                          totalApproved:
+                            type: number
+                            example: 8
+                          totalRejected:
+                            type: number
+                            example: 2
+                      products:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            productId:
+                              type: string
+                              example: "prod123"
+                            productName:
+                              type: string
+                              example: "Cotton T-Shirt"
+                            brandId:
+                              type: string
+                              example: "brand123"
+                            brandName:
+                              type: string
+                              example: "Fashion Brand"
+                            totalQuantity:
+                              type: number
+                              example: 8
+                            totalOrders:
+                              type: number
+                              example: 4
+                            orderIds:
+                              type: array
+                              items:
+                                type: string
+                              example: ["order1", "order2"]
+                            refundStats:
+                              type: object
+                              properties:
+                                pending:
+                                  type: number
+                                  example: 3
+                                approved:
+                                  type: number
+                                  example: 4
+                                rejected:
+                                  type: number
+                                  example: 1
+        '404':
+          description: Brand owner not found
+        '500':
+          description: Internal server error
+
+
   /brand-owners/me/dashboard/months-sales:
     get:
       summary: Get sales data by month for the brand owner

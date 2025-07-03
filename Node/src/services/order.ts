@@ -460,7 +460,6 @@ export const cancelOrder = async (orderID: string) => {
 
 export const refundOrder = async (orderID: string, productId: string, variantId: string) => {
     try {
-        // await updateOrderStatus(orderID, OrderStatus.REFUNDED);
         const orderRef = firestore.collection(orderCollection).doc(orderID);
         const orderDoc = await orderRef.get();
         if (!orderDoc.exists) {
@@ -480,10 +479,10 @@ export const refundOrder = async (orderID: string, productId: string, variantId:
         // Update the product to mark it as refunded
         order.products[productIndex].refundStatus = REFUND_STATUS.PENDING;
 
-        // Update the order status to REFUNDED
+        // Update the order status to REFUND_REQUESTED
         await orderRef.update({
             products: order.products,
-            status: OrderStatus.REFUNDED,
+            status: OrderStatus.REFUND_REQUESTED,
             updatedAt: Timestamp.now()
         });
         return true;
@@ -608,7 +607,7 @@ export const progressOrderStatuses = async () => {
         // Product Refund Pending to Approved
         const refundPendingOrdersSnapshot = await firestore
             .collection(FIREBASE_COLLECTIONS['order'])
-            .where('status', '==', OrderStatus.REFUNDED)
+            .where('status', '==', OrderStatus.REFUND_REQUESTED)
             .where('updatedAt', '<=', progressionThreshold)
             .orderBy('updatedAt', 'desc')
             .get();
@@ -623,7 +622,7 @@ export const progressOrderStatuses = async () => {
                 return p;
             });
             batch.update(orderDoc.ref, {
-                status: OrderStatus.DELIVERED,
+                status: OrderStatus.REFUNDED,
                 products: updatedProducts,
                 updatedAt: Timestamp.now()
             });
@@ -638,5 +637,138 @@ export const progressOrderStatuses = async () => {
     } catch (error) {
         console.error('Error in order status progression:', error);
         throw error;
+    }
+};
+
+export const getBrandProductsInProcessing = async (brandId: string) => {
+    try {
+        const processingOrdersSnapshot = await firestore
+            .collection(FIREBASE_COLLECTIONS['order'])
+            .where('status', '==', OrderStatus.PROCESSING)
+            .where('brandIds', 'array-contains', brandId)
+            .get();
+
+        const productStats = new Map<string, {
+            productId: string;
+            productName: string;
+            brandId: string;
+            brandName: string;
+            totalQuantity: number;
+            totalOrders: number;
+            orderIds: string[];
+        }>();
+
+        processingOrdersSnapshot.forEach((orderDoc) => {
+            const order = orderDoc.data() as Order;
+            const orderId = orderDoc.id;
+
+            // Filter products that belong to this brand
+            const brandProducts = order.products.filter(p => p.brandId === brandId);
+
+            brandProducts.forEach(product => {
+                const key = product.productId;
+                
+                if (!productStats.has(key)) {
+                    productStats.set(key, {
+                        productId: product.productId,
+                        productName: product.productName,
+                        brandId: product.brandId,
+                        brandName: product.brandName,
+                        totalQuantity: 0,
+                        totalOrders: 0,
+                        orderIds: []
+                    });
+                }
+
+                const stats = productStats.get(key)!;
+                stats.totalQuantity += product.quantity;
+                if (!stats.orderIds.includes(orderId)) {
+                    stats.orderIds.push(orderId);
+                    stats.totalOrders += 1;
+                }
+            });
+        });
+
+        return Array.from(productStats.values()).sort((a, b) => b.totalQuantity - a.totalQuantity);
+    } catch (error: any) {
+        throw new Error(`Failed to get brand products in processing: ${error.message}`);
+    }
+};
+
+export const getBrandProductsRefunded = async (brandId: string) => {
+    try {
+        const queryStatus = [OrderStatus.REFUND_REQUESTED, OrderStatus.REFUNDED];
+        const refundedOrdersSnapshot = await firestore
+            .collection(FIREBASE_COLLECTIONS['order'])
+            .where('status', 'in', queryStatus)
+            .where('brandIds', 'array-contains', brandId)
+            .get();
+
+        const productStats = new Map<string, {
+            productId: string;
+            productName: string;
+            brandId: string;
+            brandName: string;
+            totalQuantity: number;
+            totalOrders: number;
+            orderIds: string[];
+            refundStats: {
+                pending: number;
+                approved: number;
+                rejected: number;
+            };
+        }>();
+
+        refundedOrdersSnapshot.forEach((orderDoc) => {
+            const order = orderDoc.data() as Order;
+            const orderId = orderDoc.id;
+
+            // Filter products that belong to this brand and have refund status
+            const brandRefundedProducts = order.products.filter(p => 
+                p.brandId === brandId && p.refundStatus
+            );
+
+            brandRefundedProducts.forEach(product => {
+                const key = product.productId;
+                
+                if (!productStats.has(key)) {
+                    productStats.set(key, {
+                        productId: product.productId,
+                        productName: product.productName,
+                        brandId: product.brandId,
+                        brandName: product.brandName,
+                        totalQuantity: 0,
+                        totalOrders: 0,
+                        orderIds: [],
+                        refundStats: {
+                            pending: 0,
+                            approved: 0,
+                            rejected: 0
+                        }
+                    });
+                }
+
+                const stats = productStats.get(key)!;
+                stats.totalQuantity += product.quantity;
+                
+                // Update refund status counts
+                if (product.refundStatus === REFUND_STATUS.PENDING) {
+                    stats.refundStats.pending += product.quantity;
+                } else if (product.refundStatus === REFUND_STATUS.APPROVED) {
+                    stats.refundStats.approved += product.quantity;
+                } else if (product.refundStatus === REFUND_STATUS.REJECTED) {
+                    stats.refundStats.rejected += product.quantity;
+                }
+
+                if (!stats.orderIds.includes(orderId)) {
+                    stats.orderIds.push(orderId);
+                    stats.totalOrders += 1;
+                }
+            });
+        });
+
+        return Array.from(productStats.values()).sort((a, b) => b.totalQuantity - a.totalQuantity);
+    } catch (error: any) {
+        throw new Error(`Failed to get brand products refunded: ${error.message}`);
     }
 };

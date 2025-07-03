@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import * as BrandOwnerService from '../services/brandOwner.js';
-import * as productService from '../services/product.js';
+import * as ProductService from '../services/product.js';
+import * as OrderService from '../services/order.js';
 import { roles } from '../config/roles.js';
 import { getSubscriptionPlanDetails } from '../config/subscriptionPlans.js';
 
@@ -58,6 +59,7 @@ export const getMyProducts = async (req: Request, res: Response) => {
         const brandOwnerId = req.user?.id;
         const userRole = req.user?.role;
         const page = parseInt(req.query.page as string) || 1;
+        const limit = parseInt(req.query.limit as string) || 9;
         if (!brandOwnerId) {
             return res.status(401).json({ status: 'error', message: 'Unauthorized' });
         }
@@ -65,7 +67,7 @@ export const getMyProducts = async (req: Request, res: Response) => {
         if (!brandOwner) {
             return res.status(404).json({ status: 'error', message: 'Brand owner not found' });
         }
-        const results = await productService.getProductsByBrand(brandOwner.brandId, page);
+        const results = await ProductService.getProductsByBrand(brandOwner.brandId, page, limit);
         results.products.forEach(product => {
             product.brandSubscriptionPlan = getSubscriptionPlanDetails(product.brandSubscriptionPlan as number).name;
         })
@@ -246,6 +248,87 @@ export const getBrandOwnerMonthSalesStats = async (req: Request, res: Response) 
         res.status(500).json({
             status: 'error',
             message: error.message ?? 'Internal server error'
+        });
+    }
+};
+
+/**
+ * Get brand products currently in processing status
+ * Shows quantity and order statistics for each product
+ */
+export const getBrandProductsInProcessing = async (req: Request, res: Response) => {
+    try {
+        const brandOwnerId = req.user!.id;
+        const brandOwner = await BrandOwnerService.getBrandOwnerById(brandOwnerId);
+
+        if (!brandOwner) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'Brand owner not found'
+            });
+        }
+
+        const processingProducts = await OrderService.getBrandProductsInProcessing(brandOwner.brandId);
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                brandId: brandOwner.brandId,
+                brandName: brandOwner.brandName,
+                totalProducts: processingProducts.length,
+                totalQuantityInProcessing: processingProducts.reduce((sum, p) => sum + p.totalQuantity, 0),
+                totalOrdersInProcessing: processingProducts.reduce((sum, p) => sum + p.totalOrders, 0),
+                products: processingProducts
+            }
+        });
+    } catch (error: any) {
+        res.status(500).json({
+            status: 'error',
+            message: error.message
+        });
+    }
+};
+
+/**
+ * Get brand products with refund requests
+ * Shows quantity and refund statistics for each product
+ */
+export const getBrandProductsRefunded = async (req: Request, res: Response) => {
+    try {
+        const brandOwnerId = req.user!.id;
+        const brandOwner = await BrandOwnerService.getBrandOwnerById(brandOwnerId);
+
+        if (!brandOwner) {
+            return res.status(404).json({
+                status: 'error',
+                message: 'Brand owner not found'
+            });
+        }
+
+        const refundedProducts = await OrderService.getBrandProductsRefunded(brandOwner.brandId);
+
+        const summary = {
+            totalPending: refundedProducts.reduce((sum, p) => sum + p.refundStats.pending, 0),
+            totalApproved: refundedProducts.reduce((sum, p) => sum + p.refundStats.approved, 0),
+            totalRejected: refundedProducts.reduce((sum, p) => sum + p.refundStats.rejected, 0)
+        };
+
+        res.status(200).json({
+            status: 'success',
+            data: {
+                brandId: brandOwner.brandId,
+                brandName: brandOwner.brandName,
+                totalProducts: refundedProducts.length,
+                totalQuantityRefunded: refundedProducts.reduce((sum, p) => sum + p.totalQuantity, 0),
+                totalOrdersWithRefunds: refundedProducts.reduce((sum, p) => sum + p.totalOrders, 0),
+                refundSummary: summary,
+                products: refundedProducts
+            }
+        });
+    } catch (error: any) {
+        res.status(500).json({
+            status: 'error',
+            message: error.message
         });
     }
 };

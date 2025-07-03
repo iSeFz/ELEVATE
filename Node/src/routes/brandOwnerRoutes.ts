@@ -92,6 +92,18 @@ router.delete('/me/products/:productId/variants/:variantId',
     ProductController.deleteProductVariant);
 // -------------------------------------------------
 
+// Order tracking routes for brand owners
+router.get('/me/orders/processing-products',
+    authenticate,
+    authorize(['admin', 'brandOwner', 'brandManager']),
+    BrandOwnerController.getBrandProductsInProcessing);
+
+router.get('/me/orders/refunded-products',
+    authenticate,
+    authorize(['admin', 'brandOwner', 'brandManager']),
+    BrandOwnerController.getBrandProductsRefunded);
+// -------------------------------------------------
+
 // Dashborad routes for brand owners
 router.get('/me/dashboard/months-sales',
     authenticate,

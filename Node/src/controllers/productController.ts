@@ -24,6 +24,7 @@ export const getAllProducts = async (req: Request, res: Response) => {
     const brand = req.query.brand as string;
     const department = req.query.department as string;
     const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
 
     if ((category && brand) || (category && department) || (brand && department)) {
         return res.status(400).json({ status: 'error', message: 'Please provide only one filter: category, brand, or department' });
@@ -32,14 +33,14 @@ export const getAllProducts = async (req: Request, res: Response) => {
     try {
         let results;
         if (category) {
-            results = await productService.getProductsByCategory(category, page);
+            results = await productService.getProductsByCategory(category, page, limit);
         } else if (brand) {
-            results = await productService.getProductsByBrand(brand, page);
+            results = await productService.getProductsByBrand(brand, page, limit);
         } else if (department) {
-            results = await productService.getProductsByDepartment(department, page);
+            results = await productService.getProductsByDepartment(department, page, limit);
         } else {
             // If no filters are provided, return all products
-            results = await productService.getAllProducts(page);
+            results = await productService.getAllProducts(page, limit);
         }
         results.products.forEach(product => {
             product.brandSubscriptionPlan = getSubscriptionPlanDetails(product.brandSubscriptionPlan as number).name;
@@ -53,7 +54,8 @@ export const getAllProducts = async (req: Request, res: Response) => {
 export const getMostPopularProducts = async (req: Request, res: Response) => {
     try {
         const page = parseInt(req.query.page as string) || 1;
-        const results = await productService.getMostPopularProducts(page);
+        const limit = parseInt(req.query.limit as string) || 10;
+        const results = await productService.getMostPopularProducts(page, limit);
 
         results.products.forEach(product => {
             product.brandSubscriptionPlan = getSubscriptionPlanDetails(product.brandSubscriptionPlan as number).name;
@@ -67,7 +69,8 @@ export const getMostPopularProducts = async (req: Request, res: Response) => {
 export const getTopRatedProducts = async (req: Request, res: Response) => {
     try {
         const page = parseInt(req.query.page as string) || 1;
-        const results = await productService.getTopRatedProducts(page);
+        const limit = parseInt(req.query.limit as string) || 10;
+        const results = await productService.getTopRatedProducts(page, limit);
 
         results.products.forEach(product => {
             product.brandSubscriptionPlan = getSubscriptionPlanDetails(product.brandSubscriptionPlan as number).name;
@@ -82,12 +85,12 @@ export const getProductRecommendations = async (req: Request, res: Response) => 
     try {
         const productId = req.params.id;
         const page = parseInt(req.query.page as string) || 1;
+        const limit = parseInt(req.query.limit as string) || 10;
+        const results = await productAssociationService.getFrequentlyBoughtTogether(productId, page, limit);
 
-        if (!productId) {
-            return res.status(400).json({ status: 'error', message: 'Product ID is required' });
-        }
-
-        const results = await productAssociationService.getFrequentlyBoughtTogether(productId, page);
+        results.recommendations.forEach(product => {
+            product.brandSubscriptionPlan = getSubscriptionPlanDetails(product.brandSubscriptionPlan as number).name;
+        });
         return res.status(200).json({ status: 'success', data: results.recommendations, pagination: results.pagination });
     } catch (error: any) {
         return res.status(500).json({ status: 'error', message: error.message });
