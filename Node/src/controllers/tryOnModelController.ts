@@ -26,6 +26,9 @@ export class TryOnController {
             const replicateWebhookUrl = `${TryOnController.url}/utilities/try-on/webhook/replicate`;
             const falAIWebhookUrl = `${TryOnController.url}/utilities/try-on/webhook/falAI`;
 
+            console.log("Replicate Webhook URL:", replicateWebhookUrl);
+            console.log("FalAI Webhook URL:", falAIWebhookUrl);
+
             // Create try-on request document
             const tryOnRequest = await TryOnService.createTryOnRequest(
                 userId,
@@ -124,8 +127,6 @@ export class TryOnController {
     ): Promise<void> {
         try {
             const webhookData = req.body;
-            console.log(`Received ${options.platform} webhook data:`, JSON.stringify(webhookData, null, 2));
-
             const { predictionId, status, output, payload, error } = options.parseWebhookData(webhookData);
 
             if (!predictionId || !status) {
@@ -181,7 +182,7 @@ export class TryOnController {
             }),
             processStatusUpdate: (status, output, _, error) => {
                 if (status === 'succeeded') {
-                    const resultUrl = Array.isArray(output) ? output[0] : output;
+                    const resultUrl = (Array.isArray(output) ? output[0] : output) ?? "";
                     return {
                         status: 'succeeded' as const,
                         resultUrl,
@@ -218,7 +219,7 @@ export class TryOnController {
             }),
             processStatusUpdate: (status, _, payload, error) => {
                 if (status === 'OK') {
-                    const resultUrl = payload?.images?.[0]?.url;
+                    const resultUrl = payload?.image?.url ?? "";
                     return {
                         status: 'succeeded' as const,
                         resultUrl,
