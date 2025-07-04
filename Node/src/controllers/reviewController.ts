@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import * as reviewService from '../services/review.js';
 import * as productService from '../services/product.js';
 import * as customerService from '../services/customer.js';
+import * as orderService from '../services/order.js';
 import { Review } from '../types/models/review.js';
 
 export const getAllReviewsOfProduct = async (req: Request, res: Response) => {
@@ -53,6 +54,15 @@ export const addReview = async (req: Request, res: Response) => {
         const customer = await customerService.getCustomer(userId);
         if (!customer) {
             return res.status(404).json({ status: 'error', message: 'Customer not found' });
+        }
+
+        // Check if customer has ordered this product
+        const hasOrderedProduct = await orderService.hasCustomerOrderedProduct(userId, productId);
+        if (!hasOrderedProduct) {
+            return res.status(403).json({
+                status: 'error',
+                message: 'You can only review products that you have ordered and received'
+            });
         }
 
         const existingReview = await reviewService.hasCustomerReviewedProduct(userId, productId);

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import * as customerService from '../services/customer.js';
 import * as orderService from '../services/order.js';
+import * as productService from '../services/product.js';
 import { customerSignup } from './authControllers.js';
 
 export const getAllCustomers = async (req: Request, res: Response) => {
@@ -97,6 +98,55 @@ export const getCustomerOrders = async (req: Request, res: Response) => {
             status: 'success',
             data: result.orders,
             pagination: result.pagination
+        });
+    } catch (error: any) {
+        return res.status(400).json({ status: 'error', message: error.message });
+    }
+};
+
+export const getCustomerReviewableProducts = async (req: Request, res: Response) => {
+    try {
+        const customerId = req.user?.id!;
+        const page = parseInt(req.query.page as string) || 1;
+        const limit = 10;
+        const offset = (page - 1) * limit;
+
+        // Get all product IDs the customer has ordered
+        const orderedProductIds = await orderService.getCustomerOrderedProducts(customerId);
+
+        if (orderedProductIds.length === 0) {
+            return res.status(200).json({
+                status: 'success',
+                data: [],
+                pagination: {
+                    page,
+                    limit,
+                    hasNextPage: false
+                }
+            });
+        }
+
+        // Get paginated products
+        const paginatedProductIds = orderedProductIds.slice(offset, offset + limit);
+        const products = [];
+
+        for (const productId of paginatedProductIds) {
+            const product = await productService.getProduct(productId);
+            if (product) {
+                products.push(product);
+            }
+        }
+
+        const hasNextPage = orderedProductIds.length > offset + limit;
+
+        return res.status(200).json({
+            status: 'success',
+            data: products,
+            pagination: {
+                page,
+                limit,
+                hasNextPage
+            }
         });
     } catch (error: any) {
         return res.status(400).json({ status: 'error', message: error.message });

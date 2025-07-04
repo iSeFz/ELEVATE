@@ -153,7 +153,7 @@ export const cancelOrder = async (req: Request, res: Response) => {
 export const refundOrder = async (req: Request, res: Response) => {
     try {
         const orderID = req.params.id;
-        const { productId, variantId } = req.body;
+        const { data } = req.body;
         const customerID = req.user?.id!;
 
         // Check if order exists first
@@ -166,7 +166,7 @@ export const refundOrder = async (req: Request, res: Response) => {
             throw new Error('Unauthorized access to this order');
         }
 
-        await orderService.refundOrder(orderID, productId, variantId);
+        await orderService.refundOrder(orderID, data);
         return res.status(200).json({ status: 'success', message: 'Order refunded successfully' });
     } catch (error: any) {
         return res.status(400).json({ status: 'error', message: error.message });
@@ -180,7 +180,7 @@ export const deleteOrder = async (req: Request, res: Response) => {
         if (!orderData) {
             return res.status(404).json({ status: 'error', message: 'Order not found' });
         }
-        
+
         if (orderData.status !== OrderStatus.PENDING) {
             return res.status(400).json({
                 status: 'error',

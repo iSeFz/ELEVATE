@@ -523,15 +523,22 @@ paths:
             schema:
               type: object
               required:
-                - productId
-                - variantId
+                - data
               properties:
-                productId:
-                  type: string
-                  description: ID of the product to refund
-                variantId:
-                  type: string
-                  description: ID of the variant to refund
+                data:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - variantId
+                      - productId
+                    properties:
+                      variantId:
+                        type: string
+                        description: ID of the product variant to refund
+                      productId:
+                        type: string
+                        description: ID of the product to refund
       responses:
         200:
           description: Order refunded successfully

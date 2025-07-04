@@ -74,4 +74,8 @@ router.delete('/me',
     authorize(['admin']),
     CustomerController.deleteCustomer);
 
+router.get('/me/reviewable-products',
+    authenticate,
+    CustomerController.getCustomerReviewableProducts);
+
 export default router;

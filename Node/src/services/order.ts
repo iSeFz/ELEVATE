@@ -458,7 +458,13 @@ export const cancelOrder = async (orderID: string) => {
     }
 };
 
-export const refundOrder = async (orderID: string, productId: string, variantId: string) => {
+type RefundOrderData = [
+    {
+        variantId: string;
+        productId: string;
+    }
+]
+export const refundOrder = async (orderID: string, data: RefundOrderData) => {
     try {
         const orderRef = firestore.collection(orderCollection).doc(orderID);
         const orderDoc = await orderRef.get();
@@ -469,15 +475,18 @@ export const refundOrder = async (orderID: string, productId: string, variantId:
         if (order.status !== OrderStatus.DELIVERED) {
             throw new Error('Order must be delivered before refunding');
         }
-        const productIndex = order.products.findIndex(p => p.productId === productId && p.variantId === variantId);
-        if (productIndex === -1) {
-            throw new Error('Product not found in order');
-        }
-        if (order.products[productIndex].refundStatus) {
-            throw new Error('Product has already been refunded or is in the process of being refunded');
-        }
-        // Update the product to mark it as refunded
-        order.products[productIndex].refundStatus = REFUND_STATUS.PENDING;
+
+        data.forEach(item => {
+            const productIndex = order.products.findIndex(p => p.productId === item.productId && p.variantId === item.variantId);
+            if (productIndex === -1) {
+                throw new Error('Product not found in order');
+            }
+            if (order.products[productIndex].refundStatus) {
+                throw new Error('Product has already been refunded or is in the process of being refunded');
+            }
+            // Update the product to mark it as refunded
+            order.products[productIndex].refundStatus = REFUND_STATUS.PENDING;
+        })
 
         // Update the order status to REFUND_REQUESTED
         await orderRef.update({
@@ -668,7 +677,7 @@ export const getBrandProductsInProcessing = async (brandId: string) => {
 
             brandProducts.forEach(product => {
                 const key = product.productId;
-                
+
                 if (!productStats.has(key)) {
                     productStats.set(key, {
                         productId: product.productId,
@@ -727,13 +736,13 @@ export const getBrandProductsRefunded = async (brandId: string) => {
             const orderId = orderDoc.id;
 
             // Filter products that belong to this brand and have refund status
-            const brandRefundedProducts = order.products.filter(p => 
+            const brandRefundedProducts = order.products.filter(p =>
                 p.brandId === brandId && p.refundStatus
             );
 
             brandRefundedProducts.forEach(product => {
                 const key = product.productId;
-                
+
                 if (!productStats.has(key)) {
                     productStats.set(key, {
                         productId: product.productId,
@@ -754,7 +763,7 @@ export const getBrandProductsRefunded = async (brandId: string) => {
 
                 const stats = productStats.get(key)!;
                 stats.totalQuantity += product.quantity;
-                
+
                 // Update refund status counts
                 if (product.refundStatus === REFUND_STATUS.PENDING) {
                     stats.refundStats.pending += product.quantity;
@@ -774,5 +783,70 @@ export const getBrandProductsRefunded = async (brandId: string) => {
         return Array.from(productStats.values()).sort((a, b) => b.totalQuantity - a.totalQuantity);
     } catch (error: any) {
         throw new Error(`Failed to get brand products refunded: ${error.message}`);
+    }
+};
+
+/**
+ * Checks if a customer has ordered a specific product
+ * @param customerId - The ID of the customer
+ * @param productId - The ID of the product
+ * @returns Promise<boolean> - Returns true if customer has ordered the product, false otherwise
+ */
+export const hasCustomerOrderedProduct = async (customerId: string, productId: string): Promise<boolean> => {
+    if (!customerId || !productId) {
+        throw new Error('Please provide both customer ID and product ID');
+    }
+
+    try {
+        // Query orders where the customer has ordered the product
+        // Only consider delivered orders (customers can only review products they've received)
+        const snapshot = await firestore.collection(orderCollection)
+            .where('customerId', '==', customerId)
+            .where('status', '==', OrderStatus.DELIVERED)
+            .get();
+
+        // Check if any of the orders contains the specific product
+        for (const doc of snapshot.docs) {
+            const order = doc.data() as Order;
+            const hasProduct = order.products.some(product => product.productId === productId);
+            if (hasProduct) {
+                return true;
+            }
+        }
+
+        return false;
+    } catch (error: any) {
+        throw new Error(`Failed to check customer order history: ${error.message}`);
+    }
+};
+
+/**
+ * Gets all products that a customer has ordered and can review
+ * @param customerId - The ID of the customer
+ * @returns Promise<string[]> - Array of product IDs the customer can review
+ */
+export const getCustomerOrderedProducts = async (customerId: string): Promise<string[]> => {
+    if (!customerId) {
+        throw new Error('Please provide a customer ID');
+    }
+
+    try {
+        const snapshot = await firestore.collection(orderCollection)
+            .where('customerId', '==', customerId)
+            .where('status', '==', OrderStatus.DELIVERED)
+            .get();
+
+        const productIds = new Set<string>();
+
+        snapshot.docs.forEach(doc => {
+            const order = doc.data() as Order;
+            order.products.forEach(product => {
+                productIds.add(product.productId);
+            });
+        });
+
+        return Array.from(productIds);
+    } catch (error: any) {
+        throw new Error(`Failed to get customer ordered products: ${error.message}`);
     }
 };
