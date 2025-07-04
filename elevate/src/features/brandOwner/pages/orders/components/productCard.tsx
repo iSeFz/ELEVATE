@@ -8,6 +8,7 @@ import {
   Box,
 } from "@mui/material";
 import { useSnackbar } from "notistack";
+import { capitalizeProductName } from "../../../../../services/convertProduct";
 
 interface ProductData {
   id: string;
@@ -45,7 +46,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isOrder}) => {
                 fontWeight="bold"
                 component="div"
               >
-                {name}
+                {capitalizeProductName(name)}
               </Typography>
               <Typography
                 variant="body2"

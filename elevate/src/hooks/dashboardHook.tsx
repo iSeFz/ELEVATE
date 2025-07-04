@@ -52,7 +52,9 @@ export function useDashboardData() {
   const { data: stats, isLoading: statsLoading} = useQuery<StatsData>({
     queryKey: ["stats"],
     queryFn: getBrandStats,
-  });
+  }
+  
+);
 
   const { data: reviews, isLoading: reviewsLoading} = useQuery<ReviewData>({
     queryKey: ["reviews"],

@@ -13,6 +13,7 @@ import {
 
 import { StyledCard } from "./styledCard";
 import { useDashboardData } from "../../../../../hooks/dashboardHook";
+import { capitalizeProductName } from "../../../../../services/convertProduct";
 
 const StyledTableHeaderCell = styled(TableCell)({
   border: "none",
@@ -103,15 +104,21 @@ export const TopProductsTable = () => {
           </TableHead>
           <TableBody>
             {StatsData?.currentMonthStats?.topProductsSales?.length > 0 ? (
-              StatsData.currentMonthStats.topProductsSales.map((product) => (
-                <TableRow key={product.productName}>
-                  <StyledTableRowCell>{product.productName}</StyledTableRowCell>
-                  <StyledTableRowCell>
-                    {product.quantitySold}
-                  </StyledTableRowCell>
-                  <StyledTableRowCell>{product.totalSales}</StyledTableRowCell>
-                </TableRow>
-              ))
+              StatsData.currentMonthStats.topProductsSales
+                .slice(0, 5)
+                .map((product) => (
+                  <TableRow key={product.productName}>
+                    <StyledTableRowCell>
+                      {capitalizeProductName(product.productName)}
+                    </StyledTableRowCell>
+                    <StyledTableRowCell>
+                      {product.quantitySold}
+                    </StyledTableRowCell>
+                    <StyledTableRowCell>
+                      {product.totalSales}
+                    </StyledTableRowCell>
+                  </TableRow>
+                ))
             ) : (
               <TableRow>
                 <StyledTableRowCell colSpan={3} align="center">

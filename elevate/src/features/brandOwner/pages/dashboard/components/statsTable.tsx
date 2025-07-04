@@ -10,6 +10,7 @@ import {
 
 import { StyledCard } from "./styledCard";
 import { useDashboardData } from "../../../../../hooks/dashboardHook";
+import { capitalizeProductName } from "../../../../../services/convertProduct";
 
 const StyledSvgIcon = styled(SvgIcon)({
   fontSize: 36,
@@ -118,8 +119,8 @@ export const StatsTable = () => {
                 </Box>
 
                 <Typography color="text.primary" fontWeight="bold">
-                  {StatsData?.currentMonthStats?.topProduct?.productName ||
-                    "N/A"}
+                  {capitalizeProductName(StatsData?.currentMonthStats?.topProduct
+                    ?.productName) || "N/A"}
                 </Typography>
                 <Typography color="text.secondary">Top Product</Typography>
               </StatCard>

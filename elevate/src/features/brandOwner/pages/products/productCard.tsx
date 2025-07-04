@@ -21,6 +21,7 @@ import { useNavigate } from "react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { deleteProduct } from "../../../../api/endpoints"; // Adjust import path
 import { useSnackbar } from "notistack";
+import { capitalizeProductName } from "../../../../services/convertProduct";
 
 interface ProductData {
   id: string;
@@ -94,7 +95,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 fontWeight="bold"
                 component="div"
               >
-                {name}
+                {capitalizeProductName(name)}
               </Typography>
               <Typography variant="body2" color="text.secondary" mt={1}>
                 {reviewSummary
