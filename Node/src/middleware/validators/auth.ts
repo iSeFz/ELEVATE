@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { createSchemaBuilder, extractSchemaFieldsMiddleware, validateObjectStrict } from './builder.js';
-import { addressSchema, emailPattern, phonePattern, usernamePattern, websitePattern } from './common.js';
+import { addressSchema, emailPattern, phonePattern, websitePattern } from './common.js';
 
 const signupSchema = createSchemaBuilder()
     .field('email', {
@@ -8,12 +8,9 @@ const signupSchema = createSchemaBuilder()
         value: 'name@elevate.com', patternRgx: emailPattern.regex, patternHint: emailPattern.Hint
     })
     .field('uid', { type: 'string', required: true })
-    .field('firstName', { type: 'string', required: false, minLength: 2, maxLength: 15 })
-    .field('lastName', { type: 'string', required: false, minLength: 2, maxLength: 15 })
-    .field('username', {
-        type: 'string', required: false, minLength: 3, maxLength: 15,
-        value: 'elevateUser', patternRgx: usernamePattern.regex, patternHint: usernamePattern.Hint
-    })
+    .field('firstName', { type: 'string', required: false })
+    .field('lastName', { type: 'string', required: false })
+    .field('username', { type: 'string', required: false, value: 'elevateUser' })
     .field('phoneNumber', {
         type: 'string', required: false, minLength: 11, maxLength: 11,
         value: '01234567890', patternRgx: phonePattern.regex, patternHint: phonePattern.Hint
