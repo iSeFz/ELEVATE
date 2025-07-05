@@ -1,4 +1,3 @@
-// src/components/ProductCard.tsx
 import React from "react";
 import {
   Card,
@@ -7,12 +6,11 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { useSnackbar } from "notistack";
 import { capitalizeProductName } from "../../../../../services/convertProduct";
 
 interface ProductData {
   id: string;
-  name: string;
+  productName: string;
   variants: Array<{
     images: string[];
   }>;
@@ -31,12 +29,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isOrder}) => {
     return <div>No product data available.</div>;
   }
 
-  const { name, totalQuantity, productImage, refundStats } = product;
+  const { productName, totalQuantity, productImage, refundStats } = product;
   const mainImage = productImage || "";
 
   return (
     <>
-      <Card sx={{ margin: 2, boxShadow: 3, height: 320, width: 300 }}>
+      <Card sx={{ margin: 2, boxShadow: 3, height: 320, width: 310 }}>
         <CardContent>
           <Box display="flex" gap={2}>
             <Box>
@@ -46,7 +44,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isOrder}) => {
                 fontWeight="bold"
                 component="div"
               >
-                {capitalizeProductName(name)}
+                {capitalizeProductName(productName)}
               </Typography>
               <Typography
                 variant="body2"
