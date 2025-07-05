@@ -39,10 +39,12 @@ export const customerSignup = async (req: Request, res: Response) => {
 
 export const thirdPartySignup = async (req: Request, res: Response) => {
     try {
-        const { uid, email } = req.body;
+        const { uid, email, imageURL, ...others } = req.body;
         const userRecord = await authService.thirdPartySignup({
             id: uid,
             email: email,
+            imageURL: imageURL ?? '',
+            ...others
         });
 
         return res.status(201).json({
