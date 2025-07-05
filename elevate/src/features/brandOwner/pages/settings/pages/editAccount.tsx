@@ -28,16 +28,19 @@ const validationSchema = yup.object({
     .string()
     .required("First name is required")
     .min(2, "First name must be at least 2 characters")
+    .max(15, "First name must be at most 15 characters")
     .matches(/^[a-zA-Z\s]+$/, "First name must contain only letters"),
   lastName: yup
     .string()
     .required("Last name is required")
     .min(2, "Last name must be at least 2 characters")
+    .max(15, "Last name must be at most 15 characters")
     .matches(/^[a-zA-Z\s]+$/, "Last name must contain only letters"),
   username: yup
     .string()
     .required("Username is required")
     .min(3, "Username must be at least 3 characters")
+    .max(15, "Username must be at most 15 characters")
     .matches(
       /^[a-zA-Z0-9_-]+$/,
       "Username can only contain letters, numbers, underscores, and hyphens"

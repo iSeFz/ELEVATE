@@ -63,7 +63,8 @@ const validationSchema = Yup.object({
   brandName: Yup.string()
     .trim()
     .required("Brand name is required")
-    .min(2, "Brand name must be at least 2 characters"),
+    .min(1, "Brand name must be at least 1 characters")
+    .max(30, "Brand name must be at most 30 characters"),
   email: Yup.string()
     .trim()
     .email("Invalid email format")
@@ -71,36 +72,43 @@ const validationSchema = Yup.object({
   industry: Yup.string()
     .trim()
     .required("Industry is required")
-    .min(2, "Industry must be at least 2 characters"),
-  addresses: Yup.array().of(
-    Yup.object({
-      building: Yup.number()
-        .required("Building number is required")
-        .positive("Building number must be positive")
-        .integer("Building number must be an integer"),
-      city: Yup.string()
-        .trim()
-        .required("City is required")
-        .min(2, "City name must be at least 2 characters"),
-      postalCode: Yup.number()
-        .required("Postal code is required")
-        .positive("Postal code must be positive")
-        .integer("Postal code must be an integer"),
-      street: Yup.string()
-        .trim()
-        .required("Street is required")
-        .min(2, "Street name must be at least 2 characters")
-    })
-  ),
-  websites: Yup.array().of(
-    Yup.object({
-      type: Yup.string().required("Website type is required"),
-      url: Yup.string()
-        .trim()
-        .required("URL is required")
-        .url("Must be a valid URL (e.g., https://example.com)"),
-    })
-  ),
+    .min(1, "Industry must be at least 1 characters")
+    .max(30, "Industry must be at most 30 characters"),
+  addresses: Yup.array()
+    .of(
+      Yup.object({
+        building: Yup.number()
+          .required("Building number is required")
+          .positive("Building number must be positive")
+          .integer("Building number must be an integer"),
+        city: Yup.string()
+          .trim()
+          .required("City is required")
+          .min(1, "City name must be at least 1 characters")
+          .max(20, "City name must be at most 20 characters"),
+        postalCode: Yup.number()
+          .required("Postal code is required")
+          .positive("Postal code must be positive")
+          .integer("Postal code must be an integer"),
+        street: Yup.string()
+          .trim()
+          .required("Street is required")
+          .min(1, "Street name must be at least 1 characters")
+          .max(100, "Street name must be at most 100 characters"),
+      })
+    )
+    .max(6, "Maximum 6 addresses allowed"),
+  websites: Yup.array()
+    .of(
+      Yup.object({
+        type: Yup.string().required("Website type is required"),
+        url: Yup.string()
+          .trim()
+          .required("URL is required")
+          .url("Must be a valid URL (e.g., https://example.com)"),
+      })
+    )
+    .max(8, "Maximum 8 addresses allowed"),
   phoneNumbers: Yup.array().of(
     Yup.string()
       .required("Phone number is required")
@@ -108,8 +116,11 @@ const validationSchema = Yup.object({
         /^(010|011|012|015)[0-9]{8}$/,
         "Phone number must be 11 digits starting with 010, 011, 012, or 015"
       )
-  ),
-  storyDescription: Yup.string().trim().nullable(),
+  ).max(5, "Maximum 5 phone numbers allowed"),
+  storyDescription: Yup.string()
+    .trim()
+    .nullable()
+    .max(500, "Story must be at most 500 characters"),
 });
 
 const Profile = ({ isEditMode }: { isEditMode: boolean }) => {

@@ -62,9 +62,9 @@ const variantSchema = yup.object({
 });
 
 const productSchema = yup.object({
-  name: yup.string().required("Product name is required"),
-  description: yup.string().required("Description is required"),
-  material: yup.string().required("Material is required"),
+  name: yup.string().required("Product name is required").min(1, "Product name must be at least 1 character").max(100, "Product name must be at most 100 characters"),
+  description: yup.string().required("Description is required").min(1, "Description must be at least 1 character").max(500, "Description must be at most 500 characters"),
+  material: yup.string().required("Material is required").min(1, "Material must be at least 1 character").max(50, "Material must be at most 50 characters"),
   category: yup.string().required("Category is required"),
   department: yup.array().min(1, "At least one department is required"),
   variants: yup.array().min(1, "At least one variant is required"),
