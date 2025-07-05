@@ -34,7 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isOrder}) => {
 
   return (
     <>
-      <Card sx={{ margin: 2, boxShadow: 3, height: 320, width: 310 }}>
+      <Card sx={{ margin: 2, boxShadow: 3, height: 320, width: 300 }}>
         <CardContent>
           <Box display="flex" gap={2}>
             <Box>
