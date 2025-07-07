@@ -40,7 +40,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ allowedRoles }) => {
   }
 
   if (allowedRoles && !allowedRoles.includes(userRole)) {
-    return <Navigate to="/products" replace />;
+    return <Navigate to="/orders/orders" replace />;
   }
 
   return <Outlet />;
