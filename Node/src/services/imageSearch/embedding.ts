@@ -4,6 +4,7 @@ import { GoogleAuth } from 'google-auth-library';
 import { GOOGLE_CLOUD_LOCATION, GOOGLE_CLOUD_PROJECT_ID, VERTEX_MODEL_NAME, EMBEDDING_DIMENSION } from '../../config/vertexAI.js';
 import { PROJECT_ROOT } from '../../config/common.js';
 import { downloadImageAsBuffer } from './imageProcessing.js';
+import { SERVICE_ACCOUNT } from '../../config/firebase.js';
 
 export const GOOGLE_APPLICATION_CREDENTIALS = path.join(PROJECT_ROOT, 'src', 'config', 'serviceAccountKey.json')
 
@@ -37,7 +38,7 @@ export const generateImageEmbedding = async (imageUrl: string): Promise<number[]
 
         // Get authentication token
         const auth = new GoogleAuth({
-            keyFile: GOOGLE_APPLICATION_CREDENTIALS,
+            credentials: SERVICE_ACCOUNT as any,
             scopes: ['https://www.googleapis.com/auth/cloud-platform']
         });
 

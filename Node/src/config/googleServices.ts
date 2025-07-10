@@ -1,4 +1,4 @@
-const API_KEY = "AIzaSyABqEEAIgUA2daNGHV8zpjpYZ9_RGeXsA8";
+const API_KEY = process.env.GOOGLE_API_KEY || 'YOUR_GOOGLE_API_KEY_HERE';
 
 export const generateGeocodingURL = (
     building: string,

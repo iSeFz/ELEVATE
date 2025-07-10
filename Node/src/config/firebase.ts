@@ -1,13 +1,26 @@
 import admin from 'firebase-admin';
-import serviceAccount from './serviceAccountKey.json' with { type: 'json' };
 
+// 1. Check if the environment variable exists
+if (!process.env.FIREBASE_CREDENTIALS) {
+  console.error('Firebase credentials are not set in the .env file. Please set FIREBASE_CREDENTIALS.');
+  process.exit(1);
+}
+
+// 2. Sanitize the string for JSON parsing
+const credentialsString = process.env.FIREBASE_CREDENTIALS.replace(/\n/g, '\\n');
+
+// 3. Parse the sanitized JSON string
+const SERVICE_ACCOUNT = JSON.parse(credentialsString) as admin.ServiceAccount;
+
+// 4. Initialize Firebase with the parsed credentials
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount as any),
+  credential: admin.credential.cert(SERVICE_ACCOUNT),
   databaseURL: "https://elevate-fcai-cu-default-rtdb.europe-west1.firebasedatabase.app",
-  storageBucket: "elevate-fcai-cu.appspot.com"
 });
 
-const firestoreKey = "AIzaSyDupVh4a_BioIJteaPBRZKgBFBGhhDKY8Q";
+console.log('Firebase Admin SDK initialized successfully.');
+
+const firestoreKey = process.env.FIREBASE_WEB_API_KEY || 'YOUR_FIREBASE_WEB_API_KEY_HERE';
 
 const verifyCredentialsURL = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firestoreKey}`;
 
@@ -29,4 +42,4 @@ export const FIREBASE_COLLECTIONS = {
   "tryOnRequests": "tryOnRequests",
 }
 
-export { admin, verifyCredentialsURL, SEND_RESET_EMAIL_URL, CONFIRM_RESET_PASSWORD_URL, REFRESH_TOKEN_URL };
+export { admin, verifyCredentialsURL, SEND_RESET_EMAIL_URL, CONFIRM_RESET_PASSWORD_URL, REFRESH_TOKEN_URL, SERVICE_ACCOUNT };

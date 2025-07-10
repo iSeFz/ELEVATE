@@ -1,5 +1,3 @@
-import serviceAccount from './serviceAccountKey.json' with { type: 'json' };
-
 export const GOOGLE_CLOUD_PROJECT_ID = "elevate-fcai-cu";
 // Try different regions where embedding models are more widely available
 export const GOOGLE_CLOUD_LOCATION = "europe-west3"; // Changed from us-central1
