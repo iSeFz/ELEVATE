@@ -1,0 +1,5580 @@
+[
+  {
+    "id": 8212162412700,
+    "title": "Staywoke White",
+    "handle": "staywoke-white",
+    "body_html": "<p>Embrace our brand slogan with the Staywoke Oversized T-Shirt. Designed to keep you always aware and conscious of potential opportunities and threats, this unique piece is a testament to our commitment to high standards. Enjoy the perfect blend of comfort and street style with our distinctive streetwear. Staywoke, stay bold with WOKE.</p>\n<!---->",
+    "published_at": "2025-03-25T04:05:51+02:00",
+    "created_at": "2024-07-28T03:02:48+03:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Oversized T-shirt",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44278634676380,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "450.00",
+        "grams": 300,
+        "compare_at_price": "450.00",
+        "position": 2,
+        "product_id": 8212162412700,
+        "created_at": "2024-07-28T03:02:49+03:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44278634709148,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "450.00",
+        "grams": 300,
+        "compare_at_price": "450.00",
+        "position": 3,
+        "product_id": 8212162412700,
+        "created_at": "2024-07-28T03:02:49+03:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44278634741916,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "450.00",
+        "grams": 300,
+        "compare_at_price": "450.00",
+        "position": 4,
+        "product_id": 8212162412700,
+        "created_at": "2024-07-28T03:02:49+03:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 39277036372124,
+        "created_at": "2024-07-28T03:02:08+03:00",
+        "position": 1,
+        "updated_at": "2024-07-28T03:02:11+03:00",
+        "product_id": 8212162412700,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/WhiteResized_80500f76-5e56-404e-b92c-e3dd099fa7dd.jpg?v=1722124931",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 39277036404892,
+        "created_at": "2024-07-28T03:02:08+03:00",
+        "position": 2,
+        "updated_at": "2024-07-28T03:02:10+03:00",
+        "product_id": 8212162412700,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/polocopy3_f4286d2a-80ea-4700-840f-0cb6e563bcc6.png?v=1722124930",
+        "width": 1025,
+        "height": 1025
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 7972808982684,
+    "title": "Black Never Doubt Oversized Tee",
+    "handle": "black-never-doubt-oversized",
+    "body_html": "<p><span data-mce-fragment=\"1\">Introducing our Polo Oversized Tee – where impeccable measurements meet streetwear perfection. Crafted from lightweight, breathable cotton, it's your go-to piece for effortless summer style. Designed with simplicity and sophistication in mind, its oversized silhouette offers the ideal blend of comfort and contemporary flair. Embrace the summer breeze with confidence in this versatile wardrobe staple, ensuring you stay cool and stylish wherever the day takes you. Elevate your streetwear game with our Polo Oversized Tee – because perfection should always feel this comfortable.</span></p>",
+    "published_at": "2025-03-25T04:05:24+02:00",
+    "created_at": "2024-04-12T23:38:55+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "polo oversized t-shirt",
+    "tags": [],
+    "variants": [
+      {
+        "id": 43456370081948,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 600,
+        "compare_at_price": "650.00",
+        "position": 2,
+        "product_id": 7972808982684,
+        "created_at": "2024-04-12T23:38:56+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 43456370114716,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 600,
+        "compare_at_price": "650.00",
+        "position": 3,
+        "product_id": 7972808982684,
+        "created_at": "2024-04-12T23:38:56+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 43456370147484,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 600,
+        "compare_at_price": "650.00",
+        "position": 4,
+        "product_id": 7972808982684,
+        "created_at": "2024-04-12T23:38:56+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 38066193334428,
+        "created_at": "2024-04-12T23:38:55+02:00",
+        "position": 1,
+        "updated_at": "2024-04-12T23:38:57+02:00",
+        "product_id": 7972808982684,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/S2_146.jpg?v=1712957937",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 38066193399964,
+        "created_at": "2024-04-12T23:38:55+02:00",
+        "position": 2,
+        "updated_at": "2024-04-12T23:38:58+02:00",
+        "product_id": 7972808982684,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/S2_149.jpg?v=1712957938",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 38066193268892,
+        "created_at": "2024-04-12T23:38:55+02:00",
+        "position": 3,
+        "updated_at": "2024-04-12T23:38:57+02:00",
+        "product_id": 7972808982684,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/S2_144.jpg?v=1712957937",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 38066193203356,
+        "created_at": "2024-04-12T23:38:55+02:00",
+        "position": 4,
+        "updated_at": "2024-04-12T23:38:57+02:00",
+        "product_id": 7972808982684,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/SizeChart_f7659ea6-0689-4d39-a1ac-afa96c1fedaf.png?v=1712957937",
+        "width": 540,
+        "height": 552
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Large",
+          "Medium",
+          "Small"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 7972807278748,
+    "title": "Olive Never Doubt Oversized Tee",
+    "handle": "olive-never-doubt-oversized-tee",
+    "body_html": "<p><span data-mce-fragment=\"1\">Introducing our Polo Oversized Tee – where impeccable measurements meet streetwear perfection. Crafted from lightweight, breathable cotton, it's your go-to piece for effortless summer style. Designed with simplicity and sophistication in mind, its oversized silhouette offers the ideal blend of comfort and contemporary flair. Embrace the summer breeze with confidence in this versatile wardrobe staple, ensuring you stay cool and stylish wherever the day takes you. Elevate your streetwear game with our Polo Oversized Tee – because perfection should always feel this comfortable.</span></p>",
+    "published_at": "2025-03-25T04:04:46+02:00",
+    "created_at": "2024-04-12T23:30:38+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "polo oversized t-shirt",
+    "tags": [],
+    "variants": [
+      {
+        "id": 43456360022172,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 600000,
+        "compare_at_price": "650.00",
+        "position": 2,
+        "product_id": 7972807278748,
+        "created_at": "2024-04-12T23:30:40+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 43456360054940,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 600000,
+        "compare_at_price": "650.00",
+        "position": 3,
+        "product_id": 7972807278748,
+        "created_at": "2024-04-12T23:30:40+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 43456360087708,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 600000,
+        "compare_at_price": "650.00",
+        "position": 4,
+        "product_id": 7972807278748,
+        "created_at": "2024-04-12T23:30:40+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 38066151751836,
+        "created_at": "2024-04-12T23:30:38+02:00",
+        "position": 1,
+        "updated_at": "2024-04-12T23:30:41+02:00",
+        "product_id": 7972807278748,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/S2_86.jpg?v=1712957441",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 38066151784604,
+        "created_at": "2024-04-12T23:30:38+02:00",
+        "position": 2,
+        "updated_at": "2024-04-12T23:30:41+02:00",
+        "product_id": 7972807278748,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/S2_52.jpg?v=1712957441",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 38066151817372,
+        "created_at": "2024-04-12T23:30:38+02:00",
+        "position": 3,
+        "updated_at": "2024-04-12T23:30:41+02:00",
+        "product_id": 7972807278748,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/S2_69.jpg?v=1712957441",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 38066151719068,
+        "created_at": "2024-04-12T23:30:38+02:00",
+        "position": 4,
+        "updated_at": "2024-04-12T23:30:41+02:00",
+        "product_id": 7972807278748,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/SizeChart.png?v=1712957441",
+        "width": 540,
+        "height": 552
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Large",
+          "Medium",
+          "Small"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8351473074332,
+    "title": "WOKE Pants \"Navy\"",
+    "handle": "woke-pants-navy",
+    "body_html": "<p>Redefine your everyday look with our <strong data-start=\"98\" data-end=\"119\">Street-Luxe Pants</strong>, where <strong data-start=\"127\" data-end=\"164\">refined elegance meets urban edge</strong>. Designed for versatility, these pants deliver a <strong data-start=\"214\" data-end=\"235\">sleek, modern fit</strong> with the perfect balance of <strong data-start=\"264\" data-end=\"294\">comfort and sophistication</strong>.</p>",
+    "published_at": "2025-02-14T15:27:28+02:00",
+    "created_at": "2025-02-14T15:27:28+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Pants",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44770968273052,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "750.00",
+        "position": 1,
+        "product_id": 8351473074332,
+        "created_at": "2025-02-14T15:27:29+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770968305820,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "750.00",
+        "position": 2,
+        "product_id": 8351473074332,
+        "created_at": "2025-02-14T15:27:29+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770968338588,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "750.00",
+        "position": 3,
+        "product_id": 8351473074332,
+        "created_at": "2025-02-14T15:27:29+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40927891751068,
+        "created_at": "2025-02-14T15:27:16+02:00",
+        "position": 1,
+        "updated_at": "2025-02-14T15:27:18+02:00",
+        "product_id": 8351473074332,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09399.jpg?v=1739539638",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927891652764,
+        "created_at": "2025-02-14T15:27:16+02:00",
+        "position": 2,
+        "updated_at": "2025-02-14T15:27:18+02:00",
+        "product_id": 8351473074332,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09439.jpg?v=1739539638",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927891718300,
+        "created_at": "2025-02-14T15:27:16+02:00",
+        "position": 3,
+        "updated_at": "2025-02-14T15:27:18+02:00",
+        "product_id": 8351473074332,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09440_1.jpg?v=1739539638",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927891587228,
+        "created_at": "2025-02-14T15:27:16+02:00",
+        "position": 4,
+        "updated_at": "2025-02-14T15:27:17+02:00",
+        "product_id": 8351473074332,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09440.jpg?v=1739539637",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927891685532,
+        "created_at": "2025-02-14T15:27:16+02:00",
+        "position": 5,
+        "updated_at": "2025-02-14T15:27:18+02:00",
+        "product_id": 8351473074332,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09442.jpg?v=1739539638",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927891619996,
+        "created_at": "2025-02-14T15:27:16+02:00",
+        "position": 6,
+        "updated_at": "2025-02-14T15:27:18+02:00",
+        "product_id": 8351473074332,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09443.jpg?v=1739539638",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927882707100,
+        "created_at": "2025-02-14T15:23:02+02:00",
+        "position": 7,
+        "updated_at": "2025-02-14T15:23:04+02:00",
+        "product_id": 8351473074332,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/pants_2.png?v=1739539384",
+        "width": 1025,
+        "height": 1024
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8351472812188,
+    "title": "WOKE Pants \"Grey\"",
+    "handle": "woke-pants-grey",
+    "body_html": "<p>Redefine your everyday look with our <strong data-start=\"98\" data-end=\"119\">Street-Luxe Pants</strong>, where <strong data-start=\"127\" data-end=\"164\">refined elegance meets urban edge</strong>. Designed for versatility, these pants deliver a <strong data-start=\"214\" data-end=\"235\">sleek, modern fit</strong> with the perfect balance of <strong data-start=\"264\" data-end=\"294\">comfort and sophistication</strong>.</p>",
+    "published_at": "2025-02-14T15:23:50+02:00",
+    "created_at": "2025-02-14T15:23:50+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Pants",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44770967355548,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "550.00",
+        "grams": 700,
+        "compare_at_price": "750.00",
+        "position": 1,
+        "product_id": 8351472812188,
+        "created_at": "2025-02-14T15:23:51+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770967388316,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 700,
+        "compare_at_price": "750.00",
+        "position": 2,
+        "product_id": 8351472812188,
+        "created_at": "2025-02-14T15:23:51+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770967421084,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 700,
+        "compare_at_price": "750.00",
+        "position": 3,
+        "product_id": 8351472812188,
+        "created_at": "2025-02-14T15:23:51+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40927881265308,
+        "created_at": "2025-02-14T15:22:33+02:00",
+        "position": 1,
+        "updated_at": "2025-02-14T15:22:35+02:00",
+        "product_id": 8351472812188,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09459.jpg?v=1739539355",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927881134236,
+        "created_at": "2025-02-14T15:22:33+02:00",
+        "position": 2,
+        "updated_at": "2025-02-14T15:22:35+02:00",
+        "product_id": 8351472812188,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09455.jpg?v=1739539355",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927881298076,
+        "created_at": "2025-02-14T15:22:33+02:00",
+        "position": 3,
+        "updated_at": "2025-02-14T15:22:35+02:00",
+        "product_id": 8351472812188,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09379.jpg?v=1739539355",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927881330844,
+        "created_at": "2025-02-14T15:22:33+02:00",
+        "position": 4,
+        "updated_at": "2025-02-14T15:22:36+02:00",
+        "product_id": 8351472812188,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09380.jpg?v=1739539356",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927881232540,
+        "created_at": "2025-02-14T15:22:33+02:00",
+        "position": 5,
+        "updated_at": "2025-02-14T15:22:35+02:00",
+        "product_id": 8351472812188,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09456.jpg?v=1739539355",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927881199772,
+        "created_at": "2025-02-14T15:22:33+02:00",
+        "position": 6,
+        "updated_at": "2025-02-14T15:22:35+02:00",
+        "product_id": 8351472812188,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09457.jpg?v=1739539355",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927881167004,
+        "created_at": "2025-02-14T15:22:33+02:00",
+        "position": 7,
+        "updated_at": "2025-02-14T15:22:35+02:00",
+        "product_id": 8351472812188,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09458.jpg?v=1739539355",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927882707100,
+        "created_at": "2025-02-14T15:23:02+02:00",
+        "position": 8,
+        "updated_at": "2025-02-14T15:23:04+02:00",
+        "product_id": 8351472812188,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/pants_2.png?v=1739539384",
+        "width": 1025,
+        "height": 1024
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8351470256284,
+    "title": "STAYWOKE Hoodie \"Grey\"",
+    "handle": "staywoke-hoodie-grey",
+    "body_html": "<p>Step into the perfect blend of <strong data-start=\"94\" data-end=\"123\">luxury and street fashion</strong> with our <strong data-start=\"133\" data-end=\"153\">Signature Hoodie</strong>. Designed for those who value both <strong data-start=\"189\" data-end=\"230\">effortless style and everyday comfort</strong>, this hoodie delivers a <strong data-start=\"255\" data-end=\"282\">sleek, modern aesthetic</strong> with an urban edge.</p>",
+    "published_at": "2025-02-14T15:18:38+02:00",
+    "created_at": "2025-02-14T15:18:38+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Hoodie",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44770961686684,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 1000,
+        "compare_at_price": "850.00",
+        "position": 1,
+        "product_id": 8351470256284,
+        "created_at": "2025-02-14T15:18:39+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770961719452,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 1000,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 8351470256284,
+        "created_at": "2025-02-14T15:18:39+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770961752220,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 1000,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 8351470256284,
+        "created_at": "2025-02-14T15:18:39+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40927871959196,
+        "created_at": "2025-02-14T15:18:18+02:00",
+        "position": 1,
+        "updated_at": "2025-02-14T15:18:20+02:00",
+        "product_id": 8351470256284,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09471.jpg?v=1739539100",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927871795356,
+        "created_at": "2025-02-14T15:18:18+02:00",
+        "position": 2,
+        "updated_at": "2025-02-14T15:18:20+02:00",
+        "product_id": 8351470256284,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09478.jpg?v=1739539100",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927871893660,
+        "created_at": "2025-02-14T15:18:18+02:00",
+        "position": 3,
+        "updated_at": "2025-02-14T15:18:20+02:00",
+        "product_id": 8351470256284,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09481.jpg?v=1739539100",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927871828124,
+        "created_at": "2025-02-14T15:18:18+02:00",
+        "position": 4,
+        "updated_at": "2025-02-14T15:18:20+02:00",
+        "product_id": 8351470256284,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09482.jpg?v=1739539100",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927785582748,
+        "created_at": "2025-02-14T15:00:28+02:00",
+        "position": 5,
+        "updated_at": "2025-02-14T15:00:29+02:00",
+        "product_id": 8351470256284,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/hoodie.png?v=1739538029",
+        "width": 1025,
+        "height": 1025
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8351469863068,
+    "title": "STAYWOKE Hoodie \"Navy\"",
+    "handle": "staywoke-hoodie-navy",
+    "body_html": "<p>Step into the perfect blend of <strong data-start=\"94\" data-end=\"123\">luxury and street fashion</strong> with our <strong data-start=\"133\" data-end=\"153\">Signature Hoodie</strong>. Designed for those who value both <strong data-start=\"189\" data-end=\"230\">effortless style and everyday comfort</strong>, this hoodie delivers a <strong data-start=\"255\" data-end=\"282\">sleek, modern aesthetic</strong> with an urban edge.</p>",
+    "published_at": "2025-02-14T15:14:29+02:00",
+    "created_at": "2025-02-14T15:14:29+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Hoodie",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44770960539804,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 1,
+        "product_id": 8351469863068,
+        "created_at": "2025-02-14T15:14:31+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770960572572,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 8351469863068,
+        "created_at": "2025-02-14T15:14:31+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770960605340,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 8351469863068,
+        "created_at": "2025-02-14T15:14:31+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40927852363932,
+        "created_at": "2025-02-14T15:13:49+02:00",
+        "position": 1,
+        "updated_at": "2025-02-14T15:13:51+02:00",
+        "product_id": 8351469863068,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09417.jpg?v=1739538831",
+        "width": 2582,
+        "height": 3865
+      },
+      {
+        "id": 40927852462236,
+        "created_at": "2025-02-14T15:13:49+02:00",
+        "position": 2,
+        "updated_at": "2025-02-14T15:13:51+02:00",
+        "product_id": 8351469863068,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09460.jpg?v=1739538831",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927852527772,
+        "created_at": "2025-02-14T15:13:49+02:00",
+        "position": 3,
+        "updated_at": "2025-02-14T15:13:51+02:00",
+        "product_id": 8351469863068,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09414.jpg?v=1739538831",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927852724380,
+        "created_at": "2025-02-14T15:13:49+02:00",
+        "position": 4,
+        "updated_at": "2025-02-14T15:13:53+02:00",
+        "product_id": 8351469863068,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09418.jpg?v=1739538833",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927852626076,
+        "created_at": "2025-02-14T15:13:49+02:00",
+        "position": 5,
+        "updated_at": "2025-02-14T15:13:51+02:00",
+        "product_id": 8351469863068,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09419.jpg?v=1739538831",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927852593308,
+        "created_at": "2025-02-14T15:13:49+02:00",
+        "position": 6,
+        "updated_at": "2025-02-14T15:13:51+02:00",
+        "product_id": 8351469863068,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09422.jpg?v=1739538831",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927852495004,
+        "created_at": "2025-02-14T15:13:49+02:00",
+        "position": 7,
+        "updated_at": "2025-02-14T15:13:51+02:00",
+        "product_id": 8351469863068,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09413.jpg?v=1739538831",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927852560540,
+        "created_at": "2025-02-14T15:13:49+02:00",
+        "position": 8,
+        "updated_at": "2025-02-14T15:13:51+02:00",
+        "product_id": 8351469863068,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09465.jpg?v=1739538831",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927852331164,
+        "created_at": "2025-02-14T15:13:49+02:00",
+        "position": 9,
+        "updated_at": "2025-02-14T15:13:50+02:00",
+        "product_id": 8351469863068,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09468.jpg?v=1739538830",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927785582748,
+        "created_at": "2025-02-14T15:00:28+02:00",
+        "position": 10,
+        "updated_at": "2025-02-14T15:00:29+02:00",
+        "product_id": 8351469863068,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/hoodie.png?v=1739538029",
+        "width": 1025,
+        "height": 1025
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8351469437084,
+    "title": "Stallion Hoodie \"Grey\"",
+    "handle": "stallion-hoodie-grey",
+    "body_html": "<p>Step into the perfect blend of <strong data-start=\"94\" data-end=\"123\">luxury and street fashion</strong> with our <strong data-start=\"133\" data-end=\"153\">Signature Hoodie</strong>. Designed for those who value both <strong data-start=\"189\" data-end=\"230\">effortless style and everyday comfort</strong>, this hoodie delivers a <strong data-start=\"255\" data-end=\"282\">sleek, modern aesthetic</strong> with an urban edge.</p>",
+    "published_at": "2025-02-14T15:06:40+02:00",
+    "created_at": "2025-02-14T15:06:40+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Hoodie",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44770959196316,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 1,
+        "product_id": 8351469437084,
+        "created_at": "2025-02-14T15:06:41+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770959229084,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 8351469437084,
+        "created_at": "2025-02-14T15:06:41+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770959261852,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 8351469437084,
+        "created_at": "2025-02-14T15:06:41+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40927815106716,
+        "created_at": "2025-02-14T15:05:53+02:00",
+        "position": 1,
+        "updated_at": "2025-02-14T15:05:54+02:00",
+        "product_id": 8351469437084,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09402.jpg?v=1739538354",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927815237788,
+        "created_at": "2025-02-14T15:05:53+02:00",
+        "position": 2,
+        "updated_at": "2025-02-14T15:05:55+02:00",
+        "product_id": 8351469437084,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09404.jpg?v=1739538355",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927815336092,
+        "created_at": "2025-02-14T15:05:53+02:00",
+        "position": 3,
+        "updated_at": "2025-02-14T15:05:55+02:00",
+        "product_id": 8351469437084,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09407.jpg?v=1739538355",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927815303324,
+        "created_at": "2025-02-14T15:05:53+02:00",
+        "position": 4,
+        "updated_at": "2025-02-14T15:05:55+02:00",
+        "product_id": 8351469437084,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09410.jpg?v=1739538355",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927815205020,
+        "created_at": "2025-02-14T15:05:53+02:00",
+        "position": 5,
+        "updated_at": "2025-02-14T15:05:54+02:00",
+        "product_id": 8351469437084,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09448.jpg?v=1739538354",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927815139484,
+        "created_at": "2025-02-14T15:05:53+02:00",
+        "position": 6,
+        "updated_at": "2025-02-14T15:05:54+02:00",
+        "product_id": 8351469437084,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09450.jpg?v=1739538354",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927815270556,
+        "created_at": "2025-02-14T15:05:53+02:00",
+        "position": 7,
+        "updated_at": "2025-02-14T15:05:55+02:00",
+        "product_id": 8351469437084,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09451.jpg?v=1739538355",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927815172252,
+        "created_at": "2025-02-14T15:05:53+02:00",
+        "position": 8,
+        "updated_at": "2025-02-14T15:05:54+02:00",
+        "product_id": 8351469437084,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09454.jpg?v=1739538354",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927785582748,
+        "created_at": "2025-02-14T15:00:28+02:00",
+        "position": 9,
+        "updated_at": "2025-02-14T15:00:29+02:00",
+        "product_id": 8351469437084,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/hoodie.png?v=1739538029",
+        "width": 1025,
+        "height": 1025
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8351469043868,
+    "title": "Stallion Hoodie \"Navy\"",
+    "handle": "stallion-hoodie-navy",
+    "body_html": "<p>Step into the perfect blend of <strong data-start=\"94\" data-end=\"123\">luxury and street fashion</strong> with our <strong data-start=\"133\" data-end=\"153\">Signature Hoodie</strong>. Designed for those who value both <strong data-start=\"189\" data-end=\"230\">effortless style and everyday comfort</strong>, this hoodie delivers a <strong data-start=\"255\" data-end=\"282\">sleek, modern aesthetic</strong> with an urban edge.</p>",
+    "published_at": "2025-02-14T15:01:11+02:00",
+    "created_at": "2025-02-14T15:01:11+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Hoodie",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44770951856284,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 1,
+        "product_id": 8351469043868,
+        "created_at": "2025-02-14T15:01:12+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770951889052,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 8351469043868,
+        "created_at": "2025-02-14T15:01:12+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770951921820,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 8351469043868,
+        "created_at": "2025-02-14T15:01:12+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40927784108188,
+        "created_at": "2025-02-14T15:00:12+02:00",
+        "position": 1,
+        "updated_at": "2025-02-14T15:27:50+02:00",
+        "product_id": 8351469043868,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09393.jpg?v=1739539670",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927784009884,
+        "created_at": "2025-02-14T15:00:12+02:00",
+        "position": 2,
+        "updated_at": "2025-02-14T15:27:50+02:00",
+        "product_id": 8351469043868,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09389.jpg?v=1739539670",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927784140956,
+        "created_at": "2025-02-14T15:00:13+02:00",
+        "position": 3,
+        "updated_at": "2025-02-14T15:27:50+02:00",
+        "product_id": 8351469043868,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09438.jpg?v=1739539670",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927783944348,
+        "created_at": "2025-02-14T15:00:12+02:00",
+        "position": 4,
+        "updated_at": "2025-02-14T15:27:50+02:00",
+        "product_id": 8351469043868,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09394.jpg?v=1739539670",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927783977116,
+        "created_at": "2025-02-14T15:00:12+02:00",
+        "position": 5,
+        "updated_at": "2025-02-14T15:27:50+02:00",
+        "product_id": 8351469043868,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09435.jpg?v=1739539670",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927783911580,
+        "created_at": "2025-02-14T15:00:12+02:00",
+        "position": 6,
+        "updated_at": "2025-02-14T15:27:50+02:00",
+        "product_id": 8351469043868,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09426.jpg?v=1739539670",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927785582748,
+        "created_at": "2025-02-14T15:00:28+02:00",
+        "position": 7,
+        "updated_at": "2025-02-14T15:00:29+02:00",
+        "product_id": 8351469043868,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/hoodie.png?v=1739538029",
+        "width": 1025,
+        "height": 1025
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8351465504924,
+    "title": "Reborn quarter zipper \"Navy\"",
+    "handle": "reborn-quarter-zipper-navy",
+    "body_html": "<p>Upgrade your wardrobe with our <strong data-start=\"100\" data-end=\"120\">Quarter-Zip Polo</strong>, a sleek blend of <strong data-start=\"139\" data-end=\"172\">sophistication and urban edge</strong>. Designed for versatility, this piece delivers a <strong data-start=\"222\" data-end=\"253\">refined yet effortless look</strong>, making it a must-have for any occasion.</p>",
+    "published_at": "2025-02-14T14:54:04+02:00",
+    "created_at": "2025-02-14T14:54:04+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Quarter Zipper Polo",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44770934554780,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "700.00",
+        "grams": 0,
+        "compare_at_price": "900.00",
+        "position": 1,
+        "product_id": 8351465504924,
+        "created_at": "2025-02-14T14:54:05+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770934587548,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "700.00",
+        "grams": 0,
+        "compare_at_price": "900.00",
+        "position": 2,
+        "product_id": 8351465504924,
+        "created_at": "2025-02-14T14:54:05+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770934620316,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "700.00",
+        "grams": 0,
+        "compare_at_price": "900.00",
+        "position": 3,
+        "product_id": 8351465504924,
+        "created_at": "2025-02-14T14:54:05+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40927723782300,
+        "created_at": "2025-02-14T14:53:46+02:00",
+        "position": 1,
+        "updated_at": "2025-02-14T14:53:48+02:00",
+        "product_id": 8351465504924,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC00412.jpg?v=1739537628",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927723749532,
+        "created_at": "2025-02-14T14:53:46+02:00",
+        "position": 2,
+        "updated_at": "2025-02-14T14:53:47+02:00",
+        "product_id": 8351465504924,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC00413.jpg?v=1739537627",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927723815068,
+        "created_at": "2025-02-14T14:53:46+02:00",
+        "position": 3,
+        "updated_at": "2025-02-14T14:53:48+02:00",
+        "product_id": 8351465504924,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC00415.jpg?v=1739537628",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927723847836,
+        "created_at": "2025-02-14T14:53:46+02:00",
+        "position": 4,
+        "updated_at": "2025-02-14T14:53:48+02:00",
+        "product_id": 8351465504924,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC00416.jpg?v=1739537628",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927673778332,
+        "created_at": "2025-02-14T14:47:03+02:00",
+        "position": 5,
+        "updated_at": "2025-02-14T14:47:04+02:00",
+        "product_id": 8351465504924,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/zipper.png?v=1739537224",
+        "width": 1024,
+        "height": 1025
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8351464456348,
+    "title": "Reborn quarter zipper \"White\"",
+    "handle": "reborn-quarter-zipper-white",
+    "body_html": "<p>Upgrade your wardrobe with our <strong data-start=\"100\" data-end=\"120\">Quarter-Zip Polo</strong>, a sleek blend of <strong data-start=\"139\" data-end=\"172\">sophistication and urban edge</strong>. Designed for versatility, this piece delivers a <strong data-start=\"222\" data-end=\"253\">refined yet effortless look</strong>, making it a must-have for any occasion.</p>",
+    "published_at": "2025-02-14T14:50:24+02:00",
+    "created_at": "2025-02-14T14:50:24+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Quarter Zipper Polo",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44770932359324,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 800,
+        "compare_at_price": "900.00",
+        "position": 1,
+        "product_id": 8351464456348,
+        "created_at": "2025-02-14T14:50:25+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770932392092,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 800,
+        "compare_at_price": "900.00",
+        "position": 2,
+        "product_id": 8351464456348,
+        "created_at": "2025-02-14T14:50:25+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770932424860,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 800,
+        "compare_at_price": "900.00",
+        "position": 3,
+        "product_id": 8351464456348,
+        "created_at": "2025-02-14T14:50:25+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40927693504668,
+        "created_at": "2025-02-14T14:49:58+02:00",
+        "position": 1,
+        "updated_at": "2025-02-14T14:49:59+02:00",
+        "product_id": 8351464456348,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC00421.jpg?v=1739537399",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927693471900,
+        "created_at": "2025-02-14T14:49:58+02:00",
+        "position": 2,
+        "updated_at": "2025-02-14T14:49:59+02:00",
+        "product_id": 8351464456348,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC00422.jpg?v=1739537399",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927693570204,
+        "created_at": "2025-02-14T14:49:58+02:00",
+        "position": 3,
+        "updated_at": "2025-02-14T14:50:00+02:00",
+        "product_id": 8351464456348,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC00423.jpg?v=1739537400",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927693602972,
+        "created_at": "2025-02-14T14:49:58+02:00",
+        "position": 4,
+        "updated_at": "2025-02-14T14:50:00+02:00",
+        "product_id": 8351464456348,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC00418.jpg?v=1739537400",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927673778332,
+        "created_at": "2025-02-14T14:47:03+02:00",
+        "position": 5,
+        "updated_at": "2025-02-14T14:47:04+02:00",
+        "product_id": 8351464456348,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/zipper.png?v=1739537224",
+        "width": 1024,
+        "height": 1025
+      }
+    ],
+    "options": [
+      {
+        "name": "size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8351463473308,
+    "title": "Reborn quarter zipper \"Olive\"",
+    "handle": "reborn-quarter-zipper-olive",
+    "body_html": "<p>Upgrade your wardrobe with our <strong data-start=\"100\" data-end=\"120\">Quarter-Zip Polo</strong>, a sleek blend of <strong data-start=\"139\" data-end=\"172\">sophistication and urban edge</strong>. Designed for versatility, this piece delivers a <strong data-start=\"222\" data-end=\"253\">refined yet effortless look</strong>, making it a must-have for any occasion.</p>",
+    "published_at": "2025-02-14T14:47:27+02:00",
+    "created_at": "2025-02-14T14:47:27+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Quarter Zipper Polo",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44770930196636,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 0,
+        "compare_at_price": "900.00",
+        "position": 1,
+        "product_id": 8351463473308,
+        "created_at": "2025-02-14T14:47:28+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770930229404,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 0,
+        "compare_at_price": "900.00",
+        "position": 2,
+        "product_id": 8351463473308,
+        "created_at": "2025-02-14T14:47:28+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770930262172,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "700.00",
+        "grams": 0,
+        "compare_at_price": "900.00",
+        "position": 3,
+        "product_id": 8351463473308,
+        "created_at": "2025-02-14T14:47:28+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40927672303772,
+        "created_at": "2025-02-14T14:46:43+02:00",
+        "position": 1,
+        "updated_at": "2025-02-14T14:46:46+02:00",
+        "product_id": 8351463473308,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC00395.jpg?v=1739537206",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927672205468,
+        "created_at": "2025-02-14T14:46:43+02:00",
+        "position": 2,
+        "updated_at": "2025-02-14T14:46:45+02:00",
+        "product_id": 8351463473308,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC00396.jpg?v=1739537205",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927672107164,
+        "created_at": "2025-02-14T14:46:43+02:00",
+        "position": 3,
+        "updated_at": "2025-02-14T14:46:45+02:00",
+        "product_id": 8351463473308,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC00398.jpg?v=1739537205",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927672139932,
+        "created_at": "2025-02-14T14:46:43+02:00",
+        "position": 4,
+        "updated_at": "2025-02-14T14:46:45+02:00",
+        "product_id": 8351463473308,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC00401.jpg?v=1739537205",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927672271004,
+        "created_at": "2025-02-14T14:46:44+02:00",
+        "position": 5,
+        "updated_at": "2025-02-14T14:46:46+02:00",
+        "product_id": 8351463473308,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC00402.jpg?v=1739537206",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927672172700,
+        "created_at": "2025-02-14T14:46:44+02:00",
+        "position": 6,
+        "updated_at": "2025-02-14T14:46:45+02:00",
+        "product_id": 8351463473308,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC00404.jpg?v=1739537205",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927672238236,
+        "created_at": "2025-02-14T14:46:44+02:00",
+        "position": 7,
+        "updated_at": "2025-02-14T14:46:46+02:00",
+        "product_id": 8351463473308,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC00405.jpg?v=1739537206",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927673778332,
+        "created_at": "2025-02-14T14:47:03+02:00",
+        "position": 8,
+        "updated_at": "2025-02-14T14:47:04+02:00",
+        "product_id": 8351463473308,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/zipper.png?v=1739537224",
+        "width": 1024,
+        "height": 1025
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8351459737756,
+    "title": "Consistency Knitted Polo \"Beige\"",
+    "handle": "consistency-knitted-polo-beige",
+    "body_html": "<p>Elevate your wardrobe with our <strong data-start=\"95\" data-end=\"111\">Knitted Polo</strong>, where <strong data-start=\"119\" data-end=\"150\">luxury meets street fashion</strong> in effortless harmony. Designed for the modern trendsetter, this piece delivers a <strong data-start=\"233\" data-end=\"262\">sleek, sophisticated look</strong> with an <strong data-start=\"271\" data-end=\"293\">edge of urban cool</strong>.</p>",
+    "published_at": "2025-02-14T14:33:14+02:00",
+    "created_at": "2025-02-14T14:33:14+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "polo oversized t-shirt",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44770919710876,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "750.00",
+        "grams": 0,
+        "compare_at_price": "1000.00",
+        "position": 1,
+        "product_id": 8351459737756,
+        "created_at": "2025-02-14T14:33:15+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770919743644,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "750.00",
+        "grams": 0,
+        "compare_at_price": "1000.00",
+        "position": 2,
+        "product_id": 8351459737756,
+        "created_at": "2025-02-14T14:33:15+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770919776412,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 0,
+        "compare_at_price": "1000.00",
+        "position": 3,
+        "product_id": 8351459737756,
+        "created_at": "2025-02-14T14:33:15+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40927606243484,
+        "created_at": "2025-02-14T14:32:27+02:00",
+        "position": 1,
+        "updated_at": "2025-02-14T14:32:29+02:00",
+        "product_id": 8351459737756,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09555.jpg?v=1739536349",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927606309020,
+        "created_at": "2025-02-14T14:32:27+02:00",
+        "position": 2,
+        "updated_at": "2025-02-14T14:32:29+02:00",
+        "product_id": 8351459737756,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09560.jpg?v=1739536349",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927606276252,
+        "created_at": "2025-02-14T14:32:27+02:00",
+        "position": 3,
+        "updated_at": "2025-02-14T14:32:29+02:00",
+        "product_id": 8351459737756,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09561.jpg?v=1739536349",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927606341788,
+        "created_at": "2025-02-14T14:32:27+02:00",
+        "position": 4,
+        "updated_at": "2025-02-14T14:32:29+02:00",
+        "product_id": 8351459737756,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09633.jpg?v=1739536349",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927606210716,
+        "created_at": "2025-02-14T14:32:27+02:00",
+        "position": 5,
+        "updated_at": "2025-02-14T14:32:29+02:00",
+        "product_id": 8351459737756,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09635.jpg?v=1739536349",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927606177948,
+        "created_at": "2025-02-14T14:32:27+02:00",
+        "position": 6,
+        "updated_at": "2025-02-14T14:32:29+02:00",
+        "product_id": 8351459737756,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/poloconsis_ccb449e7-e0e4-4d39-b229-fcdfb4bb2516.png?v=1739536349",
+        "width": 1025,
+        "height": 1024
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8351458459804,
+    "title": "Consistency Knitted Polo \"Baby Blue\"",
+    "handle": "consistency-knitted-polo-baby-blue",
+    "body_html": "<p>Elevate your wardrobe with our <strong data-start=\"95\" data-end=\"111\">Knitted Polo</strong>, where <strong data-start=\"119\" data-end=\"150\">luxury meets street fashion</strong> in effortless harmony. Designed for the modern trendsetter, this piece delivers a <strong data-start=\"233\" data-end=\"262\">sleek, sophisticated look</strong> with an <strong data-start=\"271\" data-end=\"293\">edge of urban cool</strong>.</p>",
+    "published_at": "2025-02-14T14:29:49+02:00",
+    "created_at": "2025-02-14T14:29:49+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "polo oversized t-shirt",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44770916663452,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 800,
+        "compare_at_price": "1000.00",
+        "position": 1,
+        "product_id": 8351458459804,
+        "created_at": "2025-02-14T14:29:50+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770916696220,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 800,
+        "compare_at_price": "1000.00",
+        "position": 2,
+        "product_id": 8351458459804,
+        "created_at": "2025-02-14T14:29:50+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770916728988,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 800,
+        "compare_at_price": "1000.00",
+        "position": 3,
+        "product_id": 8351458459804,
+        "created_at": "2025-02-14T14:29:50+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40927587205276,
+        "created_at": "2025-02-14T14:29:10+02:00",
+        "position": 1,
+        "updated_at": "2025-02-14T14:29:12+02:00",
+        "product_id": 8351458459804,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09532.jpg?v=1739536152",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927587434652,
+        "created_at": "2025-02-14T14:29:10+02:00",
+        "position": 2,
+        "updated_at": "2025-02-14T14:29:12+02:00",
+        "product_id": 8351458459804,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09533.jpg?v=1739536152",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927587500188,
+        "created_at": "2025-02-14T14:29:10+02:00",
+        "position": 3,
+        "updated_at": "2025-02-14T14:29:12+02:00",
+        "product_id": 8351458459804,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09537.jpg?v=1739536152",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927587467420,
+        "created_at": "2025-02-14T14:29:10+02:00",
+        "position": 4,
+        "updated_at": "2025-02-14T14:29:12+02:00",
+        "product_id": 8351458459804,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09541.jpg?v=1739536152",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927587172508,
+        "created_at": "2025-02-14T14:29:10+02:00",
+        "position": 5,
+        "updated_at": "2025-02-14T14:29:12+02:00",
+        "product_id": 8351458459804,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09622.jpg?v=1739536152",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927587106972,
+        "created_at": "2025-02-14T14:29:10+02:00",
+        "position": 6,
+        "updated_at": "2025-02-14T14:29:12+02:00",
+        "product_id": 8351458459804,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09624.jpg?v=1739536152",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927587270812,
+        "created_at": "2025-02-14T14:29:10+02:00",
+        "position": 7,
+        "updated_at": "2025-02-14T14:29:12+02:00",
+        "product_id": 8351458459804,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09626.jpg?v=1739536152",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927587336348,
+        "created_at": "2025-02-14T14:29:10+02:00",
+        "position": 8,
+        "updated_at": "2025-02-14T14:29:12+02:00",
+        "product_id": 8351458459804,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09627.jpg?v=1739536152",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927587041436,
+        "created_at": "2025-02-14T14:29:10+02:00",
+        "position": 9,
+        "updated_at": "2025-02-14T14:29:12+02:00",
+        "product_id": 8351458459804,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/poloconsis_5c5918f6-2870-4aeb-8c11-493cca9e044f.png?v=1739536152",
+        "width": 1025,
+        "height": 1024
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8351456723100,
+    "title": "Consistency Knitted Polo \"Black\"",
+    "handle": "consistency-knitted-polo-black",
+    "body_html": "<p>Elevate your wardrobe with our <strong data-start=\"95\" data-end=\"111\">Knitted Polo</strong>, where <strong data-start=\"119\" data-end=\"150\">luxury meets street fashion</strong> in effortless harmony. Designed for the modern trendsetter, this piece delivers a <strong data-start=\"233\" data-end=\"262\">sleek, sophisticated look</strong> with an <strong data-start=\"271\" data-end=\"293\">edge of urban cool</strong>.</p>",
+    "published_at": "2025-02-14T14:25:32+02:00",
+    "created_at": "2025-02-14T14:25:32+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "polo oversized t-shirt",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44770908930204,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "750.00",
+        "grams": 800,
+        "compare_at_price": "1000.00",
+        "position": 1,
+        "product_id": 8351456723100,
+        "created_at": "2025-02-14T14:25:33+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770908962972,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "750.00",
+        "grams": 800,
+        "compare_at_price": "1000.00",
+        "position": 2,
+        "product_id": 8351456723100,
+        "created_at": "2025-02-14T14:25:33+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770908995740,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 800,
+        "compare_at_price": "1000.00",
+        "position": 3,
+        "product_id": 8351456723100,
+        "created_at": "2025-02-14T14:25:33+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40927544180892,
+        "created_at": "2025-02-14T14:24:44+02:00",
+        "position": 1,
+        "updated_at": "2025-02-14T14:24:46+02:00",
+        "product_id": 8351456723100,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09588.jpg?v=1739535886",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927544017052,
+        "created_at": "2025-02-14T14:24:44+02:00",
+        "position": 2,
+        "updated_at": "2025-02-14T14:24:46+02:00",
+        "product_id": 8351456723100,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09597.jpg?v=1739535886",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927543885980,
+        "created_at": "2025-02-14T14:24:44+02:00",
+        "position": 3,
+        "updated_at": "2025-02-14T14:24:46+02:00",
+        "product_id": 8351456723100,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09594.jpg?v=1739535886",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927544115356,
+        "created_at": "2025-02-14T14:24:44+02:00",
+        "position": 4,
+        "updated_at": "2025-02-14T14:24:46+02:00",
+        "product_id": 8351456723100,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09596.jpg?v=1739535886",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927543951516,
+        "created_at": "2025-02-14T14:24:44+02:00",
+        "position": 5,
+        "updated_at": "2025-02-14T14:24:46+02:00",
+        "product_id": 8351456723100,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09611.jpg?v=1739535886",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927544049820,
+        "created_at": "2025-02-14T14:24:44+02:00",
+        "position": 6,
+        "updated_at": "2025-02-14T14:24:46+02:00",
+        "product_id": 8351456723100,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09613.jpg?v=1739535886",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927543853212,
+        "created_at": "2025-02-14T14:24:44+02:00",
+        "position": 7,
+        "updated_at": "2025-02-14T14:24:46+02:00",
+        "product_id": 8351456723100,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09614.jpg?v=1739535886",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927543722140,
+        "created_at": "2025-02-14T14:24:44+02:00",
+        "position": 8,
+        "updated_at": "2025-02-14T14:24:45+02:00",
+        "product_id": 8351456723100,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/poloconsis.png?v=1739535885",
+        "width": 1025,
+        "height": 1024
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8351454724252,
+    "title": "Consistency Knitted Polo \"Off White\"",
+    "handle": "consistency-knitted-polo-off-white",
+    "body_html": "<p>Elevate your wardrobe with our <strong data-start=\"95\" data-end=\"111\">Knitted Polo</strong>, where <strong data-start=\"119\" data-end=\"150\">luxury meets street fashion</strong> in effortless harmony. Designed for the modern trendsetter, this piece delivers a <strong data-start=\"233\" data-end=\"262\">sleek, sophisticated look</strong> with an <strong data-start=\"271\" data-end=\"293\">edge of urban cool</strong>.</p>",
+    "published_at": "2025-02-14T14:20:54+02:00",
+    "created_at": "2025-02-14T14:20:54+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "polo oversized t-shirt",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44770899427484,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 600,
+        "compare_at_price": "1000.00",
+        "position": 1,
+        "product_id": 8351454724252,
+        "created_at": "2025-02-14T14:20:55+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770899460252,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 600,
+        "compare_at_price": "1000.00",
+        "position": 2,
+        "product_id": 8351454724252,
+        "created_at": "2025-02-14T14:20:55+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770899493020,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 600,
+        "compare_at_price": "1000.00",
+        "position": 3,
+        "product_id": 8351454724252,
+        "created_at": "2025-02-14T14:20:55+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40927507054748,
+        "created_at": "2025-02-14T14:18:17+02:00",
+        "position": 1,
+        "updated_at": "2025-02-14T14:18:18+02:00",
+        "product_id": 8351454724252,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09598.jpg?v=1739535498",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927507087516,
+        "created_at": "2025-02-14T14:18:17+02:00",
+        "position": 2,
+        "updated_at": "2025-02-14T14:18:18+02:00",
+        "product_id": 8351454724252,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09579.jpg?v=1739535498",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927507153052,
+        "created_at": "2025-02-14T14:18:17+02:00",
+        "position": 3,
+        "updated_at": "2025-02-14T14:18:19+02:00",
+        "product_id": 8351454724252,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09606.jpg?v=1739535499",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927506923676,
+        "created_at": "2025-02-14T14:18:17+02:00",
+        "position": 4,
+        "updated_at": "2025-02-14T14:18:18+02:00",
+        "product_id": 8351454724252,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09581.jpg?v=1739535498",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927507120284,
+        "created_at": "2025-02-14T14:18:17+02:00",
+        "position": 5,
+        "updated_at": "2025-02-14T14:18:19+02:00",
+        "product_id": 8351454724252,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09582.jpg?v=1739535499",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927506759836,
+        "created_at": "2025-02-14T14:18:17+02:00",
+        "position": 6,
+        "updated_at": "2025-02-14T14:18:18+02:00",
+        "product_id": 8351454724252,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09604.jpg?v=1739535498",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927506989212,
+        "created_at": "2025-02-14T14:18:17+02:00",
+        "position": 7,
+        "updated_at": "2025-02-14T14:18:18+02:00",
+        "product_id": 8351454724252,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09605.jpg?v=1739535498",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927511937180,
+        "created_at": "2025-02-14T14:19:42+02:00",
+        "position": 8,
+        "updated_at": "2025-02-14T14:19:43+02:00",
+        "product_id": 8351454724252,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/polo_consis.png?v=1739535583",
+        "width": 1025,
+        "height": 1024
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Large",
+          "Medium"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8351452201116,
+    "title": "Get rich knitted jacket \"Black\"",
+    "handle": "get-rich-knitted-jacket-black",
+    "body_html": "<p>Upgrade your wardrobe with our <strong data-start=\"78\" data-end=\"108\">Lightweight Knitted Jacket</strong>, designed for those who appreciate the perfect balance of <strong data-start=\"167\" data-end=\"194\">luxury and street style</strong>. Crafted with precision, this jacket blends <strong data-start=\"239\" data-end=\"272\">simplicity and sophistication</strong>, making it a must-have for any occasion.</p>",
+    "published_at": "2025-02-14T14:13:12+02:00",
+    "created_at": "2025-02-14T14:13:13+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "jacket",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44770893103260,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "700.00",
+        "grams": 600,
+        "compare_at_price": "1000.00",
+        "position": 1,
+        "product_id": 8351452201116,
+        "created_at": "2025-02-14T14:13:14+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770893136028,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "700.00",
+        "grams": 600,
+        "compare_at_price": "1000.00",
+        "position": 2,
+        "product_id": 8351452201116,
+        "created_at": "2025-02-14T14:13:14+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770893168796,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "700.00",
+        "grams": 600,
+        "compare_at_price": "1000.00",
+        "position": 3,
+        "product_id": 8351452201116,
+        "created_at": "2025-02-14T14:13:14+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40927474286748,
+        "created_at": "2025-02-14T14:11:43+02:00",
+        "position": 1,
+        "updated_at": "2025-02-14T14:11:45+02:00",
+        "product_id": 8351452201116,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09548.jpg?v=1739535105",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927474483356,
+        "created_at": "2025-02-14T14:11:43+02:00",
+        "position": 2,
+        "updated_at": "2025-02-14T14:11:46+02:00",
+        "product_id": 8351452201116,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09552.jpg?v=1739535106",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927474450588,
+        "created_at": "2025-02-14T14:11:43+02:00",
+        "position": 3,
+        "updated_at": "2025-02-14T14:11:45+02:00",
+        "product_id": 8351452201116,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09553.jpg?v=1739535105",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927474319516,
+        "created_at": "2025-02-14T14:11:43+02:00",
+        "position": 4,
+        "updated_at": "2025-02-14T14:11:45+02:00",
+        "product_id": 8351452201116,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09545.jpg?v=1739535105",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927474352284,
+        "created_at": "2025-02-14T14:11:43+02:00",
+        "position": 5,
+        "updated_at": "2025-02-14T14:11:45+02:00",
+        "product_id": 8351452201116,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09549.jpg?v=1739535105",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927474253980,
+        "created_at": "2025-02-14T14:11:43+02:00",
+        "position": 6,
+        "updated_at": "2025-02-14T14:11:45+02:00",
+        "product_id": 8351452201116,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09550.jpg?v=1739535105",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927474024604,
+        "created_at": "2025-02-14T14:11:43+02:00",
+        "position": 7,
+        "updated_at": "2025-02-14T14:11:45+02:00",
+        "product_id": 8351452201116,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/jacket_072d9f29-ee78-4102-91f6-5e7694ba73d4.png?v=1739535105",
+        "width": 1024,
+        "height": 1024
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8351450857628,
+    "title": "Get rich knitted jacket \"Grey\"",
+    "handle": "get-rich-knitted-jacket-grey",
+    "body_html": "<p>Upgrade your wardrobe with our <strong data-start=\"78\" data-end=\"108\">Lightweight Knitted Jacket</strong>, designed for those who appreciate the perfect balance of <strong data-start=\"167\" data-end=\"194\">luxury and street style</strong>. Crafted with precision, this jacket blends <strong data-start=\"239\" data-end=\"272\">simplicity and sophistication</strong>, making it a must-have for any occasion.</p>",
+    "published_at": "2025-02-14T14:08:04+02:00",
+    "created_at": "2025-02-14T14:08:04+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "jacket",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44770889859228,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 600,
+        "compare_at_price": "1000.00",
+        "position": 1,
+        "product_id": 8351450857628,
+        "created_at": "2025-02-14T14:08:06+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770889891996,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 600,
+        "compare_at_price": "1000.00",
+        "position": 2,
+        "product_id": 8351450857628,
+        "created_at": "2025-02-14T14:08:06+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770889924764,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 600,
+        "compare_at_price": "1000.00",
+        "position": 3,
+        "product_id": 8351450857628,
+        "created_at": "2025-02-14T14:08:06+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40927451512988,
+        "created_at": "2025-02-14T14:07:26+02:00",
+        "position": 1,
+        "updated_at": "2025-02-14T14:07:28+02:00",
+        "product_id": 8351450857628,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09503.jpg?v=1739534848",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927451709596,
+        "created_at": "2025-02-14T14:07:26+02:00",
+        "position": 2,
+        "updated_at": "2025-02-14T14:07:29+02:00",
+        "product_id": 8351450857628,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09507.jpg?v=1739534849",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927451447452,
+        "created_at": "2025-02-14T14:07:26+02:00",
+        "position": 3,
+        "updated_at": "2025-02-14T14:07:28+02:00",
+        "product_id": 8351450857628,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09508.jpg?v=1739534848",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927451414684,
+        "created_at": "2025-02-14T14:07:26+02:00",
+        "position": 4,
+        "updated_at": "2025-02-14T14:07:28+02:00",
+        "product_id": 8351450857628,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09526.jpg?v=1739534848",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927451545756,
+        "created_at": "2025-02-14T14:07:26+02:00",
+        "position": 5,
+        "updated_at": "2025-02-14T14:07:28+02:00",
+        "product_id": 8351450857628,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09527.jpg?v=1739534848",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927451480220,
+        "created_at": "2025-02-14T14:07:26+02:00",
+        "position": 6,
+        "updated_at": "2025-02-14T14:07:28+02:00",
+        "product_id": 8351450857628,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09528.jpg?v=1739534848",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927451578524,
+        "created_at": "2025-02-14T14:07:26+02:00",
+        "position": 7,
+        "updated_at": "2025-02-14T14:07:28+02:00",
+        "product_id": 8351450857628,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09530.jpg?v=1739534848",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927451349148,
+        "created_at": "2025-02-14T14:07:26+02:00",
+        "position": 8,
+        "updated_at": "2025-02-14T14:07:27+02:00",
+        "product_id": 8351450857628,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09531.jpg?v=1739534847",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927406653596,
+        "created_at": "2025-02-14T13:58:33+02:00",
+        "position": 9,
+        "updated_at": "2025-02-14T13:58:34+02:00",
+        "product_id": 8351450857628,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/jacket.png?v=1739534314",
+        "width": 1024,
+        "height": 1024
+      }
+    ],
+    "options": [
+      {
+        "name": "size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8351448236188,
+    "title": "Get rich knitted jacket \"Crystal Meth\"",
+    "handle": "get-rich-knitted-jacket-crystal-meth",
+    "body_html": "<p>Upgrade your wardrobe with our <strong data-start=\"78\" data-end=\"108\">Lightweight Knitted Jacket</strong>, designed for those who appreciate the perfect balance of <strong data-start=\"167\" data-end=\"194\">luxury and street style</strong>. Crafted with precision, this jacket blends <strong data-start=\"239\" data-end=\"272\">simplicity and sophistication</strong>, making it a must-have for any occasion.</p>",
+    "published_at": "2025-02-14T13:59:23+02:00",
+    "created_at": "2025-02-14T13:59:23+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "jacket",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44770881667228,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 600,
+        "compare_at_price": "1000.00",
+        "position": 1,
+        "product_id": 8351448236188,
+        "created_at": "2025-02-14T13:59:25+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770881699996,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "700.00",
+        "grams": 600,
+        "compare_at_price": "1000.00",
+        "position": 2,
+        "product_id": 8351448236188,
+        "created_at": "2025-02-14T13:59:25+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44770881732764,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "700.00",
+        "grams": 600,
+        "compare_at_price": "1000.00",
+        "position": 3,
+        "product_id": 8351448236188,
+        "created_at": "2025-02-14T13:59:25+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40927404032156,
+        "created_at": "2025-02-14T13:57:55+02:00",
+        "position": 1,
+        "updated_at": "2025-02-14T14:39:14+02:00",
+        "product_id": 8351448236188,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09521.jpg?v=1739536754",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927404130460,
+        "created_at": "2025-02-14T13:57:55+02:00",
+        "position": 2,
+        "updated_at": "2025-02-14T14:39:14+02:00",
+        "product_id": 8351448236188,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09572.jpg?v=1739536754",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927404163228,
+        "created_at": "2025-02-14T13:57:55+02:00",
+        "position": 3,
+        "updated_at": "2025-02-14T14:39:14+02:00",
+        "product_id": 8351448236188,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09573.jpg?v=1739536754",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927403999388,
+        "created_at": "2025-02-14T13:57:55+02:00",
+        "position": 4,
+        "updated_at": "2025-02-14T14:39:14+02:00",
+        "product_id": 8351448236188,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09511.jpg?v=1739536754",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927403966620,
+        "created_at": "2025-02-14T13:57:55+02:00",
+        "position": 5,
+        "updated_at": "2025-02-14T14:39:14+02:00",
+        "product_id": 8351448236188,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09512.jpg?v=1739536754",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927404195996,
+        "created_at": "2025-02-14T13:57:55+02:00",
+        "position": 6,
+        "updated_at": "2025-02-14T14:39:14+02:00",
+        "product_id": 8351448236188,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09520.jpg?v=1739536754",
+        "width": 2810,
+        "height": 4207
+      },
+      {
+        "id": 40927406653596,
+        "created_at": "2025-02-14T13:58:33+02:00",
+        "position": 7,
+        "updated_at": "2025-02-14T13:58:34+02:00",
+        "product_id": 8351448236188,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/jacket.png?v=1739534314",
+        "width": 1024,
+        "height": 1024
+      }
+    ],
+    "options": [
+      {
+        "name": "size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300366463132,
+    "title": "Rose Pants \"Stay Woke\"",
+    "handle": "rose-pants-stay-woke",
+    "body_html": "<p><span>Discover the perfect fusion of comfort and style with these baggy pants, designed to capture the essence of luxury streetwear. The relaxed fit and premium fabric delivers effortless street style with an elevated edge.</span></p>",
+    "published_at": "2024-11-18T23:47:53+02:00",
+    "created_at": "2024-11-18T23:47:53+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Pants",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44599496310940,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "750.00",
+        "position": 3,
+        "product_id": 8300366463132,
+        "created_at": "2024-11-18T23:49:13+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599496343708,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "750.00",
+        "position": 4,
+        "product_id": 8300366463132,
+        "created_at": "2024-11-18T23:49:13+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599496376476,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "750.00",
+        "position": 5,
+        "product_id": 8300366463132,
+        "created_at": "2024-11-18T23:49:13+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40272231137436,
+        "created_at": "2024-11-18T23:46:58+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T23:47:01+02:00",
+        "product_id": 8300366463132,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09195.jpg?v=1731966421",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272231170204,
+        "created_at": "2024-11-18T23:46:58+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T23:47:01+02:00",
+        "product_id": 8300366463132,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09197.jpg?v=1731966421",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272231202972,
+        "created_at": "2024-11-18T23:46:58+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T23:47:01+02:00",
+        "product_id": 8300366463132,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09201.jpg?v=1731966421",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272231235740,
+        "created_at": "2024-11-18T23:46:58+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T23:47:01+02:00",
+        "product_id": 8300366463132,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09207.jpg?v=1731966421",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272231268508,
+        "created_at": "2024-11-18T23:46:58+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T23:47:00+02:00",
+        "product_id": 8300366463132,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118230919.png?v=1731966420",
+        "width": 4268,
+        "height": 4268
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300354175132,
+    "title": "Teal Pants \"Stay Woke\"",
+    "handle": "teal-pants-stay-woke",
+    "body_html": "<div class=\"product__description rte quick-add-hidden\">\n<p>Discover the perfect fusion of comfort and style with these baggy pants, designed to capture the essence of luxury streetwear. The relaxed fit and premium fabric delivers effortless street style with an elevated edge.</p>\n</div>",
+    "published_at": "2024-11-18T23:22:33+02:00",
+    "created_at": "2024-11-18T23:22:33+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Pants",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44599473930396,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 0,
+        "compare_at_price": "750.00",
+        "position": 2,
+        "product_id": 8300354175132,
+        "created_at": "2024-11-18T23:22:34+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599473963164,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 0,
+        "compare_at_price": "750.00",
+        "position": 3,
+        "product_id": 8300354175132,
+        "created_at": "2024-11-18T23:22:34+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599473995932,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 0,
+        "compare_at_price": "750.00",
+        "position": 4,
+        "product_id": 8300354175132,
+        "created_at": "2024-11-18T23:22:34+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40272143253660,
+        "created_at": "2024-11-18T23:22:05+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T23:22:07+02:00",
+        "product_id": 8300354175132,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09179.jpg?v=1731964927",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272143286428,
+        "created_at": "2024-11-18T23:22:05+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T23:22:07+02:00",
+        "product_id": 8300354175132,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09180.jpg?v=1731964927",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272143319196,
+        "created_at": "2024-11-18T23:22:05+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T23:22:08+02:00",
+        "product_id": 8300354175132,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09181.jpg?v=1731964928",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272143351964,
+        "created_at": "2024-11-18T23:22:05+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T23:22:08+02:00",
+        "product_id": 8300354175132,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09183.jpg?v=1731964928",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272143384732,
+        "created_at": "2024-11-18T23:22:05+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T23:22:07+02:00",
+        "product_id": 8300354175132,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118230919_ddd504f1-1693-48e2-bc67-805428897cf2.png?v=1731964927",
+        "width": 4268,
+        "height": 4268
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300352929948,
+    "title": "Black Pants \"Stay Woke\"",
+    "handle": "black-pants-stay-woke",
+    "body_html": "<p>Discover the perfect fusion of comfort and style with these baggy pants, designed to capture the essence of luxury streetwear. The relaxed fit and premium fabric delivers effortless street style with an elevated edge.</p>",
+    "published_at": "2024-11-18T23:18:17+02:00",
+    "created_at": "2024-11-18T23:18:17+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Crewneck",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44599471112348,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 800,
+        "compare_at_price": "750.00",
+        "position": 2,
+        "product_id": 8300352929948,
+        "created_at": "2024-11-18T23:18:19+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599471145116,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 800,
+        "compare_at_price": "750.00",
+        "position": 3,
+        "product_id": 8300352929948,
+        "created_at": "2024-11-18T23:18:19+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599471177884,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 800,
+        "compare_at_price": "750.00",
+        "position": 4,
+        "product_id": 8300352929948,
+        "created_at": "2024-11-18T23:18:19+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40272132079772,
+        "created_at": "2024-11-18T23:17:26+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T23:17:29+02:00",
+        "product_id": 8300352929948,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09221.jpg?v=1731964649",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272132112540,
+        "created_at": "2024-11-18T23:17:26+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T23:17:29+02:00",
+        "product_id": 8300352929948,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09223.jpg?v=1731964649",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272132145308,
+        "created_at": "2024-11-18T23:17:26+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T23:17:29+02:00",
+        "product_id": 8300352929948,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09225.jpg?v=1731964649",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272132178076,
+        "created_at": "2024-11-18T23:17:26+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T23:17:28+02:00",
+        "product_id": 8300352929948,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09227.jpg?v=1731964648",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272132210844,
+        "created_at": "2024-11-18T23:17:26+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T23:17:28+02:00",
+        "product_id": 8300352929948,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118230919_091f31d1-4c7c-4f88-a6e3-c94e52f18d03.png?v=1731964648",
+        "width": 4268,
+        "height": 4268
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300351094940,
+    "title": "Black Hoodie \"Visionary\"",
+    "handle": "black-hoodie-visionary",
+    "body_html": "<p><span>Experience ultimate comfort with this oversized hoodie, featuring a bold puff print that exudes street luxury. The relaxed fit and premium fabric offer a perfect blend of style and coziness, making it a must-have statement piece for any wardrobe.</span></p>",
+    "published_at": "2024-11-18T23:09:55+02:00",
+    "created_at": "2024-11-18T23:09:55+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Hoodie",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44599468753052,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 8300351094940,
+        "created_at": "2024-11-18T23:09:56+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599468785820,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 8300351094940,
+        "created_at": "2024-11-18T23:09:56+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599468818588,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "650.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 4,
+        "product_id": 8300351094940,
+        "created_at": "2024-11-18T23:09:56+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40272118022300,
+        "created_at": "2024-11-18T23:09:16+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T23:09:19+02:00",
+        "product_id": 8300351094940,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09208.jpg?v=1731964159",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272118055068,
+        "created_at": "2024-11-18T23:09:16+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T23:09:19+02:00",
+        "product_id": 8300351094940,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09210.jpg?v=1731964159",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272118087836,
+        "created_at": "2024-11-18T23:09:16+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T23:09:19+02:00",
+        "product_id": 8300351094940,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09215.jpg?v=1731964159",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272118120604,
+        "created_at": "2024-11-18T23:09:16+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T23:09:19+02:00",
+        "product_id": 8300351094940,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09218.jpg?v=1731964159",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272118153372,
+        "created_at": "2024-11-18T23:09:16+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T23:09:18+02:00",
+        "product_id": 8300351094940,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118223103_85099d26-0046-46ba-933c-2989aca3043b.png?v=1731964158",
+        "width": 4267,
+        "height": 4267
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300350275740,
+    "title": "Pink Hoodie \"Visionary\"",
+    "handle": "pink-hoodie-visionary",
+    "body_html": "<div class=\"product__description rte quick-add-hidden\">\n<p><span>Experience ultimate comfort with this oversized hoodie, featuring a bold puff print that exudes street luxury. The relaxed fit and premium fabric offer a perfect blend of style and coziness, making it a must-have statement piece for any wardrobe.</span></p>\n</div>",
+    "published_at": "2024-11-18T23:06:36+02:00",
+    "created_at": "2024-11-18T23:06:36+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Hoodie",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44599467409564,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 1200,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 8300350275740,
+        "created_at": "2024-11-18T23:06:38+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599467442332,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 1200,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 8300350275740,
+        "created_at": "2024-11-18T23:06:38+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599467475100,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 1200,
+        "compare_at_price": "850.00",
+        "position": 4,
+        "product_id": 8300350275740,
+        "created_at": "2024-11-18T23:06:38+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40272109961372,
+        "created_at": "2024-11-18T23:06:05+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T23:06:07+02:00",
+        "product_id": 8300350275740,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09269.jpg?v=1731963967",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272109994140,
+        "created_at": "2024-11-18T23:06:05+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T23:06:07+02:00",
+        "product_id": 8300350275740,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09270.jpg?v=1731963967",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272110026908,
+        "created_at": "2024-11-18T23:06:05+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T23:06:07+02:00",
+        "product_id": 8300350275740,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09271.jpg?v=1731963967",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272110059676,
+        "created_at": "2024-11-18T23:06:05+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T23:06:08+02:00",
+        "product_id": 8300350275740,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09273.jpg?v=1731963968",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272110092444,
+        "created_at": "2024-11-18T23:06:05+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T23:06:07+02:00",
+        "product_id": 8300350275740,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09274.jpg?v=1731963967",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272110157980,
+        "created_at": "2024-11-18T23:06:05+02:00",
+        "position": 6,
+        "updated_at": "2024-11-18T23:06:07+02:00",
+        "product_id": 8300350275740,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118223103_36bbb1a2-9b21-4689-80f8-086296e16120.png?v=1731963967",
+        "width": 4267,
+        "height": 4267
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300348604572,
+    "title": "Teal Hoodie \"Visionary\"",
+    "handle": "teal-hoodie-visionary",
+    "body_html": "<p><span>Experience ultimate comfort with this oversized hoodie, featuring a bold puff print that exudes street luxury. The relaxed fit and premium fabric offer a perfect blend of style and coziness, making it a must-have statement piece for any wardrobe.</span></p>",
+    "published_at": "2024-11-18T23:01:05+02:00",
+    "created_at": "2024-11-18T23:01:05+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Hoodie",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44599465115804,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 1200,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 8300348604572,
+        "created_at": "2024-11-18T23:01:06+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599465148572,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 1200,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 8300348604572,
+        "created_at": "2024-11-18T23:01:06+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599465181340,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 1200,
+        "compare_at_price": "850.00",
+        "position": 4,
+        "product_id": 8300348604572,
+        "created_at": "2024-11-18T23:01:06+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40272096460956,
+        "created_at": "2024-11-18T23:00:34+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T23:00:37+02:00",
+        "product_id": 8300348604572,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09228.jpg?v=1731963637",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272096493724,
+        "created_at": "2024-11-18T23:00:34+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T23:00:37+02:00",
+        "product_id": 8300348604572,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09233.jpg?v=1731963637",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272096526492,
+        "created_at": "2024-11-18T23:00:34+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T23:00:37+02:00",
+        "product_id": 8300348604572,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09235.jpg?v=1731963637",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272096559260,
+        "created_at": "2024-11-18T23:00:34+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T23:00:37+02:00",
+        "product_id": 8300348604572,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09168_7cd917ef-73f0-41f5-8cdc-64b6046844c6.jpg?v=1731963637",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272096592028,
+        "created_at": "2024-11-18T23:00:34+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T23:00:37+02:00",
+        "product_id": 8300348604572,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09236.jpg?v=1731963637",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272096624796,
+        "created_at": "2024-11-18T23:00:34+02:00",
+        "position": 6,
+        "updated_at": "2024-11-18T23:00:36+02:00",
+        "product_id": 8300348604572,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118223103_58ac5541-7817-49a8-8ff1-6dcba89ef4bd.png?v=1731963636",
+        "width": 4267,
+        "height": 4267
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300345983132,
+    "title": "Teal Hoodie \"Impact Society\"",
+    "handle": "teal-hoodie-impact-society",
+    "body_html": "<p><span>Experience ultimate comfort with this oversized hoodie, featuring a bold puff print that exudes street luxury. The relaxed fit and premium fabric offer a perfect blend of style and coziness, making it a must-have statement piece for any wardrobe.</span></p>",
+    "published_at": "2024-11-18T22:52:24+02:00",
+    "created_at": "2024-11-18T22:52:24+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Hoodie",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44599459152028,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 8300345983132,
+        "created_at": "2024-11-18T22:52:25+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599459184796,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 8300345983132,
+        "created_at": "2024-11-18T22:52:25+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599459217564,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 4,
+        "product_id": 8300345983132,
+        "created_at": "2024-11-18T22:52:25+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40272072999068,
+        "created_at": "2024-11-18T22:51:31+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T22:51:34+02:00",
+        "product_id": 8300345983132,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09165.jpg?v=1731963094",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272073031836,
+        "created_at": "2024-11-18T22:51:31+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T22:51:34+02:00",
+        "product_id": 8300345983132,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09167.jpg?v=1731963094",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272073064604,
+        "created_at": "2024-11-18T22:51:31+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T22:51:34+02:00",
+        "product_id": 8300345983132,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09168.jpg?v=1731963094",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272073097372,
+        "created_at": "2024-11-18T22:51:32+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T22:51:34+02:00",
+        "product_id": 8300345983132,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09169.jpg?v=1731963094",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272073130140,
+        "created_at": "2024-11-18T22:51:32+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T22:51:34+02:00",
+        "product_id": 8300345983132,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09174.jpg?v=1731963094",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272073162908,
+        "created_at": "2024-11-18T22:51:32+02:00",
+        "position": 6,
+        "updated_at": "2024-11-18T22:51:34+02:00",
+        "product_id": 8300345983132,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118223103_09561d6d-4a9d-4830-a50f-ff0995f0d9a4.png?v=1731963094",
+        "width": 4267,
+        "height": 4267
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300342739100,
+    "title": "Pink Hoodie \"Impact Society\"",
+    "handle": "pink-hoodie-impact-society",
+    "body_html": "<p><span>Experience ultimate comfort with this oversized hoodie, featuring a bold puff print that exudes street luxury. The relaxed fit and premium fabric offer a perfect blend of style and coziness, making it a must-have statement piece for any wardrobe.</span></p>",
+    "published_at": "2024-11-18T22:43:15+02:00",
+    "created_at": "2024-11-18T22:43:15+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Hoodie",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44599452696732,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 1200,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 8300342739100,
+        "created_at": "2024-11-18T22:43:17+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599452729500,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 1200,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 8300342739100,
+        "created_at": "2024-11-18T22:43:17+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599452762268,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 1200,
+        "compare_at_price": "850.00",
+        "position": 4,
+        "product_id": 8300342739100,
+        "created_at": "2024-11-18T22:43:17+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40272043966620,
+        "created_at": "2024-11-18T22:42:32+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T22:42:34+02:00",
+        "product_id": 8300342739100,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09185.jpg?v=1731962554",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272043999388,
+        "created_at": "2024-11-18T22:42:32+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T22:42:35+02:00",
+        "product_id": 8300342739100,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09186.jpg?v=1731962555",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272044032156,
+        "created_at": "2024-11-18T22:42:32+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T22:42:34+02:00",
+        "product_id": 8300342739100,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09187.jpg?v=1731962554",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272044064924,
+        "created_at": "2024-11-18T22:42:32+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T22:42:34+02:00",
+        "product_id": 8300342739100,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09191.jpg?v=1731962554",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272044097692,
+        "created_at": "2024-11-18T22:42:32+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T22:42:34+02:00",
+        "product_id": 8300342739100,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09194.jpg?v=1731962554",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272023519388,
+        "created_at": "2024-11-18T22:35:33+02:00",
+        "position": 6,
+        "updated_at": "2024-11-18T22:35:35+02:00",
+        "product_id": 8300342739100,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118223103.png?v=1731962135",
+        "width": 4267,
+        "height": 4267
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300340510876,
+    "title": "Black Hoodie \"Impact Society\"",
+    "handle": "black-hoodie-impact-society",
+    "body_html": "<p>Experience ultimate comfort with this oversized hoodie, featuring a bold puff print that exudes street luxury. The relaxed fit and premium fabric offer a perfect blend of style and coziness, making it a must-have statement piece for any wardrobe.</p>",
+    "published_at": "2024-11-18T22:36:30+02:00",
+    "created_at": "2024-11-18T22:36:30+02:00",
+    "updated_at": "2025-05-03T21:40:04+03:00",
+    "vendor": "WOKE",
+    "product_type": "Hoodie",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44599448535196,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 800,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 8300340510876,
+        "created_at": "2024-11-18T22:36:31+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599448567964,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 800,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 8300340510876,
+        "created_at": "2024-11-18T22:36:31+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      },
+      {
+        "id": 44599448600732,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 800,
+        "compare_at_price": "850.00",
+        "position": 4,
+        "product_id": 8300340510876,
+        "created_at": "2024-11-18T22:36:31+02:00",
+        "updated_at": "2025-05-03T21:40:04+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40272023388316,
+        "created_at": "2024-11-18T22:35:33+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T22:35:35+02:00",
+        "product_id": 8300340510876,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09250.jpg?v=1731962135",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272023421084,
+        "created_at": "2024-11-18T22:35:33+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T22:35:36+02:00",
+        "product_id": 8300340510876,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09254.jpg?v=1731962136",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272023453852,
+        "created_at": "2024-11-18T22:35:33+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T22:35:35+02:00",
+        "product_id": 8300340510876,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09255.jpg?v=1731962135",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272023486620,
+        "created_at": "2024-11-18T22:35:33+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T22:35:35+02:00",
+        "product_id": 8300340510876,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09256.jpg?v=1731962135",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40272023519388,
+        "created_at": "2024-11-18T22:35:33+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T22:35:35+02:00",
+        "product_id": 8300340510876,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118223103.png?v=1731962135",
+        "width": 4267,
+        "height": 4267
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300335104156,
+    "title": "Beige Crewneck \"Marathon\"",
+    "handle": "beige-crewneck-marathon",
+    "body_html": "<p><span>Crafted from a unique, textured fabric, this oversized crewneck exudes street luxury while offering a relaxed fit. It's a statement piece that merges style and comfort for a truly standout look.</span></p>",
+    "published_at": "2024-11-18T22:30:55+02:00",
+    "created_at": "2024-11-18T22:30:55+02:00",
+    "updated_at": "2025-05-03T21:40:06+03:00",
+    "vendor": "WOKE",
+    "product_type": "Crewneck",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44599387652252,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 800,
+        "compare_at_price": "800.00",
+        "position": 2,
+        "product_id": 8300335104156,
+        "created_at": "2024-11-18T22:30:57+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      },
+      {
+        "id": 44599387685020,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 800,
+        "compare_at_price": "800.00",
+        "position": 3,
+        "product_id": 8300335104156,
+        "created_at": "2024-11-18T22:30:57+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      },
+      {
+        "id": 44599387717788,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 800,
+        "compare_at_price": "800.00",
+        "position": 4,
+        "product_id": 8300335104156,
+        "created_at": "2024-11-18T22:30:57+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40271887499420,
+        "created_at": "2024-11-18T22:30:34+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T22:30:36+02:00",
+        "product_id": 8300335104156,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09315.jpg?v=1731961836",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40271887663260,
+        "created_at": "2024-11-18T22:30:34+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T22:30:36+02:00",
+        "product_id": 8300335104156,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09310.jpg?v=1731961836",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40271887827100,
+        "created_at": "2024-11-18T22:30:34+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T22:30:36+02:00",
+        "product_id": 8300335104156,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09312.jpg?v=1731961836",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40271887990940,
+        "created_at": "2024-11-18T22:30:34+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T22:30:36+02:00",
+        "product_id": 8300335104156,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09313.jpg?v=1731961836",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40271888154780,
+        "created_at": "2024-11-18T22:30:34+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T22:30:36+02:00",
+        "product_id": 8300335104156,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09314.jpg?v=1731961836",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40271888285852,
+        "created_at": "2024-11-18T22:30:34+02:00",
+        "position": 6,
+        "updated_at": "2024-11-18T22:30:36+02:00",
+        "product_id": 8300335104156,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118220919_daa4b04f-54b6-4a1f-92ca-14af0790c9bf.png?v=1731961836",
+        "width": 4268,
+        "height": 4267
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300322914460,
+    "title": "Black Crewneck \"Marathon\"",
+    "handle": "black-crewneck-marathon",
+    "body_html": "<div class=\"product__description rte quick-add-hidden\">\n<p>Crafted from a unique, textured fabric, this oversized crewneck exudes street luxury while offering a relaxed fit. It's a statement piece that merges style and comfort for a truly standout look.</p>\n</div>",
+    "published_at": "2024-11-18T22:25:41+02:00",
+    "created_at": "2024-11-18T22:25:41+02:00",
+    "updated_at": "2025-05-03T21:40:06+03:00",
+    "vendor": "WOKE",
+    "product_type": "Crewneck",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44599218536604,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 800,
+        "compare_at_price": "800.00",
+        "position": 2,
+        "product_id": 8300322914460,
+        "created_at": "2024-11-18T22:25:43+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      },
+      {
+        "id": 44599218569372,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 800,
+        "compare_at_price": "800.00",
+        "position": 3,
+        "product_id": 8300322914460,
+        "created_at": "2024-11-18T22:25:43+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      },
+      {
+        "id": 44599218602140,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 800,
+        "compare_at_price": "800.00",
+        "position": 4,
+        "product_id": 8300322914460,
+        "created_at": "2024-11-18T22:25:43+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40271526330524,
+        "created_at": "2024-11-18T22:24:46+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T22:24:49+02:00",
+        "product_id": 8300322914460,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09330.jpg?v=1731961489",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40271526396060,
+        "created_at": "2024-11-18T22:24:46+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T22:24:49+02:00",
+        "product_id": 8300322914460,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09328_74dc22a2-36fe-4c54-a869-4f64467244cd.jpg?v=1731961489",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40271526461596,
+        "created_at": "2024-11-18T22:24:46+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T22:24:48+02:00",
+        "product_id": 8300322914460,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09329.jpg?v=1731961488",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40271526494364,
+        "created_at": "2024-11-18T22:24:46+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T22:24:48+02:00",
+        "product_id": 8300322914460,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09331.jpg?v=1731961488",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40271526527132,
+        "created_at": "2024-11-18T22:24:46+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T22:24:48+02:00",
+        "product_id": 8300322914460,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118220919_8ee242ac-3116-4405-af20-050ce521c800.png?v=1731961488",
+        "width": 4268,
+        "height": 4267
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300303384732,
+    "title": "Teal Crewneck \"Marathon\"",
+    "handle": "teal-crewneck-marathon",
+    "body_html": "<p>Crafted from a unique, textured fabric, this oversized crewneck exudes street luxury while offering a relaxed fit. It's a statement piece that merges style and comfort for a truly standout look.</p>",
+    "published_at": "2024-11-18T22:16:43+02:00",
+    "created_at": "2024-11-18T22:16:43+02:00",
+    "updated_at": "2025-05-03T21:40:06+03:00",
+    "vendor": "WOKE",
+    "product_type": "Crewneck",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44598891774108,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "550.00",
+        "grams": 800,
+        "compare_at_price": "800.00",
+        "position": 2,
+        "product_id": 8300303384732,
+        "created_at": "2024-11-18T22:16:45+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      },
+      {
+        "id": 44598891806876,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 800,
+        "compare_at_price": "800.00",
+        "position": 3,
+        "product_id": 8300303384732,
+        "created_at": "2024-11-18T22:16:45+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      },
+      {
+        "id": 44598891839644,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "550.00",
+        "grams": 800,
+        "compare_at_price": "800.00",
+        "position": 4,
+        "product_id": 8300303384732,
+        "created_at": "2024-11-18T22:16:45+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40270991884444,
+        "created_at": "2024-11-18T22:16:01+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T22:16:03+02:00",
+        "product_id": 8300303384732,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09337.jpg?v=1731960963",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270991917212,
+        "created_at": "2024-11-18T22:16:01+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T22:16:03+02:00",
+        "product_id": 8300303384732,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09338.jpg?v=1731960963",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270991949980,
+        "created_at": "2024-11-18T22:16:01+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T22:16:03+02:00",
+        "product_id": 8300303384732,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09339.jpg?v=1731960963",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270991982748,
+        "created_at": "2024-11-18T22:16:01+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T22:16:03+02:00",
+        "product_id": 8300303384732,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09340.jpg?v=1731960963",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270992015516,
+        "created_at": "2024-11-18T22:16:01+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T22:16:03+02:00",
+        "product_id": 8300303384732,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09341.jpg?v=1731960963",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270992048284,
+        "created_at": "2024-11-18T22:16:01+02:00",
+        "position": 6,
+        "updated_at": "2024-11-18T22:16:03+02:00",
+        "product_id": 8300303384732,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09342.jpg?v=1731960963",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270992113820,
+        "created_at": "2024-11-18T22:16:01+02:00",
+        "position": 7,
+        "updated_at": "2024-11-18T22:16:02+02:00",
+        "product_id": 8300303384732,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118220919.png?v=1731960962",
+        "width": 4268,
+        "height": 4267
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300299452572,
+    "title": "Black Polo \"Conquer\"",
+    "handle": "black-polo-conquer",
+    "body_html": "<div class=\"product__description rte quick-add-hidden\">\n<p>Crafted with a distinctive textured fabric, this oversized polo delivers a fresh take on street luxury. The bold design combines a relaxed fit with an elevated feel, making it the perfect blend of style and comfort for a standout look.</p>\n</div>",
+    "published_at": "2024-11-18T22:03:55+02:00",
+    "created_at": "2024-11-18T22:03:55+02:00",
+    "updated_at": "2025-05-03T21:40:06+03:00",
+    "vendor": "WOKE",
+    "product_type": "polo oversized t-shirt",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44598880731292,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 800,
+        "compare_at_price": "900.00",
+        "position": 2,
+        "product_id": 8300299452572,
+        "created_at": "2024-11-18T22:03:56+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      },
+      {
+        "id": 44598880764060,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 800,
+        "compare_at_price": "900.00",
+        "position": 3,
+        "product_id": 8300299452572,
+        "created_at": "2024-11-18T22:03:56+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      },
+      {
+        "id": 44598880796828,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 800,
+        "compare_at_price": "900.00",
+        "position": 4,
+        "product_id": 8300299452572,
+        "created_at": "2024-11-18T22:03:56+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40270954758300,
+        "created_at": "2024-11-18T22:02:56+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T22:02:59+02:00",
+        "product_id": 8300299452572,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09352.jpg?v=1731960179",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270954791068,
+        "created_at": "2024-11-18T22:02:56+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T22:02:59+02:00",
+        "product_id": 8300299452572,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09350.jpg?v=1731960179",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270954823836,
+        "created_at": "2024-11-18T22:02:56+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T22:03:01+02:00",
+        "product_id": 8300299452572,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09348.jpg?v=1731960181",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270954856604,
+        "created_at": "2024-11-18T22:02:56+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T22:03:00+02:00",
+        "product_id": 8300299452572,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09351.jpg?v=1731960180",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270954889372,
+        "created_at": "2024-11-18T22:02:56+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T22:02:59+02:00",
+        "product_id": 8300299452572,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09353.jpg?v=1731960179",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270954922140,
+        "created_at": "2024-11-18T22:02:57+02:00",
+        "position": 6,
+        "updated_at": "2024-11-18T22:02:58+02:00",
+        "product_id": 8300299452572,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118214028_de8fb779-eec4-4e8e-bd79-5282fd563bf2.png?v=1731960178",
+        "width": 4267,
+        "height": 4268
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300296503452,
+    "title": "Olive Polo \"Conquer\"",
+    "handle": "olive-polo-conquer",
+    "body_html": "<p><span>Crafted with a distinctive textured fabric, this oversized polo delivers a fresh take on street luxury. The bold design combines a relaxed fit with an elevated feel, making it the perfect blend of style and comfort for a standout look.</span></p>",
+    "published_at": "2024-11-18T21:55:47+02:00",
+    "created_at": "2024-11-18T21:55:47+02:00",
+    "updated_at": "2025-05-03T21:40:06+03:00",
+    "vendor": "WOKE",
+    "product_type": "polo oversized t-shirt",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44598872375452,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 800,
+        "compare_at_price": "900.00",
+        "position": 2,
+        "product_id": 8300296503452,
+        "created_at": "2024-11-18T21:55:49+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      },
+      {
+        "id": 44598872408220,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 800,
+        "compare_at_price": "900.00",
+        "position": 3,
+        "product_id": 8300296503452,
+        "created_at": "2024-11-18T21:55:49+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      },
+      {
+        "id": 44598872440988,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 800,
+        "compare_at_price": "900.00",
+        "position": 4,
+        "product_id": 8300296503452,
+        "created_at": "2024-11-18T21:55:49+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40270926610588,
+        "created_at": "2024-11-18T21:55:23+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T21:55:26+02:00",
+        "product_id": 8300296503452,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09354.jpg?v=1731959726",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270926643356,
+        "created_at": "2024-11-18T21:55:23+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T21:55:26+02:00",
+        "product_id": 8300296503452,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09357.jpg?v=1731959726",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270926676124,
+        "created_at": "2024-11-18T21:55:23+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T21:55:26+02:00",
+        "product_id": 8300296503452,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09358.jpg?v=1731959726",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270926741660,
+        "created_at": "2024-11-18T21:55:24+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T21:55:26+02:00",
+        "product_id": 8300296503452,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09359.jpg?v=1731959726",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270926774428,
+        "created_at": "2024-11-18T21:55:24+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T21:55:26+02:00",
+        "product_id": 8300296503452,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09363.jpg?v=1731959726",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270926807196,
+        "created_at": "2024-11-18T21:55:24+02:00",
+        "position": 6,
+        "updated_at": "2024-11-18T21:55:25+02:00",
+        "product_id": 8300296503452,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118214028_ca9f0677-639e-41ce-9c28-3dea581a329b.png?v=1731959725",
+        "width": 4267,
+        "height": 4268
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300293652636,
+    "title": "Grey Polo \"Conquer\"",
+    "handle": "grey-polo-conquer",
+    "body_html": "<p>Crafted with a distinctive textured fabric, this oversized polo delivers a fresh take on street luxury. The bold design combines a relaxed fit with an elevated feel, making it the perfect blend of style and comfort for a standout look.</p>",
+    "published_at": "2024-11-18T21:46:44+02:00",
+    "created_at": "2024-11-18T21:46:44+02:00",
+    "updated_at": "2025-05-03T21:40:06+03:00",
+    "vendor": "WOKE",
+    "product_type": "polo oversized t-shirt",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44598866346140,
+        "title": "Smal",
+        "option1": "Smal",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "700.00",
+        "grams": 800,
+        "compare_at_price": "900.00",
+        "position": 2,
+        "product_id": 8300293652636,
+        "created_at": "2024-11-18T21:46:46+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      },
+      {
+        "id": 44598866378908,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 800,
+        "compare_at_price": "900.00",
+        "position": 3,
+        "product_id": 8300293652636,
+        "created_at": "2024-11-18T21:46:46+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      },
+      {
+        "id": 44598866411676,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "700.00",
+        "grams": 800,
+        "compare_at_price": "900.00",
+        "position": 4,
+        "product_id": 8300293652636,
+        "created_at": "2024-11-18T21:46:46+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40270898495644,
+        "created_at": "2024-11-18T21:46:05+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T21:46:10+02:00",
+        "product_id": 8300293652636,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09374.jpg?v=1731959170",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270898397340,
+        "created_at": "2024-11-18T21:46:04+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T21:46:07+02:00",
+        "product_id": 8300293652636,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09366.jpg?v=1731959167",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270898430108,
+        "created_at": "2024-11-18T21:46:04+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T21:46:07+02:00",
+        "product_id": 8300293652636,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09368.jpg?v=1731959167",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270898462876,
+        "created_at": "2024-11-18T21:46:05+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T21:46:07+02:00",
+        "product_id": 8300293652636,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09369.jpg?v=1731959167",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270898561180,
+        "created_at": "2024-11-18T21:46:05+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T21:46:07+02:00",
+        "product_id": 8300293652636,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09375.jpg?v=1731959167",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270898593948,
+        "created_at": "2024-11-18T21:46:05+02:00",
+        "position": 6,
+        "updated_at": "2024-11-18T21:46:06+02:00",
+        "product_id": 8300293652636,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118214028.png?v=1731959166",
+        "width": 4267,
+        "height": 4268
+      }
+    ],
+    "options": [
+      {
+        "name": "Sizes",
+        "position": 1,
+        "values": [
+          "Smal",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300289163420,
+    "title": "Rose Knitted Polo \"No Debt\"",
+    "handle": "rose-knitted-polo-no-debt-1",
+    "body_html": "<p><span>The Oversized Knitted Polo fuses street-rich style with effortless comfort, offering a relaxed fit and premium knit fabric for a standout look. It's a versatile piece that brings elevated streetwear luxury to your everyday wardrobe.</span></p>",
+    "published_at": "2024-11-18T21:34:47+02:00",
+    "created_at": "2024-11-18T21:34:48+02:00",
+    "updated_at": "2025-05-03T21:40:06+03:00",
+    "vendor": "WOKE",
+    "product_type": "polo oversized t-shirt",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44599478517916,
+        "title": "XS/S",
+        "option1": "XS/S",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 800,
+        "compare_at_price": "950.00",
+        "position": 3,
+        "product_id": 8300289163420,
+        "created_at": "2024-11-18T23:28:35+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      },
+      {
+        "id": 44599478550684,
+        "title": "M/L",
+        "option1": "M/L",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 800,
+        "compare_at_price": "950.00",
+        "position": 4,
+        "product_id": 8300289163420,
+        "created_at": "2024-11-18T23:28:35+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40270855241884,
+        "created_at": "2024-11-18T21:34:20+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T21:34:22+02:00",
+        "product_id": 8300289163420,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09303.jpg?v=1731958462",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270855274652,
+        "created_at": "2024-11-18T21:34:20+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T21:34:22+02:00",
+        "product_id": 8300289163420,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09304.jpg?v=1731958462",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270855307420,
+        "created_at": "2024-11-18T21:34:20+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T21:34:22+02:00",
+        "product_id": 8300289163420,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09305.jpg?v=1731958462",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270855340188,
+        "created_at": "2024-11-18T21:34:20+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T21:34:22+02:00",
+        "product_id": 8300289163420,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09307.jpg?v=1731958462",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270855372956,
+        "created_at": "2024-11-18T21:34:20+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T21:34:22+02:00",
+        "product_id": 8300289163420,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09308.jpg?v=1731958462",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270855405724,
+        "created_at": "2024-11-18T21:34:20+02:00",
+        "position": 6,
+        "updated_at": "2024-11-18T21:34:22+02:00",
+        "product_id": 8300289163420,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118205657_e8c5981a-dfa5-4e45-a84e-ab5f2f84da4d.png?v=1731958462",
+        "width": 4268,
+        "height": 4268
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "XS/S",
+          "M/L"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300282544284,
+    "title": "Teal Knitted Polo \"No Debt\"",
+    "handle": "rose-knitted-polo-no-debt",
+    "body_html": "<div class=\"product__description rte quick-add-hidden\">\n<p>The Oversized Knitted Polo fuses street-rich style with effortless comfort, offering a relaxed fit and premium knit fabric for a standout look. It's a versatile piece that brings elevated streetwear luxury to your everyday wardrobe.</p>\n</div>",
+    "published_at": "2024-11-18T21:17:51+02:00",
+    "created_at": "2024-11-18T21:17:51+02:00",
+    "updated_at": "2025-05-03T21:40:06+03:00",
+    "vendor": "WOKE",
+    "product_type": "polo oversized t-shirt",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44598818635932,
+        "title": "XS/S",
+        "option1": "XS/S",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "750.00",
+        "grams": 800,
+        "compare_at_price": "950.00",
+        "position": 2,
+        "product_id": 8300282544284,
+        "created_at": "2024-11-18T21:17:53+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      },
+      {
+        "id": 44598818668700,
+        "title": "M/L",
+        "option1": "M/L",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "750.00",
+        "grams": 800,
+        "compare_at_price": "950.00",
+        "position": 3,
+        "product_id": 8300282544284,
+        "created_at": "2024-11-18T21:17:53+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40270786363548,
+        "created_at": "2024-11-18T21:15:40+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T21:15:42+02:00",
+        "product_id": 8300282544284,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09293.jpg?v=1731957342",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270786396316,
+        "created_at": "2024-11-18T21:15:40+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T21:15:42+02:00",
+        "product_id": 8300282544284,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09288.jpg?v=1731957342",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270786429084,
+        "created_at": "2024-11-18T21:15:40+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T21:15:42+02:00",
+        "product_id": 8300282544284,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09294_1.jpg?v=1731957342",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270786461852,
+        "created_at": "2024-11-18T21:15:40+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T21:15:44+02:00",
+        "product_id": 8300282544284,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09298.jpg?v=1731957344",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270786494620,
+        "created_at": "2024-11-18T21:15:40+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T21:15:42+02:00",
+        "product_id": 8300282544284,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09297.jpg?v=1731957342",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270786527388,
+        "created_at": "2024-11-18T21:15:40+02:00",
+        "position": 6,
+        "updated_at": "2024-11-18T21:15:42+02:00",
+        "product_id": 8300282544284,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118205657_998d81b7-7e93-47ef-8b74-363c1532c205.png?v=1731957342",
+        "width": 4268,
+        "height": 4268
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "XS/S",
+          "M/L"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8300273664156,
+    "title": "Navy Knitted Polo \"No Debt\"",
+    "handle": "navy-knitted-polo-no-debt",
+    "body_html": "<p>The Oversized Knitted Polo fuses street-rich style with effortless comfort, offering a relaxed fit and premium knit fabric for a standout look. It's a versatile piece that brings elevated streetwear luxury to your everyday wardrobe.</p>",
+    "published_at": "2024-11-18T21:04:45+02:00",
+    "created_at": "2024-11-18T21:04:45+02:00",
+    "updated_at": "2025-05-03T21:40:06+03:00",
+    "vendor": "WOKE",
+    "product_type": "polo oversized t-shirt",
+    "tags": [],
+    "variants": [
+      {
+        "id": 44598766272668,
+        "title": "XS/S",
+        "option1": "XS/S",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "750.00",
+        "grams": 0,
+        "compare_at_price": "950.00",
+        "position": 2,
+        "product_id": 8300273664156,
+        "created_at": "2024-11-18T21:04:47+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      },
+      {
+        "id": 44598766305436,
+        "title": "M/L",
+        "option1": "M/L",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "750.00",
+        "grams": 0,
+        "compare_at_price": "950.00",
+        "position": 3,
+        "product_id": 8300273664156,
+        "created_at": "2024-11-18T21:04:47+02:00",
+        "updated_at": "2025-05-03T21:40:06+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 40270683144348,
+        "created_at": "2024-11-18T20:54:49+02:00",
+        "position": 1,
+        "updated_at": "2024-11-18T20:54:51+02:00",
+        "product_id": 8300273664156,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09279.jpg?v=1731956091",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270683177116,
+        "created_at": "2024-11-18T20:58:03+02:00",
+        "position": 2,
+        "updated_at": "2024-11-18T20:58:05+02:00",
+        "product_id": 8300273664156,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09280.jpg?v=1731956285",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270683209884,
+        "created_at": "2024-11-18T20:58:06+02:00",
+        "position": 3,
+        "updated_at": "2024-11-18T20:58:08+02:00",
+        "product_id": 8300273664156,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09277.jpg?v=1731956288",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270683242652,
+        "created_at": "2024-11-18T20:57:57+02:00",
+        "position": 4,
+        "updated_at": "2024-11-18T20:57:59+02:00",
+        "product_id": 8300273664156,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/DSC09283.jpg?v=1731956279",
+        "width": 4000,
+        "height": 6000
+      },
+      {
+        "id": 40270683275420,
+        "created_at": "2024-11-18T20:57:29+02:00",
+        "position": 5,
+        "updated_at": "2024-11-18T20:57:30+02:00",
+        "product_id": 8300273664156,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0622/4566/6972/files/Image_20241118205657.png?v=1731956250",
+        "width": 4268,
+        "height": 4268
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "XS/S",
+          "M/L"
+        ]
+      }
+    ]
+  }
+]

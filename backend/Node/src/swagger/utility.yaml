@@ -1,0 +1,285 @@
+paths:
+  /utilities/send-password-reset:
+    post:
+      summary: Send password reset email (OTP)
+      tags: [Utilities]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        200:
+          description: Password reset email sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+        400:
+          description: Invalid email
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /utilities/confirm-password-reset:
+    post:
+      summary: Confirm password reset with OTP and new password
+      tags: [Utilities]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - oobCode
+                - newPassword
+              properties:
+                oobCode:
+                  type: string
+                  description: The OTP code received by email
+                newPassword:
+                  type: string
+                  format: password
+                  description: The new password to set
+      responses:
+        200:
+          description: Password has been reset successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+        400:
+          description: Invalid OTP or password
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /utilities/refresh-token:
+    post:
+      summary: Refresh Firebase access token using a refresh token
+      tags: [Utilities]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - refreshToken
+              properties:
+                refreshToken:
+                  type: string
+                  description: The Firebase refresh token
+      responses:
+        200:
+          description: New access token generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: object
+                    properties:
+                      accessToken:
+                        type: string
+                        description: JWT token for authentication
+                      refreshToken:
+                        type: string
+                        description: Refresh token for obtaining new access tokens afetr accessToken expiration 
+                      expiresIn:
+                        type: string
+                        description: Expiration time in seconds for accessToken
+        400:
+          description: Invalid or missing refresh token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+        401:
+          description: Refresh failed or unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /utilities/address-coordinates:
+    post:
+      summary: Get coordinates for a given address
+      tags: [Utilities]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+                # building, street, city, postalCode
+              type: object
+              required:
+                - building
+                - street
+                - city
+                - postalCode
+              properties:
+                building:
+                  type: string
+                  description: Building name or number
+                street:
+                  type: string
+                  description: Street name
+                city:
+                  type: string
+                  description: City name
+                postalCode:
+                  type: string
+                  description: Postal code of the area
+                
+      responses:
+        200:
+          description: Coordinates retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: object
+                    properties:
+                      latitude:
+                        type: number
+                        format: float
+                      longitude:
+                        type: number
+                        format: float
+        400:
+          description: Invalid address format
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /utilities/fcm-token:
+    post:
+      summary: Save FCM token for notifications
+      tags: [Utilities]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - fcmToken
+              properties:
+                fcmToken:
+                  type: string
+                  description: Firebase Cloud Messaging token for push notifications
+      responses:
+        200:
+          description: FCM token saved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+        400:
+          description: Invalid FCM token format
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /utilities/image-search:
+    get:
+      summary: Search products by image
+      tags: [Utilities]
+      parameters:
+        - in: query
+          name: imageUrl
+          required: true
+          schema:
+            type: string
+            format: uri
+          description: URL of the image to search with
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+          description: Number of results to return
+      responses:
+        200:
+          description: Search results
+        400:
+          description: Invalid request
+        500:
+          description: Server error
+

@@ -1,0 +1,837 @@
+paths:
+  /brand-owners/signup:
+    post:
+      summary: Register a new brand owner and create their brand
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BrandOwnerSignupRequest"
+      responses:
+        201:
+          description: The brand owner and brand were successfully registered
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+                    description: Success message
+                    example: Brand owner and brand registration successful
+                  data:
+                    type: object
+                    properties:
+                      brandOwner:
+                        $ref: "#/components/schemas/BrandOwnerResponse"
+                      brand:
+                        $ref: "#/components/schemas/BrandResponse"
+        400:
+          description: Registration failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /brand-owners/login:
+    post:
+      summary: Brand owner login
+      tags: [Authentication]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        200:
+          description: The brand owner was successfully logged in
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: "#/components/schemas/BrandOwnerResponse"
+                      token:
+                        type: string
+                        description: JWT token for authentication
+        400:
+          description: Login failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /brand-owners:
+    get:
+      summary: Get all brand owners (admin only)
+      tags: [Admin]
+      responses:
+        200:
+          description: List of all brand owners
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/BrandOwnerResponse"
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /brand-owners/me:
+    get:
+      summary: Get a brand owner by ID
+      tags: [Brand Owners]
+      responses:
+        200:
+          description: Brand owner details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: "#/components/schemas/BrandOwnerResponse"
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        404:
+          description: Brand owner not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    put:
+      summary: Update a brand owner
+      tags: [Brand Owners]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BrandOwnerUpdateRequest"
+      responses:
+        200:
+          description: Brand owner updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: "#/components/schemas/BrandOwnerResponse"
+        400:
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        404:
+          description: Brand owner not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+    delete:
+      summary: Delete a brand owner and their associated brand (For admin only)
+      tags: [Admin]
+      responses:
+        200:
+          description: Brand owner and associated brand deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+                    example: Brand owner and associated brand deleted successfully
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        404:
+          description: Brand owner not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /brand-owners/me/orders/processing-products:
+    get:
+      tags:
+        - Brand Owners Orders
+      summary: Get brand products in processing status
+      description: Retrieve all products belonging to the brand that are currently in processing status with order statistics
+      responses:
+        '200':
+          description: Successfully retrieved processing products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      brandId:
+                        type: string
+                        example: "brand123"
+                      brandName:
+                        type: string
+                        example: "Fashion Brand"
+                      totalProducts:
+                        type: number
+                        example: 5
+                      totalQuantityInProcessing:
+                        type: number
+                        example: 25
+                      totalOrdersInProcessing:
+                        type: number
+                        example: 12
+                      products:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            productId:
+                              type: string
+                              example: "prod123"
+                            productName:
+                              type: string
+                              example: "Cotton T-Shirt"
+                            brandId:
+                              type: string
+                              example: "brand123"
+                            brandName:
+                              type: string
+                              example: "Fashion Brand"
+                            totalQuantity:
+                              type: number
+                              example: 10
+                            totalOrders:
+                              type: number
+                              example: 5
+                            orderIds:
+                              type: array
+                              items:
+                                type: string
+                              example: ["order1", "order2", "order3"]
+        '404':
+          description: Brand owner not found
+        '500':
+          description: Internal server error
+
+  /brand-owners/me/orders/refunded-products:
+    get:
+      tags:
+        - Brand Owners Orders
+      summary: Get brand products with refund requests
+      description: Retrieve all products belonging to the brand that have refund requests with detailed refund statistics
+      responses:
+        '200':
+          description: Successfully retrieved refunded products
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      brandId:
+                        type: string
+                        example: "brand123"
+                      brandName:
+                        type: string
+                        example: "Fashion Brand"
+                      totalProducts:
+                        type: number
+                        example: 3
+                      totalQuantityRefunded:
+                        type: number
+                        example: 15
+                      totalOrdersWithRefunds:
+                        type: number
+                        example: 8
+                      refundSummary:
+                        type: object
+                        properties:
+                          totalPending:
+                            type: number
+                            example: 5
+                          totalApproved:
+                            type: number
+                            example: 8
+                          totalRejected:
+                            type: number
+                            example: 2
+                      products:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            productId:
+                              type: string
+                              example: "prod123"
+                            productName:
+                              type: string
+                              example: "Cotton T-Shirt"
+                            brandId:
+                              type: string
+                              example: "brand123"
+                            brandName:
+                              type: string
+                              example: "Fashion Brand"
+                            totalQuantity:
+                              type: number
+                              example: 8
+                            totalOrders:
+                              type: number
+                              example: 4
+                            orderIds:
+                              type: array
+                              items:
+                                type: string
+                              example: ["order1", "order2"]
+                            refundStats:
+                              type: object
+                              properties:
+                                pending:
+                                  type: number
+                                  example: 3
+                                approved:
+                                  type: number
+                                  example: 4
+                                rejected:
+                                  type: number
+                                  example: 1
+        '404':
+          description: Brand owner not found
+        '500':
+          description: Internal server error
+
+
+  /brand-owners/me/dashboard/months-sales:
+    get:
+      summary: Get sales data by month for the brand owner
+      tags: [Brand Owners Dashboard]
+      responses:
+        200:
+          description: Sales data by month retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  currentMonthStats:
+                    $ref: "#/components/schemas/CurrentMonthSales"
+                  monthsSales:
+                    $ref: "#/components/schemas/MonthsSales"
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /brand-owners/me/dashboard/reviews-summary:
+    get:
+      summary: Get reviews summary for the brand owner
+      tags: [Brand Owners Dashboard]
+      responses:
+        200:
+          description: Reviews summary retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: object
+                    properties:
+                      totalReviews:
+                        type: integer
+                        description: Total number of reviews received
+                      averageRating:
+                        type: number
+                        format: float
+                        description: Average rating across all reviews
+                      ratingDistribution:
+                        $ref: "#/components/schemas/RatingDistribution"
+                        description: Distribution of ratings across 1 to 5 stars
+                      productReviews:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            productId:
+                              type: string
+                              description: ID of the product
+                            productName:
+                              type: string
+                              description: Name of the product
+                            totalReviews:
+                              type: integer
+                              description: Total number of reviews for the product
+                            averageRating:
+                              type: number
+                              format: float
+                              description: Average rating for the product
+                            ratingDistribution:
+                              $ref: "#/components/schemas/RatingDistribution"
+                              description: Distribution of ratings across 1 to 5 stars
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    BrandOwnerSignupRequest:
+      type: object
+      required:
+        - email
+        - firstName
+        - lastName
+        - password
+        - username
+        - brand
+      properties:
+        email:
+          type: string
+          format: email
+          description: The brand owner email
+        firstName:
+          type: string
+          description: The first name of the brand owner
+        lastName:
+          type: string
+          description: The last name of the brand owner
+        password:
+          type: string
+          format: password
+          description: The brand owner password
+        username:
+          type: string
+          description: The unique username of the brand owner
+        imageURL:
+          type: string
+          description: The image URL of the brand owner (optional)
+        brand:
+          type: object
+          required:
+            - brandName
+          description: Data for creating the brand
+          properties:
+            brandName:
+              type: string
+              description: The unique name of the brand
+            storyDescription:
+              type: string
+              description: Brand description/story
+            imageURL:
+              type: string
+              description: URL to the brand's logo
+            email:
+              type: string
+              description: Brand's contact email
+            phoneNumbers:
+              type: array
+              items:
+                type: string
+              description: Contact phone numbers
+            industry:
+              type: string
+              description: Industry the brand belongs to
+            addresses:
+              type: array
+              items:
+                $ref: "#/components/schemas/Address"
+              description: Brand's physical addresses
+            websites:
+              type: array
+              items:
+                $ref: "#/components/schemas/Website"
+              description: Brand's websites
+
+    BrandOwnerRequest:
+      type: object
+      required:
+        - email
+        - firstName
+        - lastName
+        - password
+        - username
+      properties:
+        email:
+          type: string
+          format: email
+          description: The brand owner email
+        firstName:
+          type: string
+          description: The first name of the brand owner
+        lastName:
+          type: string
+          description: The last name of the brand owner
+        password:
+          type: string
+          format: password
+          description: The brand owner password
+        username:
+          type: string
+          description: The unique username of the brand owner
+        imageURL:
+          type: string
+          description: The image URL of the brand owner (optional)
+
+    BrandOwnerUpdateRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: The first name of the brand owner
+        lastName:
+          type: string
+          description: The last name of the brand owner
+        username:
+          type: string
+          description: The unique username of the brand owner
+        imageURL:
+          type: string
+          description: The image URL of the brand owner
+
+    BrandOwnerResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The auto-generated id of the brand owner
+        role:
+          type: string
+          enum: [brandOwner]
+          description: The role of the user
+        email:
+          type: string
+          description: The brand owner email
+        firstName:
+          type: string
+          description: The first name of the brand owner
+        lastName:
+          type: string
+          description: The last name of the brand owner
+        username:
+          type: string
+          description: The unique username of the brand owner
+        brandId:
+          type: string
+          description: ID of the brand this owner manages
+        imageURL:
+          type: string
+          description: The image URL of the brand owner
+        createdAt:
+          type: object
+          properties:
+            _seconds:
+              type: number
+              description: Seconds since Unix epoch
+            _nanoseconds:
+              type: number
+              description: Nanoseconds fraction
+          description: Timestamp when the brand owner was created
+        updatedAt:
+          type: object
+          properties:
+            _seconds:
+              type: number
+              description: Seconds since Unix epoch
+            _nanoseconds:
+              type: number
+              description: Nanoseconds fraction
+          description: Timestamp when the brand owner was last updated
+
+    Website:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Type of website (e.g., official, social, blog)
+        url:
+          type: string
+          description: Website URL
+
+    BrandResponse:
+      $ref: "../brand.yaml#/components/schemas/BrandResponse"
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [error]
+        message:
+          type: string
+
+    AuthResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success]
+        data:
+          type: object
+          properties:
+            token:
+              type: string
+              description: JWT token for authentication
+            user:
+              $ref: "#/components/schemas/BrandOwnerResponse"
+
+    MonthlySalesData:
+      type: object
+      properties:
+        year:
+          type: integer
+          description: Year of the sales data
+        month:
+          type: integer
+          description: Month of the sales data (1-12)
+        monthName:
+          type: string
+          description: Name of the month (e.g., January, February)
+        totalSales:
+          type: number
+          format: float
+          description: Total sales amount for the month
+        totalProductsSold:
+          type: integer
+          description: Total number of products sold in the month
+        orderCount:
+          type: integer
+          description: Total number of orders placed in the month
+
+    MonthsSales:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/MonthlySalesData"
+          description: Array of monthly sales data points
+        summary:
+          type: object
+          properties:
+            totalPeriodSales:
+              type: number
+              format: float
+              description: Total sales amount for the entire period
+            totalPeriodProducts:
+              type: integer
+              description: Total number of products sold in the entire period
+            totalPeriodOrders:
+              type: integer
+              description: Total number of orders placed in the entire period
+            averageMonthlySales:
+              type: number
+              format: float
+              description: Average sales amount per month over the period
+            highestSalesMonth:
+              $ref: "#/components/schemas/MonthlySalesData"
+              description: Month with the highest sales
+            lowestSalesMonth:
+              $ref: "#/components/schemas/MonthlySalesData"
+              description: Month with the lowest sales
+
+    CurrentMonthSales:
+      type: object
+      properties:
+        totalProductsSold:
+          type: integer
+          description: Total number of products sold in the current month
+        totalSales:
+          type: number
+          format: float
+          description: Total sales amount in the current month
+        topProduct:
+          type: object
+          properties:
+            productId:
+              type: string
+              description: ID of the top-selling product
+            productName:
+              type: string
+              description: Name of the top-selling product
+            quantitySold:
+              type: integer
+              description: Quantity sold of the top-selling product
+            totalSales:
+              type: number
+              format: float
+              description: Total sales amount of the top-selling product
+        topProductsSales:
+          type: array
+          items:
+            type: object
+            properties:
+              productId:
+                type: string
+                description: ID of the product
+              productName:
+                type: string
+                description: Name of the product
+              quantitySold:
+                type: integer
+                description: Quantity sold of the product
+              totalSales:
+                type: number
+                format: float
+                description: Total sales amount of the product

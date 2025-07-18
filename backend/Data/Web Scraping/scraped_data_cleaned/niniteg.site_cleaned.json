@@ -1,0 +1,404 @@
+[
+  {
+    "id": 8483914580122,
+    "title": "Ninit White Embroidered Tshirt",
+    "handle": "ninit-charcoal-embroidered-tshirt-copy",
+    "body_html": "<p>Embroidered high quality applique</p>\n<p>oversized fit</p>",
+    "published_at": "2025-04-19T17:55:05+02:00",
+    "created_at": "2025-04-19T02:29:54+02:00",
+    "updated_at": "2025-05-03T21:39:39+03:00",
+    "vendor": "Ninit",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 45681324949658,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 1,
+        "product_id": 8483914580122,
+        "created_at": "2025-04-19T02:29:54+02:00",
+        "updated_at": "2025-05-03T21:39:39+03:00"
+      },
+      {
+        "id": 45681324982426,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 2,
+        "product_id": 8483914580122,
+        "created_at": "2025-04-19T02:29:54+02:00",
+        "updated_at": "2025-05-03T21:39:39+03:00"
+      },
+      {
+        "id": 45681325015194,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 3,
+        "product_id": 8483914580122,
+        "created_at": "2025-04-19T02:29:54+02:00",
+        "updated_at": "2025-05-03T21:39:39+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 42339086237850,
+        "created_at": "2025-04-19T02:35:48+02:00",
+        "position": 1,
+        "updated_at": "2025-04-19T18:06:18+02:00",
+        "product_id": 8483914580122,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0651/6211/7274/files/DSC_0891.jpg?v=1745078778",
+        "width": 1350,
+        "height": 1330
+      },
+      {
+        "id": 42339085877402,
+        "created_at": "2025-04-19T02:35:36+02:00",
+        "position": 2,
+        "updated_at": "2025-04-19T18:05:56+02:00",
+        "product_id": 8483914580122,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0651/6211/7274/files/DSC_0803.jpg?v=1745078756",
+        "width": 1350,
+        "height": 1330
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8483914481818,
+    "title": "Ninit Charcoal Embroidered Tshirt",
+    "handle": "ninit-charcoal-embroidered-tshirt",
+    "body_html": "<p>Embroidered high quality applique</p>\n<p>oversized fit</p>",
+    "published_at": "2025-04-19T17:54:55+02:00",
+    "created_at": "2025-04-19T02:29:42+02:00",
+    "updated_at": "2025-05-03T21:39:39+03:00",
+    "vendor": "Ninit",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 45681324785818,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 1,
+        "product_id": 8483914481818,
+        "created_at": "2025-04-19T02:29:43+02:00",
+        "updated_at": "2025-05-03T21:39:39+03:00"
+      },
+      {
+        "id": 45681324818586,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 2,
+        "product_id": 8483914481818,
+        "created_at": "2025-04-19T02:29:43+02:00",
+        "updated_at": "2025-05-03T21:39:39+03:00"
+      },
+      {
+        "id": 45681324851354,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 3,
+        "product_id": 8483914481818,
+        "created_at": "2025-04-19T02:29:43+02:00",
+        "updated_at": "2025-05-03T21:39:39+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 42339090858138,
+        "created_at": "2025-04-19T02:38:02+02:00",
+        "position": 1,
+        "updated_at": "2025-04-19T18:07:08+02:00",
+        "product_id": 8483914481818,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0651/6211/7274/files/DSC_0868_c6eee105-e39b-4d44-a310-e522f1067370.jpg?v=1745078828",
+        "width": 1350,
+        "height": 1333
+      },
+      {
+        "id": 42339090923674,
+        "created_at": "2025-04-19T02:38:02+02:00",
+        "position": 2,
+        "updated_at": "2025-04-19T18:06:50+02:00",
+        "product_id": 8483914481818,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0651/6211/7274/files/DSC_0864.jpg?v=1745078810",
+        "width": 1350,
+        "height": 1330
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8469202895002,
+    "title": "Navy Baby Jersey",
+    "handle": "navy-baby-jersey",
+    "body_html": "<p>Pink Baby Jersey</p>\n<p>Football Jersey material</p>\n<p>size down for a cropped fit</p>",
+    "published_at": "2025-04-01T02:45:48+02:00",
+    "created_at": "2025-04-01T02:45:48+02:00",
+    "updated_at": "2025-05-03T21:39:39+03:00",
+    "vendor": "Ninit",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 45638543966362,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "480.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 1,
+        "product_id": 8469202895002,
+        "created_at": "2025-04-01T02:45:49+02:00",
+        "updated_at": "2025-05-03T21:39:39+03:00"
+      },
+      {
+        "id": 45638543999130,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "480.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 2,
+        "product_id": 8469202895002,
+        "created_at": "2025-04-01T02:45:49+02:00",
+        "updated_at": "2025-05-03T21:39:39+03:00"
+      },
+      {
+        "id": 45638544031898,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "480.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 3,
+        "product_id": 8469202895002,
+        "created_at": "2025-04-01T02:45:49+02:00",
+        "updated_at": "2025-05-03T21:39:39+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 42221105348762,
+        "created_at": "2025-04-01T02:44:39+02:00",
+        "position": 1,
+        "updated_at": "2025-04-01T03:20:45+02:00",
+        "product_id": 8469202895002,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0651/6211/7274/files/WhatsAppImage2025-03-31at6.29.28PM.jpg?v=1743470445",
+        "width": 1350,
+        "height": 1333
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8469202796698,
+    "title": "Pink Baby Jersey",
+    "handle": "pink-baby-jersey",
+    "body_html": "<p>Pink Baby Jersey</p>\n<p>Football Jersey material</p>\n<p>size down for a cropped fit</p>",
+    "published_at": "2025-04-01T02:43:25+02:00",
+    "created_at": "2025-04-01T02:43:25+02:00",
+    "updated_at": "2025-05-03T21:39:39+03:00",
+    "vendor": "Ninit",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 45638543474842,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "480.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 1,
+        "product_id": 8469202796698,
+        "created_at": "2025-04-01T02:43:27+02:00",
+        "updated_at": "2025-05-03T21:39:39+03:00"
+      },
+      {
+        "id": 45638543507610,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": true,
+        "price": "480.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 2,
+        "product_id": 8469202796698,
+        "created_at": "2025-04-01T02:43:27+02:00",
+        "updated_at": "2025-05-03T21:39:39+03:00"
+      },
+      {
+        "id": 45638543540378,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "480.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 3,
+        "product_id": 8469202796698,
+        "created_at": "2025-04-01T02:43:27+02:00",
+        "updated_at": "2025-05-03T21:39:39+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 42221103841434,
+        "created_at": "2025-04-01T02:39:41+02:00",
+        "position": 1,
+        "updated_at": "2025-04-01T03:15:21+02:00",
+        "product_id": 8469202796698,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0651/6211/7274/files/WhatsAppImage2025-03-31at6.29.17PM.jpg?v=1743470121",
+        "width": 1350,
+        "height": 1330
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  }
+]

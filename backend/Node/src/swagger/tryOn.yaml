@@ -1,0 +1,159 @@
+components:
+  schemas:
+    TryOnRequest:
+      type: object
+      required:
+        - productImg
+        - personImg
+      properties:
+        productImg:
+          type: string
+          format: binary
+          description: Image of the product to try on
+        personImg:
+          type: string
+          format: binary
+          description: Image of the person trying on the product
+        category:
+          type: string
+          enum: ["upper_body", "lower_body", "dresses"]
+          description: Optional category for the try-on session
+
+    TryOnResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success, error]
+        message:
+          type: string
+        predictionId:
+          type: string
+          description: ID of the prediction for the try-on session
+        progress:
+          type: integer
+          description: Progress percentage of the try-on session
+        id:
+          type: string
+          description: Unique identifier for the try-on request
+        resultUrl:
+          type: string
+          description: URL to the result image of the try-on session (optional)
+
+paths:
+  /utilities/try-on/start: # need in the body (productImg, personImg, category optional enum ["upper_body", "lower_body", "dresses"])
+    post:
+      summary: Start a try-on session
+      tags: [Try On]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TryOnRequest"
+      # A query parameter (platform) with value ["replicate", "falAI"]
+      parameters:
+        - name: platform
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: ["replicate", "falAI"]
+          description: Platform to use for the try-on session (replicate or falAI)
+      responses:
+        200:
+          description: Try-on session started successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TryOnResponse"
+        400:
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /utilities/try-on/request/{requestId}:
+    get:
+      summary: Get try-on request status
+      tags: [Try On]
+      parameters:
+        - name: requestId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique identifier for the try-on request
+      responses:
+        200:
+          description: Try-on request status retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: "#/components/schemas/TryOnResponse"
+        404:
+          description: Try-on request not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [error]
+                  message:
+                    type: string
+
+  /utilities/try-on/history:
+    get:
+      summary: Get try-on history
+      tags: [Try On]
+      parameters:
+        - name: lastDoc
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Last Document ID to result after for pagination (optional)
+      responses:
+        200:
+          description: Try-on history retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/TryOnResponse"
+                  pagination:
+                    type: object
+                    properties:
+                      limit:
+                        type: integer
+                        description: Number of items per page
+                      lastDoc:
+                        type: string
+                        description: ID of the last document in the current result set
+        500:
+          description: Internal server error
+          content:
+            application/json:
+              schema:

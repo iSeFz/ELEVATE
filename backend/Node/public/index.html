@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELEVATE - Firestore Collections</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>ELEVATE Firestore Collections</h1>
+            <p>A visual representation of our database structure</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="collection-nav">
+                <li><a href="#brand">Brand</a></li>
+                <li><a href="#brandowner">BrandOwner</a></li>
+                <li><a href="#inventory">Inventory</a></li>
+                <li><a href="#order">Order</a></li>
+                <li><a href="#staff">Staff</a></li>
+                <li><a href="#customer">Customer</a></li>
+                <li><a href="#product">Product</a></li>
+                <li><a href="#productvariant">ProductVariant</a></li>
+                <li><a href="#review">Review</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <div class="legend">
+            Connect to /api/v1 to access the API, visit the <a href="/api/v1/docs">API documentation</a>
+        </div>
+        <!-- Brand Collection -->
+        <section id="brand" class="collection-card">
+            <div class="collection-header">
+                <h2>Brand</h2>
+            </div>
+            <div class="fields-container">
+                <div class="field-card">
+                    <h3>addresses</h3>
+                    <span class="type-tag array">array</span>
+                    <div class="nested-fields">
+                        <div class="nested-field">
+                            <span class="field-name">building</span>
+                            <span class="type-tag number">number</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">city</span>
+                            <span class="type-tag string">string</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">postalCode</span>
+                            <span class="type-tag number">number</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">street</span>
+                            <span class="type-tag string">string</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>brandName</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>brandOwner</h3>
+                    <span class="type-tag reference">reference</span>
+                    <div class="comment">References BrandOwner collection</div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>email</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>imageURL</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>industry</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>phoneNumbers</h3>
+                    <span class="type-tag array">array of strings</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>rating</h3>
+                    <span class="type-tag number">number</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>storyDescription</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>subscription</h3>
+                    <span class="type-tag object">object</span>
+                    <div class="nested-fields">
+                        <div class="nested-field">
+                            <span class="field-name">plan</span>
+                            <span class="type-tag string">string</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">price</span>
+                            <span class="type-tag number">number</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">startDate</span>
+                            <span class="type-tag timestamp">timestamp</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">endDate</span>
+                            <span class="type-tag timestamp">timestamp</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>websites</h3>
+                    <span class="type-tag array">array</span>
+                    <div class="nested-fields">
+                        <div class="nested-field">
+                            <span class="field-name">type</span>
+                            <span class="type-tag string">string</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">url</span>
+                            <span class="type-tag string">string</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="json-example">
+                <h3>Example JSON Format:</h3>
+                <pre><code>{
+  "addresses": [
+    {
+      "building": 123,
+      "city": "New York",
+      "postalCode": 10001,
+      "street": "Fashion Avenue"
+    }
+  ],
+  "brandName": "ELEVATE Fashion",
+  "brandOwner": Reference to BrandOwner collection,
+  "email": "contact@elevatefashion.com",
+  "imageURL": "https://images.unsplash.com/photo-1553285991-4c74211f5097?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "industry": "Fashion",
+  "phoneNumbers": ["+1234567890", "+0987654321"],
+  "rating": 4.8,
+  "storyDescription": "Premium sustainable fashion brand established in 2020.",
+  "subscription": {
+    "plan": "Premium",
+    "price": 299.99,
+    "startDate": Timestamp,
+    "endDate": Timestamp
+  },
+  "websites": [
+    {
+      "type": "main",
+      "url": "https://elevatefashion.com"
+    },
+    {
+      "type": "blog",
+      "url": "https://blog.elevatefashion.com"
+    }
+  ]
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- BrandOwner Collection -->
+        <section id="brandowner" class="collection-card">
+            <div class="collection-header">
+                <h2>BrandOwner</h2>
+            </div>
+            <div class="fields-container">
+                <div class="field-card">
+                    <h3>brand</h3>
+                    <span class="type-tag reference">reference</span>
+                    <div class="comment">References Brand collection</div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>email</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>firstName</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>lastName</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>imageURL</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>username</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+            </div>
+            <div class="json-example">
+                <h3>Example JSON Format:</h3>
+                <pre><code>{
+  "brand": Reference to Brand collection,
+  "email": "john.doe@elevatefashion.com",
+  "firstName": "John",
+  "lastName": "Doe",
+  "imageURL": "https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?q=80&w=1966&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "username": "johndoe"
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Inventory Collection -->
+        <section id="inventory" class="collection-card">
+            <div class="collection-header">
+                <h2>Inventory</h2>
+            </div>
+            <div class="fields-container">
+                <div class="field-card">
+                    <h3>capacity</h3>
+                    <span class="type-tag number">number</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>name</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>orders</h3>
+                    <span class="type-tag reference">arry of references</span>
+                    <div class="comment">References Order collection</div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>products</h3>
+                    <span class="type-tag reference">arry of references</span>
+                    <div class="comment">References Product collection</div>
+                </div>
+            </div>
+            <div class="json-example">
+                <h3>Example JSON Format:</h3>
+                <pre><code>{
+  "capacity": 5000,
+  "name": "Main Warehouse",
+  "orders": [
+    Reference to Order collection,
+    Reference to Order collection
+  ],
+  "products": [
+    Reference to Product collection,
+    Reference to Product collection
+  ]
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Order Collection -->
+        <section id="order" class="collection-card">
+            <div class="collection-header">
+                <h2>Order</h2>
+            </div>
+            <div class="fields-container">
+                <div class="field-card">
+                    <h3>address</h3>
+                    <span class="type-tag object">object</span>
+                    <div class="nested-fields">
+                        <div class="nested-field">
+                            <span class="field-name">building</span>
+                            <span class="type-tag number">number</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">city</span>
+                            <span class="type-tag string">string</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">postalCode</span>
+                            <span class="type-tag number">number</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">street</span>
+                            <span class="type-tag string">string</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>customer</h3>
+                    <span class="type-tag reference">reference</span>
+                    <div class="comment">References Customer collection</div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>dateCreated</h3>
+                    <span class="type-tag timestamp">timestamp</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>payment</h3>
+                    <span class="type-tag object">object</span>
+                    <div class="nested-fields">
+                        <div class="nested-field">
+                            <span class="field-name">dateCreated</span>
+                            <span class="type-tag timestamp">timestamp</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">method</span>
+                            <span class="type-tag string">string</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">price</span>
+                            <span class="type-tag number">number</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>phoneNumber</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>pointsRedeemed</h3>
+                    <span class="type-tag number">number</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>price</h3>
+                    <span class="type-tag number">number</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>productVariant</h3>
+                    <span class="type-tag reference">reference</span>
+                    <div class="comment">References ProductVariant collection</div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>quantity</h3>
+                    <span class="type-tag number">number</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>shipment</h3>
+                    <span class="type-tag object">object</span>
+                    <div class="nested-fields">
+                        <div class="nested-field">
+                            <span class="field-name">dateCraeted</span>
+                            <span class="type-tag timestamp">timestamp</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">dateDelivery</span>
+                            <span class="type-tag timestamp">timestamp</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">fees</span>
+                            <span class="type-tag number">number</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">method</span>
+                            <span class="type-tag string">string</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>status</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+            </div>
+            <div class="json-example">
+                <h3>Example JSON Format:</h3>
+                <pre><code>{
+  "address": {
+    "building": 42,
+    "city": "Chicago",
+    "postalCode": 60601,
+    "street": "Michigan Avenue"
+  },
+  "customer": Reference to Customer collection,
+  "dateCreated": Timestamp,
+  "payment": {
+    "dateCreated": Timestamp,
+    "method": "Credit Card",
+    "price": 129.99
+  },
+  "phoneNumber": "+1234567890",
+  "pointsRedeemed": 200,
+  "price": 109.99,
+  "productVariant": Reference to ProductVariant collection,
+  "quantity": 2,
+  "shipment": {
+    "dateCraeted": Timestamp,
+    "dateDelivery": Timestamp,
+    "fees": 9.99,
+    "method": "Express"
+  },
+  "status": "Processing"
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Staff Collection -->
+        <section id="staff" class="collection-card">
+            <div class="collection-header">
+                <h2>Staff</h2>
+            </div>
+            <div class="fields-container">
+                <div class="field-card">
+                    <h3>email</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>firstName</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>lastName</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>inventory</h3>
+                    <span class="type-tag reference">reference</span>
+                    <div class="comment">References Inventory collection</div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>phoneNumber</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>username</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+            </div>
+            <div class="json-example">
+                <h3>Example JSON Format:</h3>
+                <pre><code>{
+  "email": "emma.smith@elevate.com",
+  "firstName": "Emma",
+  "lastName": "Smith",
+  "inventory": Reference to Inventory collection,
+  "phoneNumber": "+1234567890",
+  "username": "emmasmith"
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Customer Collection -->
+        <section id="customer" class="collection-card">
+            <div class="collection-header">
+                <h2>Customer</h2>
+            </div>
+            <div class="fields-container">
+                <div class="field-card">
+                    <h3>address</h3>
+                    <span class="type-tag object">object</span>
+                    <div class="nested-fields">
+                        <div class="nested-field">
+                            <span class="field-name">building</span>
+                            <span class="type-tag number">number</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">city</span>
+                            <span class="type-tag string">string</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">postalCode</span>
+                            <span class="type-tag number">number</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">street</span>
+                            <span class="type-tag string">string</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>cart</h3>
+                    <span class="type-tag object">object</span>
+                    <div class="nested-fields">
+                        <div class="nested-field">
+                            <span class="field-name">subtotal</span>
+                            <span class="type-tag number">number</span>
+                        </div>
+                        <div class="nested-field">
+                            <span class="field-name">items</span>
+                            <span class="type-tag reference">arry of references</span>
+                            <div class="comment">Non-submitted orders</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>email</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>firstName</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>lastName</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>imageURL</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>loyaltyPoints</h3>
+                    <span class="type-tag number">number</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>orders</h3>
+                    <span class="type-tag reference">arry of references</span>
+                    <div class="comment">Submitted orders</div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>phoneNumber</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>username</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>wishlist</h3>
+                    <span class="type-tag reference">arry of references</span>
+                    <div class="comment">References Product collection</div>
+                </div>
+            </div>
+            <div class="json-example">
+                <h3>Example JSON Format:</h3>
+                <pre><code>{
+  "address": {
+    "building": 123,
+    "city": "Seattle",
+    "postalCode": 98101,
+    "street": "Pine Street"
+  },
+  "cart": {
+    "subtotal": 259.98,
+    "items": [
+        Reference to Order collection, // Non-submitted orders
+        Reference to Order collection // Non-submitted orders
+    ]
+  },
+  "email": "alex.taylor@example.com",
+  "firstName": "Alex",
+  "lastName": "Taylor",
+  "imageURL": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  "loyaltyPoints": 750,
+  "orders": [
+    Reference to Order collection, // Submitted orders
+    Reference to Order collection // Submitted orders
+  ],
+  "phoneNumber": "+1234567890",
+  "username": "alextaylor",
+  "wishlist": [
+    Reference to Product collection,
+    Reference to Product collection
+  ]
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Product Collection -->
+        <section id="product" class="collection-card">
+            <div class="collection-header">
+                <h2>Product</h2>
+            </div>
+            <div class="fields-container">
+                <div class="field-card">
+                    <h3>averageRating</h3>
+                    <span class="type-tag number">number</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>brand</h3>
+                    <span class="type-tag reference">reference</span>
+                    <div class="comment">References Brand collection</div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>category</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>dateCreated</h3>
+                    <span class="type-tag timestamp">timestamp</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>department</h3>
+                    <span class="type-tag array">array of strings</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>description</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>material</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>name</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>reviews</h3>
+                    <span class="type-tag reference">arry of references</span>
+                    <div class="comment">References Review collection</div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>stock</h3>
+                    <span class="type-tag number">number</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>totalReviews</h3>
+                    <span class="type-tag number">number</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>variants</h3>
+                    <span class="type-tag reference">arry of references</span>
+                    <div class="comment">References ProductVariant collection</div>
+                </div>
+            </div>
+            <div class="json-example">
+                <h3>Example JSON Format:</h3>
+                <pre><code>{
+  "averageRating": 4.7,
+  "brand": Reference to Brand collection,
+  "category": "Outerwear",
+  "dateCreated": Timestamp,
+  "department": ["Men", "Winter"],
+  "description": "Premium quality jacket made from sustainable materials.",
+  "material": "Recycled Polyester",
+  "name": "Eco-Friendly Winter Jacket",
+  "reviews": [
+    Reference to Review collection,
+    Reference to Review collection
+  ],
+  "stock": 120,
+  "totalReviews": 45,
+  "variants": [
+    Reference to ProductVariant collection,
+    Reference to ProductVariant collection
+  ]
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- ProductVariant Collection -->
+        <section id="productvariant" class="collection-card">
+            <div class="collection-header">
+                <h2>ProductVariant</h2>
+            </div>
+            <div class="fields-container">
+                <div class="field-card">
+                    <h3>colors</h3>
+                    <span class="type-tag array">array of strings</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>discount</h3>
+                    <span class="type-tag number">number</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>images</h3>
+                    <span class="type-tag array">array of strings</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>price</h3>
+                    <span class="type-tag number">number</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>product</h3>
+                    <span class="type-tag reference">reference</span>
+                    <div class="comment">References Product collection</div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>size</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>stock</h3>
+                    <span class="type-tag number">number</span>
+                </div>
+            </div>
+            <div class="json-example">
+                <h3>Example JSON Format:</h3>
+                <pre><code>{
+  "colors": ["Black", "Navy", "Green"],
+  "discount": 15,
+  "images": [
+    "https://images.unsplash.com/photo-1745330612709-74ad3afdfe00?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1745330612760-28ba28231966?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  ],
+  "price": 149.99,
+  "product": Reference to Product collection,
+  "size": "XL",
+  "stock": 35
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- Review Collection -->
+        <section id="review" class="collection-card">
+            <div class="collection-header">
+                <h2>Review</h2>
+            </div>
+            <div class="fields-container">
+                <div class="field-card">
+                    <h3>content</h3>
+                    <span class="type-tag string">string</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>customer</h3>
+                    <span class="type-tag reference">reference</span>
+                    <div class="comment">References Customer collection</div>
+                </div>
+                
+                <div class="field-card">
+                    <h3>dateCreated</h3>
+                    <span class="type-tag timestamp">timestamp</span>
+                </div>
+                
+                <div class="field-card">
+                    <h3>rating</h3>
+                    <span class="type-tag number">number</span>
+                </div>
+            </div>
+            <div class="json-example">
+                <h3>Example JSON Format:</h3>
+                <pre><code>{
+  "content": "Great product! Very comfortable and exactly as described.",
+  "customer": Reference to Customer collection,
+  "dateCreated": Timestamp,
+  "rating": 5
+}</code></pre>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ELEVATE Team. Database structure documentation.</p>
+        </div>
+    </footer>
+</body>
+</html>

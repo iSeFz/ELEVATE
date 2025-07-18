@@ -1,0 +1,98 @@
+[
+  {
+    "name": "VICE-AIR SHORTS",
+    "category": "Bottoms - Shorts",
+    "description": "VICE GREY SHORTS. VICE SIGNATURE LUXURY STITCHED.",
+    "material": "Cotton",
+    "department": [
+      "Men"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0755/7939/2289/files/CCxVice-1_ef7623e2-191f-4088-a651-adef3338027b.jpg?v=1727793794",
+          "https://cdn.shopify.com/s/files/1/0755/7939/2289/files/CCxVice-2.jpg?v=1727793794",
+          "https://cdn.shopify.com/s/files/1/0755/7939/2289/files/CCxVice-3_526f4edf-c9c7-4d76-97fe-a1242e2356d6.jpg?v=1727793794",
+          "https://cdn.shopify.com/s/files/1/0755/7939/2289/files/CCxVice-5.jpg?v=1727793794",
+          "https://cdn.shopify.com/s/files/1/0755/7939/2289/files/CCxVice-6.jpg?v=1727793794",
+          "https://cdn.shopify.com/s/files/1/0755/7939/2289/files/LLLL.jpg?v=1727794466"
+        ],
+        "price": 670.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 670.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 670.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "AQUA-DRIFT SHORTS",
+    "category": "Bottoms - Shorts",
+    "description": "MATCHA COLOR SHORTS. VICE 91 SYMBOL SILK SCREEN PRINTED.",
+    "material": "Cotton",
+    "department": [
+      "Men"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Matcha"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0755/7939/2289/files/CCxVice-14.jpg?v=1727794466",
+          "https://cdn.shopify.com/s/files/1/0755/7939/2289/files/CCxVice-15.jpg?v=1727794466",
+          "https://cdn.shopify.com/s/files/1/0755/7939/2289/files/CCxVice-16.jpg?v=1727794466",
+          "https://cdn.shopify.com/s/files/1/0755/7939/2289/files/CCxVice-18.jpg?v=1727794466",
+          "https://cdn.shopify.com/s/files/1/0755/7939/2289/files/CCxVice-19_1977fd2a-e591-4446-8fa1-ef970a47e385.jpg?v=1727794466",
+          "https://cdn.shopify.com/s/files/1/0755/7939/2289/files/LLLL.jpg?v=1727794466"
+        ],
+        "price": 670.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Matcha"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 670.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Matcha"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 670.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  }
+]

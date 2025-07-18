@@ -1,0 +1,638 @@
+components:
+  schemas:
+    OrderResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The auto-generated id of the order
+        customerId:
+          type: string
+          description: ID of the customer (denormalized for authorization)
+        status:
+          type: string
+          description: Current status of the order
+        address:
+          $ref: "#/components/schemas/Address"
+          description: Shipping address
+        phoneNumber:
+          type: string
+          description: Contact phone number
+        pointsRedeemed:
+          type: number
+          description: Loyalty points redeemed for this order
+        pointsEarned:
+          type: number
+          description: Loyalty points earned from this order
+        price:
+          type: number
+          description: Total order price
+        products:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderProduct"
+        payment:
+          $ref: "#/components/schemas/Payment"
+          description: Payment details
+        shipment:
+          $ref: "#/components/schemas/Shipment"
+          description: Shipment details
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    OrderProduct:
+      type: object
+      properties:
+        variantId:
+          type: string
+        productId:
+          type: string
+        quantity:
+          type: number
+        colors:
+          type: array
+          items:
+            type: string
+        productName:
+          type: string
+        brandName:
+          type: string
+        size:
+          type: string
+        price:
+          type: number
+        imageURL:
+          type: string
+
+    OrderRequest:
+      type: object
+      required:
+        - products
+      properties:
+        products:
+          type: array
+          items:
+            type: object
+            required:
+              - variantId
+              - productId
+              - quantity
+            properties:
+              variantId:
+                type: string
+              productId:
+                type: string
+              quantity:
+                type: number
+
+    OrderConfirmRequest:
+      type: object
+      required:
+        - phoneNumber
+        - payment
+      properties:
+        phoneNumber:
+          type: string
+        pointsRedeemed:
+          type: number
+        payment:
+          $ref: "#/components/schemas/PaymentRequest"
+
+    Payment:
+      type: object
+      properties:
+        method:
+          type: string
+          enum: [Cash on delivery, Card payment]
+        credentials:
+          type: string
+
+    PaymentRequest:
+      type: object
+      required:
+        - method
+      properties:
+        method:
+          type: string
+        credentials:
+          type: string
+
+    Shipment:
+      type: object
+      properties:
+        createdAt:
+          type: string
+          format: date-time
+        deliveredAt:
+          type: string
+          format: date-time
+        fees:
+          type: number
+        method:
+          type: string
+        trackingNumber:
+          type: string
+        carrier:
+          type: string
+
+    ShipmentRequest:
+      type: object
+      required:
+        - method
+      properties:
+        method:
+          type: string
+
+    OrderStatusUpdate:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+        deliveredAt:
+          type: string
+          format: date-time
+
+    SuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success]
+        message:
+          type: string
+        data:
+          type: object
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [error]
+        message:
+          type: string
+
+    ShipmentCalculationRequest:
+      type: object
+      required:
+        - address
+        - products
+      properties:
+        address:
+          $ref: "#/components/schemas/Address"
+        shipmentType:
+          type: string
+          enum: [Standard, Express, Pickup]
+          description: Type of shipment
+
+    ShipmentCalculationResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success]
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            totalFees:
+              type: number
+              description: Total shipment fees in EGP
+            breakdown:
+              type: array
+              items:
+                type: object
+                properties:
+                  brandId:
+                    type: string
+                    description: ID of the brand
+                  brandName:
+                    type: string
+                    description: Name of the brand
+                  distance:
+                    type: number
+                    description: Distance to nearest branch in kilometers
+                  nearestBranch:
+                    $ref: "#/components/schemas/Address"
+                    description: Address of the nearest branch
+                  fee:
+                    type: number
+                    description: Shipment fee for this brand in EGP
+            estimatedDeliveryDays:
+              type: number
+              description: Estimated delivery time in days
+
+paths:
+  /orders:
+    get:
+      summary: Retrieve all orders (admin only) - Searching by productId not implemented yet!
+      tags: [Orders]
+      parameters:
+        - in: query
+          name: status
+          schema:
+            type: string
+            description: Filter orders by status
+        - in: query
+          name: productId
+          schema:
+            type: string
+            description: Filter orders by productId
+        - in: query
+          name: page
+          schema:
+            type: integer
+            description: Page number for pagination
+      responses:
+        200:
+          description: A list of orders
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  count:
+                    type: integer
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/OrderResponse"
+                  pagination:
+                    $ref: "#/components/schemas/PaginationInfo"
+        401:
+          description: Unauthorized - Invalid or missing token
+        403:
+          description: Forbidden - Insufficient permissions
+        500:
+          description: Server error
+
+  /orders/{id}:
+    delete:
+      summary: Delete an order (admin only)
+      tags: [Admin]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Order deleted successfully
+        401:
+          description: Unauthorized - Invalid or missing token
+        403:
+          description: Forbidden - Insufficient permissions
+        404:
+          description: Order not found
+        500:
+          description: Server error
+
+  /orders/cleanup-expired:
+    put:
+      summary: Cleanup expired orders (admin only) - Its also a cron job
+      description: |
+        This endpoint is used to cleanup expired orders that are older than 10 minutes.
+        It is intended to be called by a cron job or admin user to maintain the order database.
+      tags: [CRON Jobs]
+      responses:
+        200:
+          description: Expired orders cleanup initiated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        401:
+          description: Unauthorized - Invalid or missing token
+        403:
+          description: Forbidden - Insufficient permissions
+        500:
+          description: Server error
+
+  /orders/progress-statuses:
+    put:
+      summary: Progress orders statuses (admin only) - Its also a cron job
+      description: |
+        This endpoint is used to progress the status of orders from PROCESSING to SHIPPED and from SHIPPED to DELIVERED and from Product Refund Pending to Refund Approved.
+        It is intended to be called by a cron job or admin user to maintain the order database.
+      tags: [CRON Jobs]
+      responses:
+        200:
+          description: Orders statuses progressed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+        401:
+          description: Unauthorized - Invalid or missing token
+        403:
+          description: Forbidden - Insufficient permissions
+        500:
+          description: Server error
+
+  /customers/me/orders:
+    get:
+      summary: Get orders for the authenticated customer
+      tags: [Orders]
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            description: Page number for pagination
+      responses:
+        200:
+          description: List of customer's orders
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/OrderResponse"
+                  pagination:
+                    $ref: "#/components/schemas/PaginationInfo"
+        401:
+          description: Unauthorized - Invalid or missing token
+        500:
+          description: Server error
+    post:
+      summary: Create a new order for the authenticated customer (Checkout in the Cart Screen)
+      tags: [Orders]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderRequest"
+      responses:
+        201:
+          description: Order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderResponse"
+        400:
+          description: Invalid input
+        401:
+          description: Unauthorized - Invalid or missing token
+        500:
+          description: Server error
+
+  /customers/me/orders/{id}:
+    get:
+      summary: Get a specific order for the authenticated customer
+      tags: [Orders]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Order details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderResponse"
+        401:
+          description: Unauthorized - Invalid or missing token
+        403:
+          description: Forbidden - Insufficient permissions
+        404:
+          description: Order not found
+        500:
+          description: Server error
+    delete:
+      summary: Delete an order of the authenticated customer
+      tags: [Orders]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Order deleted successfully
+        401:
+          description: Unauthorized - Invalid or missing token
+        403:
+          description: Forbidden - Insufficient permissions
+        404:
+          description: Order not found
+        500:
+          description: Server error
+
+  /customers/me/orders/{id}/confirm:
+    put:
+      summary: Confirm an order (Place an order in the Checkout screen) of the authenticated customer
+      tags: [Orders]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrderConfirmRequest"
+      responses:
+        200:
+          description: Order confirmed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderResponse"
+        400:
+          description: Invalid input
+        401:
+          description: Unauthorized - Invalid or missing token
+        403:
+          description: Forbidden - Insufficient permissions
+        404:
+          description: Order not found
+        500:
+          description: Server error
+
+  /customers/me/orders/{id}/cancel:
+    patch:
+      summary: Cancel an order of the authenticated customer
+      tags: [Orders]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Order cancelled successfully
+        400:
+          description: Invalid input
+        401:
+          description: Unauthorized - Invalid or missing token
+        403:
+          description: Forbidden - Insufficient permissions
+        404:
+          description: Order not found
+        500:
+          description: Server error
+
+  /customers/me/orders/{id}/refund:
+    patch:
+      summary: Refund an order of the authenticated customer
+      tags: [Orders]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - data
+              properties:
+                data:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - variantId
+                      - productId
+                    properties:
+                      variantId:
+                        type: string
+                        description: ID of the product variant to refund
+                      productId:
+                        type: string
+                        description: ID of the product to refund
+      responses:
+        200:
+          description: Order refunded successfully
+        400:
+          description: Invalid input
+        401:
+          description: Unauthorized - Invalid or missing token
+        403:
+          description: Forbidden - Insufficient permissions
+        404:
+          description: Order not found
+        500:
+          description: Server error
+
+  /customers/me/orders/{id}/calculate-shipment-fees:
+    put:
+      summary: Calculate shipment fees for given address and products
+      description: |
+        Calculate shipment fees based on customer address and product list.
+        The calculation considers:
+        - Distance from customer to nearest branch of each unique brand
+        - Base fee of 30 EGP per brand + 5 EGP per kilometer
+        - Estimated delivery days based on distance and number of brands
+      tags: [Orders]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: Order ID (not used in calculation, just for context)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ShipmentCalculationRequest"
+            example:
+              address:
+                building: 123
+                street: "Tahrir Street"
+                city: "Cairo"
+                postalCode: 12345
+                latitude: 30.0444
+                longitude: 31.2357
+              shipmentType: "Standard"
+      responses:
+        200:
+          description: Shipment fees calculated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ShipmentCalculationResponse"
+              example:
+                status: "success"
+                message: "Shipment fees calculated successfully"
+                data:
+                  totalFees: 85
+                  breakdown:
+                    - brandId: "brand1"
+                      brandName: "Nike Egypt"
+                      distance: 12.5
+                      nearestBranch:
+                        building: 45
+                        street: "Zamalek Street"
+                        city: "Cairo"
+                        postalCode: 11211
+                        latitude: 30.0626
+                        longitude: 31.2197
+                      fee: 62.5
+                    - brandId: "brand2"
+                      brandName: "Adidas Egypt"
+                      distance: 5.2
+                      nearestBranch:
+                        building: 78
+                        street: "Heliopolis Avenue"
+                        city: "Cairo"
+                        postalCode: 11341
+                        latitude: 30.0875
+                        longitude: 31.3241
+                      fee: 30
+                  estimatedDeliveryDays: 3
+        400:
+          description: Invalid request data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+              example:
+                status: "error"
+                message: "Invalid request data. Please provide address and products."
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"

@@ -1,0 +1,2234 @@
+[
+  {
+    "name": "Beige Wide Leg Pants",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Oversized fit",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Beige"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6679.jpg?v=1732892909",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6686.jpg?v=1732892908",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A7123.jpg?v=1732892909",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A7130.jpg?v=1732892909"
+        ],
+        "price": 640.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Beige"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 640.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Beige"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 640.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Beige"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 640.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Olive Wide Leg Pants",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Oversized fit",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6652.png?v=1739301069",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6652.jpg?v=1739301069",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6653.jpg?v=1739301069",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6650.jpg?v=1739301069",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6654.jpg?v=1739301069",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6655.jpg?v=1739301069",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6904.jpg?v=1739301069"
+        ],
+        "price": 640.0,
+        "size": "X Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 640.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 640.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 640.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Black Wide Leg Pants",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Oversized fit",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6715.jpg?v=1732892441",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6716.jpg?v=1732892441",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6714.jpg?v=1732892442",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A7335.jpg?v=1732892441",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6718.jpg?v=1732892441"
+        ],
+        "price": 640.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 640.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 640.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 640.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Black Medusa Hoodie",
+    "category": "Tops - Hoodies",
+    "description": "Oversized fit",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6703.jpg?v=1732892179",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A7346.jpg?v=1732892178",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6705.jpg?v=1732892179"
+        ],
+        "price": 790.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 790.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 790.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 790.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 790.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Olive David Crewneck",
+    "category": "Tops - Sweatshirts",
+    "description": "Oversized fit",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6637.jpg?v=1732892018",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6641.jpg?v=1732892018",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A7145.jpg?v=1732892018"
+        ],
+        "price": 760.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 760.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 760.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Olive"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 760.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Beige Scattered Crewneck",
+    "category": "Tops - Sweatshirts",
+    "description": "Oversized fit",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Beige"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6675_d521f7ba-3d55-403d-b499-2f4f49b26b8c.jpg?v=1732891832",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A6677_b5e35e0f-d610-4152-8164-8387e29c77b1.jpg?v=1732891832",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/7L8A7119_47b8ea20-a7d8-4735-a9e2-98cc2053a538.jpg?v=1732891832"
+        ],
+        "price": 760.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Beige"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 760.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Beige"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 760.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Beige"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 760.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Pink Baby Tee",
+    "category": "Tops - T-Shirts",
+    "description": "Model is wearing size medium",
+    "material": "Cotton",
+    "department": [
+      "Women"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/46833F2F-2C51-472F-A411-549601CBB074.jpg?v=1726675449"
+        ],
+        "price": 360.0,
+        "size": "XXSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 360.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 360.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 360.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 360.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Pink"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 360.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Grey Baby Tee",
+    "category": "Tops - T-Shirts",
+    "description": "Model is wearing size medium",
+    "material": "Cotton",
+    "department": [
+      "Women"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2D3B83A7-CD4E-4D77-A153-94256C2D0BC0.jpg?v=1726743019"
+        ],
+        "price": 360.0,
+        "size": "XXSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 360.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 360.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 360.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 360.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 360.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Lilac Arsh Khufu",
+    "category": "Tops - T-Shirts",
+    "description": "Model is wearing size medium",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Lilac"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/11336FD8-2D14-4D0D-BE71-271A8FE3E07D.jpg?v=1722261856"
+        ],
+        "price": 600.0,
+        "size": "XXSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Lilac"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Lilac"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Lilac"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Lilac"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Grey Knitted Pants",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Comfortable pants.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WhatsAppImage2024-02-17at1.41.08PM_1_e721dc0f-981b-47be-ae9c-4482cc8595bf.jpg?v=1708184055"
+        ],
+        "price": 690.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 690.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 690.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Black Knitted Pants",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Comfortable pants.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WhatsAppImage2024-02-17at1.41.10PM.jpg?v=1708183604",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WhatsAppImage2024-02-17at1.41.11PM_1.jpg?v=1708183604"
+        ],
+        "price": 690.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 690.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 690.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Cream Knitted Quarter Zipper",
+    "category": "Tops - Sweaters",
+    "description": "Comfortable fit.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Cream"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WhatsAppImage2024-02-17at1.41.08PM_3.jpg?v=1708183830",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WhatsAppImage2024-02-17at1.41.08PM_2.jpg?v=1708183830",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WhatsAppImage2024-02-17at1.41.08PM.jpg?v=1708185803"
+        ],
+        "price": 750.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Cream"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Cream"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Grey Knitted Sweater",
+    "category": "Tops - Sweaters",
+    "description": "Comfortable fit.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WhatsAppImage2024-02-17at1.41.03PM.jpg?v=1708183951",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WhatsAppImage2024-02-17at1.41.07PM.jpg?v=1708183952",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WhatsAppImage2024-02-17at1.41.08PM_1.jpg?v=1708183992"
+        ],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Black Knitted Sweater",
+    "category": "Tops - Sweaters",
+    "description": "Comfortable fit.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WhatsAppImage2024-02-17at1.41.09PM.jpg?v=1708183659",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WhatsAppImage2024-02-17at1.41.11PM_5.jpg?v=1708185691"
+        ],
+        "price": 700.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Black Knitted Quarter Zipper",
+    "category": "Tops - Sweaters",
+    "description": "Comfortable fit.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WhatsAppImage2024-02-17at1.41.11PM_2.jpg?v=1708183498",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WhatsAppImage2024-02-17at1.41.11PM.jpg?v=1708183532",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WhatsAppImage2024-02-17at1.41.11PM_5_181deef0-386c-496a-8bc2-10cdf3b0109a.jpg?v=1708185727"
+        ],
+        "price": 750.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Double Waisted Denim Jeans",
+    "category": "Bottoms - Jeans",
+    "description": "Female Model is wearing size XSmall. Male Model is wearing size Medium.",
+    "material": "Denim",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2J9A0590.jpg?v=1702484130",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2J9A0597.jpg?v=1702484135",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/girl.jpg?v=1702484135"
+        ],
+        "price": 790.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 790.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 790.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 790.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Blue"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 790.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Red Alfenat Technology Hoodie Kids",
+    "category": "Tops - Hoodies",
+    "description": "Both Models are wearing size XXSmall.",
+    "material": "Cotton",
+    "department": [
+      "Kids"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Red"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2J9A0538.jpg?v=1700577890",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2J9A0542.jpg?v=1700577890"
+        ],
+        "price": 920.0,
+        "size": "XXSmall",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Red Alfenat Technology Hoodie",
+    "category": "Tops - Hoodies",
+    "description": "Male model is wearing size Large. Female model is wearing size Small. Oversized fit.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Red"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/unnamed_3.jpg?v=1700577873",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/unnamed.jpg?v=1700577873",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/unnamed_2.jpg?v=1700577873",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/unnamed_1.jpg?v=1700577873"
+        ],
+        "price": 920.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Red"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Red"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Red"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Red"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Black Reg3na 3eyal Hoodie Kids",
+    "category": "Tops - Hoodies",
+    "description": "Both Models are wearing size XXSmall.",
+    "material": "Cotton",
+    "department": [
+      "Kids"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2J9A0546.jpg?v=1700579800",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2J9A0551_1.jpg?v=1700579800",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2J9A0550.jpg?v=1700579800",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2J9A0549.jpg?v=1700579800"
+        ],
+        "price": 920.0,
+        "size": "XXSmall",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Black Cargo Sweats",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Model is wearing size medium",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2J9A0564_1.jpg?v=1700326042",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2J9A0573_1.jpg?v=1700395284",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2J9A0566_1.jpg?v=1700395284"
+        ],
+        "price": 690.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 690.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 690.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 690.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 690.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Black Reg3na 3eyal Hoodie",
+    "category": "Tops - Hoodies",
+    "description": "Male model is wearing Size Large. Female model is wearing Size Small. Oversized fit.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/edite.jpg?v=1700577556",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/editedd.jpg?v=1700577556",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/eded.jpg?v=1700577556",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/editte.jpg?v=1700577556",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2J9A0565_1.jpg?v=1700577556"
+        ],
+        "price": 790.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 790.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 790.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 790.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 790.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "White Malek Farouk Tee",
+    "category": "Tops - T-Shirts",
+    "description": "Comfortable fit for kids.",
+    "material": "Cotton",
+    "department": [
+      "Kids"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/SFSF.jpg?v=1684662201",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/324342.jpg?v=1700576089",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/324324.jpg?v=1700576089",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WDAAD.jpg?v=1700576089",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/234234_d1ea57ad-67f8-46c4-9fb1-1dcc22d75a34.jpg?v=1700576089"
+        ],
+        "price": 550.0,
+        "size": "XXSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 550.0,
+        "size": "XSmall",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Black Queen of Hearts T-Shirt",
+    "category": "Tops - T-Shirts",
+    "description": "Comfortable fit for kids",
+    "material": "Cotton",
+    "department": [
+      "Kids"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/24234342.jpg?v=1700579570",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/ADAD_e8c6191e-97e8-46f7-acdf-56c2ca93d6d1.jpg?v=1700579570",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/ADAAD.jpg?v=1700579570",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/SDFAF.jpg?v=1700576133",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/ADFADF.jpg?v=1700576133",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WDAD.jpg?v=1700576133",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/234234324234.jpg?v=1700576133",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/234234435345.jpg?v=1700576133"
+        ],
+        "price": 700.0,
+        "size": "XXSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 700.0,
+        "size": "XSmall",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Black Queen of Hearts Tee",
+    "category": "Tops - T-Shirts",
+    "description": "Model is wearing size medium",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/432424.jpg?v=1700580550",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/22.jpg?v=1700580550",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2342344.jpg?v=1700580550",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/DSC09869qr14.jpg?v=1700580550",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/234234.jpg?v=1700580550"
+        ],
+        "price": 750.0,
+        "size": "XXSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "The Charcoal Nefertiti Hoodie",
+    "category": "Tops - Hoodies",
+    "description": "Male model is wearing Size Medium. Female model is wearing Size Small. Oversized fit.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Charcoal"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/wwww.jpg?v=1700575876",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/324.jpg?v=1700575876",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/www33.jpg?v=1700575876",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/232.jpg?v=1700575876",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/DSC09955ere.jpg?v=1700575871"
+        ],
+        "price": 920.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Charcoal"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Charcoal"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Charcoal"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Charcoal"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "X Large",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "The Mint Abou ElHaul Hoodie",
+    "category": "Tops - Hoodies",
+    "description": "Male model is wearing Size Medium. Female model is wearing Size Small. Oversized fit.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Mint"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2342_ffc788c6-1e8b-4c5a-8304-3e07eb0b362e.jpg?v=1700575888",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/23234_372c232f-7482-4470-a9c8-4bb50dc6b0c7.jpg?v=1700575888"
+        ],
+        "price": 920.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Mint"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Mint"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Mint"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Mint"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "The Emerald Green Cairo Hoodie",
+    "category": "Tops - Hoodies",
+    "description": "Male model is wearing Size Medium. Female model is wearing Size Small. Oversized fit.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Green"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/ww333.jpg?v=1700580408",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2332.jpg?v=1700580408",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/32www.jpg?v=1700580408"
+        ],
+        "price": 920.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Green"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Green"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Green"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Green"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "The Black Queen of Hearts Hoodie",
+    "category": "Tops - Hoodies",
+    "description": "Male model is wearing Size Medium. Female model is wearing Size Small. Oversized fit.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/down.jpg?v=1700580475",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/DSC00090CROPPED.jpg?v=1700580466",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/down2.jpg?v=1700580466",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/down3.jpg?v=1700579482"
+        ],
+        "price": 950.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 950.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 950.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 950.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 950.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "The White Cleopatra Hoodie",
+    "category": "Tops - Hoodies",
+    "description": "Male model is wearing Size Medium. Female model is wearing Size Small. Oversized fit.",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/wwwww.jpg?v=1700575898",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/6755.jpg?v=1700575898",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/www.jpg?v=1700575898",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/455.jpg?v=1700575898"
+        ],
+        "price": 920.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 920.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Grey Oversized T",
+    "category": "Tops - T-Shirts",
+    "description": "Model is wearing size medium",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/AFFAF.jpg?v=1700580533",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/adsF.jpg?v=1700580533",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/efaaf.jpg?v=1700580533",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/Dded.jpg?v=1700575042",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/ADFf.jpg?v=1700575042",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/afaf.jpg?v=1700575042",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/AFADF.jpg?v=1700575042",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/AFADFAF.jpg?v=1700575042"
+        ],
+        "price": 750.0,
+        "size": "XXSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Grey"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Orange Oversized Tee",
+    "category": "Tops - T-Shirts",
+    "description": "Model is wearing size medium",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Orange"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/312_23.jpg?v=1700580513",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/EFAWEF.jpg?v=1700580513",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2311.jpg?v=1700580513",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/faDFaf.jpg?v=1700575111",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/QDd.jpg?v=1700575111",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/qdqd.jpg?v=1700575107"
+        ],
+        "price": 650.0,
+        "size": "XXSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Orange"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 650.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Orange"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 650.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Orange"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 650.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Orange"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 650.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Orange"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 650.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Charcoal Cargo Sweats",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Model is wearing size medium",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Charcoal"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/sd.jpg?v=1684419749",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/daad.jpg?v=1684419749"
+        ],
+        "price": 690.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Charcoal"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 690.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Charcoal"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 690.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Charcoal"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 690.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Charcoal"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 690.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Mint Cargo Sweats",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Model is wearing size medium",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Mint"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/asdASD_d00ef3cd-ba66-424b-a301-cf02761fa409.jpg?v=1684420141",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/asaaass_5b0d2b88-8ba7-42cb-a4dc-3d1ada401b4d.jpg?v=1684420141",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/aada_b4d221b9-26cc-40b5-b45e-c7c4df610d78.jpg?v=1684420141",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/zdfs.jpg?v=1684420131"
+        ],
+        "price": 600.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Mint"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Mint"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Mint"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Mint"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Emerald Green Sweatpants",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Model is wearing size medium",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Green"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WDQQD.jpg?v=1684422210",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/aadsd.jpg?v=1700575569",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/ada_4cfa8430-519a-477b-8c9d-4ee15e56b805.jpg?v=1700575569"
+        ],
+        "price": 600.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Green"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Green"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Green"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Green"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "White Sweatpants",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Model is wearing size medium",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WDQAD.jpg?v=1684420096",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/WDWQD.jpg?v=1700575632",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/DQWQDD.jpg?v=1700575632",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/QDQD_7317e26b-02c3-410c-87a3-f9d9d89cad7c.jpg?v=1700575632"
+        ],
+        "price": 600.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "Black Sweatpants",
+    "category": "Bottoms - Pants / Trousers",
+    "description": "Model is wearing size medium",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/ADDADW.jpg?v=1684419727",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/asdad.jpg?v=1700575541",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/adad.jpg?v=1700575541",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/adadadadA.jpg?v=1700575541"
+        ],
+        "price": 600.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "Black"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 600.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  },
+  {
+    "name": "White Malek Farouk Tee",
+    "category": "Tops - T-Shirts",
+    "description": "Model is wearing size medium",
+    "material": "Cotton",
+    "department": [
+      "Men",
+      "Women",
+      "Unisex"
+    ],
+    "variants": [
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/342234.jpg?v=1700580525",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/234234234.jpg?v=1700580525",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/34324.jpg?v=1700580525",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/324234.jpg?v=1700580525",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/2342343214234.jpg?v=1700575717",
+          "https://cdn.shopify.com/s/files/1/0736/3123/6396/files/q4q.jpg?v=1700575184"
+        ],
+        "price": 750.0,
+        "size": "XSmall",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Small",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Medium",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "Large",
+        "stock": 20
+      },
+      {
+        "colors": [
+          "White"
+        ],
+        "discount": 0,
+        "images": [],
+        "price": 750.0,
+        "size": "XLarge",
+        "stock": 20
+      }
+    ]
+  }
+]

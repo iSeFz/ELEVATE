@@ -1,0 +1,2232 @@
+[
+  {
+    "id": 9792789053749,
+    "title": "WHITE LAQTA TSHIRT",
+    "handle": "white-laqta-tshirt",
+    "body_html": "",
+    "published_at": "2025-03-15T04:17:44+02:00",
+    "created_at": "2024-08-22T00:22:37+03:00",
+    "updated_at": "2025-05-03T21:38:48+03:00",
+    "vendor": "LAQTA",
+    "product_type": "TSHIRT",
+    "tags": [
+      "TSHIRTS"
+    ],
+    "variants": [
+      {
+        "id": 49940004733237,
+        "title": "XS",
+        "option1": "XS",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "650.00",
+        "position": 2,
+        "product_id": 9792789053749,
+        "created_at": "2024-08-22T00:24:33+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 49940004766005,
+        "title": "S",
+        "option1": "S",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "650.00",
+        "position": 3,
+        "product_id": 9792789053749,
+        "created_at": "2024-08-22T00:24:33+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 49940004798773,
+        "title": "M",
+        "option1": "M",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "650.00",
+        "position": 4,
+        "product_id": 9792789053749,
+        "created_at": "2024-08-22T00:24:33+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 49940004831541,
+        "title": "L",
+        "option1": "L",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "650.00",
+        "position": 5,
+        "product_id": 9792789053749,
+        "created_at": "2024-08-22T00:24:33+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 57791050285365,
+        "created_at": "2024-08-22T00:25:36+03:00",
+        "position": 1,
+        "updated_at": "2024-08-22T00:25:38+03:00",
+        "product_id": 9792789053749,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/FC27BA1C-710E-49DD-A3B6-23755BBA52B0.jpg?v=1724275538",
+        "width": 4104,
+        "height": 5130
+      },
+      {
+        "id": 57791050350901,
+        "created_at": "2024-08-22T00:25:36+03:00",
+        "position": 2,
+        "updated_at": "2024-08-22T00:25:38+03:00",
+        "product_id": 9792789053749,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/07E331FC-6B9E-41C6-B736-197B08C5E087.jpg?v=1724275538",
+        "width": 3986,
+        "height": 4983
+      },
+      {
+        "id": 57791050318133,
+        "created_at": "2024-08-22T00:25:36+03:00",
+        "position": 3,
+        "updated_at": "2024-08-22T00:25:38+03:00",
+        "product_id": 9792789053749,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/06FCF33B-D594-4973-B352-979821ACB7C3.jpg?v=1724275538",
+        "width": 4110,
+        "height": 5137
+      },
+      {
+        "id": 57791061819701,
+        "created_at": "2024-08-22T00:26:42+03:00",
+        "position": 4,
+        "updated_at": "2024-08-22T00:26:44+03:00",
+        "product_id": 9792789053749,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/E28E10B8-83C7-4EC1-9C2F-4A31F21FB333.jpg?v=1724275604",
+        "width": 1280,
+        "height": 1600
+      },
+      {
+        "id": 57791061983541,
+        "created_at": "2024-08-22T00:26:42+03:00",
+        "position": 5,
+        "updated_at": "2024-08-22T00:26:46+03:00",
+        "product_id": 9792789053749,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/66B654D4-40E7-4923-AFF3-877B8D724404.jpg?v=1724275606",
+        "width": 1280,
+        "height": 1600
+      },
+      {
+        "id": 57842418745653,
+        "created_at": "2024-08-28T02:35:44+03:00",
+        "position": 6,
+        "updated_at": "2024-08-28T02:35:46+03:00",
+        "product_id": 9792789053749,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/721FDDA1-B8FD-40F9-A80E-B7FCE7E0521C.jpg?v=1724801746",
+        "width": 1600,
+        "height": 1600
+      }
+    ],
+    "options": [
+      {
+        "name": "SIZE",
+        "position": 1,
+        "values": [
+          "XS",
+          "S",
+          "M",
+          "L"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9664640614709,
+    "title": "GRAY LAQTA TSHIRT",
+    "handle": "gray-laqta-t-shirt",
+    "body_html": "",
+    "published_at": "2025-03-15T04:17:12+02:00",
+    "created_at": "2024-06-22T00:00:06+03:00",
+    "updated_at": "2025-05-03T21:38:48+03:00",
+    "vendor": "LAQTA",
+    "product_type": "TSHIRT",
+    "tags": [
+      "TSHIRTS"
+    ],
+    "variants": [
+      {
+        "id": 50000885580085,
+        "title": "XS / Gray",
+        "option1": "XS",
+        "option2": "Gray",
+        "option3": null,
+        "sku": "LAQ6750017",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 9664640614709,
+        "created_at": "2024-09-06T11:48:15+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 49585760305461,
+        "title": "S / Gray",
+        "option1": "S",
+        "option2": "Gray",
+        "option3": null,
+        "sku": "LAQ6750017",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 2,
+        "product_id": 9664640614709,
+        "created_at": "2024-06-22T04:23:36+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 49585760338229,
+        "title": "M / Gray",
+        "option1": "M",
+        "option2": "Gray",
+        "option3": null,
+        "sku": "LAQ6750018",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 3,
+        "product_id": 9664640614709,
+        "created_at": "2024-06-22T04:23:36+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 49585760370997,
+        "title": "L / Gray",
+        "option1": "L",
+        "option2": "Gray",
+        "option3": null,
+        "sku": "LAQ6750019",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 4,
+        "product_id": 9664640614709,
+        "created_at": "2024-06-22T04:23:36+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 57790628659509,
+        "created_at": "2024-08-21T23:50:01+03:00",
+        "position": 1,
+        "updated_at": "2024-08-21T23:50:03+03:00",
+        "product_id": 9664640614709,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/F9A65806-3CB1-4F97-A856-FDB90BB4F9C6.jpg?v=1724273403",
+        "width": 4288,
+        "height": 5360
+      },
+      {
+        "id": 46789166235957,
+        "created_at": "2024-06-22T02:18:46+03:00",
+        "position": 2,
+        "updated_at": "2024-08-21T23:50:02+03:00",
+        "product_id": 9664640614709,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/31EB9066-ACC7-4A19-B06F-FA87FC8D38F5.jpg?v=1724273402",
+        "width": 720,
+        "height": 1280
+      },
+      {
+        "id": 57790628561205,
+        "created_at": "2024-08-21T23:50:01+03:00",
+        "position": 3,
+        "updated_at": "2024-08-21T23:50:03+03:00",
+        "product_id": 9664640614709,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/CECD0255-9275-40AC-8D3E-0A7E76971A55.jpg?v=1724273403",
+        "width": 3939,
+        "height": 4924
+      },
+      {
+        "id": 46789166301493,
+        "created_at": "2024-06-22T02:18:46+03:00",
+        "position": 4,
+        "updated_at": "2024-08-21T23:50:02+03:00",
+        "product_id": 9664640614709,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/04D0079F-1AA3-44FC-A4E1-71D33B7D6487.jpg?v=1724273402",
+        "width": 900,
+        "height": 1600
+      },
+      {
+        "id": 57842417434933,
+        "created_at": "2024-08-28T02:35:05+03:00",
+        "position": 5,
+        "updated_at": "2024-08-28T02:35:07+03:00",
+        "product_id": 9664640614709,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/3B6B4E0C-7794-4007-8D5A-57C4D1CD4B77.jpg?v=1724801707",
+        "width": 1600,
+        "height": 1600
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "XS",
+          "S",
+          "M",
+          "L"
+        ]
+      },
+      {
+        "name": "Color",
+        "position": 2,
+        "values": [
+          "Gray"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9792770375989,
+    "title": "BLACK LAST SHOT TSHIRT",
+    "handle": "black-last-shot-tshirt-1",
+    "body_html": "",
+    "published_at": "2025-03-15T04:15:59+02:00",
+    "created_at": "2024-08-21T23:57:13+03:00",
+    "updated_at": "2025-05-03T21:38:48+03:00",
+    "vendor": "LAQTA",
+    "product_type": "TSHIRT",
+    "tags": [
+      "TSHIRTS"
+    ],
+    "variants": [
+      {
+        "id": 49939955941685,
+        "title": "XS",
+        "option1": "XS",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 2,
+        "product_id": 9792770375989,
+        "created_at": "2024-08-21T23:58:36+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 49939955974453,
+        "title": "S",
+        "option1": "S",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 3,
+        "product_id": 9792770375989,
+        "created_at": "2024-08-21T23:58:36+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 49939956007221,
+        "title": "M",
+        "option1": "M",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 4,
+        "product_id": 9792770375989,
+        "created_at": "2024-08-21T23:58:36+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 49939956039989,
+        "title": "L",
+        "option1": "L",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": null,
+        "position": 5,
+        "product_id": 9792770375989,
+        "created_at": "2024-08-21T23:58:36+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 57790751539509,
+        "created_at": "2024-08-22T00:00:12+03:00",
+        "position": 1,
+        "updated_at": "2024-08-22T00:00:15+03:00",
+        "product_id": 9792770375989,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/D2F5A0CE-2028-493E-8CCA-480C298EDDAF.jpg?v=1724274015",
+        "width": 4118,
+        "height": 5147
+      },
+      {
+        "id": 57790751441205,
+        "created_at": "2024-08-22T00:00:12+03:00",
+        "position": 2,
+        "updated_at": "2024-08-22T00:00:14+03:00",
+        "product_id": 9792770375989,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/DA0AEF9E-B945-4816-BF34-F1563E97FBE7.jpg?v=1724274014",
+        "width": 1280,
+        "height": 1600
+      },
+      {
+        "id": 57842416714037,
+        "created_at": "2024-08-28T02:34:10+03:00",
+        "position": 3,
+        "updated_at": "2024-08-28T02:34:12+03:00",
+        "product_id": 9792770375989,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/B315DDB0-EB96-481A-A6C9-EB4BB28539CD.jpg?v=1724801652",
+        "width": 1600,
+        "height": 1600
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "XS",
+          "S",
+          "M",
+          "L"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9936116089141,
+    "title": "Black sweatpants",
+    "handle": "untitled-jan1_17-54",
+    "body_html": "",
+    "published_at": "2025-01-01T18:03:06+02:00",
+    "created_at": "2025-01-01T17:54:53+02:00",
+    "updated_at": "2025-05-03T21:38:48+03:00",
+    "vendor": "LAQTA",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 50436953571637,
+        "title": "Xs",
+        "option1": "Xs",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 9936116089141,
+        "created_at": "2025-01-01T18:00:07+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50436953604405,
+        "title": "S",
+        "option1": "S",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 9936116089141,
+        "created_at": "2025-01-01T18:00:07+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50436953637173,
+        "title": "M",
+        "option1": "M",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 4,
+        "product_id": 9936116089141,
+        "created_at": "2025-01-01T18:00:07+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50436953669941,
+        "title": "L",
+        "option1": "L",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 5,
+        "product_id": 9936116089141,
+        "created_at": "2025-01-01T18:00:07+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 58907646787893,
+        "created_at": "2025-01-01T18:03:07+02:00",
+        "position": 1,
+        "updated_at": "2025-01-01T18:03:09+02:00",
+        "product_id": 9936116089141,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/58C4E356-924E-4F41-9AD3-073CC8FE072D.jpg?v=1735747389",
+        "width": 4451,
+        "height": 5564
+      },
+      {
+        "id": 58907646755125,
+        "created_at": "2025-01-01T18:03:07+02:00",
+        "position": 2,
+        "updated_at": "2025-01-01T18:03:09+02:00",
+        "product_id": 9936116089141,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/8BFC6304-AD8F-4940-BF8E-503397946686.jpg?v=1735747389",
+        "width": 3805,
+        "height": 5702
+      },
+      {
+        "id": 58907646951733,
+        "created_at": "2025-01-01T18:03:07+02:00",
+        "position": 3,
+        "updated_at": "2025-01-01T18:03:09+02:00",
+        "product_id": 9936116089141,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/114E4655-B2D5-44F0-AE3B-B8D12C8308AB.jpg?v=1735747389",
+        "width": 4285,
+        "height": 5356
+      },
+      {
+        "id": 58907646722357,
+        "created_at": "2025-01-01T18:03:07+02:00",
+        "position": 4,
+        "updated_at": "2025-01-01T18:03:09+02:00",
+        "product_id": 9936116089141,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/D92F7509-F8A2-49F6-9483-4216DB9E82FF.jpg?v=1735747389",
+        "width": 3753,
+        "height": 5313
+      },
+      {
+        "id": 58907646689589,
+        "created_at": "2025-01-01T18:03:07+02:00",
+        "position": 5,
+        "updated_at": "2025-01-01T18:03:09+02:00",
+        "product_id": 9936116089141,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/D592F7D6-E15E-42FE-B594-72185325CC4C.jpg?v=1735747389",
+        "width": 3929,
+        "height": 5517
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Xs",
+          "S",
+          "M",
+          "L"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9929818014005,
+    "title": "White knitted pants",
+    "handle": "white-knitted-pants",
+    "body_html": "",
+    "published_at": "2024-12-28T19:46:33+02:00",
+    "created_at": "2024-12-28T19:40:23+02:00",
+    "updated_at": "2025-05-03T21:38:48+03:00",
+    "vendor": "LAQTA",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 50417798316341,
+        "title": "S/M",
+        "option1": "S/M",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 0,
+        "compare_at_price": "900.00",
+        "position": 2,
+        "product_id": 9929818014005,
+        "created_at": "2024-12-28T19:42:08+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50417798349109,
+        "title": "L/XL",
+        "option1": "L/XL",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 0,
+        "compare_at_price": "900.00",
+        "position": 3,
+        "product_id": 9929818014005,
+        "created_at": "2024-12-28T19:42:08+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 58881078100277,
+        "created_at": "2024-12-28T19:46:34+02:00",
+        "position": 1,
+        "updated_at": "2024-12-28T19:46:36+02:00",
+        "product_id": 9929818014005,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/46F48820-2A6C-42B4-94EA-451D37808DBF.jpg?v=1735407996",
+        "width": 3787,
+        "height": 5513
+      },
+      {
+        "id": 58881078296885,
+        "created_at": "2024-12-28T19:46:34+02:00",
+        "position": 2,
+        "updated_at": "2024-12-28T19:46:37+02:00",
+        "product_id": 9929818014005,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/9A52AA04-6E0F-4A5C-A0F3-A24FFA9DC606.jpg?v=1735407997",
+        "width": 3633,
+        "height": 5489
+      },
+      {
+        "id": 58881078133045,
+        "created_at": "2024-12-28T19:46:34+02:00",
+        "position": 3,
+        "updated_at": "2024-12-28T19:46:36+02:00",
+        "product_id": 9929818014005,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/2B69AC55-270D-4935-91D8-BE8EF6DF1EBD.jpg?v=1735407996",
+        "width": 3954,
+        "height": 5698
+      },
+      {
+        "id": 58881078165813,
+        "created_at": "2024-12-28T19:46:34+02:00",
+        "position": 4,
+        "updated_at": "2024-12-28T19:46:37+02:00",
+        "product_id": 9929818014005,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/35675284-FFFC-4E0B-9527-0501482202A8.jpg?v=1735407997",
+        "width": 3821,
+        "height": 5684
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S/M",
+          "L/XL"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9928885338421,
+    "title": "BLACK KNITTED SWEATER",
+    "handle": "laqta-black-knitted-sweater",
+    "body_html": "",
+    "published_at": "2024-12-26T17:46:19+02:00",
+    "created_at": "2024-12-26T17:41:52+02:00",
+    "updated_at": "2025-05-03T21:38:48+03:00",
+    "vendor": "LAQTA",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 50413371195701,
+        "title": "S/m",
+        "option1": "S/m",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 0,
+        "compare_at_price": "900.00",
+        "position": 2,
+        "product_id": 9928885338421,
+        "created_at": "2024-12-26T17:43:57+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50413371228469,
+        "title": "L/xl",
+        "option1": "L/xl",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 0,
+        "compare_at_price": "900.00",
+        "position": 3,
+        "product_id": 9928885338421,
+        "created_at": "2024-12-26T17:43:57+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 58871761010997,
+        "created_at": "2024-12-26T17:46:21+02:00",
+        "position": 1,
+        "updated_at": "2024-12-26T17:46:23+02:00",
+        "product_id": 9928885338421,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/43C12E94-F9CB-45DC-87DF-667E6FB925CD.jpg?v=1735227983",
+        "width": 3842,
+        "height": 5698
+      },
+      {
+        "id": 58871760945461,
+        "created_at": "2024-12-26T17:46:21+02:00",
+        "position": 2,
+        "updated_at": "2024-12-26T17:46:23+02:00",
+        "product_id": 9928885338421,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/51C64FF7-0B8D-4857-988D-E4C818DECBAC.jpg?v=1735227983",
+        "width": 4318,
+        "height": 5397
+      },
+      {
+        "id": 58871760978229,
+        "created_at": "2024-12-26T17:46:21+02:00",
+        "position": 3,
+        "updated_at": "2024-12-26T17:46:23+02:00",
+        "product_id": 9928885338421,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/E3865D8F-9E80-4BD3-B594-146557781417.jpg?v=1735227983",
+        "width": 3880,
+        "height": 5652
+      },
+      {
+        "id": 58871760912693,
+        "created_at": "2024-12-26T17:46:21+02:00",
+        "position": 4,
+        "updated_at": "2024-12-26T17:46:23+02:00",
+        "product_id": 9928885338421,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/4E5A92DC-75D0-4576-8E13-D56795D57AE1.jpg?v=1735227983",
+        "width": 3917,
+        "height": 5711
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S/m",
+          "L/xl"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9927919763765,
+    "title": "FROSTED ROSE SWEATER",
+    "handle": "frosted-rose-sweater",
+    "body_html": "",
+    "published_at": "2024-12-24T23:27:42+02:00",
+    "created_at": "2024-12-24T23:27:42+02:00",
+    "updated_at": "2025-05-03T21:38:48+03:00",
+    "vendor": "LAQTA",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 50410366075189,
+        "title": "S/M",
+        "option1": "S/M",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 800,
+        "compare_at_price": "900.00",
+        "position": 2,
+        "product_id": 9927919763765,
+        "created_at": "2024-12-24T23:27:44+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50410366107957,
+        "title": "L/XL",
+        "option1": "L/XL",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "650.00",
+        "grams": 800,
+        "compare_at_price": "900.00",
+        "position": 3,
+        "product_id": 9927919763765,
+        "created_at": "2024-12-24T23:27:44+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 58862769078581,
+        "created_at": "2024-12-24T23:21:48+02:00",
+        "position": 1,
+        "updated_at": "2024-12-24T23:21:49+02:00",
+        "product_id": 9927919763765,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/bdcc89e1-35eb-4825-8642-e963d732f9d2.jpg?v=1735075309",
+        "width": 1024,
+        "height": 1280
+      },
+      {
+        "id": 58862769111349,
+        "created_at": "2024-12-24T23:22:03+02:00",
+        "position": 2,
+        "updated_at": "2024-12-24T23:22:04+02:00",
+        "product_id": 9927919763765,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/ed92f9ab-e54b-4052-9641-997754bda35d.jpg?v=1735075324",
+        "width": 1024,
+        "height": 1280
+      },
+      {
+        "id": 58862769144117,
+        "created_at": "2024-12-24T23:22:15+02:00",
+        "position": 3,
+        "updated_at": "2024-12-24T23:22:16+02:00",
+        "product_id": 9927919763765,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/e9936703-aa92-4a23-88fa-b55a4569b22f.jpg?v=1735075336",
+        "width": 1024,
+        "height": 1280
+      },
+      {
+        "id": 58862769176885,
+        "created_at": "2024-12-24T23:22:26+02:00",
+        "position": 4,
+        "updated_at": "2024-12-24T23:22:27+02:00",
+        "product_id": 9927919763765,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/e3ba55ee-23f1-4017-bebe-c33c7f0c6a2c.jpg?v=1735075347",
+        "width": 1024,
+        "height": 1280
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S/M",
+          "L/XL"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9918377886005,
+    "title": "MAROON JACKET",
+    "handle": "burgundy-jacket",
+    "body_html": "",
+    "published_at": "2024-12-14T03:11:06+02:00",
+    "created_at": "2024-12-14T03:08:35+02:00",
+    "updated_at": "2025-05-03T21:38:48+03:00",
+    "vendor": "LAQTA",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 50380162859317,
+        "title": "S",
+        "option1": "S",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "900.00",
+        "grams": 0,
+        "compare_at_price": "1050.00",
+        "position": 2,
+        "product_id": 9918377886005,
+        "created_at": "2024-12-14T03:09:21+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50380162892085,
+        "title": "M",
+        "option1": "M",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "900.00",
+        "grams": 0,
+        "compare_at_price": "1050.00",
+        "position": 3,
+        "product_id": 9918377886005,
+        "created_at": "2024-12-14T03:09:21+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50380162924853,
+        "title": "L",
+        "option1": "L",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "900.00",
+        "grams": 0,
+        "compare_at_price": "1050.00",
+        "position": 4,
+        "product_id": 9918377886005,
+        "created_at": "2024-12-14T03:09:21+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 58789897601333,
+        "created_at": "2024-12-14T03:11:07+02:00",
+        "position": 1,
+        "updated_at": "2024-12-14T03:11:09+02:00",
+        "product_id": 9918377886005,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/92C7EBEC-8AB5-4AF8-8999-0AE400E611F8.jpg?v=1734138669",
+        "width": 3643,
+        "height": 5317
+      },
+      {
+        "id": 58789897535797,
+        "created_at": "2024-12-14T03:11:07+02:00",
+        "position": 2,
+        "updated_at": "2024-12-14T03:11:09+02:00",
+        "product_id": 9918377886005,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/6509B3D2-C167-436D-A181-ACECEF573CF0.jpg?v=1734138669",
+        "width": 3881,
+        "height": 6219
+      },
+      {
+        "id": 58789897568565,
+        "created_at": "2024-12-14T03:11:07+02:00",
+        "position": 3,
+        "updated_at": "2024-12-14T03:11:09+02:00",
+        "product_id": 9918377886005,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/CD4441CB-F10D-4AFD-AB0B-94958078BD7F.jpg?v=1734138669",
+        "width": 3985,
+        "height": 5375
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S",
+          "M",
+          "L"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9918336893237,
+    "title": "DARK GREY SWEATPANT",
+    "handle": "dark-grey-sweatpants",
+    "body_html": "",
+    "published_at": "2024-12-14T02:55:37+02:00",
+    "created_at": "2024-12-14T02:52:38+02:00",
+    "updated_at": "2025-05-03T21:38:48+03:00",
+    "vendor": "LAQTA",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 50380066586933,
+        "title": "XS",
+        "option1": "XS",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 9918336893237,
+        "created_at": "2024-12-14T02:53:50+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50380066619701,
+        "title": "S",
+        "option1": "S",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 9918336893237,
+        "created_at": "2024-12-14T02:53:50+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50380066652469,
+        "title": "M",
+        "option1": "M",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 4,
+        "product_id": 9918336893237,
+        "created_at": "2024-12-14T02:53:50+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50380066685237,
+        "title": "L",
+        "option1": "L",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 5,
+        "product_id": 9918336893237,
+        "created_at": "2024-12-14T02:53:50+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 58789646172469,
+        "created_at": "2024-12-14T02:55:38+02:00",
+        "position": 1,
+        "updated_at": "2024-12-14T02:55:40+02:00",
+        "product_id": 9918336893237,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/0B9878CD-C133-4A9D-A480-3DA0301B8AC5.jpg?v=1734137740",
+        "width": 4049,
+        "height": 5538
+      },
+      {
+        "id": 58789646106933,
+        "created_at": "2024-12-14T02:55:38+02:00",
+        "position": 2,
+        "updated_at": "2024-12-14T02:55:40+02:00",
+        "product_id": 9918336893237,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/5A9FD561-902E-49CD-8C70-6B1D415E93E7.jpg?v=1734137740",
+        "width": 3861,
+        "height": 5254
+      },
+      {
+        "id": 58789646139701,
+        "created_at": "2024-12-14T02:55:38+02:00",
+        "position": 3,
+        "updated_at": "2024-12-14T02:55:40+02:00",
+        "product_id": 9918336893237,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/D3797A6B-6C5A-4650-8BE2-75C86DEF6C79.jpg?v=1734137740",
+        "width": 4261,
+        "height": 5836
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "XS",
+          "S",
+          "M",
+          "L"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9918335320373,
+    "title": "PINK SWEATPANT",
+    "handle": "pink-sweatpants",
+    "body_html": "",
+    "published_at": "2024-12-14T02:52:30+02:00",
+    "created_at": "2024-12-14T02:49:38+02:00",
+    "updated_at": "2025-05-03T21:38:48+03:00",
+    "vendor": "LAQTA",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 50380053938485,
+        "title": "Xs",
+        "option1": "Xs",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 9918335320373,
+        "created_at": "2024-12-14T02:50:19+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50380053971253,
+        "title": "S",
+        "option1": "S",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 9918335320373,
+        "created_at": "2024-12-14T02:50:19+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50380054004021,
+        "title": "M",
+        "option1": "M",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 4,
+        "product_id": 9918335320373,
+        "created_at": "2024-12-14T02:50:19+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50380054036789,
+        "title": "L",
+        "option1": "L",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 5,
+        "product_id": 9918335320373,
+        "created_at": "2024-12-14T02:50:19+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 58789633425717,
+        "created_at": "2024-12-14T02:52:31+02:00",
+        "position": 1,
+        "updated_at": "2024-12-14T02:52:33+02:00",
+        "product_id": 9918335320373,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/66F17E74-A13E-4D7D-A163-264787DFF09B.jpg?v=1734137553",
+        "width": 4021,
+        "height": 5314
+      },
+      {
+        "id": 58789633458485,
+        "created_at": "2024-12-14T02:52:31+02:00",
+        "position": 2,
+        "updated_at": "2024-12-14T02:52:33+02:00",
+        "product_id": 9918335320373,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/C4CADA86-81D6-4BFA-9FC2-D8C14EFA4926.jpg?v=1734137553",
+        "width": 4129,
+        "height": 5839
+      },
+      {
+        "id": 58789633491253,
+        "created_at": "2024-12-14T02:52:31+02:00",
+        "position": 3,
+        "updated_at": "2024-12-14T02:52:33+02:00",
+        "product_id": 9918335320373,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/D3C14AD6-9F3F-4248-8EC4-BAC5D89E04A8.jpg?v=1734137553",
+        "width": 4139,
+        "height": 5593
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Xs",
+          "S",
+          "M",
+          "L"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9918322540853,
+    "title": "MAROON SWEATPANT",
+    "handle": "burnjady",
+    "body_html": "",
+    "published_at": "2024-12-14T02:27:08+02:00",
+    "created_at": "2024-12-14T02:26:25+02:00",
+    "updated_at": "2025-05-03T21:38:48+03:00",
+    "vendor": "LAQTA",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 50380012421429,
+        "title": "Xs",
+        "option1": "Xs",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 9918322540853,
+        "created_at": "2024-12-14T02:29:35+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50380012454197,
+        "title": "S",
+        "option1": "S",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 9918322540853,
+        "created_at": "2024-12-14T02:29:35+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50380012486965,
+        "title": "M",
+        "option1": "M",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 4,
+        "product_id": 9918322540853,
+        "created_at": "2024-12-14T02:29:35+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50380012519733,
+        "title": "L",
+        "option1": "L",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 5,
+        "product_id": 9918322540853,
+        "created_at": "2024-12-14T02:29:35+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 58789555732789,
+        "created_at": "2024-12-14T02:33:12+02:00",
+        "position": 1,
+        "updated_at": "2024-12-14T02:33:14+02:00",
+        "product_id": 9918322540853,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/059E740F-8D37-4A49-A01C-B5DDF1867DFC.jpg?v=1734136394",
+        "width": 3985,
+        "height": 5375
+      },
+      {
+        "id": 58789555765557,
+        "created_at": "2024-12-14T02:33:12+02:00",
+        "position": 2,
+        "updated_at": "2024-12-14T02:33:14+02:00",
+        "product_id": 9918322540853,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/E7FB07B4-1126-486D-8228-DBC863489C73.jpg?v=1734136394",
+        "width": 4042,
+        "height": 5414
+      },
+      {
+        "id": 58789555798325,
+        "created_at": "2024-12-14T02:33:12+02:00",
+        "position": 3,
+        "updated_at": "2024-12-14T02:33:14+02:00",
+        "product_id": 9918322540853,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/D36DAECF-4F6A-44C9-B3C4-AEF192C22CA2.jpg?v=1734136394",
+        "width": 4105,
+        "height": 5839
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "Xs",
+          "S",
+          "M",
+          "L"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9918310252853,
+    "title": "ROYAL BLUE SWEATPANTS",
+    "handle": "royal-blue-sweatpants",
+    "body_html": "",
+    "published_at": "2024-12-14T02:08:09+02:00",
+    "created_at": "2024-12-14T02:02:35+02:00",
+    "updated_at": "2025-05-03T21:38:48+03:00",
+    "vendor": "LAQTA",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 50379890164021,
+        "title": "XS",
+        "option1": "XS",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 9918310252853,
+        "created_at": "2024-12-14T02:04:12+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50379890196789,
+        "title": "S",
+        "option1": "S",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 9918310252853,
+        "created_at": "2024-12-14T02:04:12+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50379890229557,
+        "title": "M",
+        "option1": "M",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 4,
+        "product_id": 9918310252853,
+        "created_at": "2024-12-14T02:04:12+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50379890262325,
+        "title": "L",
+        "option1": "L",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 5,
+        "product_id": 9918310252853,
+        "created_at": "2024-12-14T02:04:12+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 58789436358965,
+        "created_at": "2024-12-14T02:08:10+02:00",
+        "position": 1,
+        "updated_at": "2024-12-14T02:08:13+02:00",
+        "product_id": 9918310252853,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/DB294ABD-A504-4C2A-80C7-1F39639D6DA0.jpg?v=1734134893",
+        "width": 4274,
+        "height": 5836
+      },
+      {
+        "id": 58789436227893,
+        "created_at": "2024-12-14T02:08:10+02:00",
+        "position": 2,
+        "updated_at": "2024-12-14T02:08:12+02:00",
+        "product_id": 9918310252853,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/6B461766-6987-487C-9880-6F1436EEC312.jpg?v=1734134892",
+        "width": 3935,
+        "height": 5444
+      },
+      {
+        "id": 58789436490037,
+        "created_at": "2024-12-14T02:08:11+02:00",
+        "position": 3,
+        "updated_at": "2024-12-14T02:08:13+02:00",
+        "product_id": 9918310252853,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/552DE8A7-3209-483C-9972-E9FAF76D2D97.jpg?v=1734134893",
+        "width": 4221,
+        "height": 5694
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "XS",
+          "S",
+          "M",
+          "L"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9913898991925,
+    "title": "BLACK CREWNECK",
+    "handle": "untitled-dec11_03-49",
+    "body_html": "",
+    "published_at": "2024-12-14T01:54:11+02:00",
+    "created_at": "2024-12-11T03:49:19+02:00",
+    "updated_at": "2025-05-03T21:38:48+03:00",
+    "vendor": "LAQTA",
+    "product_type": "",
+    "tags": [],
+    "variants": [
+      {
+        "id": 50379825119541,
+        "title": "Small",
+        "option1": "Small",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 9913898991925,
+        "created_at": "2024-12-14T01:43:27+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50379825152309,
+        "title": "Medium",
+        "option1": "Medium",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 9913898991925,
+        "created_at": "2024-12-14T01:43:27+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 50379825185077,
+        "title": "Large",
+        "option1": "Large",
+        "option2": null,
+        "option3": null,
+        "sku": null,
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "600.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 4,
+        "product_id": 9913898991925,
+        "created_at": "2024-12-14T01:43:27+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 58789394415925,
+        "created_at": "2024-12-14T01:54:06+02:00",
+        "position": 1,
+        "updated_at": "2024-12-14T01:54:08+02:00",
+        "product_id": 9913898991925,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/65B315F6-7719-4720-9138-2C79F2C35C3A.jpg?v=1734134048",
+        "width": 4196,
+        "height": 5812
+      },
+      {
+        "id": 58789394383157,
+        "created_at": "2024-12-14T01:54:06+02:00",
+        "position": 2,
+        "updated_at": "2024-12-14T01:54:08+02:00",
+        "product_id": 9913898991925,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/AC0E5A79-1AB5-43E5-84C4-4D339CE9E301.jpg?v=1734134048",
+        "width": 4279,
+        "height": 5837
+      },
+      {
+        "id": 58789394448693,
+        "created_at": "2024-12-14T01:54:06+02:00",
+        "position": 3,
+        "updated_at": "2024-12-14T01:54:08+02:00",
+        "product_id": 9913898991925,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/EDA74727-15F6-4333-9C9D-3EF176FA5AF8.jpg?v=1734134048",
+        "width": 4129,
+        "height": 5161
+      },
+      {
+        "id": 58789394481461,
+        "created_at": "2024-12-14T01:54:06+02:00",
+        "position": 4,
+        "updated_at": "2024-12-14T01:54:08+02:00",
+        "product_id": 9913898991925,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/01398B37-E253-485A-806F-B3EA7475C5E4.jpg?v=1734134048",
+        "width": 4199,
+        "height": 5836
+      }
+    ],
+    "options": [
+      {
+        "name": "Black crewneck",
+        "position": 1,
+        "values": [
+          "Small",
+          "Medium",
+          "Large"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9008151626037,
+    "title": "WHITE CREWNECK",
+    "handle": "star-of-love-crewneck",
+    "body_html": "",
+    "published_at": "2024-11-22T18:10:53+02:00",
+    "created_at": "2023-12-26T17:46:53+02:00",
+    "updated_at": "2025-05-03T21:38:48+03:00",
+    "vendor": "LAQTA",
+    "product_type": "Crewnecks",
+    "tags": [],
+    "variants": [
+      {
+        "id": 47717407686965,
+        "title": "S",
+        "option1": "S",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": {
+          "id": 44497877827893,
+          "product_id": 9008151626037,
+          "position": 1,
+          "created_at": "2023-12-26T17:54:01+02:00",
+          "updated_at": "2023-12-26T17:54:02+02:00",
+          "alt": null,
+          "width": 720,
+          "height": 1280,
+          "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/F1C0CBCC-913E-4285-812B-641BFA3A1687.jpg?v=1703606042",
+          "variant_ids": [
+            47689305882933,
+            47689305915701,
+            47717407686965
+          ]
+        },
+        "available": false,
+        "price": "650.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 1,
+        "product_id": 9008151626037,
+        "created_at": "2023-12-30T13:05:03+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 47689305882933,
+        "title": "M",
+        "option1": "M",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": {
+          "id": 44497877827893,
+          "product_id": 9008151626037,
+          "position": 1,
+          "created_at": "2023-12-26T17:54:01+02:00",
+          "updated_at": "2023-12-26T17:54:02+02:00",
+          "alt": null,
+          "width": 720,
+          "height": 1280,
+          "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/F1C0CBCC-913E-4285-812B-641BFA3A1687.jpg?v=1703606042",
+          "variant_ids": [
+            47689305882933,
+            47689305915701,
+            47717407686965
+          ]
+        },
+        "available": false,
+        "price": "650.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 9008151626037,
+        "created_at": "2023-12-26T18:29:12+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 47689305915701,
+        "title": "L",
+        "option1": "L",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": {
+          "id": 44497877827893,
+          "product_id": 9008151626037,
+          "position": 1,
+          "created_at": "2023-12-26T17:54:01+02:00",
+          "updated_at": "2023-12-26T17:54:02+02:00",
+          "alt": null,
+          "width": 720,
+          "height": 1280,
+          "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/F1C0CBCC-913E-4285-812B-641BFA3A1687.jpg?v=1703606042",
+          "variant_ids": [
+            47689305882933,
+            47689305915701,
+            47717407686965
+          ]
+        },
+        "available": false,
+        "price": "650.00",
+        "grams": 0,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 9008151626037,
+        "created_at": "2023-12-26T18:29:12+02:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 44497877827893,
+        "created_at": "2023-12-26T17:54:01+02:00",
+        "position": 1,
+        "updated_at": "2023-12-26T17:54:02+02:00",
+        "product_id": 9008151626037,
+        "variant_ids": [
+          47689305882933,
+          47689305915701,
+          47717407686965
+        ],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/F1C0CBCC-913E-4285-812B-641BFA3A1687.jpg?v=1703606042",
+        "width": 720,
+        "height": 1280
+      },
+      {
+        "id": 44497877795125,
+        "created_at": "2023-12-26T17:54:01+02:00",
+        "position": 2,
+        "updated_at": "2023-12-26T17:54:02+02:00",
+        "product_id": 9008151626037,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/89C831A9-9156-4684-9DE3-A23BF8428EB8.jpg?v=1703606042",
+        "width": 720,
+        "height": 1280
+      }
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "position": 1,
+        "values": [
+          "S",
+          "M",
+          "L"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9792794689845,
+    "title": "BLACK STAR PANT",
+    "handle": "black-star-pant",
+    "body_html": "<p><strong>PRE-ORDER</strong></p>",
+    "published_at": "2024-08-22T00:33:01+03:00",
+    "created_at": "2024-08-22T00:31:13+03:00",
+    "updated_at": "2025-05-03T21:38:48+03:00",
+    "vendor": "LAQTA",
+    "product_type": "Pants",
+    "tags": [],
+    "variants": [
+      {
+        "id": 49977838862645,
+        "title": "XS",
+        "option1": "XS",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 800,
+        "compare_at_price": "850.00",
+        "position": 1,
+        "product_id": 9792794689845,
+        "created_at": "2024-09-01T00:22:03+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 49940013711669,
+        "title": "S",
+        "option1": "S",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 800,
+        "compare_at_price": "850.00",
+        "position": 2,
+        "product_id": 9792794689845,
+        "created_at": "2024-08-22T00:32:13+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 49940013744437,
+        "title": "M",
+        "option1": "M",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 800,
+        "compare_at_price": "850.00",
+        "position": 3,
+        "product_id": 9792794689845,
+        "created_at": "2024-08-22T00:32:13+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 49940013777205,
+        "title": "L",
+        "option1": "L",
+        "option2": null,
+        "option3": null,
+        "sku": "",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "750.00",
+        "grams": 800,
+        "compare_at_price": "850.00",
+        "position": 4,
+        "product_id": 9792794689845,
+        "created_at": "2024-08-22T00:32:13+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 57791134269749,
+        "created_at": "2024-08-22T00:33:02+03:00",
+        "position": 1,
+        "updated_at": "2024-08-22T00:33:04+03:00",
+        "product_id": 9792794689845,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/35813A22-479E-4A0B-B365-38DA28F2C417.jpg?v=1724275984",
+        "width": 4269,
+        "height": 5336
+      },
+      {
+        "id": 57791134662965,
+        "created_at": "2024-08-22T00:33:02+03:00",
+        "position": 2,
+        "updated_at": "2024-08-22T00:33:05+03:00",
+        "product_id": 9792794689845,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/52A4A4A3-48DA-4B72-B3AB-BB33262A535B.jpg?v=1724275985",
+        "width": 4378,
+        "height": 5473
+      },
+      {
+        "id": 57791134302517,
+        "created_at": "2024-08-22T00:33:02+03:00",
+        "position": 3,
+        "updated_at": "2024-08-22T00:33:04+03:00",
+        "product_id": 9792794689845,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/77E6A98E-F424-418A-9D59-7B27F2E0EA1C.jpg?v=1724275984",
+        "width": 4356,
+        "height": 5445
+      },
+      {
+        "id": 57791134400821,
+        "created_at": "2024-08-22T00:33:02+03:00",
+        "position": 4,
+        "updated_at": "2024-08-22T00:33:04+03:00",
+        "product_id": 9792794689845,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/D454839D-7D70-42EF-BCA1-3D672B517727.jpg?v=1724275984",
+        "width": 4375,
+        "height": 5469
+      },
+      {
+        "id": 57842424676661,
+        "created_at": "2024-08-28T02:36:47+03:00",
+        "position": 5,
+        "updated_at": "2024-08-28T02:36:49+03:00",
+        "product_id": 9792794689845,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/E08D2B2B-372F-428F-AFC6-A4CCE5425A5D.jpg?v=1724801809",
+        "width": 1600,
+        "height": 1600
+      }
+    ],
+    "options": [
+      {
+        "name": "SIZE",
+        "position": 1,
+        "values": [
+          "XS",
+          "S",
+          "M",
+          "L"
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9507378757941,
+    "title": "ONLY PINK VIBES TSHIRT",
+    "handle": "only-pink-vibes-tshirt",
+    "body_html": "<p><span style=\"text-decoration: underline;\"><strong> </strong></span></p>",
+    "published_at": "2024-05-11T00:39:04+03:00",
+    "created_at": "2024-05-11T00:37:48+03:00",
+    "updated_at": "2025-05-03T21:38:48+03:00",
+    "vendor": "LAQTA",
+    "product_type": "TSHIRT",
+    "tags": [
+      "TSHIRTS"
+    ],
+    "variants": [
+      {
+        "id": 50000940171573,
+        "title": "XS",
+        "option1": "XS",
+        "option2": null,
+        "option3": null,
+        "sku": "LAQ675007",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 1,
+        "product_id": 9507378757941,
+        "created_at": "2024-09-06T11:54:09+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 49199068905781,
+        "title": "S",
+        "option1": "S",
+        "option2": null,
+        "option3": null,
+        "sku": "LAQ675007",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 2,
+        "product_id": 9507378757941,
+        "created_at": "2024-05-11T00:38:32+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 49199068938549,
+        "title": "M",
+        "option1": "M",
+        "option2": null,
+        "option3": null,
+        "sku": "LAQ675008",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 3,
+        "product_id": 9507378757941,
+        "created_at": "2024-05-11T00:38:32+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      },
+      {
+        "id": 49199068971317,
+        "title": "L",
+        "option1": "L",
+        "option2": null,
+        "option3": null,
+        "sku": "LAQ675009",
+        "requires_shipping": true,
+        "taxable": true,
+        "featured_image": null,
+        "available": false,
+        "price": "550.00",
+        "grams": 0,
+        "compare_at_price": "0.00",
+        "position": 4,
+        "product_id": 9507378757941,
+        "created_at": "2024-05-11T00:38:32+03:00",
+        "updated_at": "2025-05-03T21:38:48+03:00"
+      }
+    ],
+    "images": [
+      {
+        "id": 46331452293429,
+        "created_at": "2024-05-11T00:39:04+03:00",
+        "position": 1,
+        "updated_at": "2024-05-29T00:47:32+03:00",
+        "product_id": 9507378757941,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/IMG-7012.jpg?v=1716932852",
+        "width": 844,
+        "height": 1280
+      },
+      {
+        "id": 46331452195125,
+        "created_at": "2024-05-11T00:39:04+03:00",
+        "position": 2,
+        "updated_at": "2024-05-29T00:47:32+03:00",
+        "product_id": 9507378757941,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/IMG-7011.jpg?v=1716932852",
+        "width": 720,
+        "height": 1280
+      },
+      {
+        "id": 46331452227893,
+        "created_at": "2024-05-11T00:39:04+03:00",
+        "position": 3,
+        "updated_at": "2024-05-29T00:47:32+03:00",
+        "product_id": 9507378757941,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/IMG-7010.jpg?v=1716932852",
+        "width": 720,
+        "height": 1280
+      },
+      {
+        "id": 46331452260661,
+        "created_at": "2024-05-11T00:39:04+03:00",
+        "position": 4,
+        "updated_at": "2024-05-29T00:47:32+03:00",
+        "product_id": 9507378757941,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/IMG-7013.jpg?v=1716932852",
+        "width": 800,
+        "height": 1280
+      },
+      {
+        "id": 57842413142325,
+        "created_at": "2024-08-28T02:33:48+03:00",
+        "position": 5,
+        "updated_at": "2024-08-28T02:33:49+03:00",
+        "product_id": 9507378757941,
+        "variant_ids": [],
+        "src": "https://cdn.shopify.com/s/files/1/0752/2087/7621/files/9C9B28C2-8571-4454-84AA-7099FF986C20.jpg?v=1724801629",
+        "width": 1600,
+        "height": 1600
+      }
+    ],
+    "options": [
+      {
+        "name": "Sizes",
+        "position": 1,
+        "values": [
+          "XS",
+          "S",
+          "M",
+          "L"
+        ]
+      }
+    ]
+  }
+]

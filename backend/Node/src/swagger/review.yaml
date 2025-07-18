@@ -1,0 +1,307 @@
+components:
+  schemas:
+    ReviewResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The auto-generated id of the review
+        productId:
+          type: string
+          description: ID of the product being reviewed
+        customerId:
+          type: string
+          description: ID of the customer who wrote the review
+        title:
+          type: string
+          description: Review title
+        content:
+          type: string
+          description: Review content/comment
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+          description: Rating from 1 to 5 stars
+        createdAt:
+          $ref: "#/components/schemas/Timestamp"
+          description: Review creation timestamp
+        updatedAt:
+          $ref: "#/components/schemas/Timestamp"
+          description: Review update timestamp
+
+    ReviewRequest:
+      type: object
+      required:
+        - title
+        - content
+        - rating
+      properties:
+        title:
+          type: string
+          description: Review title
+        content:
+          type: string
+          description: Review content/comment
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+          description: Rating from 1 to 5 stars
+
+    SuccessResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [success]
+        message:
+          type: string
+        data:
+          type: object
+
+    ErrorResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [error]
+        message:
+          type: string
+
+# Defining Paths
+paths:
+  /products/{productId}/reviews:
+    get:
+      summary: Retrieve all reviews of a product with pagination
+      tags: [Products]
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Page number for pagination
+        - in: path
+          name: productId
+          required: true
+          description: The ID of the product
+          schema:
+            type: string
+      responses:
+        200:
+          description: A list of reviews
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ReviewResponse'
+                  pagination:
+                    $ref: "#/components/schemas/PaginationInfo"
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    post:
+      summary: Create a new review
+      tags: [Products]
+      parameters:
+        - in: path
+          name: productId
+          required: true
+          description: The ID of the product
+          schema:
+            type: string
+      requestBody:
+        description: You must provide all these data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewRequest'
+      responses:
+        201:
+          description: The review was successfully created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  message:
+                    type: string
+                    description: Success message
+                  data:
+                    $ref: '#/components/schemas/ReviewResponse'
+        400:
+          description: Failed to create review due to invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /reviews/{id}:
+    get:
+      summary: Retrieve a review by ID
+      tags: [Reviews]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the review
+          schema:
+            type: string
+      responses:
+        200:
+          description: Review data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    enum: [success]
+                  data:
+                    $ref: '#/components/schemas/ReviewResponse'
+        404:
+          description: Review not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    put:
+      summary: Update a review
+      tags: [Reviews]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the review
+          schema:
+            type: string
+      requestBody:
+        description: You can only provide the fields you want to update
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: Review title
+                content:
+                  type: string
+                  description: Review content/comment
+                rating:
+                  type: integer
+                  minimum: 1
+                  maximum: 5
+                  description: Rating from 1 to 5 stars
+      responses:
+        200:
+          description: The review was successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        400:
+          description: Failed to update review due to invalid data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Review not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+    delete:
+      summary: Delete a review
+      tags: [Reviews]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          description: The ID of the review
+          schema:
+            type: string
+      responses:
+        200:
+          description: The review was successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        401:
+          description: Unauthorized - Invalid or missing token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        403:
+          description: Forbidden - Insufficient permissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        404:
+          description: Review not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        500:
+          description: Server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
