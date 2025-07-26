@@ -13,23 +13,6 @@ class ImagePreview extends StatelessWidget {
       builder: (context, state) {
         final aiTryOnCubit = context.read<AITryOnCubit>();
 
-        // Show loading state
-        if (state is AITryOnLoading || state is AITryOnSuccess) {
-          return const Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(),
-                SizedBox(height: 16),
-                Text(
-                  'Processing your image...',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
-                ),
-              ],
-            ),
-          );
-        }
-
         // Determine which image URL to use and badge properties
         final String? imageURL =
             state is AITryOnResultReady
@@ -66,6 +49,7 @@ class ImagePreview extends StatelessWidget {
 
         // Show image with badge
         return Stack(
+          alignment: Alignment.center,
           children: [
             // Check if the URL is a local file path or a network URL
             imageURL.startsWith('http')
@@ -160,6 +144,25 @@ class ImagePreview extends StatelessWidget {
                 ),
               ),
             ),
+            if (state is AITryOnLoading || state is AITryOnSuccess)
+              Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.black.withAlpha(125),
+                child: const Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(height: 16),
+                      Text(
+                        'Processing your image...',
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
           ],
         );
       },

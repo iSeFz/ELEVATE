@@ -63,7 +63,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   Future<void> fetchProductsByDepartments(List<String> departments) async {
     emit(HomeLoading());
-    Map<String, int> pages = {'Men': 2, 'Women': 1, 'Kids': 1};
+    Map<String, int> pages = {'Men': 14, 'Women': 16, 'Kids': 1};
     try {
       final results = await Future.wait(
         departments.map(
